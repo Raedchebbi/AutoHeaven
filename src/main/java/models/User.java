@@ -1,25 +1,18 @@
 package models;
 
 public class User {
-    private int id, cin, tel, id_ad;
-    private String nom, prenom, email, password, adresse, role;
+    private int id;
+    private int cin;
+    private String nom;
+    private String prenom;
+    private int tel;
+    private String email;
+    private String password;
+    private String role;
 
-    public User() {
-    }
+    public User() {}
 
-    public User(int cin, String nom, String prenom, int tel, String email, String password, String adresse, String role, int id_ad) {
-        this.cin = cin;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.tel = tel;
-        this.email = email;
-        this.password = password;
-        this.adresse = adresse;
-        this.role = role;
-        this.id_ad = id_ad;
-    }
-
-    public User(int id, int cin, String nom, String prenom, int tel, String email, String password, String adresse, String role, int id_ad) {
+    public User(int id, int cin, String nom, String prenom, int tel, String email, String password, String role) {
         this.id = id;
         this.cin = cin;
         this.nom = nom;
@@ -27,9 +20,7 @@ public class User {
         this.tel = tel;
         this.email = email;
         this.password = password;
-        this.adresse = adresse;
         this.role = role;
-        this.id_ad = id_ad;
     }
 
     public int getId() { return id; }
@@ -53,28 +44,13 @@ public class User {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    public String getAdresse() { return adresse; }
-    public void setAdresse(String adresse) { this.adresse = adresse; }
-
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 
-    public int getId_ad() { return id_ad; }
-    public void setId_ad(int id_ad) { this.id_ad = id_ad; }
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", cin=" + cin +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", tel=" + tel +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", adresse='" + adresse + '\'' +
-                ", role='" + role + '\'' +
-                ", id_ad=" + id_ad +
-                '}';
+        return "User{id=" + id + ", cin=" + cin + ", nom='" + nom + "', prenom='" + prenom + "', tel=" + tel +
+                ", email='" + email + "', role='" + role  + "}";
     }
 }
