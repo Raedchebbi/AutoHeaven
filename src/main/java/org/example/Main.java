@@ -24,8 +24,7 @@ public class Main {
             // Ajout user
             User newUser = new User(0, 98765532, "Sami", "Ben Ali", 55443322, "sami.benali@email.com", "securePass", "client");
             userService.create(newUser);  // Créer l'utilisateur dans la base de données
-            System.out.println("Nouvel utilisateur ajouté : " + newUser.getNom() + " " + newUser.getPrenom());
-            System.out.println("Utilisateur ajouté avec ID : " + newUser.getId());
+
 
             // Ajout adresse
             Adresse adresse = new Adresse(0, "Rue Ibn Khaldoun", "Sfax", "3000", "Immeuble El-Naoufel", "5", newUser.getId());
