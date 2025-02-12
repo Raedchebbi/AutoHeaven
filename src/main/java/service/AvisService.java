@@ -40,11 +40,25 @@ public class AvisService  implements Crud<avis> {
     }
 
     @Override
-    public void delete(avis obj) throws Exception {
+    public void delete(int idAvis) throws Exception {
         String sql = "DELETE FROM avis WHERE id_a = ?";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, obj.getId_a());
-        stmt.executeUpdate();
+
+        // Utilisation de try-with-resources pour gérer automatiquement les ressources
+        // Connexion obtenue depuis MyDb
+             PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, idAvis);  // Paramètre d'ID d'avis
+
+            // Exécution de la requête de suppression
+            int rowsDeleted = stmt.executeUpdate();
+
+            if (rowsDeleted > 0) {
+                System.out.println("Avis supprimé avec succès.");
+            } else {
+                System.out.println("Aucun avis trouvé avec cet ID.");
+            }
+
+
     }
 
     @Override
