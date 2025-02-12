@@ -5,11 +5,25 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MyDb {
-    private String url = "jdbc:mysql://localhost:3306/pi";
-    private String user = "root";
-    private String password = "";
-    private Connection conn;
-    private static MyDb instance;
+    private static final String URL = "jdbc:mysql://localhost:3306/pidev";
+    private static final String USER = "root";
+    private static final String PASSWORD = "";
+    private static Connection conn = null;
+    private static MyDb instance = null;
+
+    private MyDb() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Connection etablie avec succes");
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("Driver JDBC non trouvé : " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Erreur de connexion : " + e.getMessage());
+        }
+    }
 
     public static MyDb getInstance() {
         if (instance == null) {
@@ -18,18 +32,18 @@ public class MyDb {
         return instance;
     }
 
-    public Connection getConn()
-    {
+    public Connection getConnection() {
         return conn;
     }
 
-    private MyDb() {
+    public void closeConnection() {
         try {
-            this.conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Connection established");
-
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+                System.out.println("Connexion fermee");
+            }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.err.println("Erreur fermeture : " + e.getMessage());
         }
     }
 }

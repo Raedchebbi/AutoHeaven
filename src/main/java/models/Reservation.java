@@ -5,25 +5,27 @@ public class Reservation {
     private int id_r;
     private Date date_res;
     private String status;
+    //private Voiture voiture;
     private int id_v;
-    private int id;
+    private User user;
 
-    public Reservation() {
-    }
+    public Reservation() {}
 
-    public Reservation(Date date_res, String status, int id_v, int id) {
+    public Reservation(Date date_res, String status, int id_v /*Voiture voiture*/, User user) {
         this.date_res = date_res;
         this.status = status;
+        //this.voiture = voiture;
         this.id_v = id_v;
-        this.id = id;
+        this.user = user;
     }
 
-    public Reservation(int id_r, Date date_res, String status, int id_v, int id) {
+    public Reservation(int id_r, Date date_res, String status, int id_v /*Voiture voiture*/, User user) {
         this.id_r = id_r;
         this.date_res = date_res;
         this.status = status;
+        //this.voiture = voiture;
         this.id_v = id_v;
-        this.id = id;
+        this.user = user;
     }
 
     public int getId_r() {
@@ -47,6 +49,13 @@ public class Reservation {
         this.status = status;
     }
 
+    /*public Voiture getVoiture() {
+        return voiture;
+    }
+    public void setVoiture(Voiture voiture) {
+        this.voiture = voiture;
+    }*/
+
     public int getId_v() {
         return id_v;
     }
@@ -54,11 +63,11 @@ public class Reservation {
         this.id_v = id_v;
     }
 
-    public int getId() {
-        return id;
+    public User getUser() {
+        return user;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -67,8 +76,9 @@ public class Reservation {
                 "id_r=" + id_r +
                 ", date_res=" + date_res +
                 ", status='" + status + '\'' +
+                /*", voiture_id=" + (voiture != null ? voiture.getId_v() : "null") +*/
                 ", id_v=" + id_v +
-                ", id=" + id +
+                ", user_id=" + (user != null ? user.getId() : "null") +
                 '}';
     }
 }
