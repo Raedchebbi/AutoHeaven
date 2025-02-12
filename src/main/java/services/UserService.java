@@ -86,10 +86,10 @@ public class UserService implements Crud<User> {
     }
 
     @Override
-    public void delete(User obj) throws Exception {
+    public void delete(int obj) throws Exception {
         String sql = "DELETE FROM user WHERE id = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, obj.getId());
+        stmt.setInt(1, obj);
 
         stmt.executeUpdate();
     }

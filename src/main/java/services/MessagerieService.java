@@ -1,4 +1,4 @@
-package service;
+package services;
 
 import models.Messagerie;
 import utils.MyDb;
@@ -51,10 +51,10 @@ public class MessagerieService implements Crud<Messagerie> {
     }
 
     @Override
-    public void delete(Messagerie obj) throws Exception {
+    public void delete(int obj) throws Exception {
         String sql = "DELETE FROM messagerie WHERE id_m = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, obj.getId_m());
+        stmt.setInt(1, obj);
         stmt.executeUpdate();
     }
 

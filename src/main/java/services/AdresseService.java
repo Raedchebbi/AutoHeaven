@@ -57,21 +57,12 @@ public class AdresseService implements Crud<Adresse> {
         }
     }
 
-
     @Override
-    public void delete(Adresse adresse) throws Exception {
-        String sql = "DELETE FROM adresse WHERE id_ad = ? AND user_id = ?";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, adresse.getId_ad());
-        stmt.setInt(2, adresse.getUserId());
+    public void delete(int obj) throws Exception {
 
-        int rowsDeleted = stmt.executeUpdate();
-        if (rowsDeleted > 0) {
-            System.out.println("");
-        } else {
-            throw new Exception("Adresse non trouvée ou permission refusée.");
-        }
     }
+
+
 
     @Override
     public List<Adresse> getAll() throws Exception {

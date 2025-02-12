@@ -6,8 +6,8 @@ import services.UserService;
 import models.User;
 import models.Reclamation;
 import models.Messagerie;
-import service.ReclamationService;
-import service.MessagerieService;
+import services.ReclamationService;
+import services.MessagerieService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -51,11 +51,11 @@ public class Main {
             System.out.println("Utilisateur mis à jour : " + newUser.getNom() + " " + newUser.getPrenom());
 
             // Supprimer l'adresse
-            adresseService.delete(adresse);  // Supprimer l'adresse dans la base de données
+            adresseService.delete(1);  // Supprimer l'adresse dans la base de données
             System.out.println("Adresse supprimée.");
 
             // Supprimer user
-            userService.delete(newUser);  // Supprimer l'utilisateur dans la base de données
+            userService.delete(1);  // Supprimer l'utilisateur dans la base de données
             System.out.println("Utilisateur supprimé.");
 
             /////////////////////////// ==== TEST MESSAGERIE ====
@@ -71,9 +71,7 @@ public class Main {
             System.out.println(messagerieService.getAll());
 
             ////////////////////////// ==== TEST DELETE MESSAGERIE ====
-            Messagerie messageToDelete = new Messagerie();
-            messageToDelete.setId_m(59); // Supposons que l'ID du message à supprimer est 4
-            messagerieService.delete(messageToDelete);
+            messagerieService.delete(4);
             System.out.println("✅ Message supprimé !");
             System.out.println(messagerieService.getAll());
 
@@ -89,10 +87,7 @@ public class Main {
             System.out.println("✅ Réclamation mise à jour !");
             System.out.println(reclamationService.getAll());
 
-            ////////////////////////////// ==== TEST DELETE RECLAMATION ====
-            Reclamation reclamationToDelete = new Reclamation();
-            reclamationToDelete.setId(50); // ID de la réclamation à supprimer
-            reclamationService.delete(reclamationToDelete);
+            reclamationService.delete(50);
             System.out.println("✅ Réclamation supprimée !");
             System.out.println(reclamationService.getAll());
 
