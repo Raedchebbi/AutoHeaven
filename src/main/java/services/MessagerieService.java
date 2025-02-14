@@ -1,6 +1,7 @@
-package service;
+package services;
 
 import models.Messagerie;
+import services.Crud;
 import utils.MyDb;
 
 import java.sql.*;
@@ -76,5 +77,8 @@ public class MessagerieService implements Crud<Messagerie> {
             messages.add(msg);
         }
         return messages;
+    }
+
+    public void delete(int i) {
     }
 }

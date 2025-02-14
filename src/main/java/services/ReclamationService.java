@@ -1,6 +1,7 @@
-package service;
+package services;
 
 import models.Reclamation;
+import services.Crud;
 import utils.MyDb;
 
 import java.sql.*;
@@ -43,14 +44,14 @@ public class ReclamationService implements Crud<Reclamation> {
         // Vérifier si la réclamation existe avant de la supprimer
         String checkRecSql = "SELECT id_rec FROM reclamation WHERE id_rec = ?";
         PreparedStatement checkRecStmt = conn.prepareStatement(checkRecSql);
-        checkRecStmt.setInt(1, obj.getId());
+        checkRecStmt.setInt(1, obj.getIdRec());  // Utiliser getIdRec()
         ResultSet rs = checkRecStmt.executeQuery();
 
         if (rs.next()) {
             // La réclamation existe, suppression des messages associés
             String sqlMessagerie = "DELETE FROM messagerie WHERE id_rec = ?";
             PreparedStatement stmtMessagerie = conn.prepareStatement(sqlMessagerie);
-            stmtMessagerie.setInt(1, obj.getId());
+            stmtMessagerie.setInt(1, obj.getIdRec());  // Utiliser getIdRec()
             int messagerieDeleted = stmtMessagerie.executeUpdate();
 
             // Afficher le nombre de messages supprimés
@@ -63,7 +64,7 @@ public class ReclamationService implements Crud<Reclamation> {
             // Suppression de la réclamation
             String sqlReclamation = "DELETE FROM reclamation WHERE id_rec = ?";
             PreparedStatement stmtReclamation = conn.prepareStatement(sqlReclamation);
-            stmtReclamation.setInt(1, obj.getId());
+            stmtReclamation.setInt(1, obj.getIdRec());  // Utiliser getIdRec()
             int reclamationDeleted = stmtReclamation.executeUpdate();
 
             if (reclamationDeleted > 0) {
@@ -72,11 +73,9 @@ public class ReclamationService implements Crud<Reclamation> {
                 System.out.println("❌ La réclamation n'a pas pu être supprimée.");
             }
         } else {
-            throw new Exception("❌ La réclamation avec l'ID " + obj.getId() + " n'existe pas.");
+            throw new Exception("❌ La réclamation avec l'ID " + obj.getIdRec() + " n'existe pas.");
         }
     }
-
-
 
     @Override
     public List<Reclamation> getAll() throws Exception {
