@@ -19,7 +19,6 @@ public class UserService implements Crud<User> {
 
     @Override
     public void create(User obj) throws Exception {
-
         String checkSql = "SELECT COUNT(*) FROM user WHERE cin = ? OR email = ?";
         PreparedStatement checkStmt = conn.prepareStatement(checkSql);
         checkStmt.setInt(1, obj.getCin());
@@ -31,8 +30,7 @@ public class UserService implements Crud<User> {
             throw new Exception("Un utilisateur avec ce CIN ou cet email existe déjà !");
         }
 
-
-        String sql = "INSERT INTO user (cin, nom, prenom, tel, email, password, role) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO user (cin, nom, prenom, tel, email, password, role, adresse) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         stmt.setInt(1, obj.getCin());
         stmt.setString(2, obj.getNom());
@@ -41,6 +39,7 @@ public class UserService implements Crud<User> {
         stmt.setString(5, obj.getEmail());
         stmt.setString(6, obj.getPassword());
         stmt.setString(7, obj.getRole());
+        stmt.setString(8, obj.getAdresse());
 
         int rowsInserted = stmt.executeUpdate();
         System.out.println("Nouvel utilisateur ajouté : " + obj.getNom() + " " + obj.getPrenom());
@@ -59,7 +58,6 @@ public class UserService implements Crud<User> {
 
     @Override
     public void update(User obj) throws Exception {
-
         String checkSql = "SELECT COUNT(*) FROM user WHERE (cin = ? OR email = ?) AND id != ?";
         PreparedStatement checkStmt = conn.prepareStatement(checkSql);
         checkStmt.setInt(1, obj.getCin());
@@ -72,7 +70,7 @@ public class UserService implements Crud<User> {
             throw new Exception("Erreur : Un autre utilisateur avec ce CIN ou cet email existe déjà !");
         }
 
-        String sql = "UPDATE user SET cin = ?, nom = ?, prenom = ?, tel = ?, email = ?, role = ? WHERE id = ?";
+        String sql = "UPDATE user SET cin = ?, nom = ?, prenom = ?, tel = ?, email = ?, role = ?, adresse = ? WHERE id = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, obj.getCin());
         stmt.setString(2, obj.getNom());
@@ -80,7 +78,8 @@ public class UserService implements Crud<User> {
         stmt.setInt(4, obj.getTel());
         stmt.setString(5, obj.getEmail());
         stmt.setString(6, obj.getRole());
-        stmt.setInt(7, obj.getId());
+        stmt.setString(7, obj.getAdresse());
+        stmt.setInt(8, obj.getId());
 
         stmt.executeUpdate();
     }
@@ -111,21 +110,10 @@ public class UserService implements Crud<User> {
             user.setEmail(rs.getString("email"));
             user.setPassword(rs.getString("password"));
             user.setRole(rs.getString("role"));
+            user.setAdresse(rs.getString("adresse"));
 
             users.add(user);
         }
         return users;
     }
-
-    /*public boolean isClient(int userId) throws Exception {
-        String sql = "SELECT role FROM user WHERE id = ?";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, userId);
-        ResultSet rs = stmt.executeQuery();
-
-        if (rs.next()) {
-            return rs.getString("role").equalsIgnoreCase("client");
-        }
-        return false;
-    }*/
 }

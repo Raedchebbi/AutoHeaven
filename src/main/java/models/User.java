@@ -9,10 +9,11 @@ public class User {
     private String email;
     private String password;
     private String role;
+    private String adresse;
 
     public User() {}
 
-    public User(int id, int cin, String nom, String prenom, int tel, String email, String password, String role) {
+    public User(int id, int cin, String nom, String prenom, int tel, String email, String password, String role, String adresse) {
         this.id = id;
         this.cin = cin;
         this.nom = nom;
@@ -21,6 +22,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.adresse = adresse;
     }
 
     public int getId() { return id; }
@@ -47,10 +49,12 @@ public class User {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 
+    public String getAdresse() { return adresse; }
+    public void setAdresse(String adresse) { this.adresse = adresse; }
 
     @Override
     public String toString() {
         return "User{id=" + id + ", cin=" + cin + ", nom='" + nom + "', prenom='" + prenom + "', tel=" + tel +
-                ", email='" + email + "', role='" + role  + "}";
+                ", email='" + email + "', role='" + role + "', adresse='" + adresse + "'}";
     }
 }
