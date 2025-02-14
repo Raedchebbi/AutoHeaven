@@ -90,7 +90,9 @@ public class UserService implements Crud<User> {
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, obj.getId());
 
+
         stmt.executeUpdate();
+        System.out.println("Utilisateur supprimé.");
     }
 
     @Override
