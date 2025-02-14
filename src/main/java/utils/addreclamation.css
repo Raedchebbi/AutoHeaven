@@ -1,0 +1,64 @@
+.root {
+    -fx-font-family: "Arial", sans-serif;
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #ffcccc); /* Dégradé blanc → rouge clair */
+    -fx-padding: 30px;
+}
+
+.container {
+    -fx-background-color: rgba(255, 255, 255, 0.9); /* Blanc avec légère transparence */
+    -fx-padding: 30px;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 0, 0, 0.3), 12, 0, 0, 0);
+}
+
+.label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #B22222; /* Rouge foncé */
+    -fx-font-size: 15px;
+    -fx-padding: 5px 0;
+}
+
+.text-field, .text-area {
+    -fx-pref-width: 320px;
+    -fx-padding: 12px;
+    -fx-border-color: #B22222; /* Bordure rouge foncé */
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-font-size: 14px;
+    -fx-background-color: #fff; /* Fond blanc */
+    -fx-text-fill: #333; /* Texte noir */
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 0, 0, 0.2), 5, 0, 0, 0);
+}
+
+.text-area {
+    -fx-pref-height: 100px;
+}
+
+.text-field:focused, .text-area:focused {
+    -fx-border-color: #FF4500; /* Rouge plus vif en focus */
+    -fx-background-color: #ffefef;
+}
+
+.button {
+    -fx-background-color: linear-gradient(to right, #FF6347, #B22222); /* Dégradé rouge clair → rouge foncé */
+    -fx-text-fill: white;
+    -fx-padding: 12px 20px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 0, 0, 0.4), 6, 0, 0, 0);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to right, #FF4500, #8B0000); /* Rouge plus intense */
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 0, 0, 0.6), 12, 0, 0, 0);
+}
+
+.button:pressed {
+    -fx-background-color: #8B0000; /* Rouge très foncé */
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
