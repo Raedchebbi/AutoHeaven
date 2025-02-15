@@ -25,13 +25,14 @@ public class MessagerieService implements Crud<Messagerie> {
 
         if (rs.next()) {
             // La réclamation existe, on peut ajouter le message
-            String sql = "INSERT INTO messagerie (sender, message, id_rec, datemessage, receiver) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO messagerie (sender, message, id_rec, datemessage, receiver, id_user) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, obj.getSender());
             stmt.setString(2, obj.getMessage());
             stmt.setInt(3, obj.getId_rec());
-            stmt.setTimestamp(4, Timestamp.valueOf(obj.getDatemessage()));
+            stmt.setTimestamp(4, Timestamp.valueOf(obj.getDateMessage())); // Utiliser getDateMessage()
             stmt.setString(5, obj.getReceiver());
+            stmt.setInt(6, obj.getId_user()); // Ajouter l'ID de l'utilisateur
             stmt.executeUpdate();
         } else {
             throw new Exception("❌ La réclamation avec ID " + obj.getId_rec() + " n'existe pas.");
@@ -40,14 +41,15 @@ public class MessagerieService implements Crud<Messagerie> {
 
     @Override
     public void update(Messagerie obj) throws Exception {
-        String sql = "UPDATE messagerie SET sender = ?, message = ?, id_rec = ?, datemessage = ?, receiver = ? WHERE id_m = ?";
+        String sql = "UPDATE messagerie SET sender = ?, message = ?, id_rec = ?, datemessage = ?, receiver = ?, id_user = ? WHERE id_m = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, obj.getSender());
         stmt.setString(2, obj.getMessage());
         stmt.setInt(3, obj.getId_rec());
-        stmt.setTimestamp(4, Timestamp.valueOf(obj.getDatemessage()));
+        stmt.setTimestamp(4, Timestamp.valueOf(obj.getDateMessage())); // Utiliser getDateMessage()
         stmt.setString(5, obj.getReceiver());
-        stmt.setInt(6, obj.getId_m());
+        stmt.setInt(6, obj.getId_user()); // Ajouter l'ID de l'utilisateur
+        stmt.setInt(7, obj.getId_m());
         stmt.executeUpdate();
     }
 
@@ -70,15 +72,13 @@ public class MessagerieService implements Crud<Messagerie> {
                     rs.getInt("id_m"),
                     rs.getString("sender"),
                     rs.getString("message"),
-                    rs.getString("receiver"),
+                    rs.getInt("id_rec"),
                     rs.getTimestamp("datemessage").toLocalDateTime(),
-                    rs.getInt("id_rec")
+                    rs.getString("receiver"),
+                    rs.getInt("id_user") // Ajouter l'ID de l'utilisateur
             );
             messages.add(msg);
         }
         return messages;
-    }
-
-    public void delete(int i) {
     }
 }

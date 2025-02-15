@@ -1,0 +1,68 @@
+/* Style général pour le VBox */
+.VBox {
+    -fx-background-color: #ffffff !important; /* Fond blanc pour le VBox */
+    -fx-padding: 20px; /* Espacement interne */
+    -fx-border-color: #cccccc; /* Bordure gris clair */
+    -fx-border-width: 2px; /* Bordure autour du VBox */
+    -fx-border-radius: 10px; /* Coins arrondis */
+    -fx-effect: dropshadow(gaussian, #aaaaaa, 10, 0, 5, 5); /* Ombre douce autour du VBox */
+}
+
+/* Style pour chaque HBox représentant une ligne de réclamation */
+.HBox {
+    -fx-background-color: #f5f5f5 !important; /* Fond gris clair pour chaque ligne */
+    -fx-padding: 10px; /* Espacement autour de chaque HBox */
+    -fx-spacing: 20px; /* Espacement entre les colonnes */
+    -fx-border-color: #dcdcdc; /* Bordure gris clair autour des lignes */
+    -fx-border-width: 1px; /* Bordure légère */
+    -fx-border-radius: 5px; /* Coins arrondis */
+    -fx-effect: dropshadow(gaussian, #888888, 5, 0, 2, 2); /* Ombre pour chaque ligne */
+}
+
+/* Style pour les labels dans le HBox */
+.HBox label {
+    -fx-font-size: 14px; /* Taille de police */
+    -fx-text-fill: #333333; /* Couleur du texte gris foncé */
+    -fx-padding: 5px; /* Espacement autour du texte */
+    -fx-font-family: Arial, sans-serif; /* Choix de la police */
+}
+
+/* Style pour les titres de colonnes */
+.HBox .titre,
+.HBox .contenu,
+.HBox .status,
+.HBox .date,
+.HBox .nom,
+.HBox .tel,
+.HBox .email {
+    -fx-font-weight: bold; /* Mettre en gras les titres de colonnes */
+    -fx-text-fill: #ff0000; /* Couleur rouge pour les titres */
+    -fx-font-size: 16px; /* Taille de police plus grande pour les titres */
+}
+
+/* Style pour le survol des HBox */
+.HBox:hover {
+    -fx-background-color: #e6e6e6; /* Change le fond au survol */
+    -fx-cursor: hand; /* Change le curseur pour indiquer une interactivité */
+}
+
+/* Style pour les labels dans les HBox (éléments de données) */
+.HBox label {
+    -fx-text-fill: #333333; /* Texte gris foncé pour les données */
+    -fx-font-size: 13px; /* Taille de police plus petite pour les données */
+}
+
+/* Style pour l'alignement de chaque label */
+.HBox label {
+    -fx-alignment: center-left; /* Alignement du texte à gauche */
+    -fx-max-width: 150px; /* Largeur maximale pour chaque label */
+}
+
+
+/* Style pour les labels avec un fond gris foncé et un texte blanc */
+.HBox .label-highlight {
+    -fx-background-color: #333333; /* Fond gris foncé */
+    -fx-text-fill: white; /* Texte en blanc */
+    -fx-padding: 5px; /* Espacement interne pour une meilleure lisibilité */
+    -fx-border-radius: 5px; /* Coins arrondis */
+}

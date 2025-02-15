@@ -19,22 +19,33 @@ public class mainreclamation {
         try {
             /////////////////////////// ==== TEST MESSAGERIE ====
             System.out.println("🔹 Envoi d'un message...");
-            Messagerie message = new Messagerie("client", "Bonsoir, comment allez-vous ?", "admin", LocalDateTime.now(), 75, 3);
+            Messagerie message = new Messagerie(0, "client", "Bonsoir, comment allez-vous ?", 75, LocalDateTime.now(), "admin", 3);
             messagerieService.create(message);
             System.out.println("✅ Message envoyé !");
             System.out.println(messagerieService.getAll());
 
             /////////////////////////////// ==== TEST UPDATE MESSAGERIE ====
             System.out.println("🔹 Mise à jour du message...");
-            Messagerie updatedMessage = new Messagerie(58, "client", "Message mis à jour !", "client", LocalDateTime.now(), 75, 3);
+            Messagerie updatedMessage = new Messagerie(58, "client", "Message mis à jour !", 75, LocalDateTime.now(), "client", 3);
             messagerieService.update(updatedMessage);
             System.out.println("✅ Message mis à jour !");
             System.out.println(messagerieService.getAll());
 
             ////////////////////////// ==== TEST DELETE MESSAGERIE ====
             System.out.println("🔹 Suppression d'un message...");
-            messagerieService.delete(76); // Suppression par ID
-            System.out.println("✅ Message supprimé !");
+            // Récupérer le message par son ID avant de le supprimer
+            Messagerie messageToDelete = messagerieService.getAll().stream()
+                    .filter(msg -> msg.getId_m() == 76) // Trouver le message par ID
+                    .findFirst()
+                    .orElse(null);
+
+            if (messageToDelete != null) {
+                messagerieService.delete(messageToDelete); // Suppression par l'objet Messagerie
+                System.out.println("✅ Message supprimé !");
+            } else {
+                System.out.println("❌ Message non trouvé !");
+            }
+
             System.out.println(messagerieService.getAll());
 
             /////////////////////////// ==== TEST RECLAMATION ====
@@ -53,8 +64,7 @@ public class mainreclamation {
 
             ////////////////////////////// ==== TEST DELETE RECLAMATION ====
             System.out.println("🔹 Suppression d'une réclamation...");
-            Reclamation reclamationToDelete = new Reclamation();
-            reclamationToDelete.setIdRec(77); // Remplacez par l'ID de la réclamation à supprimer
+            Reclamation reclamationToDelete = new Reclamation(77, null, null, null, null, 0); // Mettre l'ID de la réclamation à supprimer
             reclamationService.delete(reclamationToDelete);  // Suppression par l'objet Reclamation
             System.out.println("✅ Réclamation supprimée !");
             System.out.println(reclamationService.getAll());
