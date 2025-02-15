@@ -7,6 +7,7 @@ import models.User;
 import java.util.Date;
 
 public class UserMain {
+
     public static void main(String[] args) {
         OffreService offreService = new OffreService();
         UserService userService = new UserService();

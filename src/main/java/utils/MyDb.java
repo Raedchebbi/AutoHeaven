@@ -22,7 +22,7 @@ public class MyDb {
         return conn;
     }
 
-    private MyDb() {
+    public MyDb() {
         try {
             this.conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connection established");
