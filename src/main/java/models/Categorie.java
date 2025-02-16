@@ -1,29 +1,31 @@
 package models;
 
-public class categorie {
+public class Categorie {
+    private int id_c, nbr_porte;
+    private String type, type_carburant, type_utilisation, transmission;
 
-    private int id_c, nbr_porte ;
-    private String type, type_carburant ,type_utilisation,transmission;
 
-    public categorie(int id_c, int nbr_porte, String type, String type_carburant, String type_utilisation, String transmission) {
+    public Categorie() {
+    }
+
+
+    public Categorie(String type, String type_carburant, String type_utilisation, int nbr_porte, String transmission) {
+        this.type = type;
+        this.type_carburant = type_carburant;
+        this.type_utilisation = type_utilisation;
+        this.nbr_porte = nbr_porte;
+        this.transmission = transmission;
+    }
+
+    public Categorie(int id_c, String type, String type_carburant, String type_utilisation, int nbr_porte, String transmission) {
         this.id_c = id_c;
-        this.nbr_porte = nbr_porte;
         this.type = type;
         this.type_carburant = type_carburant;
         this.type_utilisation = type_utilisation;
-        this.transmission = transmission;
-    }
-
-    public categorie(int nbr_porte, String type, String type_carburant, String type_utilisation, String transmission) {
         this.nbr_porte = nbr_porte;
-        this.type = type;
-        this.type_carburant = type_carburant;
-        this.type_utilisation = type_utilisation;
         this.transmission = transmission;
     }
 
-    public categorie() {
-    }
 
     public int getId_c() {
         return id_c;
@@ -75,7 +77,7 @@ public class categorie {
 
     @Override
     public String toString() {
-        return "categorie{" +
+        return "Categorie{" +
                 "id_c=" + id_c +
                 ", nbr_porte=" + nbr_porte +
                 ", type='" + type + '\'' +
