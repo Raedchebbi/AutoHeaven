@@ -1,0 +1,51 @@
+/* Styling for the root AnchorPane */
+AnchorPane {
+    -fx-background-color: #f4f4f4;
+}
+
+/* Styling for the title text */
+Text {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-fill: #333333;
+}
+
+/* Styling for labels */
+Label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+/* Styling for text fields */
+TextField {
+    -fx-pref-width: 250px;
+    -fx-pref-height: 26px;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 4px;
+}
+
+/* Styling for checkboxes */
+CheckBox {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* Styling for buttons */
+Button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+/* Button hover effect */
+Button:hover {
+    -fx-background-color: #45a049;
+}

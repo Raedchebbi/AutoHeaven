@@ -38,12 +38,13 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>
-                        org.example.MainFx
-                    </mainClass>
+
+                        <mainClass>org.example.mainFXvoiture</mainClass>
+
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
 
 </project>

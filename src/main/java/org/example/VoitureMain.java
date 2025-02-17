@@ -14,8 +14,6 @@ public class VoitureMain {
             CategorieService categorieService = new CategorieService();
             VoitureService voitureService = new VoitureService();
 
-            // -------------------- TEST CRUD CATEGORIE --------------------
-
             // 1. Création d'une catégorie
             Categorie categorie = new Categorie(3, "SUV", "Essence", "Urbaine", 5, "Automatique");
             try {
