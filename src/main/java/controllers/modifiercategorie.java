@@ -39,6 +39,23 @@ public class modifiercategorie {
             portesField.setText(String.valueOf(categorie.getNbr_porte()));
         }
     }
+    private boolean validateFields() {
+        if (typeField.getText().trim().isEmpty() || carburantField.getText().trim().isEmpty() ||
+                utilisationField.getText().trim().isEmpty() || transmissionField.getText().trim().isEmpty() ||
+                portesField.getText().trim().isEmpty()) {
+            showErrorAlert("Veuillez remplir tous les champs.");
+            return false;
+        }
+
+        try {
+            Integer.parseInt(portesField.getText().trim()); // Check if it's a valid integer
+        } catch (NumberFormatException e) {
+            showErrorAlert("Le nombre de portes doit être un nombre valide.");
+            return false;
+        }
+
+        return true;
+    }
 
     @FXML
     private void handleSaveModification() {
@@ -80,25 +97,6 @@ public class modifiercategorie {
     @FXML
     private void handleCancel() {
         closeWindow(); // Close the window without saving
-    }
-
-
-    private boolean validateFields() {
-        if (typeField.getText().trim().isEmpty() || carburantField.getText().trim().isEmpty() ||
-                utilisationField.getText().trim().isEmpty() || transmissionField.getText().trim().isEmpty() ||
-                portesField.getText().trim().isEmpty()) {
-            showErrorAlert("Veuillez remplir tous les champs.");
-            return false;
-        }
-
-        try {
-            Integer.parseInt(portesField.getText().trim()); // Check if it's a valid integer
-        } catch (NumberFormatException e) {
-            showErrorAlert("Le nombre de portes doit être un nombre valide.");
-            return false;
-        }
-
-        return true;
     }
 
 
