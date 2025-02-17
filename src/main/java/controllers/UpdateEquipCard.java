@@ -119,7 +119,7 @@ public class UpdateEquipCard {
             String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf("."));
             imageName = uniqueID + extension;
 
-            Path destination = Paths.get("C:\\Users\\ASUS\\Downloads\\pi\\AutoHeaven\\src\\main\\resources\\dir", imageName);
+            Path destination = Paths.get("C:\\Users\\ASUS\\Downloads\\pi3A21\\AutoHeaven\\src\\main\\resources\\dir", imageName);
             try {
                 Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
@@ -165,7 +165,7 @@ public class UpdateEquipCard {
     void Update(ActionEvent event) throws Exception {
         boolean check = false;
         // Récupérer le chemin de l'image
-        String imagePath = "C:\\Users\\ASUS\\Downloads\\pi\\AutoHeaven\\src\\main\\resources\\dir\\" + imageName;
+        String imagePath = "C:\\Users\\ASUS\\Downloads\\pi3A21\\AutoHeaven\\src\\main\\resources\\dir" + imageName;
         if (imageName == null) {
             error_image.setVisible(true);
             check=true;
