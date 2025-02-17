@@ -1,0 +1,38 @@
+.button {
+    -fx-background-color: rgba(0,0,0,0);
+    /* -fx-background-color: linear-gradient(to bottom, #f0f0f0, #d9d9d9);*/
+    -fx-border-color: #b3b3b3;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px 10px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 0, 1);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #e0e0e0, #c0c0c0);
+}
+
+.button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #c0c0c0, #a0a0a0);
+}
+
+.text-field {
+    -fx-border-color: #b3b3b3;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-text-fill: #333;
+    -fx-alignment: center;
+}
+
+.text-field:focused {
+    -fx-border-color: #0078d7;
+    -fx-effect: dropshadow(gaussian, rgba(0,120,215,0.5), 5, 0, 0, 1);
+}
+.add-btn{
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 100;
+}
