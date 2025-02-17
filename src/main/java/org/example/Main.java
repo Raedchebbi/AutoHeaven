@@ -1,14 +1,5 @@
 package org.example;
 
-import models.Adresse;
-import services.AdresseService;
-import services.UserService;
-import models.User;
-import models.Reclamation;
-import models.Messagerie;
-import services.ReclamationService;
-import services.MessagerieService;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
