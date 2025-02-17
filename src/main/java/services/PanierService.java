@@ -21,14 +21,34 @@ public class PanierService implements CrudPanier<Panier>{
 
     @Override
     public void create(Panier obj) throws Exception {
+        // Vérification si le client a ajouter un equipement qui a l'ajouté avant
+        String checkSql = "SELECT * FROM panier WHERE id = ? AND id_e = ?";
+        try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
+            checkStmt.setInt(1, obj.getId()); // id du client
+            checkStmt.setInt(2, obj.getId_e()); // id de l'équipement
+            ResultSet rs = checkStmt.executeQuery();
 
-        String sql = "insert into panier (quantite,id,id_e) values ('" +
-                1 + "','" + obj.getId() + "','" +
-                obj.getId_e() + "')";
-        Statement stmt = conn.createStatement();
-        stmt.executeUpdate(sql);
-
+            if (rs.next()) {
+                // Si l'équipement existe déjà la quantité sera incrementé
+                String updateSql = "UPDATE panier SET quantite = quantite + 1 WHERE id = ? AND id_e = ?";
+                try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                    updateStmt.setInt(1, obj.getId());
+                    updateStmt.setInt(2, obj.getId_e());
+                    updateStmt.executeUpdate();
+                }
+            } else {
+                // Si l'équipement n'existe pas on va créer un nouveau panier pour le client
+                String insertSql = "INSERT INTO panier (quantite, id, id_e) VALUES (?, ?, ?)";
+                try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                    insertStmt.setInt(1, obj.getQuantite());
+                    insertStmt.setInt(2, obj.getId());
+                    insertStmt.setInt(3, obj.getId_e());
+                    insertStmt.executeUpdate();
+                }
+            }
+        }
     }
+
 
     @Override
     public void update(Panier obj) throws Exception {
