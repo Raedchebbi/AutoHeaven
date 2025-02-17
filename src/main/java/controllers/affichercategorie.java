@@ -1,6 +1,9 @@
 package controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
@@ -8,11 +11,12 @@ import javafx.scene.layout.HBox;
 import models.Categorie;
 import services.CategorieService;
 import java.util.List;
+import java.util.Optional;
 
 public class affichercategorie {
 
     @FXML
-    private VBox categoriesContainer; // VBox to hold category entries
+    private VBox categoriesContainer;
 
     private CategorieService categorieService = new CategorieService();
 
@@ -22,7 +26,7 @@ public class affichercategorie {
     }
 
     private void loadCategories() {
-        categoriesContainer.getChildren().clear(); // Clear old data
+        categoriesContainer.getChildren().clear();
 
         List<Categorie> categories;
         try {
@@ -32,34 +36,62 @@ public class affichercategorie {
         }
 
         for (Categorie categorie : categories) {
-            HBox categoryRow = new HBox(10); // HBox for a single category (spacing: 10)
+            HBox categoryRow = new HBox(10);
             categoryRow.setStyle("-fx-border-color: black; -fx-border-width: 0 0 1 0; -fx-padding: 5;");
 
             Label typeLabel = new Label(categorie.getType());
-            typeLabel.setPrefWidth(100);
+            typeLabel.setPrefWidth(80);
 
             Label carburantLabel = new Label(categorie.getType_carburant());
-            carburantLabel.setPrefWidth(100);
+            carburantLabel.setPrefWidth(80);
 
             Label utilisationLabel = new Label(categorie.getType_utilisation());
-            utilisationLabel.setPrefWidth(100);
+            utilisationLabel.setPrefWidth(80);
 
             Label transmissionLabel = new Label(categorie.getTransmission());
-            transmissionLabel.setPrefWidth(100);
+            transmissionLabel.setPrefWidth(80);
 
             Label portesLabel = new Label(String.valueOf(categorie.getNbr_porte()));
-            portesLabel.setPrefWidth(100);
+            portesLabel.setPrefWidth(60);
 
-            // Add labels with separators between columns
+
+            Button deleteButton = new Button("Supprimer");
+            deleteButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+            deleteButton.setPrefWidth(100);
+            deleteButton.setOnAction(event -> confirmDeleteCategorie(categorie));
+
+
             categoryRow.getChildren().addAll(
                     typeLabel, new Separator(),
                     carburantLabel, new Separator(),
                     utilisationLabel, new Separator(),
                     transmissionLabel, new Separator(),
-                    portesLabel
+                    portesLabel, new Separator(),
+                    deleteButton
             );
 
-            categoriesContainer.getChildren().add(categoryRow); // Add row to VBox
+            categoriesContainer.getChildren().add(categoryRow);
+        }
+    }
+
+    private void confirmDeleteCategorie(Categorie categorie) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation de suppression");
+        alert.setHeaderText(null);
+        alert.setContentText("Voulez-vous vraiment supprimer cette catégorie ?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            handleDeleteCategorie(categorie);
+        }
+    }
+
+    private void handleDeleteCategorie(Categorie categorie) {
+        try {
+            categorieService.delete(categorie.getId_c());
+            loadCategories();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

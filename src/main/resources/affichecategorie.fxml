@@ -4,33 +4,35 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="511.0" prefWidth="762.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.affichercategorie">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@style1.css"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.affichercategorie">
     <children>
-        <!-- Main VBox that holds everything -->
-        <VBox layoutX="20.0" layoutY="20.0" prefWidth="560.0" spacing="5.0">
 
-            <!-- Column Headers -->
-            <HBox prefHeight="44.0" prefWidth="1000.0" spacing="10.0" style="-fx-border-color: black; -fx-border-width: 0 0 1 0; -fx-padding: 5;">
-                <Label style="-fx-font-weight: bold; -fx-pref-width: 100;" text="Type" />
+        <VBox layoutX="20.0" layoutY="20.0" spacing="5.0" prefWidth="560.0">
+
+
+            <HBox spacing="10.0" style="-fx-border-color: black; -fx-border-width: 0 0 1 0; -fx-padding: 5;">
+                <Label text="Type" style="-fx-font-weight: bold; -fx-pref-width: 80;" />
                 <Separator orientation="VERTICAL" />
-                <Label style="-fx-font-weight: bold; -fx-pref-width: 100;" text="Carburant" />
+                <Label text="Carburant" style="-fx-font-weight: bold; -fx-pref-width: 80;" />
                 <Separator orientation="VERTICAL" />
-                <Label style="-fx-font-weight: bold; -fx-pref-width: 100;" text="Utilisation" />
+                <Label text="Utilisation" style="-fx-font-weight: bold; -fx-pref-width: 80;" />
                 <Separator orientation="VERTICAL" />
-                <Label style="-fx-font-weight: bold; -fx-pref-width: 100;" text="Transmission" />
+                <Label text="Transmission" style="-fx-font-weight: bold; -fx-pref-width: 80;" />
                 <Separator orientation="VERTICAL" />
-                <Label prefHeight="20.0" prefWidth="82.0" style="-fx-font-weight: bold; -fx-pref-width: 100;" text="Portes" />
+                <Label text="Portes" style="-fx-font-weight: bold; -fx-pref-width: 60;" />
+                <Separator orientation="VERTICAL" />
+                <Label text="Action" style="-fx-font-weight: bold; -fx-pref-width: 100;" />
             </HBox>
 
-            <!-- VBox that dynamically holds all category rows -->
+
             <VBox fx:id="categoriesContainer" spacing="5.0" />
 
         </VBox>
-
-        <!-- Refresh Button -->
-        <Button fx:id="refreshButton" layoutX="500.0" layoutY="360.0" onAction="#handleRefresh" text="Rafraîchir" />
+        <Button fx:id="refreshButton" layoutX="500.0" layoutY="360.0" text="Rafraîchir" onAction="#handleRefresh" />
     </children>
 </AnchorPane>
