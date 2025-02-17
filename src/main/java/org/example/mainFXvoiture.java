@@ -9,8 +9,8 @@ import javafx.stage.Stage;
 public class mainFXvoiture extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/addvoiture.fxml"));
-        primaryStage.setTitle("Ajout de Voiture");
+        Parent root = FXMLLoader.load(getClass().getResource("/addcategorie.fxml"));
+        primaryStage.setTitle("Ajout de categorie");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
