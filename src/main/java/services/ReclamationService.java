@@ -15,7 +15,7 @@ public class ReclamationService {
         this.conn = MyDb.getInstance().getConn();
     }
 
-    // Méthode pour récupérer toutes les réclamations
+    // ✅ Récupérer toutes les réclamations
     public List<Reclamation> getAll() throws Exception {
         String sql = "SELECT id_rec, titre, contenu, status, datecreation, id FROM reclamation";
         List<Reclamation> reclamations = new ArrayList<>();
@@ -41,7 +41,7 @@ public class ReclamationService {
         return reclamations;
     }
 
-    // Méthode pour ajouter une réclamation
+    // ✅ Ajouter une réclamation
     public void create(Reclamation reclamation) throws Exception {
         String sql = "INSERT INTO reclamation (titre, contenu, status, datecreation, id) VALUES (?, ?, ?, ?, ?)";
 
@@ -61,7 +61,7 @@ public class ReclamationService {
         }
     }
 
-    // Méthode pour mettre à jour une réclamation
+    // ✅ Mettre à jour une réclamation
     public void update(Reclamation reclamation) throws Exception {
         String sql = "UPDATE reclamation SET titre = ?, contenu = ?, status = ?, datecreation = ?, id = ? WHERE id_rec = ?";
 
@@ -82,71 +82,104 @@ public class ReclamationService {
         }
     }
 
-    // Méthode pour supprimer une réclamation
-    public void delete(Reclamation reclamation) throws Exception {
+    // ✅ Supprimer une réclamation
+    public void delete(int idRec) throws Exception {
         String sql = "DELETE FROM reclamation WHERE id_rec = ?";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, reclamation.getIdRec());
+            stmt.setInt(1, idRec);
 
             int rowsDeleted = stmt.executeUpdate();
             if (rowsDeleted > 0) {
                 System.out.println("✅ Réclamation supprimée avec succès !");
+            } else {
+                System.out.println("⚠️ Aucune réclamation trouvée avec cet ID !");
             }
         } catch (SQLException e) {
             throw new Exception("❌ Erreur lors de la suppression de la réclamation : " + e.getMessage(), e);
         }
     }
 
-    // Méthode pour récupérer toutes les réclamations avec les informations utilisateur
+    // ✅ Récupérer toutes les réclamations avec les informations utilisateur
     public List<Reclamation> getAllWithUserDetails() throws Exception {
-        String sqlReclamation = "SELECT id_rec, titre, contenu, status, datecreation, id FROM reclamation";
+        String sql = "SELECT r.id_rec, r.titre, r.contenu, r.status, r.datecreation, " +
+                "u.cin, u.nom, u.prenom, u.tel, u.email, r.id AS user_id " +
+                "FROM reclamation r " +
+                "LEFT JOIN user u ON r.id = u.id";
+
         List<Reclamation> reclamations = new ArrayList<>();
 
-        try (PreparedStatement stmtReclamation = conn.prepareStatement(sqlReclamation);
-             ResultSet rsReclamation = stmtReclamation.executeQuery()) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
-            while (rsReclamation.next()) {
-                int reclamationId = rsReclamation.getInt("id_rec");
-                String titre = rsReclamation.getString("titre");
-                String contenu = rsReclamation.getString("contenu");
-                String status = rsReclamation.getString("status");
-                Date dateCreation = rsReclamation.getDate("datecreation");
-                int userId = rsReclamation.getInt("id");
+            while (rs.next()) {
+                int idRec = rs.getInt("id_rec");
+                String titre = rs.getString("titre");
+                String contenu = rs.getString("contenu");
+                String status = rs.getString("status");
+                Date dateCreation = rs.getDate("datecreation");
+                int userId = rs.getInt("user_id");
 
-                String sqlUser = "SELECT cin, nom, prenom, tel, email FROM user WHERE id = ?";
-                try (PreparedStatement stmtUser = conn.prepareStatement(sqlUser)) {
-                    stmtUser.setInt(1, userId);
-                    try (ResultSet rsUser = stmtUser.executeQuery()) {
-                        if (rsUser.next()) {
-                            String cin = rsUser.getString("cin");
-                            String nom = rsUser.getString("nom");
-                            String prenom = rsUser.getString("prenom");
-                            String tel = rsUser.getString("tel");
-                            String email = rsUser.getString("email");
+                // Gestion des valeurs null
+                String cin = rs.getString("cin") != null ? rs.getString("cin") : "N/A";
+                String nom = rs.getString("nom") != null ? rs.getString("nom") : "N/A";
+                String prenom = rs.getString("prenom") != null ? rs.getString("prenom") : "N/A";
+                String tel = rs.getString("tel") != null ? rs.getString("tel") : "N/A";
+                String email = rs.getString("email") != null ? rs.getString("email") : "N/A";
 
-                            Reclamation rec = new Reclamation(
-                                    reclamationId,
-                                    titre,
-                                    contenu,
-                                    status,
-                                    dateCreation.toLocalDate(),
-                                    userId,
-                                    cin,
-                                    nom,
-                                    prenom,
-                                    tel,
-                                    email
-                            );
-                            reclamations.add(rec);
-                        }
-                    }
-                }
+                Reclamation rec = new Reclamation(
+                        idRec, titre, contenu, status, dateCreation.toLocalDate(), userId, cin, nom, prenom, tel, email
+                );
+                reclamations.add(rec);
             }
         } catch (SQLException e) {
             throw new Exception("❌ Erreur lors de la récupération des réclamations et des informations utilisateur : " + e.getMessage(), e);
         }
 
         return reclamations;
+    }
+
+    // ✅ Récupérer toutes les réclamations sans détails utilisateur
+    public List<Reclamation> getAllReclamations() {
+        List<Reclamation> reclamations = new ArrayList<>();
+        String sql = "SELECT id_rec, titre, contenu, status, datecreation, id FROM reclamation";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int idRec = rs.getInt("id_rec");
+                String titre = rs.getString("titre");
+                String contenu = rs.getString("contenu");
+                String status = rs.getString("status");
+                Date dateCreation = rs.getDate("datecreation");
+                int userId = rs.getInt("id");
+
+                Reclamation reclamation = new Reclamation(idRec, titre, contenu, status, dateCreation.toLocalDate(), userId);
+                reclamations.add(reclamation);
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de la récupération des réclamations : " + e.getMessage());
+        }
+
+        return reclamations;
+    }
+
+    // ✅ Supprimer une réclamation par ID
+    public void deleteById(int idRec) throws Exception {
+        String sql = "DELETE FROM reclamation WHERE id_rec = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idRec);
+
+            int rowsDeleted = stmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("✅ Réclamation supprimée avec succès !");
+            } else {
+                System.out.println("⚠️ Aucune réclamation trouvée avec cet ID !");
+            }
+        } catch (SQLException e) {
+            throw new Exception("❌ Erreur lors de la suppression de la réclamation : " + e.getMessage(), e);
+        }
     }
 }

@@ -5,13 +5,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MyDb {
-    private String url = "jdbc:mysql://localhost:3306/pidev";  // URL de la base de données
-    private String user = "root";  // Utilisateur
-    private String password = "";  // Mot de passe
+    private final String url = "jdbc:mysql://localhost:3306/pidev";
+    private final String user = "root";
+    private final String password = "";
     private Connection conn;
     private static MyDb instance;
 
-    // Méthode pour obtenir l'instance unique de MyDb (Pattern Singleton)
+    // Singleton
     public static MyDb getInstance() {
         if (instance == null) {
             instance = new MyDb();
@@ -19,19 +19,17 @@ public class MyDb {
         return instance;
     }
 
-    // Méthode pour obtenir la connexion à la base de données
     public Connection getConn() {
         return conn;
     }
 
-    // Constructeur privé pour initialiser la connexion à la base de données
     private MyDb() {
         try {
-            // Établit la connexion à la base de données avec les informations fournies
-            this.conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Connection established");  // Message de confirmation
+            conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Connexion à la base de données réussie !");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());  // Affiche le message d'erreur en cas d'exception
+            System.err.println("Échec de la connexion : " + e.getMessage());
+            throw new RuntimeException("La base de données est indisponible.");
         }
     }
 }

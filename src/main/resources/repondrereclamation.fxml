@@ -6,7 +6,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="447.0" prefWidth="600.0" stylesheets="@repondrereclamation.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.repondre_rec_controller">
    <children>
       <Label layoutX="74.0" layoutY="104.0" text="Titre :" />
@@ -16,6 +15,6 @@
       <TextField layoutX="260.0" layoutY="104.0" />
       <TextArea layoutX="260.0" layoutY="161.0" prefHeight="78.0" prefWidth="200.0" />
       <TextArea layoutX="260.0" layoutY="275.0" prefHeight="78.0" prefWidth="200.0" />
-      <Button layoutX="283.0" layoutY="411.0" mnemonicParsing="false" text="Button" />
+      <Button layoutX="283.0" layoutY="411.0" mnemonicParsing="false" text="envoyer Réponse" />
    </children>
 </AnchorPane>

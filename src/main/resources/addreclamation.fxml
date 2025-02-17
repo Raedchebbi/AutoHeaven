@@ -1,37 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" styleClass="VBox" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="481.0" prefWidth="600.0" stylesheets="@addreclamation.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.addreclamation_controller">
    <children>
-      <!-- HBox pour la ligne de titres -->
-      <HBox prefHeight="50.0" prefWidth="600.0" spacing="10.0" styleClass="HBox" stylesheets="@styles.css">
-         <children>
-            <Label styleClass="date" text="Titre" />
-            <Label styleClass="contenu" text="Contenu" />
-            <Label styleClass="date" text="Status" />
-            <Label styleClass="date" text="Date" />
-            <Label styleClass="date" text="Nom" />
-            <Label styleClass="date" text="Tel" />
-            <Label styleClass="date" text="Email" />
-         </children>
-      </HBox>
-
-      <!-- HBox pour la première réclamation -->
-      <HBox prefHeight="50.0" prefWidth="600.0" spacing="10.0" styleClass="HBox" stylesheets="@styles.css">
-         <children>
-            <Label text="Titre 1" />
-            <Label text="Contenu 1" />
-            <Label text="Status 1" />
-            <Label text="Date 1" />
-            <Label text="Nom 1" />
-            <Label text="Tel 1" />
-            <Label text="Email 1" />
-         </children>
-      </HBox>
-
-      <!-- Ajouter d'autres HBox pour plus de réclamations si nécessaire -->
+      <Label layoutX="141.0" layoutY="83.0" text="Objet :" />
+      <TextArea fx:id="reclamationTextArea" layoutX="138.0" layoutY="206.0" prefHeight="46.0" prefWidth="200.0" />
+      <Label layoutX="114.0" layoutY="15.0" text="Vous avez des questions ?" />
+      <Label layoutX="315.0" layoutY="15.0" text="Contactez-nous !" />
+      <TextField fx:id="objetTextField" layoutX="136.0" layoutY="111.0" />
+      <Label layoutX="141.0" layoutY="178.0" text="Votre Réclamation : " />
+      <Button layoutX="194.0" layoutY="340.0" mnemonicParsing="false" text="Envoyer Réclamation" onAction="#handleEnvoyerReclamation"/>
    </children>
-</VBox>
+</AnchorPane>
