@@ -111,13 +111,13 @@
                                         <Insets left="10.0" />
                                     </padding>
                                 </Label>
-                                <Button fx:id="sous" mnemonicParsing="false" stylesheets="@detailequip.css" text="-" />
+                                <Button fx:id="sous" mnemonicParsing="false" onAction="#handleSousAction" stylesheets="@detailequip.css" text="-" />
                                 <TextField fx:id="input" prefHeight="26.0" prefWidth="34.0" styleClass="text-field" stylesheets="@detailequip.css">
                                     <HBox.margin>
                                         <Insets left="5.0" />
                                     </HBox.margin>
                                 </TextField>
-                                <Button fx:id="add" mnemonicParsing="false" stylesheets="@detailequip.css" text="+">
+                                <Button fx:id="add" mnemonicParsing="false" onAction="#handleAddAction" stylesheets="@detailequip.css" text="+">
                                     <HBox.margin>
                                         <Insets left="5.0" />
                                     </HBox.margin>
@@ -126,7 +126,7 @@
                         </HBox>
                         <HBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="474.0">
                             <children>
-                                <Button fx:id="cart" mnemonicParsing="false" prefHeight="26.0" prefWidth="271.0" style="-fx-background-color: #9c1313;" styleClass="add-btn" stylesheets="@equipclient.css" text="ADD TO CART" textFill="WHITE" />
+                                <Button fx:id="cart" mnemonicParsing="false" onAction="#handleAddToCart" prefHeight="26.0" prefWidth="271.0" style="-fx-background-color: #9c1313;" styleClass="add-btn" stylesheets="@equipclient.css" text="ADD TO CART" textFill="WHITE" />
                             </children>
                         </HBox>
                         <HBox alignment="TOP_CENTER" prefHeight="89.0" prefWidth="474.0">
