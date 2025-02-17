@@ -46,18 +46,18 @@ public class voitureController {
         String image = imageField.getText();
         boolean disponible = disponibleCheck.isSelected();
 
-        // Basic validation
+
         if (marque.isEmpty() || description.isEmpty() || kilometrage.isEmpty() || couleur.isEmpty() || prix.isEmpty()) {
             showAlert("Erreur", "Veuillez remplir tous les champs obligatoires.");
             return;
         }
 
-        // Simulating saving the data
+
         System.out.println("Voiture ajoutée : " + marque + ", " + description + ", " + kilometrage + ", " + couleur + ", " + prix + ", " + (disponible ? "Disponible" : "Non disponible"));
 
         showAlert("Succès", "Voiture ajoutée avec succès !");
 
-        // Clear fields after submission
+
         marqueField.clear();
         descriptionField.clear();
         kilometrageField.clear();

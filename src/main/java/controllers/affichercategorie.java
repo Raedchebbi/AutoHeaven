@@ -1,15 +1,21 @@
 package controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import models.Categorie;
 import services.CategorieService;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,7 +60,13 @@ public class affichercategorie {
             Label portesLabel = new Label(String.valueOf(categorie.getNbr_porte()));
             portesLabel.setPrefWidth(60);
 
+            // Modifier Button
+            Button modifyButton = new Button("Modifier");
+            modifyButton.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
+            modifyButton.setPrefWidth(100);
+            modifyButton.setOnAction(event -> handleModifyCategorie(categorie));
 
+            // Supprimer Button with confirmation dialog
             Button deleteButton = new Button("Supprimer");
             deleteButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
             deleteButton.setPrefWidth(100);
@@ -67,6 +79,7 @@ public class affichercategorie {
                     utilisationLabel, new Separator(),
                     transmissionLabel, new Separator(),
                     portesLabel, new Separator(),
+                    modifyButton, new Separator(),
                     deleteButton
             );
 
@@ -93,6 +106,25 @@ public class affichercategorie {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void handleModifyCategorie(Categorie categorie) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifiercategorie.fxml"));
+        AnchorPane root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        modifiercategorie modifierController = loader.getController();
+        modifierController.setCategorie(categorie);
+
+        Stage stage = new Stage();
+        stage.setTitle("Modifier la catégorie");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     @FXML

@@ -14,7 +14,7 @@
 
         <VBox layoutX="20.0" layoutY="20.0" spacing="5.0" prefWidth="560.0">
 
-
+            <!-- Header Row -->
             <HBox spacing="10.0" style="-fx-border-color: black; -fx-border-width: 0 0 1 0; -fx-padding: 5;">
                 <Label text="Type" style="-fx-font-weight: bold; -fx-pref-width: 80;" />
                 <Separator orientation="VERTICAL" />
@@ -26,13 +26,15 @@
                 <Separator orientation="VERTICAL" />
                 <Label text="Portes" style="-fx-font-weight: bold; -fx-pref-width: 60;" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Action" style="-fx-font-weight: bold; -fx-pref-width: 100;" />
+                <Label text="Action" style="-fx-font-weight: bold; -fx-pref-width: 200;" />
             </HBox>
 
 
             <VBox fx:id="categoriesContainer" spacing="5.0" />
 
         </VBox>
+
+
         <Button fx:id="refreshButton" layoutX="500.0" layoutY="360.0" text="Rafraîchir" onAction="#handleRefresh" />
     </children>
 </AnchorPane>
