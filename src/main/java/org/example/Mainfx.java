@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
 
 public class Mainfx extends Application {
@@ -17,7 +16,7 @@ public class Mainfx extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddUser.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/LoginUser.fxml"));
         Parent root = loader.load();
         //Scene sc = new Scene(root);
         stage.setScene(new Scene(root, 520, 400));

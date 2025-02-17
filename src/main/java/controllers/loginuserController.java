@@ -1,7 +1,10 @@
 package controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -10,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.stage.StageStyle;
 import utils.MyDb;
 
 
@@ -47,6 +51,7 @@ public class loginuserController implements Initializable {
         Image lockImage = new Image(lockFile.toURI().toString());
         lockImageView.setImage(lockImage);
     }
+
     public void loginButtonOnAction(ActionEvent event) {
         loginMessageLabel.setText("try to login");
         if(usernameTextField.getText().isBlank() == false && enterPasswordField.getText().isBlank() == false) {
@@ -86,6 +91,22 @@ public class loginuserController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             loginMessageLabel.setText("Erreur de connexion !");
+        }
+    }
+    public void createAccountForm(){
+        try{
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddUser.fxml"));
+            Parent root = loader.load();
+            Stage adduserstage = new Stage();
+            //Scene sc = new Scene(root);
+            adduserstage.setScene(new Scene(root, 520, 665));
+            adduserstage.initStyle(StageStyle.UNDECORATED);
+            adduserstage.show();
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            e.getCause();
         }
     }
 }
