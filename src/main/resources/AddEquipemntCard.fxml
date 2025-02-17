@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="area" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddEquipemntCard">
+    <children>
+        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-alignment: Center;" stylesheets="@ListEquipements.css">
+            <children>
+                <Text fill="#cf4b27" strokeType="OUTSIDE" strokeWidth="0.0" text="Formulaire d'ajout d'un equipement">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Text>
+            </children>
+        </HBox>
+        <Line endX="871.2928466796875" endY="-0.7071059942245483" startX="-100.0" />
+        <ScrollPane prefHeight="439.0" prefWidth="972.0">
+            <content>
+                <VBox prefHeight="440.0" prefWidth="954.0" style="-fx-background-color: #D3D3D3;">
+                    <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="138.0" prefWidth="954.0">
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Supported image type : .jpg ,jpeg &amp; png" wrappingWidth="214.83795166015625" />
+                                <ImageView fx:id="imageInput" fitHeight="98.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
+                                </ImageView>
+                                <Button fx:id="add_photo" mnemonicParsing="false" onAction="#ajouter_image" style="-fx-background-color: #cf4b27; -fx-background-radius: 5; -fx-text-fill: #ffffff;" text="Choisir une photo">
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
+                                </Button>
+                                <HBox fx:id="h_error_photo" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                        <Text fx:id="error_photo" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez choisir une photo ">
+                                            <font>
+                                                <Font name="Arial Bold" size="12.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                </HBox>
+                            </children>
+                            <padding>
+                                <Insets top="50.0" />
+                            </padding>
+                        </VBox>
+                        <VBox prefHeight="118.0" prefWidth="954.0" styleClass="box-container" stylesheets="@ListEquipements.css">
+                            <children>
+                                <Label prefHeight="16.0" prefWidth="216.0" text="Reference :">
+                                    <font>
+                                        <Font name="Arial Bold" size="13.0" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="reference" alignment="TOP_LEFT" promptText="Reference" />
+                                <HBox fx:id="h_error_ref" prefHeight="20.0" prefWidth="334.0">
+                                    <children>
+                                        <Text fx:id="error_ref" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir le reference du produit">
+                                            <font>
+                                                <Font name="Arial Bold" size="13.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                </HBox>
+                            </children>
+                            <padding>
+                                <Insets left="20.0" right="600.0" />
+                            </padding>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="148.0" prefHeight="118.0" prefWidth="954.0" styleClass="box-container" stylesheets="@ListEquipements.css">
+                            <children>
+                                <Label prefHeight="16.0" prefWidth="216.0" text="Nom :">
+                                    <font>
+                                        <Font name="Arial Bold" size="13.0" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="nom" alignment="TOP_LEFT" promptText="Nom" />
+                                <HBox fx:id="h_error_nom" prefHeight="20.0" prefWidth="334.0">
+                                    <children>
+                                        <Text fx:id="error_nom" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir le nom du produit">
+                                            <font>
+                                                <Font name="Arial Bold" size="13.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                </HBox>
+                            </children>
+                            <padding>
+                                <Insets left="20.0" right="600.0" />
+                            </padding>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="267.0" prefHeight="118.0" prefWidth="954.0" styleClass="box-container" stylesheets="@ListEquipements.css">
+                            <children>
+                                <Label prefHeight="16.0" prefWidth="216.0" text="Marque:">
+                                    <font>
+                                        <Font name="Arial Bold" size="13.0" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="marque" alignment="TOP_LEFT" promptText="Marque" />
+                                <HBox fx:id="h_error_marque" prefHeight="20.0" prefWidth="334.0">
+                                    <children>
+                                        <Text fx:id="error_marque" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir le marque du produit">
+                                            <font>
+                                                <Font name="Arial Bold" size="13.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                </HBox>
+                            </children>
+                            <padding>
+                                <Insets left="20.0" right="600.0" />
+                            </padding>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="345.0" prefHeight="118.0" prefWidth="954.0" styleClass="box-container" stylesheets="@ListEquipements.css">
+                            <children>
+                                <Label prefHeight="16.0" prefWidth="216.0" text="Prix:">
+                                    <font>
+                                        <Font name="Arial Bold" size="13.0" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="prix" alignment="TOP_LEFT" promptText="Prix" />
+                                <HBox fx:id="h_error_prix" prefHeight="20.0" prefWidth="334.0">
+                                    <children>
+                                        <Text fx:id="error_prix" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir le prix du produit">
+                                            <font>
+                                                <Font name="Arial Bold" size="13.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                </HBox>
+                            </children>
+                            <padding>
+                                <Insets left="20.0" right="600.0" />
+                            </padding>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="404.0" prefHeight="118.0" prefWidth="954.0" styleClass="box-container" stylesheets="@ListEquipements.css">
+                            <children>
+                                <Label prefHeight="16.0" prefWidth="216.0" text="Quantite:">
+                                    <font>
+                                        <Font name="Arial Bold" size="13.0" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="quantite" alignment="TOP_LEFT" promptText="Quantite" />
+                                <HBox fx:id="h_error_quantite" prefHeight="20.0" prefWidth="334.0">
+                                    <children>
+                                        <Text fx:id="error_quantite" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir le quantité du produit">
+                                            <font>
+                                                <Font name="Arial Bold" size="13.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                </HBox>
+                            </children>
+                            <padding>
+                                <Insets left="20.0" right="600.0" />
+                            </padding>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="491.0" prefHeight="118.0" prefWidth="954.0" styleClass="box-container" stylesheets="@ListEquipements.css">
+                            <children>
+                                <Label prefHeight="16.0" prefWidth="216.0" text="Description">
+                                    <font>
+                                        <Font name="Arial Bold" size="13.0" />
+                                    </font>
+                                </Label>
+                                <TextArea fx:id="desc" prefHeight="300.0" prefWidth="200.0" styleClass="text-area" stylesheets="@ListEquipements.css" />
+                                <HBox fx:id="h_error_desc" prefHeight="20.0" prefWidth="334.0">
+                                    <children>
+                                        <Text fx:id="error_desc" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir la description du produit">
+                                            <font>
+                                                <Font name="Arial Bold" size="13.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                </HBox>
+                            </children>
+                            <padding>
+                                <Insets left="20.0" right="600.0" />
+                            </padding>
+                        </VBox>
+                        <Button fx:id="add_btn" mnemonicParsing="false" onAction="#Ajouter" style="-fx-background-color: #cf4b27; -fx-background-radius: 5; -fx-text-fill: #ffffff;" text="Ajouter">
+                            <font>
+                                <Font name="Arial" size="13.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="20.0" left="20.0" top="30.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</VBox>
