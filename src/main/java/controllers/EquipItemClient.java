@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,6 +26,11 @@ public class EquipItemClient {
 
     @FXML
     private Label prix;
+    private ListEquipement listEquipementController;
+
+    public void setListEquipementController(ListEquipement listEquipementController) {
+        this.listEquipementController = listEquipementController;
+    }
     EquipementAffichage equipement;
     public void initData(EquipementAffichage equipement) {
         this.equipement = equipement;
@@ -63,5 +69,6 @@ public class EquipItemClient {
 
 
     }
+
 
 }

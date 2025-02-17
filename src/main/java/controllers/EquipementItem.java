@@ -81,26 +81,7 @@ public class EquipementItem {
             System.out.println("Erreur : equipement est null !");
         }
     }
-    /* private void handleUpdateAction() throws Exception {
-         if (equipement != null) {
 
-             EquipementService es = new EquipementService();
-             Equipement equip =new Equipement(equipement.getId(),equipement.getNom(),equipement.getDescription(),equipement.getImage(),equipement.getReference(),equipement.getMarque());
-
-
-             es.update(equip,equipement.getQuantite(),equipement.getPrixvente());  // Supprimer l'équipement par son ID
-
-
-             if (listEquipementController != null) {
-
-                 listEquipementController.reloadEquipements();
-             } else {
-                 System.out.println("Erreur : listEquipementController est null !");
-             }
-         } else {
-             System.out.println("Erreur : equipement est null !");
-         }
-     }*/
     @FXML
     private void handleEditAction() throws IOException {
 
@@ -133,5 +114,9 @@ public class EquipementItem {
 
 
         popupStage.show();
+    }
+    @FXML
+    void handleEditAction(ActionEvent event) {
+        listEquipementController.showUpdatePopup(equipement);
     }
 }

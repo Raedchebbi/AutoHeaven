@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import models.Equipement;
 import models.EquipementAffichage;
 import services.EquipementService;
@@ -100,6 +101,7 @@ public class UpdateEquipCard {
     private Button update_btn;
     private int id;
     private ListEquipement listEquipementController;
+    private EquipementAffichage equipement ;
 
     public void setListEquipementController(ListEquipement listEquipementController) {
         this.listEquipementController = listEquipementController;
@@ -119,7 +121,7 @@ public class UpdateEquipCard {
             String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf("."));
             imageName = uniqueID + extension;
 
-            Path destination = Paths.get("C:\\Users\\ASUS\\Downloads\\pi3A21\\AutoHeaven\\src\\main\\resources\\dir", imageName);
+            Path destination = Paths.get("C:\\Users\\ASUS\\Downloads\\pi3A21\\AutoHeaven\\src\\main\\resources\\dir\\", imageName);
             try {
                 Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
@@ -130,6 +132,7 @@ public class UpdateEquipCard {
 
 
     public void initData(EquipementAffichage equipement){
+        this.equipement = equipement;
         this.id=equipement.getId();
         error_ref.setVisible(false);
         error_nom.setVisible(false);
@@ -149,31 +152,41 @@ public class UpdateEquipCard {
         String imagePath = equipement.getImage();
         if (imagePath != null && !imagePath.isEmpty()) {
             try {
-                Image image = new Image("file:" + imagePath);
+                // Convertir le chemin de fichier local en URL
+                File file = new File(imagePath);
+                String localUrl = file.toURI().toURL().toString();
+                Image image = new Image(localUrl);
                 imageInput.setImage(image);
             } catch (Exception e) {
                 System.err.println("Erreur lors du chargement de l'image: " + e.getMessage());
-                imageInput.setImage(null); //  mettre une image par défaut en cas d'erreur
+                imageInput.setImage(null);
             }
         } else {
             System.err.println("Chemin d'image invalide ou vide.");
-            imageInput.setImage(null); //mettre une image par défaut
+            imageInput.setImage(null);
         }
 
     }
     @FXML
     void Update(ActionEvent event) throws Exception {
         boolean check = false;
-        // Récupérer le chemin de l'image
-        String imagePath = "C:\\Users\\ASUS\\Downloads\\pi3A21\\AutoHeaven\\src\\main\\resources\\dir" + imageName;
-        if (imageName == null) {
-            error_image.setVisible(true);
-            check=true;
-        }
-        else {
-            h_error_image.setVisible(false);
 
+        String imagePath;
+        if (selectedImageFile != null) {
+
+            imagePath = "C:\\Users\\ASUS\\Downloads\\pi3A21\\AutoHeaven\\src\\main\\resources\\dir\\" + imageName;
+        } else {
+
+            imagePath = equipement.getImage();
         }
+
+        if (imagePath == null || imagePath.isEmpty()) {
+            error_image.setVisible(true);
+            check = true;
+        } else {
+            h_error_image.setVisible(false);
+        }
+
         if(nom.getText().isEmpty()){
             error_nom.setVisible(true);
             check=true;
@@ -220,44 +233,38 @@ public class UpdateEquipCard {
             return ;
         }
 
-        // Créer l'objet Equipement avec le chemin de l'image
+
+        File file = new File(imagePath);
+
+
         Equipement u1 = new Equipement(id,nom.getText(), desc.getText(), imagePath, reference.getText(), marque.getText());
         int quantite1 = Integer.parseInt(quantite.getText());
         double prix1 = Double.parseDouble(prix.getText());
 
-        // Ajouter l'équipement
         EquipementService sc = new EquipementService();
         sc.update(u1, quantite1, prix1);
+        listEquipementController.hideUpdatePopup();
 
-        // Afficher une pop-up de succès
-        showSuccessPopup();
+        listEquipementController.reloadEquipements();
 
-        // Rediriger vers ListEquipement.fxml
-        //redirectToListEquipement();
-
-
-    }
-
-    private void showSuccessPopup() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Succès");
         alert.setHeaderText(null);
-        alert.setContentText("L'équipement a été ajouté avec succès !");
+        alert.setContentText("L'équipement a été mis à jour avec succès !");
         alert.showAndWait();
+
+
+
+
+
     }
 
-    private void redirectToListEquipement() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
-        Parent root = loader.load();
-        Scene scene = update_btn.getScene(); // Récupérer la scène actuelle
-        scene.setRoot(root); // Définir la nouvelle racine de la scène
-    }
 
-    @FXML
-    void Afficher(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
-        Parent root = loader.load();
-        nom.getScene().setRoot(root);
-    }
+
+
+
+
+
+
 
 }

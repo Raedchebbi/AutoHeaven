@@ -24,6 +24,8 @@ public class ListEquipement implements Initializable {
 
     @FXML
     private Button add_btn;
+    @FXML
+    private Pane popupContainer;
 
     @FXML
     private VBox equip_container;
@@ -39,88 +41,7 @@ public class ListEquipement implements Initializable {
 
 
 
-    /*public void initialize(URL url, ResourceBundle resourceBundle) {
-        EquipementService es = new EquipementService();
 
-        ObservableList<EquipementAffichage> obs;
-        try {
-            obs = FXCollections.observableList(es.getAll());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        for (EquipementAffichage e : obs) {
-            try {
-                Stage primaryStage = new Stage();
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/EquipementItem.fxml"));
-                //fxmlLoader.setRoot(equipementPane);
-                Parent item = loader.load();
-                //Scene scene = new Scene(item);
-               // primaryStage.setTitle("AutoHeaven");
-               // primaryStage.setScene(scene);
-                EquipementItem ie = loader.getController();
-                ie.initData(e);
-                equip_container.getChildren().add(item);
-
-
-            } catch (IOException e1) {
-                e1.printStackTrace();
-
-            }
-
-
-        }}*/
-
-    /*@Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        EquipementService es = new EquipementService();
-       // ObservableList<EquipementAffichage> obs ;
-        // obs = FXCollections.observableArrayList();
-         List<EquipementAffichage> obs =new ArrayList<>();
-
-        try {
-            obs.addAll(es.getAll());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        for (EquipementAffichage e : obs) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/EquipementItem.fxml"));
-                Parent item = loader.load();
-                EquipementItem ie = loader.getController();
-                ie.initData(e);
-
-                // Vérifier si equip_container est bien initialisé
-                if (equip_container != null) {
-                    equip_container.getChildren().add(item);
-                } else {
-                    System.out.println("⚠ ERREUR : equip_container est null !");
-                }
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-
-     public void loadEquipItem (ObservableList < EquipementAffichage > obs) {
-            for (EquipementAffichage e : obs) {
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/equipement.fxml"));
-                    //fxmlLoader.setRoot(equipementPane);
-                    Parent item = loader.load();
-                    EquipementItem ie = loader.getController();
-                    ie.initData(e);
-                    equip_container.getChildren().add(item);
-
-
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-
-                }
-            }}*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -142,12 +63,30 @@ public class ListEquipement implements Initializable {
                 Parent item = loader.load();
                 EquipementItem ie = loader.getController();
                 ie.initData(e);
-                ie.setListEquipementController(this);  // Passer la référence du contrôleur parent
+                ie.setListEquipementController(this);
                 equip_container.getChildren().add(item);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
+    }
+    public void showUpdatePopup(EquipementAffichage equipement) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateEquipCard.fxml"));
+            Parent updateEquip = loader.load();
+            UpdateEquipCard updateEquipCardController = loader.getController();
+            updateEquipCardController.setListEquipementController(this);
+            updateEquipCardController.initData(equipement);
+
+            popupContainer.getChildren().clear();
+            popupContainer.getChildren().add(updateEquip);
+            popupContainer.setVisible(true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void hideUpdatePopup() {
+        popupContainer.setVisible(false);
     }
 
     @FXML
