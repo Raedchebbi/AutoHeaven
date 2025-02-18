@@ -10,7 +10,7 @@ public class mainFXvoiture extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/affichervoiture.fxml"));
-        primaryStage.setTitle("Affiche de categorie");
+        primaryStage.setTitle("liste des voitures");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }

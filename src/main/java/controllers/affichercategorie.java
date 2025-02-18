@@ -60,13 +60,12 @@ public class affichercategorie {
             Label portesLabel = new Label(String.valueOf(categorie.getNbr_porte()));
             portesLabel.setPrefWidth(60);
 
-            // Modifier Button
+
             Button modifyButton = new Button("Modifier");
             modifyButton.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
             modifyButton.setPrefWidth(100);
             modifyButton.setOnAction(event -> handleModifyCategorie(categorie));
 
-            // Supprimer Button with confirmation dialog
             Button deleteButton = new Button("Supprimer");
             deleteButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
             deleteButton.setPrefWidth(100);

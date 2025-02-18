@@ -30,12 +30,10 @@
                 <Label style="-fx-font-weight: bold;" text="Disponibilité" HBox.hgrow="ALWAYS" />
             </HBox>
 
-            <!-- Data Rows for Each Voiture -->
             <VBox fx:id="voitureContainer" spacing="10.0" prefHeight="450.0" VBox.vgrow="ALWAYS" />
 
         </VBox>
 
-        <!-- Refresh Button -->
         <Button fx:id="refreshButton" layoutX="700.0" layoutY="550.0" onAction="#handleRefresh" text="Rafraîchir" />
     </children>
 

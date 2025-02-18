@@ -48,7 +48,7 @@ public class modifiercategorie {
         }
 
         try {
-            Integer.parseInt(portesField.getText().trim()); // Check if it's a valid integer
+            Integer.parseInt(portesField.getText().trim());
         } catch (NumberFormatException e) {
             showErrorAlert("Le nombre de portes doit être un nombre valide.");
             return false;
@@ -85,7 +85,7 @@ public class modifiercategorie {
         }
 
         try {
-            categorieService.update(categorie); // No return value needed
+            categorieService.update(categorie);
             showSuccessAlert();
             closeWindow();
         } catch (Exception e) {
@@ -96,7 +96,7 @@ public class modifiercategorie {
 
     @FXML
     private void handleCancel() {
-        closeWindow(); // Close the window without saving
+        closeWindow();
     }
 
 

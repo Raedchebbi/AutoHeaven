@@ -1,17 +1,18 @@
 package controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import models.Voiture;
 import services.VoitureService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,12 +54,12 @@ public class affichervoiture {
             // Buttons with fixed width
             Button modifyButton = new Button("Modifier");
             styleButton(modifyButton, "blue");
+            modifyButton.setOnAction(event -> handleModifyVoiture(voiture));
 
             Button deleteButton = new Button("Supprimer");
             styleButton(deleteButton, "red");
             deleteButton.setOnAction(event -> confirmDeleteVoiture(voiture));
 
-            // Spacer to push buttons to the right
             Region spacer = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
@@ -104,6 +105,23 @@ public class affichervoiture {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    private void handleModifyVoiture(Voiture voiture) {
+       FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifiervoiture.fxml")); // Make sure this FXML exists
+      AnchorPane root = null;
+      try {
+         root = loader.load();
+     } catch (IOException e) {
+        throw new RuntimeException(e);
+     }
+
+     modifiervoiture modifierController = loader.getController();
+     modifierController.setVoiture(voiture);
+
+     Stage stage = new Stage();
+     stage.setTitle("Modifier la voiture");
+     stage.setScene(new Scene(root));
+     stage.show();
     }
 
     @FXML
