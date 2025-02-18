@@ -17,7 +17,7 @@ public class Mainfx extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/addreclamation.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherReclamationController.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);

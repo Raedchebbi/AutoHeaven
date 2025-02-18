@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane prefHeight="481.0" prefWidth="600.0" stylesheets="@addreclamation.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.addreclamation_controller">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@addreclamation.css"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.addreclamation_controller">
+
    <children>
-      <Label layoutX="141.0" layoutY="83.0" text="Objet :" />
-      <TextArea fx:id="reclamationTextArea" layoutX="138.0" layoutY="206.0" prefHeight="46.0" prefWidth="200.0" />
-      <Label layoutX="114.0" layoutY="15.0" text="Vous avez des questions ?" />
-      <Label layoutX="315.0" layoutY="15.0" text="Contactez-nous !" />
-      <TextField fx:id="objetTextField" layoutX="136.0" layoutY="111.0" />
-      <Label layoutX="141.0" layoutY="178.0" text="Votre Réclamation : " />
-      <Button layoutX="194.0" layoutY="340.0" mnemonicParsing="false" text="Envoyer Réclamation" onAction="#handleEnvoyerReclamation"/>
+      <!-- Conteneur principal -->
+      <VBox alignment="TOP_CENTER" spacing="20" layoutX="150" layoutY="50"
+            styleClass="container">
+
+         <Label text="Formulaire de Réclamation" styleClass="main-title"/>
+
+         <!-- Groupe Objet -->
+         <VBox spacing="5" alignment="CENTER_LEFT">
+            <Label text="Objet :" styleClass="form-label"/>
+            <TextField fx:id="objetTextField" styleClass="form-field"/>
+            <Label fx:id="erreurObjet" styleClass="error-label"/>
+         </VBox>
+
+         <!-- Groupe Réclamation -->
+         <VBox spacing="5" alignment="CENTER_LEFT">
+            <Label text="Votre Réclamation :" styleClass="form-label"/>
+            <TextArea fx:id="reclamationTextArea" styleClass="form-area"/>
+            <Label fx:id="erreurReclamation" styleClass="error-label"/>
+         </VBox>
+
+         <!-- Bouton -->
+         <Button text="Envoyer Réclamation" onAction="#handleEnvoyerReclamation"
+                 styleClass="btn-primary"/>
+      </VBox>
    </children>
 </AnchorPane>

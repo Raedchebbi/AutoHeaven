@@ -3,10 +3,7 @@ package services;
 import models.User;
 import utils.MyDb;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +83,17 @@ public class UserService implements Crud<User> {
     }
 
     @Override
+    public void updateStatus(int userId, String newStatus) throws SQLException {
+        String sql = "UPDATE user SET status = ? WHERE id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, newStatus);
+            stmt.setInt(2, userId);
+            stmt.executeUpdate();
+        }
+    }
+
+    @Override
     public void delete(User obj) throws Exception {
         String sql = "DELETE FROM user WHERE id = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -117,15 +125,5 @@ public class UserService implements Crud<User> {
         return users;
     }
 
-    /*public boolean isClient(int userId) throws Exception {
-        String sql = "SELECT role FROM user WHERE id = ?";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, userId);
-        ResultSet rs = stmt.executeQuery();
 
-        if (rs.next()) {
-            return rs.getString("role").equalsIgnoreCase("client");
-        }
-        return false;
-    }*/
 }

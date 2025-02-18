@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import utils.MyDb;
@@ -9,28 +10,60 @@ import utils.MyDb;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class addreclamation_controller {
 
-    // ID utilisateur statique pour les tests (ID = 3)
     private static final int USER_ID = 3;
+    private static final int TITRE_MAX_LENGTH = 100;
+    private static final int CONTENU_MIN_LENGTH = 10;
+    private static final int CONTENU_MAX_LENGTH = 1000;
 
     @FXML
-    private TextField objetTextField;   // Correspond à "titre"
+    private TextField objetTextField;
     @FXML
-    private TextArea reclamationTextArea; // Correspond à "contenu"
+    private TextArea reclamationTextArea;
+    @FXML
+    private Label erreurObjet;
+    @FXML
+    private Label erreurReclamation;
 
     @FXML
     private void handleEnvoyerReclamation() {
+        clearErrors();
+
         String titre = objetTextField.getText().trim();
         String contenu = reclamationTextArea.getText().trim();
+        boolean isValid = true;
 
-        if (titre.isEmpty() || contenu.isEmpty()) {
-            showAlert("Erreur", "Remplissez tous les champs.", Alert.AlertType.ERROR);
-            return;
+        // Validation Objet
+        if (titre.isEmpty()) {
+            erreurObjet.setText("Ce champ est obligatoire");
+            isValid = false;
+        } else if (titre.length() > TITRE_MAX_LENGTH) {
+            erreurObjet.setText("Maximum " + TITRE_MAX_LENGTH + " caractères");
+            isValid = false;
+        } else if (!titre.matches("^[a-zA-Z0-9 àâäéèêëîïôöùûüç,.'!?-]+$")) {
+            erreurObjet.setText("Caractères spéciaux non autorisés");
+            isValid = false;
         }
 
-        insererReclamation(titre, contenu);
+        // Validation Réclamation
+        if (contenu.isEmpty()) {
+            erreurReclamation.setText("Ce champ est obligatoire");
+            isValid = false;
+        } else if (contenu.length() < CONTENU_MIN_LENGTH) {
+            erreurReclamation.setText("Minimum " + CONTENU_MIN_LENGTH + " caractères");
+            isValid = false;
+        } else if (contenu.length() > CONTENU_MAX_LENGTH) {
+            erreurReclamation.setText("Maximum " + CONTENU_MAX_LENGTH + " caractères");
+            isValid = false;
+        }
+
+        if (isValid) {
+            insererReclamation(titre, contenu);
+        }
     }
 
     private void insererReclamation(String titre, String contenu) {
@@ -41,17 +74,30 @@ public class addreclamation_controller {
 
             pstmt.setString(1, titre);
             pstmt.setString(2, contenu);
-            pstmt.setInt(3, USER_ID); // ID utilisateur statique (3)
+            pstmt.setInt(3, USER_ID);
 
-            pstmt.executeUpdate();
+            int rowsAffected = pstmt.executeUpdate();
 
-            showAlert("Succès", "Réclamation enregistrée !", Alert.AlertType.INFORMATION);
-            clearFields();
+            if (rowsAffected > 0) {
+                showAlert("Succès", "Réclamation envoyée avec succès!", Alert.AlertType.INFORMATION);
+                clearFields();
+            }
 
         } catch (SQLException e) {
-            showAlert("Erreur", "Échec : " + e.getMessage(), Alert.AlertType.ERROR);
+            showAlert("Erreur", "Erreur technique: " + e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace();
         }
+    }
+
+    private void clearErrors() {
+        erreurObjet.setText("");
+        erreurReclamation.setText("");
+    }
+
+    private void clearFields() {
+        objetTextField.clear();
+        reclamationTextArea.clear();
+        clearErrors();
     }
 
     private void showAlert(String title, String message, Alert.AlertType type) {
@@ -60,10 +106,5 @@ public class addreclamation_controller {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    private void clearFields() {
-        objetTextField.clear();
-        reclamationTextArea.clear();
     }
 }

@@ -52,6 +52,11 @@ public class MessagerieService implements Crud<Messagerie> {
     }
 
     @Override
+    public void updateStatus(int idRec, String newStatus) throws SQLException {
+
+    }
+
+    @Override
     public void delete(Messagerie obj) throws Exception {
         deleteById(obj.getId_m());
     }
