@@ -38,9 +38,9 @@ public class repondre_rec_controller {
     @FXML
     private void handleEnvoyerReponse() {
         if (validateInput()) {
-            if (updateStatusInDatabase()) {
+            if (saveMessageToDatabase() && updateStatusInDatabase()) {
+                if (onSuccessCallback != null) onSuccessCallback.run(); // Rafraîchir l'affichage principal
                 closeWindow();
-                if (onSuccessCallback != null) onSuccessCallback.run();
             }
         }
     }
@@ -53,20 +53,66 @@ public class repondre_rec_controller {
         return true;
     }
 
+    private boolean saveMessageToDatabase() {
+        // Correction : Ajout de 'datemessage' avec NOW()
+        String query = "INSERT INTO messagerie (message, receiver, id_rec, datemessage) VALUES (?, 'admin', ?, NOW())";
+
+        try (Connection conn = MyDb.getInstance().getConn();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            // Vérification de la connexion
+            if (conn == null || conn.isClosed()) {
+                showAlert("Erreur SQL", "Connexion fermée. Impossible d'enregistrer.");
+                return false;
+            }
+
+            System.out.println("Connexion active. Enregistrement du message...");
+
+            // Ajout des valeurs à la requête
+            ps.setString(1, reponseField.getText().trim());
+            ps.setInt(2, reclamationId);
+
+            // Exécution de la requête et retour du succès
+            int rowsInserted = ps.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Message enregistré avec succès !");
+                return true;
+            } else {
+                showAlert("Erreur", "Aucune ligne insérée.");
+            }
+
+        } catch (SQLException e) {
+            showAlert("Erreur SQL", "Échec de l'enregistrement du message : " + e.getMessage());
+        }
+        return false;
+    }
+
+
+
+
+
     private boolean updateStatusInDatabase() {
-        String query = "UPDATE reclamation SET status = 'traité' WHERE id_rec = ?";
+        String query = "UPDATE reclamation SET status = 'repondu' WHERE id_rec = ?";
 
         try (Connection conn = MyDb.getInstance().getConn();
              PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setInt(1, reclamationId);
-            return ps.executeUpdate() > 0;
+            int rowsUpdated = ps.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("Statut mis à jour avec succès !");
+                return true;
+            } else {
+                showAlert("Erreur", "Aucune réclamation trouvée pour mise à jour.");
+            }
 
         } catch (SQLException e) {
-            showAlert("Erreur SQL", "Échec de la mise à jour : " + e.getMessage());
+            showAlert("Erreur SQL", "Échec de la mise à jour du statut : " + e.getMessage());
         }
         return false;
     }
+
 
     private void closeWindow() {
         Stage stage = (Stage) reponseField.getScene().getWindow();

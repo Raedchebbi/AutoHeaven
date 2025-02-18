@@ -22,8 +22,7 @@ import java.time.format.DateTimeFormatter;
 public class AfficherReclamationController {
 
     @FXML private VBox contentBox;
-    private final DateTimeFormatter dateFormatter =
-            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     @FXML
     public void initialize() {
@@ -68,7 +67,6 @@ public class AfficherReclamationController {
         HBox row = new HBox(10);
         row.getStyleClass().add("data-row");
 
-        // Création des composants
         Label lblTitre = createCell(titre, 200);
         Label lblContenu = createCell(contenu, 300);
         Label lblDate = createCell(date, 150);
@@ -76,7 +74,6 @@ public class AfficherReclamationController {
         Label lblTel = createCell(tel, 100);
         Label lblEmail = createCell(email, 200);
 
-        // Bouton de statut
         Button btnStatus = new Button();
         btnStatus.setPrefWidth(120);
         updateButtonState(btnStatus, status, idRec, titre, contenu);
@@ -86,11 +83,11 @@ public class AfficherReclamationController {
     }
 
     private void updateButtonState(Button btn, String status, int idRec, String titre, String contenu) {
-        if ("traité".equalsIgnoreCase(status)) {
+        if ("repondu".equalsIgnoreCase(status)) {  // Vérifie si status est 'repondu'
             btn.setText("Traité");
             btn.setDisable(true);
             btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
-        } else {
+        } else {  // Par défaut, 'en_attente'
             btn.setText("En attente");
             btn.setStyle("-fx-background-color: #f44336; -fx-text-fill: white;");
             btn.setOnAction(e -> openRepondreForm(idRec, titre, contenu));
