@@ -28,7 +28,10 @@
                         <Font name="Cambria Bold" size="18.0" />
                     </font>
                 </Label>
-                <Pane prefHeight="66.0" prefWidth="328.0" />
+                <Pane prefHeight="66.0" prefWidth="328.0">
+               <children>
+                  <Label fx:id="commande" layoutX="247.0" layoutY="25.0" text="Commandes" onMouseClicked="#handleCommandeClick"/>
+               </children></Pane>
                 <HBox alignment="CENTER" prefHeight="66.0" prefWidth="316.0" stylesheets="@equipclient.css">
                     <children>
                         <TextField fx:id="input_search" prefHeight="26.0" prefWidth="246.0" promptText="Type your search here" styleClass="transparent" stylesheets="@equipclient.css">

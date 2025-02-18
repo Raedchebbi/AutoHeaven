@@ -1,0 +1,11 @@
+.status-accepted {
+    -fx-text-fill: green;
+}
+
+.status-pending {
+    -fx-text-fill: orange;
+}
+
+.status-cancelled {
+    -fx-text-fill: red;
+}

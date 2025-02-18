@@ -1,6 +1,7 @@
 package services;
 
 import models.Commande;
+import models.EquipementAffichage;
 import models.Lignecommande;
 import models.Panier;
 import utils.MyDb;
@@ -8,6 +9,7 @@ import utils.MyDb;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.Statement;
 
@@ -94,8 +96,23 @@ public class CommandeService implements CrudCommande<Commande> {
     }
 
     @Override
-    public List<Commande> getAll(int id) throws Exception {
-        return List.of();
+    public List<Commande> getAllByidU(int id) throws Exception {
+        String sql = "SELECT * FROM commande WHERE id = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, id);
+        ResultSet rs = stmt.executeQuery();
+
+        List<Commande> coms = new ArrayList<>();
+        while (rs.next()) {
+            coms.add(new Commande(
+                    rs.getInt("id_com"),
+                    rs.getTimestamp("date_com").toLocalDateTime(),
+                    rs.getString("status"),
+                    rs.getDouble("montant_total"),
+                    rs.getInt("id")
+            ));
+        }
+        return coms;
     }
 
     @Override
@@ -115,6 +132,26 @@ public class CommandeService implements CrudCommande<Commande> {
         } else {
             throw new Exception("Commande non trouvée avec l'id : " + id);
         }
+    }
+
+    @Override
+    public List<Commande> getAll(int id) throws Exception {
+        String sql = "SELECT * FROM commande";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+
+        ResultSet rs = stmt.executeQuery();
+
+        List<Commande> coms = new ArrayList<>();
+        while (rs.next()) {
+            coms.add(new Commande(
+                    rs.getInt("id_com"),
+                    rs.getTimestamp("date_com").toLocalDateTime(),
+                    rs.getString("status"),
+                    rs.getDouble("montant_total"),
+                    rs.getInt("id")
+            ));
+        }
+        return coms;
     }
 
 }

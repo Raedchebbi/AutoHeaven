@@ -11,6 +11,7 @@ public interface CrudCommande<T> {
 
     double getPrixEquipement(int id) throws Exception;
 
-    List<T> getAll(int id) throws Exception;
+    List<T> getAllByidU(int id) throws Exception;
     Commande getCommande(int id) throws Exception;
+    List<T> getAll(int id) throws Exception;
 }
