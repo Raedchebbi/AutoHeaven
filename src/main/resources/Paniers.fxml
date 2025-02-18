@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -14,12 +15,20 @@
    <children>
       <BorderPane layoutX="329.0" layoutY="83.0" prefHeight="200.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <HBox alignment="CENTER" prefHeight="47.0" prefWidth="972.0" style="-fx-background-color: #D3D3D3;" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="972.0" style="-fx-background-color: #D3D3D3;" BorderPane.alignment="CENTER">
                <children>
+                  <FontAwesomeIconView fx:id="back" glyphName="ARROW_LEFT" onMouseClicked="#handleBackAction">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </FontAwesomeIconView>
                   <Label text="Panier">
                      <font>
                         <Font name="Cambria Bold" size="19.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
                   </Label>
                </children>
             </HBox>

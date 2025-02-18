@@ -1,5 +1,6 @@
 package controllers;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,6 +22,8 @@ public class Paniers implements Initializable {
 
     @FXML
     private VBox contenu;
+    @FXML
+    private FontAwesomeIconView back;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -72,6 +75,15 @@ public class Paniers implements Initializable {
             Scene scene = contenu.getScene();
             scene.setRoot(root);
         }
+    @FXML
+    private void handleBackAction() throws IOException {
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
+        Parent root = loader.load();
+        Scene currentScene = back.getScene();
+        currentScene.setRoot(root);
     }
+
+
+}
 
