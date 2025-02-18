@@ -36,7 +36,7 @@ public class CommandeService implements CrudCommande<Commande> {
             idCommande = rs.getInt(1);
         }
 
-        // Transférer les articles du panier à Commande_Details
+
         if (idCommande > 0) {
             List<Panier> panier = panierService.getAll(id);
             double total = 0;

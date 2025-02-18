@@ -1,9 +1,11 @@
 package org.example;
 
 import models.Equipement;
+import models.Stock;
 import services.CommandeService;
 import services.EquipementService;
 import services.PanierService;
+import services.StockService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,7 +35,8 @@ public class Main {
             //cs.create(3);
             // System.out.println(ps.getAll(1));
             //System.out.println(es.rechercherEquipement("sam-1235"));
-
+            StockService ss = new StockService();
+            System.out.println(ss.getStockById(27));
 
 
 

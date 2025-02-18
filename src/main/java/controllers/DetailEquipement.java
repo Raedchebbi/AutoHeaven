@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import models.Equipement;
 import models.EquipementAffichage;
 import models.Panier;
 import services.EquipementService;
@@ -56,6 +57,7 @@ public class DetailEquipement {
     EquipementAffichage equipement;
     public void initData(EquipementAffichage equipement) {
         this.equipement = equipement;
+        int initial =1;
         nom.setText(equipement.getNom());
         prix.setText(String.valueOf(equipement.getPrixvente()));
         ref.setText(equipement.getReference());
@@ -63,7 +65,7 @@ public class DetailEquipement {
         image.setImage(new Image(equipement.getImage()));
         disponibilite.setText(equipement.getQuantite() > 0 ? "In Stock" : "Out of Stock");
         desc.setText(equipement.getDescription());
-        input.setText(String.valueOf(1));
+        input.setText(String.valueOf(initial));
 
 
 
@@ -75,7 +77,7 @@ public class DetailEquipement {
         int value = Integer.parseInt(input.getText());
         input.setText(String.valueOf(value + 1));
     } catch (NumberFormatException e) {
-        System.err.println("Erreur : la valeur du champ n'est pas un entier valide.");
+        System.err.println("la valeur du champ n'est pas un entier valide.");
     }
 
        // PanierService es = new PanierService();
@@ -86,10 +88,10 @@ public class DetailEquipement {
     @FXML
     private void handleSousAction() throws Exception {try {
         int value = Integer.parseInt(input.getText());
-        if (value > 0) {
+        if (value > 1) {
         input.setText(String.valueOf(value -1));}
     } catch (NumberFormatException e) {
-        System.err.println("Erreur : la valeur du champ n'est pas un entier valide.");
+        System.err.println("la valeur du champ n'est pas un entier valide.");
     }}
     @FXML
     private void handleAddToCart() throws Exception {
@@ -99,23 +101,34 @@ public class DetailEquipement {
         Panier panier = new Panier(Integer.parseInt(input.getText()),idu,id);
         ps.create(panier);
         showSuccessPopup();
-        redirectToEquipDetail();
+      //  redirectToEquipDetail(equipement);
 
     }
     private void showSuccessPopup() throws IOException {
+        if (Integer.parseInt(input.getText()) > equipement.getQuantite()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Stock insuffisant !");
+            alert.showAndWait();
+            return;
+        }
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Succès");
         alert.setHeaderText(null);
         alert.setContentText("Votre produit a été ajouté avec succès au panier!");
         alert.showAndWait();
-       // redirectToEquipDetail();
+        redirectToEquipDetail(equipement ,cart.getScene());
     }
 
-    private void redirectToEquipDetail() throws IOException {
+    private void redirectToEquipDetail(EquipementAffichage equipement, Scene currentScene) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Detail_equipement.fxml"));
         Parent root = loader.load();
-        Scene scene = cart.getScene();
-        scene.setRoot(root);
+        DetailEquipement controller = loader.getController();
+        controller.initData(equipement);
+
+
+        currentScene.setRoot(root);
     }
 
 

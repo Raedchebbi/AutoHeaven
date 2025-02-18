@@ -29,9 +29,9 @@
                 </ImageView>
                 <HBox alignment="CENTER" prefHeight="50.0" prefWidth="226.0">
                     <children>
-                        <Label prefHeight="18.0" prefWidth="71.0" text="DT">
+                        <Label prefHeight="18.0" prefWidth="63.0" text="DT">
                             <graphic>
-                                <Label fx:id="prix" text="200000">
+                                <Label fx:id="prix" text="2000">
                                     <font>
                                         <Font name="Cambria Bold" size="14.0" />
                                     </font>

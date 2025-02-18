@@ -50,7 +50,7 @@
                         <String fx:value="shadow" />
                     </styleClass>
                 </HBox>
-                <ImageView fitHeight="50.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="panier" fitHeight="50.0" fitWidth="55.0" onMouseClicked="#handlePanierClick" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@dir/cart.png" />
                </image>

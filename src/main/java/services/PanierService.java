@@ -24,16 +24,18 @@ public class PanierService implements CrudPanier<Panier>{
         // Vérification si le client a ajouter un equipement qui a l'ajouté avant
         String checkSql = "SELECT * FROM panier WHERE id = ? AND id_e = ?";
         try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
-            checkStmt.setInt(1, obj.getId()); // id du client
-            checkStmt.setInt(2, obj.getId_e()); // id de l'équipement
+            checkStmt.setInt(1, obj.getId());
+            checkStmt.setInt(2, obj.getId_e());
             ResultSet rs = checkStmt.executeQuery();
 
             if (rs.next()) {
                 // Si l'équipement existe déjà la quantité sera incrementé
-                String updateSql = "UPDATE panier SET quantite = quantite + 1 WHERE id = ? AND id_e = ?";
+                String updateSql = "UPDATE panier SET quantite = quantite + ? WHERE id = ? AND id_e = ?";
+
                 try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
-                    updateStmt.setInt(1, obj.getId());
-                    updateStmt.setInt(2, obj.getId_e());
+                    updateStmt.setInt(1, obj.getQuantite());
+                    updateStmt.setInt(2, obj.getId());
+                    updateStmt.setInt(3, obj.getId_e());
                     updateStmt.executeUpdate();
                 }
             } else {
@@ -55,7 +57,7 @@ public class PanierService implements CrudPanier<Panier>{
         String sql = "UPDATE panier SET quantite = quantite + 1 WHERE id = ?";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, obj.getId()); // Supposant que id est un entier
+            stmt.setInt(1, obj.getId());
             stmt.executeUpdate();
         }
     }

@@ -12,10 +12,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="102.0" prefWidth="640.0" stylesheets="@detailequip.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="102.0" prefWidth="700.0" stylesheets="@detailequip.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PanierItem">
    <children>
-      <ImageView fitHeight="77.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image" fitHeight="77.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>
@@ -23,7 +22,7 @@
             <Image url="@../../../../../roue2.jpg" />
          </image>
       </ImageView>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Guidan KIA" wrappingWidth="202.15465927124023">
+      <Text fx:id="nom" strokeType="OUTSIDE" strokeWidth="0.0" text="Guidan KIA" wrappingWidth="190.9546468257904">
          <HBox.margin>
             <Insets />
          </HBox.margin>
@@ -31,9 +30,9 @@
             <Font name="Arial Bold" size="17.0" />
          </font>
       </Text>
-      <Label prefHeight="18.0" prefWidth="64.0" text="DT">
+      <Label prefHeight="26.0" prefWidth="101.0" text="DT">
          <graphic>
-            <Label text="20000">
+            <Label fx:id="prix" text="20000">
                <font>
                   <Font size="16.0" />
                </font>
@@ -42,16 +41,16 @@
       </Label>
       <HBox alignment="CENTER" prefHeight="102.0" prefWidth="132.0">
          <children>
-            <Button mnemonicParsing="false" text="-" />
-            <TextField prefHeight="33.0" prefWidth="32.0">
+            <Button fx:id="Sous" mnemonicParsing="false" onAction="#handleSousAction" text="-" />
+            <TextField fx:id="input" prefHeight="33.0" prefWidth="32.0">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" text="+" />
+            <Button fx:id="Add" mnemonicParsing="false" onAction="#handleAddAction" text="+" />
          </children>
       </HBox>
-      <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="3.0" styleClass="delete-button" stylesheets="@equipclient.css">
+      <Button mnemonicParsing="false" onAction="#handleDeleteAction" prefHeight="34.0" prefWidth="3.0" styleClass="delete-button" stylesheets="@equipclient.css">
          <graphic>
             <FontAwesomeIconView glyphName="TRASH" />
          </graphic>

@@ -4,15 +4,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import javafx.stage.Stage;
 import models.EquipementAffichage;
 import services.EquipementService;
 
+import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -21,6 +27,8 @@ import java.util.ResourceBundle;
 public class ListEquipementClient implements Initializable {
     @FXML
     private GridPane grid;
+    @FXML
+    private ImageView panier;
 
     @FXML
     private TextField input_search;
@@ -39,8 +47,30 @@ public class ListEquipementClient implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        panier.setOnMouseClicked(event -> {
+            try {
+                handlePanierClick(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
 
+    }
+    public void handlePanierClick(MouseEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Paniers.fxml"));
+        Parent root = loader.load();
+
+
+        Scene scene = new Scene(root);
+
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+
+        stage.setScene(scene);
+        stage.show();
     }
     public void reloadEquipements() throws Exception {
         int column =0 ;

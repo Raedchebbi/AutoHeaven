@@ -41,7 +41,7 @@
 }
 .equipement_cell_container{
     -fx-background-color: #FFFFFF;
-    -fx-border-color: #c7c4c4;
+    /*-fx-border-color: #c7c4c4;*/
     -fx-background-radius: 25;
 
     -fx-effect: dropshadow(three-pass-box,#DDDDDD,5,0,0,7);
