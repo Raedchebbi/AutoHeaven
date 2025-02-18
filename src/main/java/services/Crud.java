@@ -1,5 +1,7 @@
 package services;
 
+import models.Categorie;
+
 import java.util.List;
 
 public interface Crud<T> {
@@ -7,7 +9,7 @@ public interface Crud<T> {
 
     void update(T obj) throws Exception;
 
-    void delete(T obj) throws Exception;
+    void delete(int obj) throws Exception;
 
     List<T> getAll() throws Exception;
 

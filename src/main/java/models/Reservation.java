@@ -1,30 +1,28 @@
 package models;
+
 import java.util.Date;
 
 public class Reservation {
     private int id_r;
     private Date date_res;
     private String status;
-    //private Voiture voiture;
-    private int id_v;
+    private Voiture voiture;
     private User user;
 
     public Reservation() {}
 
-    public Reservation(Date date_res, String status, int id_v /*Voiture voiture*/, User user) {
+    public Reservation(Date date_res, String status, Voiture voiture, User user) {
         this.date_res = date_res;
         this.status = status;
-        //this.voiture = voiture;
-        this.id_v = id_v;
+        this.voiture = voiture;
         this.user = user;
     }
 
-    public Reservation(int id_r, Date date_res, String status, int id_v /*Voiture voiture*/, User user) {
+    public Reservation(int id_r, Date date_res, String status, Voiture voiture, User user) {
         this.id_r = id_r;
         this.date_res = date_res;
         this.status = status;
-        //this.voiture = voiture;
-        this.id_v = id_v;
+        this.voiture = voiture;
         this.user = user;
     }
 
@@ -49,18 +47,11 @@ public class Reservation {
         this.status = status;
     }
 
-    /*public Voiture getVoiture() {
+    public Voiture getVoiture() {
         return voiture;
     }
     public void setVoiture(Voiture voiture) {
         this.voiture = voiture;
-    }*/
-
-    public int getId_v() {
-        return id_v;
-    }
-    public void setId_v(int id_v) {
-        this.id_v = id_v;
     }
 
     public User getUser() {
@@ -76,8 +67,7 @@ public class Reservation {
                 "id_r=" + id_r +
                 ", date_res=" + date_res +
                 ", status='" + status + '\'' +
-                /*", voiture_id=" + (voiture != null ? voiture.getId_v() : "null") +*/
-                ", id_v=" + id_v +
+                ", voiture_id=" + (voiture != null ? voiture.getId_v() : "null") +
                 ", user_id=" + (user != null ? user.getId() : "null") +
                 '}';
     }

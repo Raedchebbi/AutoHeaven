@@ -1,11 +1,11 @@
 package models;
+
 import java.util.Date;
 
 public class Remorquage {
     private int id_rm;
     private User user;
-    //private Voiture voiture;
-    private int id_v;
+    private Voiture voiture;
     private Date date_demande;
     private String adresse;
     private String destination;
@@ -15,11 +15,10 @@ public class Remorquage {
 
     public Remorquage() {}
 
-    public Remorquage(int id_rm, User user, int id_v /*Voiture voiture*/, Date date_demande, String adresse, String destination, String statut, double prix, Date date_fin) {
+    public Remorquage(int id_rm, User user, Voiture voiture, Date date_demande, String adresse, String destination, String statut, double prix, Date date_fin) {
         this.id_rm = id_rm;
         this.user = user;
-        //this.voiture = voiture;
-        this.id_v = id_v;
+        this.voiture = voiture;
         this.date_demande = date_demande;
         this.adresse = adresse;
         this.destination = destination;
@@ -43,19 +42,11 @@ public class Remorquage {
         this.user = user;
     }
 
-    /*public Voiture getVoiture() {
+    public Voiture getVoiture() {
         return voiture;
     }
     public void setVoiture(Voiture voiture) {
         this.voiture = voiture;
-    }*/
-
-    public int getId_v() {
-        return id_v;
-    }
-
-    public void setId_v(int id_v) {
-        this.id_v = id_v;
     }
 
     public Date getDate_demande() {
@@ -111,8 +102,7 @@ public class Remorquage {
         return "Remorquage{" +
                 "id_rm=" + id_rm +
                 ", user_id=" + (user != null ? user.getId() : "null") +
-                //", voiture_id=" + (voiture != null ? voiture.getId_v() : "null") +
-                ", id_v=" + id_v +
+                ", voiture_id=" + (voiture != null ? voiture.getId_v() : "null") +
                 ", date_demande=" + date_demande +
                 ", adresse='" + adresse + '\'' +
                 ", destination='" + destination + '\'' +
