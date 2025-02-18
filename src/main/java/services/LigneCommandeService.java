@@ -34,7 +34,7 @@ public class LigneCommandeService implements CrudLigneCommande<Lignecommande>{
     }
 
     @Override
-    public List<Lignecommande> getAll(int id) throws Exception {
+    public List<Lignecommande> getAllByClient(int id) throws Exception {
         List<Lignecommande> ligneCommande = new ArrayList<>();
         String sql = "SELECT * FROM LigneCommande where idc=?";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -47,6 +47,26 @@ public class LigneCommandeService implements CrudLigneCommande<Lignecommande>{
             l.setQuantite(rs.getInt("quantite"));
             l.setPrix_unitaire(rs.getInt("prix_unitaire"));
             l.setIdc(rs.getInt("id_c"));
+            ligneCommande.add(l);
+
+        }
+        return ligneCommande;
+    }
+
+    @Override
+    public List<Lignecommande> getAllByIDC(int id) throws Exception {
+        List<Lignecommande> ligneCommande = new ArrayList<>();
+        String sql = "SELECT * FROM lignecommande where idc=?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1,id);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            Lignecommande l = new Lignecommande();
+            l.setId_l(rs.getInt("id_l"));
+            l.setId_e(rs.getInt("id_e"));
+            l.setQuantite(rs.getInt("quantite"));
+            l.setPrix_unitaire(rs.getInt("prix_unitaire"));
+            l.setIdc(rs.getInt("idc"));
             ligneCommande.add(l);
 
         }

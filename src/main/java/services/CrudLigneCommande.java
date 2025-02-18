@@ -8,6 +8,9 @@ public interface CrudLigneCommande<T>
 {
     void create(T obj) throws Exception;
 
-    List<T> getAll(int id) throws Exception;
+    List<T> getAllByClient(int id) throws Exception;
+    List<T> getAllByIDC(int id) throws Exception;
+
+
     Lignecommande getById(int id) throws Exception;
 }

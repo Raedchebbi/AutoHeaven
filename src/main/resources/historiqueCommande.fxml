@@ -29,9 +29,13 @@
             </Label>
          </children>
       </HBox>
-      <ScrollPane layoutX="206.0" layoutY="51.0" prefHeight="598.0" prefWidth="548.0">
+      <ScrollPane layoutX="206.0" layoutY="51.0" prefHeight="598.0" prefWidth="548.0" stylesheets="@scroll.css">
          <content>
-            <VBox fx:id="area" prefHeight="604.0" prefWidth="519.0" />
+            <VBox fx:id="area" alignment="TOP_CENTER" prefHeight="604.0" prefWidth="519.0" style="-fx-spacing: 20;">
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </VBox>
          </content>
       </ScrollPane>
    </children>

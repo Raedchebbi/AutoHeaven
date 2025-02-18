@@ -47,3 +47,14 @@
     -fx-effect: dropshadow(three-pass-box,#DDDDDD,5,0,0,7);
 
 }
+.status-accepted {
+    -fx-text-fill: green;
+}
+
+.status-pending {
+    -fx-text-fill: orange;
+}
+
+.status-cancelled {
+    -fx-text-fill: red;
+}
