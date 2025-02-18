@@ -1,5 +1,6 @@
 package controllers;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,6 +25,8 @@ public class DetailEquipement {
     @FXML
     private Button add;
 
+
+
     @FXML
     private Button cart;
 
@@ -35,6 +38,7 @@ public class DetailEquipement {
 
     @FXML
     private ImageView image;
+
 
     @FXML
     private TextField input;
@@ -53,6 +57,9 @@ public class DetailEquipement {
 
     @FXML
     private Button sous;
+    @FXML
+    private FontAwesomeIconView back;
+
 
     EquipementAffichage equipement;
     public void initData(EquipementAffichage equipement) {
@@ -130,6 +137,16 @@ public class DetailEquipement {
 
         currentScene.setRoot(root);
     }
+
+    @FXML
+    private void handleBackAction() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
+        Parent root = loader.load();
+        Scene currentScene = back.getScene();
+        currentScene.setRoot(root);
+    }
+
 
 
 }
