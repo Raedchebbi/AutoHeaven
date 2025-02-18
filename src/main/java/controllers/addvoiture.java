@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class voitureController {
+public class addvoiture {
 
     @FXML
     private TextField marqueField;
