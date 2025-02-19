@@ -1,6 +1,7 @@
 package services;
 
 import models.Lignecommande;
+import models.User;
 import utils.MyDb;
 
 import java.sql.Connection;
@@ -9,13 +10,15 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LigneCommandeService implements CrudLigneCommande<Lignecommande>{
+public class LigneCommandeService implements CrudLigneCommande<Lignecommande> {
 
     Connection conn;
+
     public LigneCommandeService() {
         this.conn = MyDb.getInstance().getConn();
 
     }
+
     @Override
     public void create(Lignecommande obj) throws Exception {
         String sql = "INSERT INTO LigneCommande (quantite, prix_unitaire,id_e, idc) VALUES (?, ?, ?, ?)";
@@ -23,12 +26,11 @@ public class LigneCommandeService implements CrudLigneCommande<Lignecommande>{
 
         PreparedStatement stmt = conn.prepareStatement(sql);
 
-        stmt.setInt(1,obj.getQuantite());
-        stmt.setDouble(2,obj.getPrix_unitaire());
+        stmt.setInt(1, obj.getQuantite());
+        stmt.setDouble(2, obj.getPrix_unitaire());
         stmt.setInt(3, obj.getId_e());
-        stmt.setInt(4,obj.getIdc());
+        stmt.setInt(4, obj.getIdc());
         stmt.executeUpdate();
-
 
 
     }
@@ -38,7 +40,7 @@ public class LigneCommandeService implements CrudLigneCommande<Lignecommande>{
         List<Lignecommande> ligneCommande = new ArrayList<>();
         String sql = "SELECT * FROM LigneCommande where idc=?";
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1,id);
+        stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             Lignecommande l = new Lignecommande();
@@ -58,7 +60,7 @@ public class LigneCommandeService implements CrudLigneCommande<Lignecommande>{
         List<Lignecommande> ligneCommande = new ArrayList<>();
         String sql = "SELECT * FROM lignecommande where idc=?";
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1,id);
+        stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             Lignecommande l = new Lignecommande();
@@ -91,6 +93,20 @@ public class LigneCommandeService implements CrudLigneCommande<Lignecommande>{
             throw new Exception("Ligne de commande non trouvée avec l'id_l : " + id);
         }
     }
+
+    @Override
+    public User getByID(int id) throws Exception {
+        String query = "SELECT * FROM user WHERE id = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setInt(1, id);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return new User(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getInt("tel"), rs.getString("email"), rs.getString("password"), rs.getString("role"), rs.getString("adresse"), rs.getString("username"));
+
+    } else {
+            throw new Exception("Ligne de commande non trouvée avec l'id_l : " + id);
+        }}
+
 
 
 }

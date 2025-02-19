@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox fx:id="cell" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="62.0" prefWidth="862.0" style="-fx-spacing: 10;" styleClass="equipement_cell_container" stylesheets="@commandeItem.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CommandeItemAdmin">
+   <children>
+      <Label fx:id="nom" prefHeight="18.0" prefWidth="164.0" text="Label">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </Label>
+      <Label fx:id="pren" prefHeight="18.0" prefWidth="157.0" text="Label" />
+      <Label fx:id="tel" prefHeight="18.0" prefWidth="103.0" text="Label" />
+      <Label fx:id="date" prefHeight="18.0" prefWidth="160.0" text="Label" />
+      <Label fx:id="prix" prefHeight="18.0" prefWidth="78.0" text="Label" />
+      <FontAwesomeIconView fx:id="detail" glyphName="EYE" size="20" wrappingWidth="28.0" />
+      <Button fx:id="check" mnemonicParsing="false" style="-fx-background-color: #38994f;">
+         <graphic>
+            <FontAwesomeIconView glyphName="CHECK" />
+         </graphic>
+      </Button>
+      <Button fx:id="cancel" mnemonicParsing="false" style="-fx-background-color: #f70909;" text="X" />
+   </children>
+</HBox>

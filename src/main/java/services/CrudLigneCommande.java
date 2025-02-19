@@ -1,6 +1,7 @@
 package services;
 
 import models.Lignecommande;
+import models.User;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface CrudLigneCommande<T>
 
 
     Lignecommande getById(int id) throws Exception;
+    User getByID(int id) throws Exception;
+
 }

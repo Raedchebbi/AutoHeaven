@@ -14,7 +14,7 @@
 
 <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="102.0" prefWidth="700.0" stylesheets="@detailequip.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PanierItem">
    <children>
-      <ImageView fx:id="image" fitHeight="77.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image" fitHeight="77.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>
@@ -22,7 +22,7 @@
             <Image url="@../../../../../roue2.jpg" />
          </image>
       </ImageView>
-      <Text fx:id="nom" strokeType="OUTSIDE" strokeWidth="0.0" text="Guidan KIA" wrappingWidth="190.9546468257904">
+      <Text fx:id="nom" strokeType="OUTSIDE" strokeWidth="0.0" text="Guidan KIA " wrappingWidth="190.9546468257904">
          <HBox.margin>
             <Insets />
          </HBox.margin>

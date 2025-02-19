@@ -77,17 +77,9 @@ public class HistoriqueComItem {
             ligneCommandes.add(l);
 
         }
-        System.out.println(commande);
 
 
 
-        System.out.println(ligneCommandes.size());
-        System.out.println(ligneCommandes);
-
-
-        System.out.println(commande.getId_com());
-
-        // Afficher les équipements dans une nouvelle vue
         HisCon.showEquipementsAchetes(ligneCommandes);
     }
 

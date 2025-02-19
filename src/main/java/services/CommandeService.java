@@ -135,7 +135,7 @@ public class CommandeService implements CrudCommande<Commande> {
     }
 
     @Override
-    public List<Commande> getAll(int id) throws Exception {
+    public List<Commande> getAll() throws Exception {
         String sql = "SELECT * FROM commande";
         PreparedStatement stmt = conn.prepareStatement(sql);
 
