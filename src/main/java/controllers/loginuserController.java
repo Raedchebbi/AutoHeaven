@@ -20,15 +20,11 @@ import utils.MyDb;
 import java.io.File;
 import java.sql.*;
 import java.util.ResourceBundle;
-
 import java.net.URL;
 
-
 public class loginuserController implements Initializable {
-
     @FXML
     private Button CancelButton;
-
     @FXML
     private Label loginMessageLabel;
     @FXML
@@ -39,7 +35,11 @@ public class loginuserController implements Initializable {
     private TextField usernameTextField;
     @FXML
     private PasswordField enterPasswordField;
+    @FXML
+    private Button loginButton;
 
+    // Static variable to store the logged-in username
+    public static String loggedInUser;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,10 +54,10 @@ public class loginuserController implements Initializable {
 
     public void loginButtonOnAction(ActionEvent event) {
         loginMessageLabel.setText("try to login");
-        if(usernameTextField.getText().isBlank() == false && enterPasswordField.getText().isBlank() == false) {
+        if (!usernameTextField.getText().isBlank() && !enterPasswordField.getText().isBlank()) {
             loginMessageLabel.setText("tentative de connexion");
             validateLogin();
-        }else{
+        } else {
             loginMessageLabel.setText("Veuillez remplir tous les champs.");
         }
     }
@@ -71,42 +71,57 @@ public class loginuserController implements Initializable {
         MyDb connectNow = new MyDb();
         Connection connectDB = connectNow.getConn();
 
-        // SQL query with placeholders
         String verifyLogin = "SELECT * FROM `user` WHERE username = ? AND password = ?";
 
         try {
             PreparedStatement preparedStatement = connectDB.prepareStatement(verifyLogin);
             preparedStatement.setString(1, usernameTextField.getText());
-            preparedStatement.setString(2, enterPasswordField.getText()); // If using hashed passwords, hash this before setting it.
+            preparedStatement.setString(2, enterPasswordField.getText());
 
             ResultSet queryResult = preparedStatement.executeQuery();
 
-            // Check if a user exists
             if (queryResult.next()) {
                 loginMessageLabel.setText("Connexion réussie !");
+                loggedInUser = queryResult.getString("username"); // Store username
+
+                String role = queryResult.getString("role");
+                if (role.equals("admin")) {
+                    try {
+                        loginButton.getScene().getWindow().hide();
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
+                        Parent root = loader.load();
+
+                        // Pass username to dashboard
+                        dashboardController dashboardCtrl = loader.getController();
+                        dashboardCtrl.displayUsername();
+
+                        Stage dashboardStage = new Stage();
+                        dashboardStage.setScene(new Scene(root, 1100, 600));
+                        dashboardStage.initStyle(StageStyle.UNDECORATED);
+                        dashboardStage.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             } else {
                 loginMessageLabel.setText("Identifiants invalides. Veuillez réessayer.");
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
             loginMessageLabel.setText("Erreur de connexion !");
         }
     }
-    public void createAccountForm(){
-        try{
 
+    public void createAccountForm() {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddUser.fxml"));
             Parent root = loader.load();
             Stage adduserstage = new Stage();
-            //Scene sc = new Scene(root);
-            adduserstage.setScene(new Scene(root, 520, 665));
+            adduserstage.setScene(new Scene(root, 1100, 660));
             adduserstage.initStyle(StageStyle.UNDECORATED);
             adduserstage.show();
-
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            e.getCause();
         }
     }
 }
