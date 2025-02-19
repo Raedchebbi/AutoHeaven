@@ -1,0 +1,40 @@
+/* Style pour l'AnchorPane principal */
+AnchorPane {
+    -fx-background-color: #f9f9f9; /* Couleur de fond */
+    -fx-padding: 20; /* Espacement intérieur */
+}
+
+/* Style pour les labels */
+Label {
+    -fx-font-size: 14px; /* Taille de la police pour les labels */
+    -fx-text-fill: #333; /* Couleur du texte pour les labels */
+}
+
+/* Style pour le titre */
+Label[layoutY="52.0"] { /* Cible le label du titre par sa position Y */
+    -fx-font-size: 20px; /* Taille de la police plus grande */
+    -fx-font-weight: bold; /* Gras */
+    -fx-text-fill: #007bff; /* Couleur bleue pour le titre */
+}
+
+/* Style pour les champs de texte */
+TextField, DatePicker {
+    -fx-padding: 5; /* Espacement intérieur */
+    -fx-border-color: #cccccc; /* Couleur de la bordure */
+    -fx-border-radius: 5; /* Arrondir les coins */
+    -fx-pref-width: 200; /* Largeur préférée */
+}
+
+/* Style pour le bouton */
+Button {
+    -fx-background-color: #007bff; /* Couleur de fond */
+    -fx-text-fill: white; /* Couleur du texte */
+    -fx-font-size: 14px; /* Taille de la police */
+    -fx-font-weight: bold; /* Gras */
+    -fx-padding: 10; /* Espacement intérieur */
+    -fx-border-radius: 5; /* Arrondir les coins */
+}
+
+Button:hover {
+    -fx-background-color: #0056b3; /* Couleur de fond au survol */
+}

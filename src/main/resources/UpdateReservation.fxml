@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="350.0" prefWidth="600.0" stylesheets="@UpdateReservationStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UpdateReservation">
+
+    <children>
+        <Label layoutX="144.0" layoutY="43.0" prefHeight="32.0" prefWidth="312.0" text="Mettre à Jour la Réservation">
+            <font>
+                <Font name="System Bold" size="22.0" />
+            </font>
+        </Label>
+
+        <Label layoutX="145.0" layoutY="94.0" text="ID Réservation :">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="reservationIdField" layoutX="278.0" layoutY="95.0" />
+
+        <Label layoutX="144.0" layoutY="149.0" text="Nom du Client :">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="clientNameField" layoutX="278.0" layoutY="150.0" />
+
+        <Label layoutX="100.0" layoutY="202.0" text="Date de Réservation :">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <DatePicker fx:id="reservationDatePicker" layoutX="278.0" layoutY="203.0" />
+
+        <Label layoutX="212.0" layoutY="255.0" text="Statut :">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="statusField" layoutX="278.0" layoutY="255.0" />
+
+        <Button fx:id="updateButton" layoutX="256.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleUpdateReservation" text="Mettre à Jour" />
+    </children>
+
+</AnchorPane>

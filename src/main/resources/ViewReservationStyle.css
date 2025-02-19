@@ -1,0 +1,36 @@
+/* Style pour le VBox principal */
+VBox {
+    -fx-background-color: #f0f0f0; /* Couleur de fond */
+    -fx-padding: 20; /* Espacement intérieur */
+}
+
+/* Style pour le label principal */
+Label {
+    -fx-text-fill: #333; /* Couleur du texte */
+    -fx-font-size: 20px; /* Taille de la police */
+    -fx-font-weight: bold; /* Gras */
+}
+
+/* Style pour chaque entrée de réservation */
+HBox {
+    -fx-background-color: #ffffff; /* Couleur de fond des entrées */
+    -fx-padding: 10; /* Espacement intérieur */
+    -fx-spacing: 10; /* Espacement entre les éléments */
+    -fx-border-color: #cccccc; /* Couleur de la bordure */
+    -fx-border-radius: 5; /* Arrondir les coins */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.0, 0, 1); /* Ombre */
+}
+
+/* Style pour les boutons */
+Button {
+    -fx-background-color: #007bff; /* Couleur de fond */
+    -fx-text-fill: white; /* Couleur du texte */
+    -fx-font-size: 14px; /* Taille de la police */
+    -fx-font-weight: bold; /* Gras */
+    -fx-padding: 10; /* Espacement intérieur */
+    -fx-border-radius: 5; /* Arrondir les coins */
+}
+
+Button:hover {
+    -fx-background-color: #0056b3; /* Couleur de fond au survol */
+}
