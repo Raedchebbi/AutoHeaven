@@ -34,6 +34,10 @@ public class PanierItem {
     @FXML
     private Button Sous;
 
+    @FXML
+    private Label quantite;
+
+
 
     @FXML
     private Label prix;
@@ -52,6 +56,7 @@ public class PanierItem {
         equip = es.getEquipementById(panier.getId_e());
         nom.setText(equip.getNom());
         prix.setText(String.valueOf(ss.getStockById(equip.getId()).getPrixvente()));
+        quantite.setText(String.valueOf(ss.getStockById(equip.getId()).getQuantite()));
         image.setImage(new Image(equip.getImage()));
 
     }

@@ -14,6 +14,7 @@ public interface CrudEquipement <T,R>{
     void update(Equipement obj, int quantite, double prixvente) throws Exception;
 
     void delete(int id) throws Exception;
+    void updateQuantite(int id ,int quantite) throws Exception;
 
     List<R> getAll() throws Exception;
     T getEquipementById(int id) throws Exception;

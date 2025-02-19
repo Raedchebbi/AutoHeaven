@@ -7,6 +7,7 @@ import java.util.List;
 public interface CrudCommande<T> {
     int create(int id) throws Exception;
     void update(int id , double montantTotal) throws Exception;
+    void updateStatus(int id , String status) throws Exception;
 
 
     double getPrixEquipement(int id) throws Exception;

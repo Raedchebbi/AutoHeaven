@@ -51,7 +51,7 @@ public class HistoriqueComItem {
                 status.getStyleClass().add("status-cancelled");
                 break;
             default:
-                // Si le statut n'est pas reconnu, ne pas appliquer de style
+
                 break;
         }
         detail.setOnMouseClicked(event -> {

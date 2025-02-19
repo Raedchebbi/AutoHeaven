@@ -53,16 +53,16 @@ public class HistoriqueCommande implements Initializable {
                 ex.printStackTrace();
             }
         }}
-    public void showEquipementsAchetes(List<Lignecommande> ligneCommandes) throws IOException {
-        // Charger la nouvelle vue
+    public void showEquipementsAchetes(List<Lignecommande> ligneCommandes) throws Exception {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/EquipementsAchetes.fxml"));
         Parent root = loader.load();
 
-        // Initialiser les données dans le contrôleur
+
         EquipementsAchetes controller = loader.getController();
         controller.initData(ligneCommandes);
 
-        // Afficher la nouvelle vue dans une nouvelle fenêtre
+
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("Équipements Achetés");

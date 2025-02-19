@@ -4,11 +4,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import models.Commande;
 import models.EquipementAffichage;
+import models.Lignecommande;
 import services.CommandeService;
 import services.EquipementService;
 
@@ -56,5 +59,20 @@ public class ValidationCommande implements Initializable {
                 ex.printStackTrace();
             }
         }
+    }
+    public void showEquipementsAchetes(List<Lignecommande> ligneCommandes ,Commande commande) throws Exception {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/EquipementAchetesadr.fxml"));
+        Parent root = loader.load();
+
+
+        EquipementAchetesadr controller = loader.getController();
+        controller.initData(ligneCommandes,commande);
+
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Équipements Achetés");
+        stage.show();
     }
 }

@@ -90,6 +90,16 @@ public class EquipementService implements CrudEquipement<Equipement,EquipementAf
     }
 
     @Override
+    public void updateQuantite(int id ,int quantite) throws Exception {
+        String sqlStock = "update Stock set quantite =quantite- ? where id = ?";
+        PreparedStatement stmt = conn.prepareStatement(sqlStock);
+        stmt.setInt(1, quantite);
+        stmt.setInt(2, id);
+        stmt.executeUpdate();
+
+    }
+
+    @Override
     public List<EquipementAffichage> getAll() throws Exception {
         String sql = "select e.id ,e.nom ,e.description ,e.image ,e.reference ,e.marque, s.quantite , s.prixvente from equipement e join stock s on e.id = s.id";
         Statement stmt = conn.createStatement();

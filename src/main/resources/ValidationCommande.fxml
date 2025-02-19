@@ -24,7 +24,7 @@
             <Label prefHeight="18.0" prefWidth="157.0" text="Prenom" />
             <Label prefHeight="18.0" prefWidth="103.0" text="tel" />
             <Label prefHeight="18.0" prefWidth="160.0" text="Date commande" />
-            <Label prefHeight="18.0" prefWidth="78.0" text="Prix totale" />
+            <Label prefHeight="18.0" prefWidth="78.0" text="Status" />
             <Label text="Action" />
          </children>
       </HBox>

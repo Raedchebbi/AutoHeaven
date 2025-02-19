@@ -16,11 +16,11 @@
       <Label fx:id="pren" prefHeight="18.0" prefWidth="157.0" text="Label" />
       <Label fx:id="tel" prefHeight="18.0" prefWidth="103.0" text="Label" />
       <Label fx:id="date" prefHeight="18.0" prefWidth="160.0" text="Label" />
-      <Label fx:id="prix" prefHeight="18.0" prefWidth="78.0" text="Label" />
+      <Label fx:id="prix" prefHeight="18.0" prefWidth="78.0" text="Status" />
       <FontAwesomeIconView fx:id="detail" glyphName="EYE" size="20" wrappingWidth="28.0" />
       <Button fx:id="check" mnemonicParsing="false" style="-fx-background-color: #38994f;">
          <graphic>
-            <FontAwesomeIconView glyphName="CHECK" />
+            <FontAwesomeIconView glyphName="CHECK"  />
          </graphic>
       </Button>
       <Button fx:id="cancel" mnemonicParsing="false" style="-fx-background-color: #f70909;" text="X" />

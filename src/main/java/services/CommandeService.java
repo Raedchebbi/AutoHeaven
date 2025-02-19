@@ -50,10 +50,10 @@ public class CommandeService implements CrudCommande<Commande> {
                 ligneCommandeService.create(l);
             }
 
-            // Mettre à jour le montant total de la commande
+
             update(idCommande, total);
 
-            // Vider le panier
+
             panierService.delete(id);
         }
 
@@ -71,6 +71,17 @@ public class CommandeService implements CrudCommande<Commande> {
         PreparedStatement stmt = conn.prepareStatement(sql);
 
         stmt.setDouble(1, montantTotal);
+        stmt.setInt(2, id);
+        stmt.executeUpdate();
+
+
+    }
+
+    @Override
+    public void updateStatus(int id, String status) throws Exception {
+        String sql = "UPDATE commande SET status = ? WHERE id_com = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, status);
         stmt.setInt(2, id);
         stmt.executeUpdate();
 
@@ -153,5 +164,6 @@ public class CommandeService implements CrudCommande<Commande> {
         }
         return coms;
     }
+
 
 }

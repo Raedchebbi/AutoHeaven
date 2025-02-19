@@ -105,6 +105,7 @@ public class DetailEquipement {
         int id =equipement.getId();
         int idu =3;
         PanierService ps = new PanierService();
+
         Panier panier = new Panier(Integer.parseInt(input.getText()),idu,id);
         ps.create(panier);
         showSuccessPopup();
