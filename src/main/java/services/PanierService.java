@@ -71,6 +71,13 @@ public class PanierService implements CrudPanier<Panier>{
         stmt.executeUpdate();
 
     }
+    public void deleteByid(int id) throws Exception {
+        String sql = "delete from panier where id_e = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1,id);
+        stmt.executeUpdate();
+
+    }
 
     @Override
     public List<Panier> getAll(int id) throws Exception {

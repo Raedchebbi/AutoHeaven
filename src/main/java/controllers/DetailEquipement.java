@@ -107,8 +107,11 @@ public class DetailEquipement {
         PanierService ps = new PanierService();
 
         Panier panier = new Panier(Integer.parseInt(input.getText()),idu,id);
-        ps.create(panier);
+        if (Integer.parseInt(input.getText()) <= equipement.getQuantite())
+
+            ps.create(panier);
         showSuccessPopup();
+
       //  redirectToEquipDetail(equipement);
 
     }

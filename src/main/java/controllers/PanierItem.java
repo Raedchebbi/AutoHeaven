@@ -56,7 +56,7 @@ public class PanierItem {
         equip = es.getEquipementById(panier.getId_e());
         nom.setText(equip.getNom());
         prix.setText(String.valueOf(ss.getStockById(equip.getId()).getPrixvente()));
-        quantite.setText(String.valueOf(ss.getStockById(equip.getId()).getQuantite()));
+        quantite.setText(String.valueOf(panier.getQuantite()));
         image.setImage(new Image(equip.getImage()));
 
     }
@@ -96,7 +96,10 @@ public class PanierItem {
         if (panier != null) {
 
             PanierService ps = new PanierService();
-            ps.delete(panier.getId());
+            System.out.println(panier);
+            //System.out.println(panier.getId_e());
+            System.out.println("ID du panier à supprimer : " + panier.getId_e());
+            ps.deleteByid(panier.getId_e());
 
 
             if (paniersCon != null) {

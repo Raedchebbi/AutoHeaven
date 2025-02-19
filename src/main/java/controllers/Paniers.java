@@ -11,7 +11,9 @@ import javafx.scene.layout.VBox;
 import models.EquipementAffichage;
 import models.Panier;
 import services.CommandeService;
+import services.EquipementService;
 import services.PanierService;
+import services.StockService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -55,7 +57,28 @@ public class Paniers implements Initializable {
         public void handleCommande() throws Exception {
 
             CommandeService cs = new CommandeService();
+            PanierService ps = new PanierService();
+            EquipementService es = new EquipementService();
+            StockService ss = new StockService();
+
+            List<Panier> paniers = ps.getAll(3); // Récupère tous les paniers pour l'utilisateur avec l'id 3
+
+
+            for (Panier panier : paniers) {
+                int quantiteDisponible = ss.getStockById(panier.getId_e()).getQuantite();
+                if (quantiteDisponible < panier.getQuantite()) {
+                    showErrorPopup("Quantité insuffisante pour l'équipement: " + panier.getId_e());
+                    return;
+                }
+            }
+
+
             cs.create(3);
+
+            for (Panier panier : paniers) {
+                es.updateQuantite(panier.getId_e(), panier.getQuantite());
+            }
+
             showSuccessPopup();
             redirectToPaniers();
 
@@ -82,6 +105,13 @@ public class Paniers implements Initializable {
         Parent root = loader.load();
         Scene currentScene = back.getScene();
         currentScene.setRoot(root);
+    }
+    private void showErrorPopup(String message) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 

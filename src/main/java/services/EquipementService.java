@@ -89,14 +89,14 @@ public class EquipementService implements CrudEquipement<Equipement,EquipementAf
 
     }
 
+
     @Override
-    public void updateQuantite(int id ,int quantite) throws Exception {
-        String sqlStock = "update Stock set quantite =quantite- ? where id = ?";
+    public void updateQuantite(int id, int quantite) throws Exception {
+        String sqlStock = "UPDATE stock SET quantite = quantite - ? WHERE id = ?";
         PreparedStatement stmt = conn.prepareStatement(sqlStock);
         stmt.setInt(1, quantite);
         stmt.setInt(2, id);
         stmt.executeUpdate();
-
     }
 
     @Override
