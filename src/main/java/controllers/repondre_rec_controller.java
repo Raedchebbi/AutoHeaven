@@ -6,15 +6,20 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import utils.MyDb;
+
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class repondre_rec_controller {
 
-    @FXML private TextField titreField;
-    @FXML private TextArea contenuField;
-    @FXML private TextArea reponseField;
+    @FXML
+    private TextField titreField;
+    @FXML
+    private TextArea contenuField;
+    @FXML
+    private TextArea reponseField;
 
     private int reclamationId;
     private Runnable onSuccessCallback;
@@ -39,6 +44,7 @@ public class repondre_rec_controller {
     private void handleEnvoyerReponse() {
         if (validateInput()) {
             if (saveMessageToDatabase() && updateStatusInDatabase()) {
+                showSuccessAlert(); // Afficher l'alerte de succès
                 if (onSuccessCallback != null) onSuccessCallback.run(); // Rafraîchir l'affichage principal
                 closeWindow();
             }
@@ -54,28 +60,21 @@ public class repondre_rec_controller {
     }
 
     private boolean saveMessageToDatabase() {
-        // Correction : Ajout de 'datemessage' avec NOW()
         String query = "INSERT INTO messagerie (message, receiver, id_rec, datemessage) VALUES (?, 'admin', ?, NOW())";
 
         try (Connection conn = MyDb.getInstance().getConn();
              PreparedStatement ps = conn.prepareStatement(query)) {
 
-            // Vérification de la connexion
             if (conn == null || conn.isClosed()) {
                 showAlert("Erreur SQL", "Connexion fermée. Impossible d'enregistrer.");
                 return false;
             }
 
-            System.out.println("Connexion active. Enregistrement du message...");
-
-            // Ajout des valeurs à la requête
             ps.setString(1, reponseField.getText().trim());
             ps.setInt(2, reclamationId);
 
-            // Exécution de la requête et retour du succès
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Message enregistré avec succès !");
                 return true;
             } else {
                 showAlert("Erreur", "Aucune ligne insérée.");
@@ -87,10 +86,6 @@ public class repondre_rec_controller {
         return false;
     }
 
-
-
-
-
     private boolean updateStatusInDatabase() {
         String query = "UPDATE reclamation SET status = 'repondu' WHERE id_rec = ?";
 
@@ -101,7 +96,6 @@ public class repondre_rec_controller {
             int rowsUpdated = ps.executeUpdate();
 
             if (rowsUpdated > 0) {
-                System.out.println("Statut mis à jour avec succès !");
                 return true;
             } else {
                 showAlert("Erreur", "Aucune réclamation trouvée pour mise à jour.");
@@ -112,7 +106,6 @@ public class repondre_rec_controller {
         }
         return false;
     }
-
 
     private void closeWindow() {
         Stage stage = (Stage) reponseField.getScene().getWindow();
@@ -126,4 +119,25 @@ public class repondre_rec_controller {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+    public void showSuccessAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Succès");
+        alert.setHeaderText("Réponse envoyée avec succès !");
+        alert.setContentText(""); // Supprime le texte inutile qui casse le style
+
+        // Appliquer le CSS
+        URL cssUrl = getClass().getResource("/repondrereclamation.css");
+        if (cssUrl != null) {
+            alert.getDialogPane().getStylesheets().add(cssUrl.toExternalForm());
+        } else {
+            System.out.println("⚠️ Fichier styles.css non trouvé !");
+        }
+
+        // Ajuster le style de la boîte de dialogue
+        alert.getDialogPane().setPrefSize(300, 150); // Ajuste la taille
+        alert.showAndWait();
+    }
+
+
 }

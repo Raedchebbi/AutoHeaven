@@ -34,6 +34,17 @@
     -fx-background-color: #fff; /* Fond blanc */
     -fx-text-fill: #333; /* Texte noir */
     -fx-effect: dropshadow(three-pass-box, rgba(255, 0, 0, 0.2), 5, 0, 0, 0);
+    -fx-border-insets: 0;
+    -fx-background-insets: 0;
+}
+.text-area .content {
+    -fx-background-color: transparent; /* Supprime le cadre interne */
+    -fx-padding: 10px;
+}
+
+.text-area:focused {
+    -fx-background-color: transparent; /* Supprime le cadre interne */
+    -fx-background-color: white;
 }
 
 .text-area {
@@ -66,4 +77,23 @@
     -fx-background-color: #8B0000; /* Rouge très foncé */
     -fx-scale-x: 0.98;
     -fx-scale-y: 0.98;
+}
+.dialog-pane {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 10px;
+    -fx-padding: 10px;
+}
+
+.dialog-pane .button {
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px 15px;
+}
+
+.dialog-pane .content {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
 }

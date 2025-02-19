@@ -1,30 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherReclamationController">
+<AnchorPane prefHeight="750.0" prefWidth="1250.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherReclamationController">
 
-    <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="scroll-pane">
-        <VBox prefWidth="1150" spacing="5" styleClass="container">
+    <!-- Conteneur principal avec padding -->
+    <VBox alignment="TOP_CENTER" spacing="20">
+        <padding>
+            <Insets bottom="20" left="20" right="20" top="20" />
+        </padding>
 
-            <!-- En-tête -->
-            <HBox styleClass="header-row">
-                <Label prefHeight="42.0" prefWidth="165.0" styleClass="header-cell" text="Titre" />
-                <Label prefHeight="42.0" prefWidth="272.0" styleClass="header-cell" text="Contenu" />
-                <Label prefHeight="42.0" prefWidth="148.0" styleClass="header-cell" text="Date" />
-                <Label prefHeight="42.0" prefWidth="142.0" styleClass="header-cell" text="Nom" />
-                <Label prefHeight="42.0" prefWidth="119.0" styleClass="header-cell" text="Téléphone" />
-                <Label prefHeight="42.0" prefWidth="161.0" styleClass="header-cell" text="Email" />
-                <Label prefHeight="42.0" prefWidth="119.0" styleClass="header-cell" text="Statut" /> <!-- Colonne "Statut" -->
-            </HBox>
+        <!-- Titre principal -->
+        <Label styleClass="label-title" text="Répondre aux réclamations" textAlignment="CENTER" />
 
-            <!-- Contenu dynamique -->
-            <VBox fx:id="contentBox" spacing="3" />
+        <!-- Barre de recherche et filtre -->
+        <HBox spacing="15">
+            <TextField fx:id="searchField" prefHeight="31.0" prefWidth="172.0" promptText="Rechercher une réclamation..." />
+            <CheckBox fx:id="filterBannedCheckBox" prefHeight="26.0" prefWidth="270.0" text="Afficher seulement les messages bannis" />
+        </HBox>
 
-        </VBox>
-    </ScrollPane>
+        <!-- Conteneur principal avec ScrollPane -->
+        <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="scroll-pane modern-scroll">
+            <VBox prefWidth="1200" spacing="10" styleClass="container">
+                <padding>
+                    <Insets bottom="10" left="10" right="10" top="10" />
+                </padding>
+
+                <!-- En-tête -->
+                <HBox styleClass="header-row">
+                    <Label prefWidth="165.0" styleClass="header-cell" text="Objet" />
+                    <Label prefWidth="272.0" styleClass="header-cell" text="Réclamation" />
+                    <Label prefHeight="40.0" prefWidth="121.0" styleClass="header-cell" text="Date" />
+                    <Label prefWidth="142.0" styleClass="header-cell" text="Nom" />
+                    <Label prefWidth="119.0" styleClass="header-cell" text="Téléphone" />
+                    <Label prefWidth="161.0" styleClass="header-cell" text="Email" />
+                    <Label prefWidth="119.0" styleClass="header-cell" text="Statut" />
+                </HBox>
+
+                <!-- Contenu dynamique -->
+                <VBox fx:id="contentBox" spacing="5" />
+            </VBox>
+        </ScrollPane>
+    </VBox>
+
 </AnchorPane>

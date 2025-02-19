@@ -10,24 +10,22 @@ import utils.MyDb;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class addreclamation_controller {
 
-    private static final int USER_ID = 3;
-    private static final int TITRE_MAX_LENGTH = 100;
-    private static final int CONTENU_MIN_LENGTH = 10;
-    private static final int CONTENU_MAX_LENGTH = 1000;
+    private static final int USER_ID = 3;  // L'ID de l'utilisateur
+    private static final int TITRE_MAX_LENGTH = 100;  // Longueur maximale du titre
+    private static final int CONTENU_MIN_LENGTH = 10;  // Longueur minimale du contenu
+    private static final int CONTENU_MAX_LENGTH = 1000;  // Longueur maximale du contenu
 
     @FXML
-    private TextField objetTextField;
+    private TextField objetTextField;  // Champ pour le titre de la réclamation
     @FXML
-    private TextArea reclamationTextArea;
+    private TextArea reclamationTextArea;  // Champ pour le contenu de la réclamation
     @FXML
-    private Label erreurObjet;
+    private Label erreurObjet;  // Label pour afficher l'erreur sur le titre
     @FXML
-    private Label erreurReclamation;
+    private Label erreurReclamation;  // Label pour afficher l'erreur sur le contenu
 
     @FXML
     private void handleEnvoyerReclamation() {
@@ -37,7 +35,7 @@ public class addreclamation_controller {
         String contenu = reclamationTextArea.getText().trim();
         boolean isValid = true;
 
-        // Validation Objet
+        // Validation du titre
         if (titre.isEmpty()) {
             erreurObjet.setText("Ce champ est obligatoire");
             isValid = false;
@@ -49,7 +47,7 @@ public class addreclamation_controller {
             isValid = false;
         }
 
-        // Validation Réclamation
+        // Validation du contenu
         if (contenu.isEmpty()) {
             erreurReclamation.setText("Ce champ est obligatoire");
             isValid = false;
@@ -61,6 +59,7 @@ public class addreclamation_controller {
             isValid = false;
         }
 
+        // Si tout est valide, enregistrer la réclamation
         if (isValid) {
             insererReclamation(titre, contenu);
         }

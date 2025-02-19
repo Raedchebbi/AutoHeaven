@@ -21,7 +21,7 @@ public class mainreclamation { // Nom de classe en PascalCase
             // TEST MESSAGERIE
             System.out.println("\n=== TEST MESSAGERIE ===");
             Messagerie message = new Messagerie(0, "client", "Bonsoir, comment allez-vous ?",
-                    44, LocalDateTime.now(), "admin", 3);
+                    86, LocalDateTime.now(), "admin", 3);
             messagerieService.create(message);
             System.out.println("✅ Message créé : " + message);
 
@@ -29,7 +29,7 @@ public class mainreclamation { // Nom de classe en PascalCase
             // TEST UPDATE MESSAGERIE
             System.out.println("\n=== TEST UPDATE MESSAGERIE ===");
             Messagerie updatedMessage = new Messagerie(58, "client", "Message mis à jour !",
-                    44, LocalDateTime.now(), "client", 3);
+                    86, LocalDateTime.now(), "client", 3);
             messagerieService.update(updatedMessage);
             System.out.println("✅ Message mis à jour : " + updatedMessage);
 
@@ -52,7 +52,7 @@ public class mainreclamation { // Nom de classe en PascalCase
             ///////////////////////////
             // TEST UPDATE RECLAMATION
             System.out.println("\n=== TEST UPDATE RECLAMATION ===");
-            Reclamation updatedReclamation = new Reclamation(44, "Problème de connexion",
+            Reclamation updatedReclamation = new Reclamation(86, "Problème de connexion",
                     "Connexion rétablie, mise à jour !", "repondu", // Statut corrigé
                     LocalDate.now(), 4);
             reclamationService.update(updatedReclamation);
