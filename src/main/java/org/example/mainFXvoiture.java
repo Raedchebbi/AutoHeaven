@@ -9,9 +9,11 @@ import javafx.stage.Stage;
 public class mainFXvoiture extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/affichervoiture.fxml"));
-        primaryStage.setTitle("liste des voitures");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        Parent root = FXMLLoader.load(getClass().getResource("/navigate.fxml"));
+        primaryStage.setTitle("Gestion Voitures");
+        primaryStage.setScene(new Scene(root, 1200, 600)); // Increased size
+
+        primaryStage.setResizable(true);
         primaryStage.show();
     }
 

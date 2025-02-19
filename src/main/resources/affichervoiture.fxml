@@ -4,37 +4,40 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.affichervoiture">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@style1.css"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.affichervoiture">
 
     <children>
-        <VBox layoutX="20.0" layoutY="20.0" prefWidth="860.0" spacing="10.0">
+        <VBox layoutX="20.0" layoutY="20.0" spacing="10.0" prefWidth="860.0"
+              AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
-            <!-- Header Row -->
-            <HBox prefHeight="50.0" prefWidth="860.0" spacing="10.0" style="-fx-border-color: black; -fx-border-width: 0 0 1 0; -fx-padding: 10;">
-                <Label style="-fx-font-weight: bold;" text="Marque" HBox.hgrow="ALWAYS" />
+            <HBox spacing="10.0" style="-fx-border-color: black; -fx-border-width: 0 0 1 0; -fx-padding: 10;">
+                <Label text="Marque" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
                 <Separator orientation="VERTICAL" />
-                <Label style="-fx-font-weight: bold;" text="Description" HBox.hgrow="ALWAYS" />
+                <Label text="Modèle" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
                 <Separator orientation="VERTICAL" />
-                <Label style="-fx-font-weight: bold;" text="Kilométrage" HBox.hgrow="ALWAYS" />
+                <Label text="Prix" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
                 <Separator orientation="VERTICAL" />
-                <Label style="-fx-font-weight: bold;" text="Couleur" HBox.hgrow="ALWAYS" />
+                <Label text="Kilométrage" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
                 <Separator orientation="VERTICAL" />
-                <Label style="-fx-font-weight: bold;" text="Prix" HBox.hgrow="ALWAYS" />
+                <Label text="Couleur" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
                 <Separator orientation="VERTICAL" />
-                <Label style="-fx-font-weight: bold;" text="Image" HBox.hgrow="ALWAYS" />
+                <Label text="Description" style="-fx-font-weight: bold; -fx-pref-width: 150;" />
                 <Separator orientation="VERTICAL" />
-                <Label style="-fx-font-weight: bold;" text="Disponibilité" HBox.hgrow="ALWAYS" />
+                <Label text="Disponibilité" style="-fx-font-weight: bold; -fx-pref-width: 100;" />
             </HBox>
 
             <VBox fx:id="voitureContainer" spacing="10.0" prefHeight="450.0" VBox.vgrow="ALWAYS" />
 
         </VBox>
 
-        <Button fx:id="refreshButton" layoutX="700.0" layoutY="550.0" onAction="#handleRefresh" text="Rafraîchir" />
+        <Button fx:id="refreshButton" text="Rafraîchir"
+                AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0"
+                onAction="#handleRefresh" />
     </children>
 
 </AnchorPane>

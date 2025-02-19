@@ -11,6 +11,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import models.Categorie;
 import services.CategorieService;
@@ -42,36 +43,45 @@ public class affichercategorie {
         }
 
         for (Categorie categorie : categories) {
-            HBox categoryRow = new HBox(10);
-            categoryRow.setStyle("-fx-border-color: black; -fx-border-width: 0 0 1 0; -fx-padding: 5;");
+            HBox categoryRow = new HBox(15); // Increased spacing for better visibility
+            categoryRow.setStyle("-fx-border-color: black; -fx-border-width: 0 0 1 0; -fx-padding: 10;");
+            categoryRow.setPrefWidth(1000); // Increased HBox width
+            categoryRow.setMaxWidth(Double.MAX_VALUE); // Allow it to expand
 
+            // Labels with increased width
             Label typeLabel = new Label(categorie.getType());
-            typeLabel.setPrefWidth(80);
+            typeLabel.setPrefWidth(150);
+            HBox.setHgrow(typeLabel, Priority.ALWAYS);
 
             Label carburantLabel = new Label(categorie.getType_carburant());
-            carburantLabel.setPrefWidth(80);
+            carburantLabel.setPrefWidth(150);
+            HBox.setHgrow(carburantLabel, Priority.ALWAYS);
 
             Label utilisationLabel = new Label(categorie.getType_utilisation());
-            utilisationLabel.setPrefWidth(80);
+            utilisationLabel.setPrefWidth(150);
+            HBox.setHgrow(utilisationLabel, Priority.ALWAYS);
 
             Label transmissionLabel = new Label(categorie.getTransmission());
-            transmissionLabel.setPrefWidth(80);
+            transmissionLabel.setPrefWidth(150);
+            HBox.setHgrow(transmissionLabel, Priority.ALWAYS);
 
             Label portesLabel = new Label(String.valueOf(categorie.getNbr_porte()));
-            portesLabel.setPrefWidth(60);
+            portesLabel.setPrefWidth(100);
+            HBox.setHgrow(portesLabel, Priority.ALWAYS);
 
-
+            // Modify button
             Button modifyButton = new Button("Modifier");
             modifyButton.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
-            modifyButton.setPrefWidth(100);
+            modifyButton.setPrefWidth(120);
             modifyButton.setOnAction(event -> handleModifyCategorie(categorie));
 
+            // Delete button
             Button deleteButton = new Button("Supprimer");
             deleteButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
-            deleteButton.setPrefWidth(100);
+            deleteButton.setPrefWidth(120);
             deleteButton.setOnAction(event -> confirmDeleteCategorie(categorie));
 
-
+            // Add all elements to the row
             categoryRow.getChildren().addAll(
                     typeLabel, new Separator(),
                     carburantLabel, new Separator(),
@@ -115,7 +125,6 @@ public class affichercategorie {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
 
         modifiercategorie modifierController = loader.getController();
         modifierController.setCategorie(categorie);

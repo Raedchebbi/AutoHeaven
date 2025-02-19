@@ -6,41 +6,34 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.CheckBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@style1.css"
+<AnchorPane prefHeight="500.0" prefWidth="800.0" stylesheets="@style1.css"
             xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.affichervoiture">
+            fx:controller="controllers.affichercategorie">
 
     <children>
-        <VBox layoutX="20.0" layoutY="20.0" spacing="5.0" prefWidth="560.0">
+        <VBox layoutX="20.0" layoutY="20.0" spacing="5.0" prefWidth="760.0" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
-            <!-- Header Row -->
             <HBox spacing="10.0" style="-fx-border-color: black; -fx-border-width: 0 0 1 0; -fx-padding: 5;">
-                <Label text="Marque" style="-fx-font-weight: bold; -fx-pref-width: 100;" />
+                <Label text="Type" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Modèle" style="-fx-font-weight: bold; -fx-pref-width: 100;" />
+                <Label text="Carburant" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Prix" style="-fx-font-weight: bold; -fx-pref-width: 80;" />
+                <Label text="Utilisation" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Kilométrage" style="-fx-font-weight: bold; -fx-pref-width: 100;" />
+                <Label text="Transmission" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Couleur" style="-fx-font-weight: bold; -fx-pref-width: 80;" />
+                <Label text="Portes" style="-fx-font-weight: bold; -fx-pref-width: 80;" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Description" style="-fx-font-weight: bold; -fx-pref-width: 150;" />
-                <Separator orientation="VERTICAL" />
-                <Label text="Disponibilité" style="-fx-font-weight: bold; -fx-pref-width: 100;" />
+                <Label text="Actions" style="-fx-font-weight: bold; -fx-pref-width: 200;" />
             </HBox>
 
-            <!-- Data Rows for Each Voiture -->
-            <VBox fx:id="voitureContainer" spacing="5.0" />
+            <VBox fx:id="categoriesContainer" spacing="5.0" AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="60.0"/>
 
         </VBox>
 
-        <!-- Refresh Button -->
-        <Button fx:id="refreshButton" layoutX="500.0" layoutY="360.0" text="Rafraîchir" onAction="#handleRefresh" />
+        <Button fx:id="refreshButton" layoutX="650.0" layoutY="450.0" text="Rafraîchir" onAction="#handleRefresh"
+                AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0"/>
     </children>
 
 </AnchorPane>

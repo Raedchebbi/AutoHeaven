@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.navigatecontroller" fx:id="borderPane">
+    <left>
+        <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f0f0f0;">
+            <Button text="Ajouter Voiture" onAction="#loadAddVoiture" style="-fx-min-width: 150;"/>
+            <Button text="Ajouter Catégorie" onAction="#loadAddCategorie" style="-fx-min-width: 150;"/>
+            <Button text="Afficher Voitures" onAction="#loadAfficherVoiture" style="-fx-min-width: 150;"/>
+            <Button text="Afficher Catégories" onAction="#loadAfficherCategorie" style="-fx-min-width: 150;"/>
+        </VBox>
+    </left>
+</BorderPane>

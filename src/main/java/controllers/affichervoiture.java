@@ -51,7 +51,7 @@ public class affichervoiture {
             Label imageLabel = createLabel(voiture.getImage(), 200);
             Label disponibiliteLabel = createLabel(voiture.getDisponibilite(), 60);
 
-            // Buttons with fixed width
+
             Button modifyButton = new Button("Modifier");
             styleButton(modifyButton, "blue");
             modifyButton.setOnAction(event -> handleModifyVoiture(voiture));
