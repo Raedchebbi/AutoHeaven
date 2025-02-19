@@ -1,5 +1,6 @@
 package controllers;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,6 +23,9 @@ public class HistoriqueCommande implements Initializable {
 
     @FXML
     private VBox area;
+
+    @FXML
+    private FontAwesomeIconView back;
     Commande commande;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,5 +71,14 @@ public class HistoriqueCommande implements Initializable {
         stage.setScene(new Scene(root));
         stage.setTitle("Équipements Achetés");
         stage.show();
+
+    }
+    @FXML
+    private void handleBackAction() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
+        Parent root = loader.load();
+        Scene currentScene = back.getScene();
+        currentScene.setRoot(root);
     }
 }
