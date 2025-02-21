@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.NavigateController"
+            fx:id="borderPane">
+    <left>
+        <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f0f0f0;">
+            <Button text="Ajouter Reservation" onAction="#loadAddReservation" style="-fx-min-width: 150;"/>
+            <Button text="Ajouter Voiture Remorquage" onAction="#loadAddVoitureRemorque" style="-fx-min-width: 150;"/>
+            <Button text="Afficher Reservation" onAction="#loadViewReservation" style="-fx-min-width: 150;"/>
+            <Button text="Afficher Voiture Remorquage" onAction="#loadViewVoitureRemorque" style="-fx-min-width: 150;"/>
+            <Button text="Ajouter Service de Remorquage" onAction="#loadAddServiceRemorquage" style="-fx-min-width: 150;"/>
+            <Button text="Afficher Services de Remorquage" onAction="#loadViewServiceRemorquage" style="-fx-min-width: 150;"/>
+        </VBox>
+    </left>
+    <center>
+        <!-- Cette section sera utilisée pour charger d'autres interfaces FXML -->
+    </center>
+</BorderPane>
