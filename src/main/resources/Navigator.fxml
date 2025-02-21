@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="root"
+      alignment="CENTER"
+      spacing="20.0"
+      xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.NavigatorController">
+    <Button fx:id="btnCamionRemorquage" mnemonicParsing="false" onAction="#goToCamionRemorquage" text="Camion Remorquage">
+        <font>
+            <Font size="14.0" />
+        </font>
+    </Button>
+    <Button fx:id="btnResTestDrive" mnemonicParsing="false" onAction="#goToResTestDrive" text="Reservation Test Drive">
+        <font>
+            <Font size="14.0" />
+        </font>
+    </Button>
+    <Button fx:id="btnResRemorquage" mnemonicParsing="false" onAction="#goToResRemorquage" text="Reservation Remorquage">
+        <font>
+            <Font size="14.0" />
+        </font>
+    </Button>
+    <Button fx:id="btnResMecanicien" mnemonicParsing="false" onAction="#goToResMecanicien" text="Reservation Mecanicien">
+        <font>
+            <Font size="14.0" />
+        </font>
+    </Button>
+</VBox>
