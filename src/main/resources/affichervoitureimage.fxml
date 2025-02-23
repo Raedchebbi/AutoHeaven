@@ -3,13 +3,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@style1.css"
             xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.affichervoiture">
+            fx:controller="controllers.affichervoitureimage">
 
     <children>
         <VBox layoutX="20.0" layoutY="20.0" spacing="10.0" prefWidth="860.0"
@@ -18,15 +19,15 @@
             <HBox spacing="10.0" style="-fx-border-color: black; -fx-border-width: 0 0 1 0; -fx-padding: 10;">
                 <Label text="Marque" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Modèle" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
-                <Separator orientation="VERTICAL" />
-                <Label text="Prix" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
+                <Label text="Description" style="-fx-font-weight: bold; -fx-pref-width: 150;" />
                 <Separator orientation="VERTICAL" />
                 <Label text="Kilométrage" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
                 <Separator orientation="VERTICAL" />
                 <Label text="Couleur" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Description" style="-fx-font-weight: bold; -fx-pref-width: 150;" />
+                <Label text="Prix" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
+                <Separator orientation="VERTICAL" />
+                <Label text="Image" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
                 <Separator orientation="VERTICAL" />
                 <Label text="Disponibilité" style="-fx-font-weight: bold; -fx-pref-width: 100;" />
             </HBox>
