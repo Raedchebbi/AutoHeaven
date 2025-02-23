@@ -14,7 +14,7 @@ public class navigatecontroller {
 
     @FXML
     private void loadAddVoiture() {
-        loadView("/addvoiture.fxml");
+        loadView("/addvoitureimage.fxml");
     }
 
     @FXML
@@ -24,7 +24,7 @@ public class navigatecontroller {
 
     @FXML
     private void loadAfficherVoiture() {
-        loadView("/affichervoiturei.fxml");
+        loadView("/affichervoitureimage.fxml");
     }
 
     @FXML

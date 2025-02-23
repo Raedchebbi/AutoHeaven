@@ -124,7 +124,7 @@ public class affichervoitureimage {
     }
 
     private void handleModifyVoiture(Voiture voiture) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifiervoiture.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifiervoitureimage.fxml"));
         AnchorPane root;
         try {
             root = loader.load();
@@ -132,7 +132,7 @@ public class affichervoitureimage {
             throw new RuntimeException(e);
         }
 
-        modifiervoiture modifierController = loader.getController();
+        modifiervoitureimage modifierController = loader.getController();
         modifierController.setVoiture(voiture);
 
         Stage stage = new Stage();
