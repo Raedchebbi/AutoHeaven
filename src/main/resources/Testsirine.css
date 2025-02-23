@@ -1,0 +1,205 @@
+/* Style général de la scène */
+.root {
+    -fx-padding: 20px;
+    -fx-font-family: "Segoe UI", Arial, sans-serif; /* Une police moderne et élégante */
+    -fx-font-size: 14px;
+    -fx-background-color: #f4f4f4; /* Fond gris clair pour une ambiance épurée */
+}
+
+/* Style des Labels */
+.label {
+    -fx-text-fill: #333333; /* Texte gris foncé pour une lisibilité optimale */
+    -fx-font-weight: bold; /* Texte en gras pour une meilleure visibilité */
+    -fx-font-size: 16px;
+    -fx-padding: 5px;
+}
+
+/* Style des TextFields */
+.text-field {
+    -fx-background-color: #ffffff; /* Fond blanc pour un contraste moderne */
+    -fx-text-fill: #333333; /* Texte noir pour contraster avec le fond blanc */
+    -fx-prompt-text-fill: #999999; /* Couleur du texte de l'invite (placeholder) */
+    -fx-border-color: #cccccc; /* Bordure gris clair */
+    -fx-border-width: 1px;
+    -fx-padding: 10px;
+}
+
+/* Style pour les TextField lorsqu'ils sont focus (c'est-à-dire quand l'utilisateur clique dedans) */
+.text-field:focused {
+    -fx-background-color: #f7f7f7; /* Fond plus clair au focus */
+    -fx-border-color: #d32f2f; /* Bordure rouge vif au focus */
+    -fx-text-fill: #000000; /* Texte noir au focus */
+}
+
+/* Fond de la scène avec dégradé léger */
+.root {
+    -fx-background-color: linear-gradient(to bottom, #f4f4f4, #e0e0e0); /* Dégradé subtil de gris clair à gris */
+}
+
+/* Style des boutons */
+.button {
+    -fx-background-color: #d32f2f; /* Fond rouge vif pour les boutons */
+    -fx-text-fill: white; /* Texte blanc pour un bon contraste */
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 12px 25px; /* Espacement interne du bouton */
+    -fx-border-radius: 5px; /* Coins arrondis */
+    -fx-border-color: #b71c1c; /* Bordure rouge foncé */
+    -fx-border-width: 2px;
+    -fx-effect: innershadow(gaussian, #b71c1c, 5, 0.5, 1, 1); /* Ombre interne subtile */
+}
+
+/* Style pour le bouton lorsqu'il est en survol (hover) */
+.button:hover {
+    -fx-background-color: #b71c1c; /* Fond rouge plus foncé au survol */
+    -fx-border-color: #8e0000; /* Bordure plus foncée au survol */
+}
+
+/* Style du bouton lorsqu'il est cliqué (pressed) */
+.button:pressed {
+    -fx-background-color: #8e0000; /* Fond encore plus foncé lors du clic */
+    -fx-border-color: #6a0000; /* Bordure très foncée lors du clic */
+    -fx-effect: innershadow(gaussian, #6a0000, 8, 0.5, 1, 1); /* Ombre plus marquée lors du clic */
+}
+
+/* Style des titres ou éléments importants */
+.title {
+    -fx-text-fill: #333333;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+}
+
+/* Style pour les sections de la page */
+.section {
+    -fx-background-color: #ffffff; /* Fond blanc pour les sections */
+    -fx-border-color: #cccccc; /* Bordure gris clair */
+    -fx-border-width: 1px;
+    -fx-padding: 15px;
+    -fx-margin: 10px 0;
+    -fx-effect: dropshadow(gaussian, #aaaaaa, 5, 0.5, 0, 1); /* Ombre subtile pour les sections */
+}
+
+/* Style des notifications ou alertes */
+.alert {
+    -fx-background-color: #f8d7da; /* Fond rouge clair pour les alertes */
+    -fx-text-fill: #721c24; /* Texte rouge foncé pour contraster avec le fond */
+    -fx-border-color: #f5c6cb; /* Bordure rose clair */
+    -fx-border-width: 2px;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+/* Style des liens ou actions */
+.link {
+    -fx-text-fill: #d32f2f; /* Couleur rouge vif pour les liens */
+    -fx-font-size: 14px;
+    -fx-text-decoration: underline; /* Sous-ligné pour les liens */
+}
+
+/* Style pour les icônes si vous en avez besoin */
+.icon {
+    -fx-fill: #333333; /* Couleur gris foncé pour les icônes */
+    -fx-font-size: 20px; /* Taille d'icône standard */
+}
+
+
+
+/* Style général */
+.root {
+    -fx-background-color: #f8f9fa;
+    -fx-font-family: 'Segoe UI', sans-serif;
+}
+
+/* Titre principal */
+.title {
+    -fx-font-size: 28px;
+    -fx-text-fill: #d32f2f;
+    -fx-font-weight: 700;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0.5, 0, 1);
+}
+
+/* Zone de recherche */
+.search-box {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 6, 0, 0, 2);
+}
+
+/* Champ de texte moderne */
+.modern-textfield {
+    -fx-pref-width: 400px;
+    -fx-pref-height: 40px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-font-size: 16px;
+    -fx-padding: 0 12px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 1.5px;
+}
+
+.modern-textfield:focused {
+    -fx-border-color: #d32f2f;
+    -fx-effect: innershadow(gaussian, rgba(52,152,219,0.2), 8, 0, 0, 0);
+}
+
+/* Bouton moderne */
+.modern-button {
+    -fx-background-color: linear-gradient(to bottom right, #d32f2f, #2980b9);
+    -fx-text-fill: white;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 25px;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 6, 0, 0, 2);
+}
+
+.modern-button:hover {
+    -fx-background-color: linear-gradient(to bottom right, #d32f2f, #3498db);
+}
+
+.modern-button:pressed {
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 1);
+}
+
+/* ListView stylisée */
+.styled-list {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.styled-list .list-cell {
+    -fx-background-color: white;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 15px;
+    -fx-font-size: 14px;
+}
+
+.styled-list .list-cell:filled:hover {
+    -fx-background-color: #f8f9fa;
+    -fx-cursor: hand;
+}
+
+.styled-list .list-cell:filled:selected {
+    -fx-background-color: #e3f2fd;
+    -fx-text-fill: #2c3e50;
+}
+
+.styled-list .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.styled-list .scroll-bar:vertical .track {
+    -fx-background-color: #f1f1f1;
+    -fx-background-radius: 2px;
+}
+
+.styled-list .scroll-bar:vertical .thumb {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 2px;
+}
