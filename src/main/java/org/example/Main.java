@@ -1,4 +1,4 @@
-package org.example;
+/*package org.example;
 
 import models.Offre;
 import models.User;
@@ -51,3 +51,4 @@ public class Main {
         }
     }
 }
+*/

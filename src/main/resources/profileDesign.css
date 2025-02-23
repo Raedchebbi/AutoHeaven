@@ -17,7 +17,6 @@
 
 .shadow{
     -fx-effect:dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);
-    -fx-background-radius: 8px;
 }
 .table-header {
     -fx-font-weight: bold;

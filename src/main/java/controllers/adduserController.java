@@ -28,18 +28,17 @@ public class adduserController implements Initializable {
     @FXML
     private ImageView shieldImageview;
     @FXML
+    private ImageView photoprofil;
+    @FXML
     private Button fermerButton;
     @FXML
-    private Label registrationMessageLabel;
+    private Button loadphotoBtn;
 
     @FXML
     private Label errormessage;
 
     @FXML
     private TextField setPasswordfield;
-
-    @FXML
-    private RadioButton roleRadiobtn;
 
     @FXML
     private TextField confirmPasswordfield;
@@ -58,10 +57,13 @@ public class adduserController implements Initializable {
     private TextField telTextfield;
     @FXML
     private TextField adresseTextfield;
-    @FXML
-    private TextField roleTextfield;
+
     @FXML
     private TextField usernameTextfield;
+
+    @FXML
+    private TextField photoTextfield;
+
 
     private UserService userService = new UserService();
 
@@ -90,6 +92,7 @@ public class adduserController implements Initializable {
             String password = setPasswordfield.getText();
             String tel = telTextfield.getText();
             String adresse = adresseTextfield.getText();
+
 
             // Validate input
             if (!isValidInput()) {
@@ -128,13 +131,14 @@ public class adduserController implements Initializable {
         String role = "client";
         String username = usernameTextfield.getText();
         String password = setPasswordfield.getText();
+
+
         User newUser = new User( cin, nom, prénom, tel, email, password, role, adresse, username);
         try {
             userService.create(newUser);
         } catch (Exception e) {
             System.out.println("Erreur : " + e.getMessage());
         }
-
     }
 
     public void registerUser() throws Exception {
@@ -184,7 +188,7 @@ public class adduserController implements Initializable {
         if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             errors.append("Erreur : L'email n'est pas valide.\n");
         }
-        if (cin.isBlank() || email.isBlank() || username.isBlank() || password.isBlank() || tel.isBlank() || adresse.isBlank() || !roleRadiobtn.isSelected()) {
+        if (cin.isBlank() || email.isBlank() || username.isBlank() || password.isBlank() || tel.isBlank() || adresse.isBlank() ) {
             errors.append("Veuillez remplir tous les champs. \n");
         }
         if (userService.cinExists(cin)) {

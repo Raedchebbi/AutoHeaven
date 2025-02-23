@@ -20,21 +20,25 @@ import javafx.stage.Stage;
 
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
+import javafx.util.Pair;
+import models.Offre;
 import models.User;
 import services.UserService;
+import services.OffreService;
 import utils.MyDb;
 
 import java.io.File;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ComboBox;
+import javafx.util.StringConverter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 public class dashboardController implements Initializable {
@@ -44,7 +48,19 @@ public class dashboardController implements Initializable {
     private AnchorPane Acceuil_form;
 
     @FXML
+    private DatePicker DateFpick;
+
+    @FXML
     private AnchorPane Mecaniciens_form;
+
+    @FXML
+    private Button OffreBtn;
+
+    @FXML
+    private AnchorPane Offre_form;
+
+    @FXML
+    private AnchorPane photoContainer;
 
     @FXML
     private ImageView acceuil;
@@ -71,7 +87,7 @@ public class dashboardController implements Initializable {
     private Button ajouterMecBtn;
 
     @FXML
-    private Label cinLabel;
+    private Button ajouterOffreBtn;
 
     @FXML
     private TextField cinTextfield;
@@ -80,13 +96,19 @@ public class dashboardController implements Initializable {
     private TextField cinTextfield1;
 
     @FXML
-    private Button readBtn;
+    private Button clearBtn;
 
     @FXML
     private Button clearBtn2;
 
     @FXML
+    private Button clearBtn3;
+
+    @FXML
     private ImageView clients;
+
+    @FXML
+    private ImageView clients1;
 
     @FXML
     private Button clientsBtn;
@@ -98,10 +120,19 @@ public class dashboardController implements Initializable {
     private Button close;
 
     @FXML
+    private DatePicker dateDpick;
+
+    @FXML
     private Button deleteBtn2;
 
     @FXML
+    private Button deleteBtn3;
+
+    @FXML
     private Button deleteMecBtn;
+
+    @FXML
+    private TextField descTextfield;
 
     @FXML
     private ImageView déconnexion;
@@ -116,23 +147,43 @@ public class dashboardController implements Initializable {
     private ImageView employes;
 
     @FXML
-    private Label idLabel;
+    private ComboBox<Pair<Integer, String>> equipCombobox;
+
+    @FXML
+    private Label errormessage;
 
     @FXML
     private Label errormessage1;
 
+    @FXML
+    private Label errormessage3;
+
+    @FXML
+    private TextField idTextfield;
+
+    @FXML
+    private TextField idTextfield1;
+
+    @FXML
+    private TextField idTextfield3;
+
+    @FXML
+    private ImageView imageOffre;
+
+    @FXML
+    private Button loadphotoBtn;
 
     @FXML
     private Button logout;
+
+    @FXML
+    private AnchorPane main_form;
 
     @FXML
     private RadioButton mecRadioBtn;
 
     @FXML
     private TextField nomTextfield;
-
-    @FXML
-    private TextField idTextfield;
 
     @FXML
     private TextField nomTextfield1;
@@ -144,6 +195,9 @@ public class dashboardController implements Initializable {
     private TextField prenomTextfield1;
 
     @FXML
+    private Button readBtn2;
+
+    @FXML
     private PasswordField setPasswordfield;
 
     @FXML
@@ -153,19 +207,28 @@ public class dashboardController implements Initializable {
     private VBox tableContainer;
 
     @FXML
+    private VBox tableContainer1;
+
+    @FXML
     private VBox tablecontainer;
+
+    @FXML
+    private TextField tauxTextfield;
 
     @FXML
     private TextField telTextfield;
 
     @FXML
-    private TextField idTextfield1;
-
-    @FXML
     private TextField telTextfield1;
 
     @FXML
+    private TextField typeTextfield;
+
+    @FXML
     private Button updateMecBtn;
+
+    @FXML
+    private Button updateOffreBtn;
 
     @FXML
     private Label usernaame;
@@ -176,10 +239,10 @@ public class dashboardController implements Initializable {
     @FXML
     private TextField usernameTextfield1;
 
-    @FXML
-    private Label errormessage;
 
     private UserService userService = new UserService();
+
+    private OffreService offreService = new OffreService();
 
     public void close(){
         System.exit(0);
@@ -205,7 +268,7 @@ public class dashboardController implements Initializable {
         // Loop through the list of mecaniciens to display them in the table
         for (User user : mecaniciens) {
             HBox row = new HBox(20); // Spacing between columns
-            Label idLabel = new Label(String.valueOf(user.getId()));
+
             Label cinLabel = new Label(String.valueOf(user.getCin()));
             Label nomLabel = new Label(user.getNom());
             Label prenomLabel = new Label(user.getPrenom());
@@ -214,21 +277,23 @@ public class dashboardController implements Initializable {
             Label passwordLabel = new Label(user.getPassword());
             Label roleLabel = new Label(user.getRole());
             Label adresseLabel = new Label(user.getAdresse());
+            adresseLabel.setWrapText(true);
+            adresseLabel.setMaxWidth(180);
             Label usernameLabel = new Label(user.getUsername());
 
+
             // Set fixed widths for proper alignment
-            idLabel.setPrefWidth(50);
             cinLabel.setPrefWidth(130);
             nomLabel.setPrefWidth(130);
             prenomLabel.setPrefWidth(110);
             telLabel.setPrefWidth(120);
             emailLabel.setPrefWidth(200);
             passwordLabel.setPrefWidth(100);
-            roleLabel.setPrefWidth(150);
+            roleLabel.setPrefWidth(100);
             adresseLabel.setPrefWidth(180);
-            usernameLabel.setPrefWidth(120);
+            usernameLabel.setPrefWidth(150);
             row.getChildren().addAll(
-                    idLabel, cinLabel, nomLabel, prenomLabel, telLabel,
+                    cinLabel, nomLabel, prenomLabel, telLabel,
                     emailLabel, passwordLabel, roleLabel, adresseLabel, usernameLabel
             );
 
@@ -271,6 +336,7 @@ public class dashboardController implements Initializable {
         String role = "mecanicien";
         String username = usernameTextfield.getText();
         String password = setPasswordfield.getText();
+
         UserService userService = new UserService();
         User newUser = new User( cin, nom, prénom, tel, email, password, role, adresse, username);
         try {
@@ -345,6 +411,7 @@ public class dashboardController implements Initializable {
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
             pause.setOnFinished(event -> errormessage.setText(""));
             pause.play();
+            showMechanics();
 
         } catch (Exception e) {
             // Handle exceptions, including validation failures or database issues
@@ -380,6 +447,7 @@ public class dashboardController implements Initializable {
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
             pause.setOnFinished(event -> errormessage.setText(""));
             pause.play();
+            showMechanics();
 
             idTextfield.clear();
             cinTextfield.clear();
@@ -447,26 +515,44 @@ public class dashboardController implements Initializable {
             Acceuil_form.setVisible(true);
             Mecaniciens_form.setVisible(false);
             clients_form.setVisible(false);
+            Offre_form.setVisible(false);
 
             acceuilBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             addMecanicienBtn.setStyle("-fx-background-color: transparent");
             clientsBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
+
 
         } else if (event.getSource() == addMecanicienBtn){
             Acceuil_form.setVisible(false);
             Mecaniciens_form.setVisible(true);
             clients_form.setVisible(false);
+            Offre_form.setVisible(false);
 
             addMecanicienBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             acceuilBtn.setStyle("-fx-background-color: transparent");
             clientsBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
 
         } else if (event.getSource() == clientsBtn){
             Acceuil_form.setVisible(false);
             Mecaniciens_form.setVisible(false);
             clients_form.setVisible(true);
+            Offre_form.setVisible(false);
 
             clientsBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            addMecanicienBtn.setStyle("-fx-background-color: transparent");
+            acceuilBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
+
+        } else if (event.getSource() == OffreBtn) {
+            Acceuil_form.setVisible(false);
+            Mecaniciens_form.setVisible(false);
+            clients_form.setVisible(false);
+            Offre_form.setVisible(true);
+
+            OffreBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            clientsBtn.setStyle("-fx-background-color: transparent");
             addMecanicienBtn.setStyle("-fx-background-color: transparent");
             acceuilBtn.setStyle("-fx-background-color: transparent");
 
@@ -498,6 +584,15 @@ public class dashboardController implements Initializable {
         File logoutFile = new File("images/déconnexion.png");
         Image logoutImage = new Image(logoutFile.toURI().toString());
         déconnexion.setImage(logoutImage);
+
+        try {
+            showMechanics();
+            showClients();
+            showOffres();
+            loadEquipements();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -613,7 +708,6 @@ public class dashboardController implements Initializable {
         // Loop through the list of mecaniciens to display them in the table
         for (User user : clients) {
             HBox row = new HBox(20); // Spacing between columns
-            Label idLabel = new Label(String.valueOf(user.getId()));
             Label cinLabel = new Label(String.valueOf(user.getCin()));
             Label nomLabel = new Label(user.getNom());
             Label prenomLabel = new Label(user.getPrenom());
@@ -624,7 +718,6 @@ public class dashboardController implements Initializable {
             Label usernameLabel = new Label(user.getUsername());
 
             // Set fixed widths for proper alignment
-            idLabel.setPrefWidth(50);
             cinLabel.setPrefWidth(140);
             nomLabel.setPrefWidth(130);
             prenomLabel.setPrefWidth(110);
@@ -634,7 +727,7 @@ public class dashboardController implements Initializable {
             adresseLabel.setPrefWidth(180);
             usernameLabel.setPrefWidth(120);
             row.getChildren().addAll(
-                    idLabel, cinLabel, nomLabel, prenomLabel, telLabel,
+                    cinLabel, nomLabel, prenomLabel, telLabel,
                     emailLabel, passwordLabel, adresseLabel, usernameLabel
             );
 
@@ -690,6 +783,7 @@ public class dashboardController implements Initializable {
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
             pause.setOnFinished(event -> errormessage1.setText(""));
             pause.play();
+            showClients();
 
             idTextfield1.clear();
             cinTextfield1.clear();
@@ -720,6 +814,149 @@ public class dashboardController implements Initializable {
         adresseTextfield1.clear();
         usernameTextfield1.clear();
         setPasswordfield1.clear();
+    }
+
+
+    public void showOffres() throws Exception {
+        List<Offre> allOffres = offreService.getAll(); // Get all offers
+        ObservableList<Offre> offresList = FXCollections.observableArrayList();
+        offresList.addAll(allOffres);
+
+        // Clear the table container before adding new content
+        if (tableContainer1.getChildren().size() > 1) {
+            tableContainer1.getChildren().remove(1, tableContainer1.getChildren().size());
+        }
+
+        // Loop through the list of offers to display them in the table
+        for (Offre offre : offresList) {
+            HBox row = new HBox(20); // Spacing between columns
+
+            Label idLabel = new Label(String.valueOf(offre.getId_offre()));
+            Label typeLabel = new Label(offre.getType_offre());
+            Label descLabel = new Label(offre.getDescription());
+            Label tauxLabel = new Label(String.valueOf(offre.getTaux_reduction()));
+            Label debutLabel = new Label(offre.getDate_debut());
+            Label finLabel = new Label(offre.getDate_fin());
+            String equipementNom = getEquipementNom(offre.getId_equipement());
+            Label equipLabel = new Label(equipementNom);
+            Label imageLabel = new Label(offre.getImage());
+
+            // Allow description wrapping
+            descLabel.setWrapText(true);
+            descLabel.setMaxWidth(200);
+
+            // Set fixed widths for alignment
+            idLabel.setPrefWidth(80);
+            typeLabel.setPrefWidth(120);
+            descLabel.setPrefWidth(200);
+            tauxLabel.setPrefWidth(100);
+            debutLabel.setPrefWidth(120);
+            finLabel.setPrefWidth(120);
+            equipLabel.setPrefWidth(100);
+            imageLabel.setPrefWidth(150);
+
+            row.getChildren().addAll(
+                    idLabel, typeLabel, descLabel, tauxLabel,
+                    debutLabel, finLabel, equipLabel, imageLabel
+            );
+
+            tableContainer1.getChildren().add(row);
+            row.getStyleClass().add("table-data");
+            row.getStyleClass().add("table-row");
+
+            row.setOnMouseClicked(e -> {
+                // Handle the click event for showing offer details
+                showOffreDetails(offre);
+            });
+        }
+    }
+    public String getEquipementNom(int equipementId) {
+        String equipementNom = "Unknown"; // Default in case of error
+        MyDb connectNow = new MyDb();
+        Connection connectDB = connectNow.getConn();
+
+        String query = "SELECT nom FROM equipement WHERE id = ?";
+
+        try (PreparedStatement statement = connectDB.prepareStatement(query)) {
+            statement.setInt(1, equipementId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                equipementNom = resultSet.getString("nom"); // Get the equipment name
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération du nom de l'équipement: " + e.getMessage());
+        }
+
+        return equipementNom;
+    }
+
+    public void showOffreDetails(Offre selectedOffre) {
+        // Set the values of the text fields with the selected offer's details
+        idTextfield3.setText(String.valueOf(selectedOffre.getId_offre()));
+        typeTextfield.setText(selectedOffre.getType_offre());
+        descTextfield.setText(selectedOffre.getDescription());
+        tauxTextfield.setText(String.valueOf(selectedOffre.getTaux_reduction()));
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate debutDate = LocalDate.parse(selectedOffre.getDate_debut(), formatter);
+        LocalDate finDate = LocalDate.parse(selectedOffre.getDate_fin(), formatter);
+        dateDpick.setValue(debutDate); // Set the date in the DatePicker for debut
+        DateFpick.setValue(finDate);
+
+        int selectedEquipementId = selectedOffre.getId_equipement();
+        for (Pair<Integer, String> equip : equipCombobox.getItems()) {
+            if (equip.getKey() == selectedEquipementId) {
+                equipCombobox.getSelectionModel().select(equip);
+                break;
+            }
+        }
+
+
+        ImageView imageView = new ImageView(new Image(selectedOffre.getImage()));
+        imageView.setFitWidth(117);  // Set the desired width
+        imageView.setPreserveRatio(true);  // Maintain aspect ratio of the image
+        photoContainer.getChildren().clear();  // Assuming imageContainer is the container for the ImageView
+        photoContainer.getChildren().add(imageView);  // Add the ImageView to the container
+    }
+
+    public void loadEquipements() {
+        MyDb connectNow = new MyDb();
+        Connection connectDB = connectNow.getConn();
+
+        ObservableList<Pair<Integer, String>> equipementList = FXCollections.observableArrayList(); // Pair<ID, Name>
+
+        String query = "SELECT id, nom FROM equipement"; // Change "nom" if the column name is different
+
+        try {
+            Statement statement = connectDB.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("nom");
+                equipementList.add(new Pair<>(id, name)); // Store ID and Name
+            }
+
+            equipCombobox.setItems(equipementList);
+
+            // Convert Pair to only display names
+            equipCombobox.setConverter(new StringConverter<Pair<Integer, String>>() {
+                @Override
+                public String toString(Pair<Integer, String> equip) {
+                    return equip != null ? equip.getValue() : "";
+                }
+
+                @Override
+                public Pair<Integer, String> fromString(String string) {
+                    return null; // Not needed
+                }
+            });
+
+        } catch (Exception e) {
+            System.out.println("Erreur de chargement des équipements : " + e.getMessage());
+        }
     }
 
 

@@ -8,12 +8,11 @@ public class Offre {
     private String date_debut;
     private String date_fin;
     private int id_equipement;
+    private String image;
 
-    // Default constructor
     public Offre() {}
 
-    // Parameterized constructor
-    public Offre(int id_offre, String type_offre, String description, double taux_reduction, String date_debut, String date_fin, int id_equipement) {
+    public Offre(int id_offre, String type_offre, String description, double taux_reduction, String date_debut, String date_fin, int id_equipement, String image) {
         this.id_offre = id_offre;
         this.type_offre = type_offre;
         this.description = description;
@@ -21,9 +20,9 @@ public class Offre {
         this.date_debut = date_debut;
         this.date_fin = date_fin;
         this.id_equipement = id_equipement;
+        this.image = image;
     }
 
-    // Getters and Setters
     public int getId_offre() {
         return id_offre;
     }
@@ -73,7 +72,14 @@ public class Offre {
         this.id_equipement = id_equipement;
     }
 
-    // toString method
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+
     @Override
     public String toString() {
         return "Offre{" +
@@ -84,6 +90,7 @@ public class Offre {
                 ", date_debut='" + date_debut + '\'' +
                 ", date_fin='" + date_fin + '\'' +
                 ", id_equipement=" + id_equipement +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

@@ -85,8 +85,10 @@ public class loginuserController implements Initializable {
                 loggedInUser = queryResult.getString("username"); // Store username
 
                 String role = queryResult.getString("role");
+
                 if (role.equals("admin")) {
                     try {
+
                         loginButton.getScene().getWindow().hide();
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
                         Parent root = loader.load();
@@ -102,6 +104,23 @@ public class loginuserController implements Initializable {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                } else if (role.equals("mecanicien") || role.equals("client")) {
+                    try {
+                        loginButton.getScene().getWindow().hide();
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/profile.fxml")); // Ensure profile.fxml exists
+                        Parent root = loader.load();
+
+                        // Pass username to profile
+                        profileController profileCtrl = loader.getController();
+                        profileCtrl.displayUsername();
+
+                        Stage profileStage = new Stage();
+                        profileStage.setScene(new Scene(root, 1100, 600));
+                        profileStage.initStyle(StageStyle.UNDECORATED);
+                        profileStage.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             } else {
                 loginMessageLabel.setText("Identifiants invalides. Veuillez réessayer.");
@@ -111,6 +130,7 @@ public class loginuserController implements Initializable {
             loginMessageLabel.setText("Erreur de connexion !");
         }
     }
+
 
     public void createAccountForm() {
         try {

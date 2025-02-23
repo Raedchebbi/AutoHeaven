@@ -18,7 +18,7 @@ public class OffreService implements Crud<Offre> {
 
     @Override
     public void create(Offre offre) throws Exception {
-        String sql = "INSERT INTO offre (type_offre, description, taux_reduction, date_debut, date_fin, id_equipement) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO offre (type_offre, description, taux_reduction, date_debut, date_fin, id_equipement, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         stmt.setString(1, offre.getType_offre());
         stmt.setString(2, offre.getDescription());
@@ -26,6 +26,7 @@ public class OffreService implements Crud<Offre> {
         stmt.setString(4, offre.getDate_debut());
         stmt.setString(5, offre.getDate_fin());
         stmt.setInt(6, offre.getId_equipement());
+        stmt.setString(7, offre.getImage());
         stmt.executeUpdate();
 
         ResultSet rs = stmt.getGeneratedKeys();
@@ -38,7 +39,7 @@ public class OffreService implements Crud<Offre> {
 
     @Override
     public void update(Offre offre) throws Exception {
-        String sql = "UPDATE offre SET type_offre = ?, description = ?, taux_reduction = ?, date_debut = ?, date_fin = ?, id_equipement = ? WHERE id_offre = ?";
+        String sql = "UPDATE offre SET type_offre = ?, description = ?, taux_reduction = ?, date_debut = ?, date_fin = ?, id_equipement = ?, image = ? WHERE id_offre = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, offre.getType_offre());
         stmt.setString(2, offre.getDescription());
@@ -46,7 +47,8 @@ public class OffreService implements Crud<Offre> {
         stmt.setString(4, offre.getDate_debut());
         stmt.setString(5, offre.getDate_fin());
         stmt.setInt(6, offre.getId_equipement());
-        stmt.setInt(7, offre.getId_offre());
+        stmt.setString(7, offre.getImage());
+        stmt.setInt(8, offre.getId_offre());
 
         int rowsUpdated = stmt.executeUpdate();
         if (rowsUpdated > 0) {
@@ -86,6 +88,7 @@ public class OffreService implements Crud<Offre> {
             offre.setDate_debut(rs.getString("date_debut"));
             offre.setDate_fin(rs.getString("date_fin"));
             offre.setId_equipement(rs.getInt("id_equipement"));
+            offre.setImage(rs.getString("image"));
             offres.add(offre);
         }
         return offres;

@@ -52,7 +52,7 @@
                   <Font size="13.0" />
                </font>
             </Button>
-            <Label fx:id="loginMessageLabel" alignment="CENTER" layoutX="19.0" layoutY="236.0" prefHeight="19.0" prefWidth="256.0">
+            <Label fx:id="loginMessageLabel" alignment="CENTER" layoutX="171.0" layoutY="340.0" prefHeight="30.0" prefWidth="290.0">
                <font>
                   <Font size="13.0" />
                </font>
