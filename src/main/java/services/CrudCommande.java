@@ -3,6 +3,7 @@ package services;
 import models.Commande;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CrudCommande<T> {
     int create(int id) throws Exception;
@@ -15,4 +16,6 @@ public interface CrudCommande<T> {
     List<T> getAllByidU(int id) throws Exception;
     Commande getCommande(int id) throws Exception;
     List<T> getAll() throws Exception;
+    Map<String , Integer> countCOM() throws Exception;
+    Map<String , Double> countVente() throws Exception;
 }

@@ -10,8 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.sql.Statement;
+import java.util.Map;
 
 public class CommandeService implements CrudCommande<Commande> {
     Connection conn;
@@ -163,6 +165,33 @@ public class CommandeService implements CrudCommande<Commande> {
             ));
         }
         return coms;
+    }
+
+    @Override
+    public Map<String, Integer> countCOM() throws Exception {
+        String sql="SELECT status ,count(*) AS count FROM commande group by status ";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        Map<String, Integer> map = new HashMap<>();
+        while (rs.next()) {
+            map.put(rs.getString("status"), rs.getInt("count"));
+
+        }
+        return map;
+    }
+
+    @Override
+    public Map<String, Double> countVente() throws Exception {
+        String sql ="SELECT MONTH(date_com) AS mois, SUM(montant_total) AS total FROM commande WHERE YEAR(date_com) = YEAR(CURDATE()) GROUP BY mois";
+
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        Map<String, Double> map = new HashMap<>();
+        while (rs.next()) {
+            map.put(rs.getString("mois"), (double) rs.getInt("total"));
+
+        }
+        return map;
     }
 
 

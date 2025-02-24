@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -30,7 +31,7 @@
       </HBox>
       <ScrollPane fx:id="pane" layoutX="45.0" layoutY="154.0" prefHeight="376.0" prefWidth="862.0">
          <content>
-            <HBox fx:id="area" prefHeight="372.0" prefWidth="862.0" />
+            <VBox fx:id="area" prefHeight="372.0" prefWidth="862.0" />
          </content>
       </ScrollPane>
    </children>

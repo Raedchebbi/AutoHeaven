@@ -39,7 +39,7 @@ public class Paniers implements Initializable {
         contenu.getChildren().clear();
 
         PanierService ps = new PanierService();
-        List<Panier> obs = ps.getAll(3);
+        List<Panier> obs = ps.getAll(38);
 
         for (Panier e : obs) {
             try {
@@ -61,7 +61,7 @@ public class Paniers implements Initializable {
             EquipementService es = new EquipementService();
             StockService ss = new StockService();
 
-            List<Panier> paniers = ps.getAll(3); // Récupère tous les paniers pour l'utilisateur avec l'id 3
+            List<Panier> paniers = ps.getAll(38); // Récupère tous les paniers pour l'utilisateur avec l'id 3
 
 
             for (Panier panier : paniers) {
@@ -73,7 +73,7 @@ public class Paniers implements Initializable {
             }
 
 
-            cs.create(3);
+            cs.create(38);
 
             for (Panier panier : paniers) {
                 es.updateQuantite(panier.getId_e(), panier.getQuantite());

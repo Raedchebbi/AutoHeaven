@@ -22,8 +22,10 @@ import services.EquipementService;
 import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class ListEquipementClient implements Initializable {
     @FXML
@@ -41,11 +43,19 @@ public class ListEquipementClient implements Initializable {
     private Button search_btn;
     @FXML
     private Label commande;
+    EquipementService es=new EquipementService();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        List<EquipementAffichage> l =new ArrayList<>();
         try {
-            reloadEquipements();
+            l=es.getAll();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            reloadEquipements(l);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -54,6 +64,32 @@ public class ListEquipementClient implements Initializable {
                 handlePanierClick(event);
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        });
+        input_search.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                if (newValue == null || newValue.trim().isEmpty()) {
+                    // Si le champ de recherche est vide, recharger tous les équipements
+                    List<EquipementAffichage> allEquipements = es.getAll();
+                    reloadEquipements(allEquipements);
+                } else {
+                    // Sinon, effectuer la recherche
+                    List<EquipementAffichage> filtredName = handleSearch_name(newValue);
+                    reloadEquipements(filtredName);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        // Écouteur pour le bouton de recherche
+        search_btn.setOnMouseClicked(event -> {
+            try {
+                String searchText = input_search.getText();
+                List<EquipementAffichage> filtredName = handleSearch_name(searchText);
+                reloadEquipements(filtredName);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
 
@@ -82,14 +118,14 @@ public class ListEquipementClient implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    public void reloadEquipements() throws Exception {
+    public void reloadEquipements(List<EquipementAffichage> obs) throws Exception {
         int column =0 ;
         int row=1;
 
         grid.getChildren().clear();
 
-        EquipementService es = new EquipementService();
-        List<EquipementAffichage> obs = es.getAll();
+        //EquipementService es = new EquipementService();
+        //List<EquipementAffichage> obs = es.getAll();
 
         for (EquipementAffichage e : obs) {
             try {
@@ -119,6 +155,7 @@ public class ListEquipementClient implements Initializable {
 
                 GridPane.setMargin(item,new Insets(20,20,20,20));
                 System.out.println("Adding item at column: " + column + ", row: " + row);
+                System.out.println("Nombre d'équipements à afficher : " + obs.size());
 
 
             } catch (IOException ex) {
@@ -142,6 +179,32 @@ public class ListEquipementClient implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+   /* public List<EquipementAffichage> handleSearch_name(MouseEvent event) throws Exception {
+        String nom= this.input_search.getText();
+        List<EquipementAffichage> l =new ArrayList<>();
+      //  l=es.getAll().stream().filter(x -> x.getNom().equals(nom)).collect(Collectors.toList());
+        l=es.getAll().stream().filter(x->x.getNom().toLowerCase().contains(nom.toLowerCase())).collect(Collectors.toList());
+        System.out.println(l);
+        if (l.isEmpty()){
+            l=es.getAll().stream().filter(x->x.getMarque().toLowerCase().contains(nom.toLowerCase())).collect(Collectors.toList());
+            System.out.println(l);
+
+        }
+
+        System.out.println(l);
+        return l;
+
+
+    }*/
+   public List<EquipementAffichage> handleSearch_name(String searchText) throws Exception {
+       List<EquipementAffichage> l = new ArrayList<>();
+       l = es.getAll().stream()
+               .filter(x -> x.getNom().toLowerCase().contains(searchText.toLowerCase()) ||
+                       x.getMarque().toLowerCase().contains(searchText.toLowerCase()) ||
+                       x.getReference().toLowerCase().contains(searchText.toLowerCase()))
+               .collect(Collectors.toList());
+       return l;
+   }
 
 
 }

@@ -103,7 +103,7 @@ public class DetailEquipement {
     @FXML
     private void handleAddToCart() throws Exception {
         int id =equipement.getId();
-        int idu =3;
+        int idu =38;
         PanierService ps = new PanierService();
 
         Panier panier = new Panier(Integer.parseInt(input.getText()),idu,id);

@@ -2,6 +2,9 @@ package controllers;
 
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -15,10 +18,18 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import com.google.gson.JsonParser;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class Chabot {
     @FXML
     private TextArea chatArea;
+    @FXML
+    private VBox chatBox;
+
+    @FXML
+    private ScrollPane chatScrollPane;
+
 
     @FXML
     private TextField inputField;
@@ -27,13 +38,36 @@ public class Chabot {
     private void sendMessage() {
         String userMessage = inputField.getText();
         if (!userMessage.isEmpty()) {
-            chatArea.appendText("Vous: " + userMessage + "\n");
+            addMessage(userMessage, "user-message");
             inputField.clear();
 
-            // Appeler l'API Gemini
+            // Simuler une réponse du bot (Remplace cette ligne par l'appel réel à Gemini)
             String botResponse = getGeminiResponse(userMessage);
-            chatArea.appendText("Chatbot: " + botResponse + "\n");
+            addMessage(botResponse, "bot-message");
         }
+    }
+
+    private void addMessage(String text, String styleClass) {
+        HBox messageContainer = new HBox();
+        messageContainer.setSpacing(10);
+
+        Label messageLabel = new Label(text);
+        messageLabel.getStyleClass().add(styleClass);
+        messageLabel.setWrapText(true);
+        messageLabel.setMaxWidth(300); // Pour éviter que le texte soit trop large
+
+        if (styleClass.equals("user-message")) {
+            messageContainer.getChildren().add(messageLabel);
+            messageContainer.setAlignment(Pos.CENTER_RIGHT);
+        } else {
+            messageContainer.getChildren().add(messageLabel);
+            messageContainer.setAlignment(Pos.CENTER_LEFT);
+        }
+
+        chatBox.getChildren().add(messageContainer);
+
+        // Scroll vers le bas après l'ajout du message
+        chatScrollPane.vvalueProperty().bind(chatBox.heightProperty());
     }
 
     /*private String getGeminiResponse(String userMessage) {

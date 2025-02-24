@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Commande;
 import models.EquipementAffichage;
@@ -23,7 +24,7 @@ import java.util.ResourceBundle;
 public class ValidationCommande implements Initializable {
 
     @FXML
-    private HBox area;
+    private VBox area;
 
     @FXML
     private ScrollPane pane;
@@ -49,6 +50,7 @@ public class ValidationCommande implements Initializable {
 
         for (Commande e : obs) {
             try {
+                System.out.println(e);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/CommandeItemAdmin.fxml"));
                 Parent item = loader.load();
                 CommandeItemAdmin ie = loader.getController();

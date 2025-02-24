@@ -49,6 +49,7 @@ public class ListEquipement implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
     }
 
     public void reloadEquipements() throws Exception {

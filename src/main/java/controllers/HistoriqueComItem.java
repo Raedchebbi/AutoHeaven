@@ -1,5 +1,12 @@
 package controllers;
 
+import com.infobip.ApiClient;
+import com.infobip.ApiException;
+import com.infobip.Configuration;
+import com.infobip.api.SendSmsApi;
+import com.infobip.model.SmsAdvancedTextualRequest;
+import com.infobip.model.SmsDestination;
+import com.infobip.model.SmsTextualMessage;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,6 +21,7 @@ import services.LigneCommandeService;
 import services.StockService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HistoriqueComItem {
@@ -80,7 +88,9 @@ public class HistoriqueComItem {
 
 
 
+
         HisCon.showEquipementsAchetes(ligneCommandes);
     }
+
 
 }
