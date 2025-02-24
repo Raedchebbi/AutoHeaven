@@ -25,6 +25,9 @@ public class affichercategorie {
     @FXML
     private VBox categoriesContainer;
 
+    @FXML
+    private AnchorPane rootContainer;
+
     private CategorieService categorieService = new CategorieService();
 
     @FXML
@@ -48,7 +51,11 @@ public class affichercategorie {
             categoryRow.setPrefWidth(1000); // Increased HBox width
             categoryRow.setMaxWidth(Double.MAX_VALUE); // Allow it to expand
 
-            // Labels with increased width
+
+            Label id_cLabel = new Label (String.valueOf(categorie.getId_c()));
+            id_cLabel.setPrefWidth(150);
+            HBox.setHgrow(id_cLabel, Priority.ALWAYS);
+
             Label typeLabel = new Label(categorie.getType());
             typeLabel.setPrefWidth(150);
             HBox.setHgrow(typeLabel, Priority.ALWAYS);
@@ -83,6 +90,7 @@ public class affichercategorie {
 
             // Add all elements to the row
             categoryRow.getChildren().addAll(
+                    id_cLabel, new Separator(),
                     typeLabel, new Separator(),
                     carburantLabel, new Separator(),
                     utilisationLabel, new Separator(),
@@ -118,22 +126,23 @@ public class affichercategorie {
     }
 
     private void handleModifyCategorie(Categorie categorie) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifiercategorie.fxml"));
-        AnchorPane root = null;
         try {
-            root = loader.load();
+            // Load the modification view for the category
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifiercategorie.fxml"));
+            AnchorPane modificationView = loader.load();
+
+            // Get the controller and pass the Categorie object to it
+            modifiercategorie modifierController = loader.getController();
+            modifierController.setCategorie(categorie);
+
+            // Replace the current content with the modification view
+            rootContainer.getChildren().setAll(modificationView);
+
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-
-        modifiercategorie modifierController = loader.getController();
-        modifierController.setCategorie(categorie);
-
-        Stage stage = new Stage();
-        stage.setTitle("Modifier la catégorie");
-        stage.setScene(new Scene(root));
-        stage.show();
     }
+
 
     @FXML
     private void handleRefresh() {

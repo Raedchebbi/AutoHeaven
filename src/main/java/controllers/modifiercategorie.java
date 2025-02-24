@@ -87,19 +87,12 @@ public class modifiercategorie {
         try {
             categorieService.update(categorie);
             showSuccessAlert();
-            closeWindow();
+           // closeWindow();
         } catch (Exception e) {
             showErrorAlert("Erreur lors de la mise à jour de la catégorie : " + e.getMessage());
             e.printStackTrace();
         }
     }
-
-    @FXML
-    private void handleCancel() {
-        closeWindow();
-    }
-
-
     private void showSuccessAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Mise à jour réussie");

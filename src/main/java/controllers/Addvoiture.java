@@ -12,8 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class Addvoitureimage {
+public class Addvoiture {
 
+    public Button imageButton;
     @FXML
     private TextField marqueTextField;
     @FXML
@@ -28,10 +29,6 @@ public class Addvoitureimage {
     private TextField disponibleTextField;
     @FXML
     private TextField idCategorieTextField;
-    @FXML
-    private Button ajouterButton;
-    @FXML
-    private Button imageButton;
     @FXML
     private ImageView imageView;
 

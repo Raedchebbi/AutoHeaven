@@ -14,7 +14,7 @@ public class navigatecontroller {
 
     @FXML
     private void loadAddVoiture() {
-        loadView("/addvoitureimage.fxml");
+        loadView("/addvoiture.fxml");
     }
 
     @FXML
@@ -24,7 +24,7 @@ public class navigatecontroller {
 
     @FXML
     private void loadAfficherVoiture() {
-        loadView("/affichervoitureimage.fxml");
+        loadView("/affichervoiture.fxml");
     }
 
     @FXML
@@ -35,6 +35,10 @@ public class navigatecontroller {
     private void loadView(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            if (loader.getLocation() == null) {
+                System.err.println("FXML file not found: " + fxmlPath);
+                return;
+            }
             Parent view = loader.load();
             borderPane.setCenter(view);
         } catch (IOException e) {

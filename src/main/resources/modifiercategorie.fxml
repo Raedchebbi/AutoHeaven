@@ -23,6 +23,5 @@
         <TextField fx:id="portesField" layoutX="100.0" layoutY="180.0"/>
 
         <Button fx:id="saveButton"  text="Save" layoutX="150.0" layoutY="220.0" onAction="#handleSaveModification"/>
-        <Button text="Cancel" layoutX="250.0" layoutY="220.0" onAction="#handleCancel"/>
     </children>
 </AnchorPane>

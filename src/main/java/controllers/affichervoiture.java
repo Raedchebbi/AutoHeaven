@@ -2,16 +2,14 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 import models.Voiture;
 import services.VoitureService;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +18,9 @@ public class affichervoiture {
 
     @FXML
     private VBox voitureContainer;
+
+    @FXML
+    private AnchorPane mainContainer; // Added this to reference the parent container
 
     private final VoitureService voitureService = new VoitureService();
 
@@ -48,9 +49,10 @@ public class affichervoiture {
             Label kilometrageLabel = createLabel(String.valueOf(voiture.getKilometrage()), 80);
             Label couleurLabel = createLabel(voiture.getCouleur(), 80);
             Label prixLabel = createLabel(String.valueOf(voiture.getPrix()), 80);
-            Label imageLabel = createLabel(voiture.getImage(), 200);
             Label disponibiliteLabel = createLabel(voiture.getDisponibilite(), 60);
 
+            // Load image
+            ImageView imageView = createImageView(voiture.getImage(), 100, 70);
 
             Button modifyButton = new Button("Modifier");
             styleButton(modifyButton, "blue");
@@ -65,7 +67,7 @@ public class affichervoiture {
 
             voitureRow.getChildren().addAll(
                     marqueLabel, descriptionLabel, kilometrageLabel,
-                    couleurLabel, prixLabel, imageLabel, disponibiliteLabel,
+                    couleurLabel, prixLabel, imageView, disponibiliteLabel,
                     spacer, modifyButton, deleteButton
             );
 
@@ -78,6 +80,21 @@ public class affichervoiture {
         label.setPrefWidth(width);
         label.setWrapText(true);
         return label;
+    }
+
+    private ImageView createImageView(String imagePath, double width, double height) {
+        ImageView imageView = new ImageView();
+        if (imagePath != null && !imagePath.isEmpty()) {
+            File file = new File(imagePath);
+            if (file.exists()) {
+                Image image = new Image(file.toURI().toString());
+                imageView.setImage(image);
+            }
+        }
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+        imageView.setPreserveRatio(true);
+        return imageView;
     }
 
     private void styleButton(Button button, String color) {
@@ -106,22 +123,22 @@ public class affichervoiture {
             e.printStackTrace();
         }
     }
+
     private void handleModifyVoiture(Voiture voiture) {
-       FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifiervoiture.fxml")); // Make sure this FXML exists
-      AnchorPane root = null;
-      try {
-         root = loader.load();
-     } catch (IOException e) {
-        throw new RuntimeException(e);
-     }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifiervoiture.fxml"));
+            AnchorPane modificationView = loader.load();
 
-     modifiervoiture modifierController = loader.getController();
-     modifierController.setVoiture(voiture);
+            // Get controller and pass the voiture object
+            modifiervoiture modifierController = loader.getController();
+            modifierController.setVoiture(voiture);
 
-     Stage stage = new Stage();
-     stage.setTitle("Modifier la voiture");
-     stage.setScene(new Scene(root));
-     stage.show();
+            // Replace the current content with modification view
+            mainContainer.getChildren().setAll(modificationView);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
