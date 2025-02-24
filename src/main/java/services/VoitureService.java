@@ -67,7 +67,7 @@ public class VoitureService implements Crud<Voiture> {
     }
 
     @Override
-    public List<Voiture> getAll() throws Exception {
+    public  List<Voiture> getAll() throws Exception {
         String sql = "SELECT * FROM voiture";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql);

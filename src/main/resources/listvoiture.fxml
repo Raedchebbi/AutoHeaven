@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@style1.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.Listvoiture" prefHeight="600.0" prefWidth="1200.0">
+
+    <HBox spacing="20" layoutX="20.0" layoutY="20.0" alignment="CENTER_LEFT">
+        <Label text="Recherche:" />
+        <TextField fx:id="searchTextField" promptText="Entrez la marque ou description" prefWidth="400"/>
+        <Button text="Rechercher" onAction="#handleSearch"/>
+    </HBox>
+
+    <VBox fx:id="voitureVBox" layoutX="20.0" layoutY="80.0" prefHeight="500.0" prefWidth="1160.0" spacing="15">
+
+    </VBox>
+
+</AnchorPane>

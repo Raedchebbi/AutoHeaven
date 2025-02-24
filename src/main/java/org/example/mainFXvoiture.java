@@ -13,7 +13,7 @@ public class mainFXvoiture extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            URL fxmlLocation = getClass().getResource("/navigate.fxml");
+            URL fxmlLocation = getClass().getResource("/listvoiture.fxml");
 
             if (fxmlLocation == null) {
                 throw new IOException("FXML file '/addvoiture.fxml' not found. Check the path.");
