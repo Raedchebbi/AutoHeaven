@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <Pane fx:id="pane_1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ValidationCommande">
@@ -15,7 +17,7 @@
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER_LEFT" layoutX="45.0" layoutY="95.0" prefHeight="52.0" prefWidth="862.0" style="-fx-spacing: 10;" styleClass="container_header" stylesheets="@Dashboard.css">
+      <HBox alignment="CENTER_LEFT" layoutX="45.0" layoutY="95.0" prefHeight="52.0" prefWidth="897.0" style="-fx-spacing: 10;" styleClass="container_header" stylesheets="@Dashboard.css">
          <children>
             <Label prefHeight="18.0" prefWidth="164.0" text="Nom">
                <HBox.margin>
@@ -29,10 +31,12 @@
             <Label text="Action" />
          </children>
       </HBox>
-      <ScrollPane fx:id="pane" layoutX="45.0" layoutY="154.0" prefHeight="376.0" prefWidth="862.0">
+      <ScrollPane fx:id="pane" layoutX="45.0" layoutY="154.0" prefHeight="376.0" prefWidth="897.0">
          <content>
-            <VBox fx:id="area" prefHeight="372.0" prefWidth="862.0" />
+            <VBox fx:id="area" prefHeight="383.0" prefWidth="880.0" />
          </content>
       </ScrollPane>
+      <ComboBox fx:id="comCombo" layoutX="757.0" layoutY="44.0" prefWidth="150.0" stylesheets="@commandeItem.css" />
+      <Button fx:id="exportexcel" layoutX="45.0" layoutY="63.0" mnemonicParsing="false" text="Export EXCEL" />
    </children>
 </Pane>

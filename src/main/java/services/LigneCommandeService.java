@@ -107,6 +107,19 @@ public class LigneCommandeService implements CrudLigneCommande<Lignecommande> {
             throw new Exception("Ligne de commande non trouvée avec l'id_l : " + id);
         }}
 
+    @Override
+    public int somEq(int idc, int id_e) throws Exception {
+        String sql ="select SUM(quantite) as sum from LigneCommande where idc = ? and id_e = ?";
+        PreparedStatement stmt =conn.prepareStatement(sql);
+        stmt.setInt(1, idc);
+        stmt.setInt(2, id_e);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("sum");
+
+        }
+        return 0;
+    }
 
 
 }

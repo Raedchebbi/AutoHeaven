@@ -16,4 +16,6 @@ public interface CrudLigneCommande<T>
     Lignecommande getById(int id) throws Exception;
     User getByID(int id) throws Exception;
 
+
+    int somEq(int idc, int id_e) throws Exception;
 }

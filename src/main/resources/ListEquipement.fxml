@@ -12,9 +12,6 @@
 
 <Pane fx:id="equip_pa" prefHeight="544.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ListEquipement">
     <children>
-
-
-
         <Label layoutX="36.0" layoutY="23.0" text="Liste des équipements">
             <font>
                 <Font name="Arial Bold" size="25.0" />
@@ -66,9 +63,6 @@
             </content>
         </ScrollPane>
         <Button fx:id="add_btn" layoutX="36.0" layoutY="71.0" mnemonicParsing="false" onAction="#AjouterE" style="-fx-background-color: #254637; -fx-background-radius: 5; -fx-text-fill: #ffffff;" text="Ajouter" />
-      <Pane fx:id="popupContainer" layoutX="264.0" layoutY="2.0" prefHeight="534.0" prefWidth="440.0" visible="false" />
-
-
-
+        <Pane fx:id="popupContainer" layoutX="264.0" layoutY="2.0" prefHeight="534.0" prefWidth="440.0" visible="false" />
     </children>
 </Pane>

@@ -1,8 +1,6 @@
 package controllers;
 
 import javafx.event.ActionEvent;
-
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,6 +22,7 @@ public class ListEquipement implements Initializable {
 
     @FXML
     private Button add_btn;
+
     @FXML
     private Pane popupContainer;
 
@@ -39,9 +38,6 @@ public class ListEquipement implements Initializable {
     @FXML
     private TextField search_id;
 
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -49,7 +45,6 @@ public class ListEquipement implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public void reloadEquipements() throws Exception {
@@ -71,6 +66,7 @@ public class ListEquipement implements Initializable {
             }
         }
     }
+
     public void showUpdatePopup(EquipementAffichage equipement) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateEquipCard.fxml"));
@@ -86,6 +82,7 @@ public class ListEquipement implements Initializable {
             e.printStackTrace();
         }
     }
+
     public void hideUpdatePopup() {
         popupContainer.setVisible(false);
     }
@@ -97,6 +94,7 @@ public class ListEquipement implements Initializable {
         equip_pa.getChildren().clear();
         equip_pa.getChildren().add(addEquip);
     }
+
     @FXML
     public void AjouterE(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddEquipemntCard.fxml"));
@@ -109,5 +107,4 @@ public class ListEquipement implements Initializable {
             System.out.println("Erreur : equipementPanel est null !");
         }
     }
-
 }

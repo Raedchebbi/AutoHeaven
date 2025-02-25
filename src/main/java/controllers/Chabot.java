@@ -19,6 +19,7 @@ import com.google.gson.JsonObject;
 
 import com.google.gson.JsonParser;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class Chabot {
@@ -50,11 +51,15 @@ public class Chabot {
     private void addMessage(String text, String styleClass) {
         HBox messageContainer = new HBox();
         messageContainer.setSpacing(10);
+        messageContainer.setMaxWidth(Double.MAX_VALUE);
 
         Label messageLabel = new Label(text);
         messageLabel.getStyleClass().add(styleClass);
         messageLabel.setWrapText(true);
-        messageLabel.setMaxWidth(300); // Pour éviter que le texte soit trop large
+       // messageLabel.setMaxWidth(600); // Largeur max pour éviter un message trop étendu
+      //  messageLabel.setPrefWidth(0); // Permet à la largeur de s'ajuster dynamiquement
+
+        HBox.setHgrow(messageLabel, Priority.ALWAYS); // Permet au label de prendre l'espace disponible
 
         if (styleClass.equals("user-message")) {
             messageContainer.getChildren().add(messageLabel);
@@ -64,10 +69,8 @@ public class Chabot {
             messageContainer.setAlignment(Pos.CENTER_LEFT);
         }
 
+        // Ajout du message au chat
         chatBox.getChildren().add(messageContainer);
-
-        // Scroll vers le bas après l'ajout du message
-        chatScrollPane.vvalueProperty().bind(chatBox.heightProperty());
     }
 
     /*private String getGeminiResponse(String userMessage) {

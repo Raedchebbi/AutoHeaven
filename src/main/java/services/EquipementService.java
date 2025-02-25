@@ -8,8 +8,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class EquipementService implements CrudEquipement<Equipement,EquipementAffichage> {
@@ -156,6 +158,19 @@ public class EquipementService implements CrudEquipement<Equipement,EquipementAf
             }
             return equipements;
         }
+    }
+
+    @Override
+    public Map<String ,Integer> eqRef() throws Exception {
+        String sql ="SELECT id, reference  FROM equipement" ;
+                PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        Map<String,Integer> equipements = new HashMap<>();
+        while (rs.next()) {
+            equipements.put(rs.getString("reference"),rs.getInt("id"));
+
+        }
+        return equipements;
     }
 
 }

@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.HBox?>
 
 <HBox fx:id="container_equipement" prefHeight="52.0" prefWidth="872.0" styleClass="equipement_cell_container" stylesheets="@ListEquipements.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EquipementItem">
-
     <children>
         <Label fx:id="reference" prefHeight="18.0" prefWidth="214.0" text="Label">
             <HBox.margin>
