@@ -1,14 +1,12 @@
 package controllers;
 
 import javafx.animation.PauseTransition;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -19,10 +17,9 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import models.User;
 import models.Offre;
@@ -195,6 +192,15 @@ public class profileController implements Initializable {
     @FXML
     private Label dateLabel;
 
+    @FXML
+    private ImageView offreAutocollant;
+
+    @FXML
+    private ImageView offreLabel;
+
+    @FXML
+    private File selectedFile;
+
 
     private ObservableList<Offre> cardListoffre = FXCollections.observableArrayList();
 
@@ -230,6 +236,15 @@ public class profileController implements Initializable {
         File offreFile = new File("images/offre.png");
         Image offreImage = new Image(offreFile.toURI().toString());
         offre.setImage(offreImage);
+
+        File offrelabFile = new File("images/offreLabel.png");
+        Image offrelabImage = new Image(offrelabFile.toURI().toString());
+        offreLabel.setImage(offrelabImage);
+
+        File offreautoFile = new File("images/offreAutocollant.png");
+        Image offreautoImage = new Image(offreautoFile.toURI().toString());
+        offreAutocollant.setImage(offreautoImage);
+
 
         showLoggedInUserDetails();
         menuDisplayCard();
@@ -562,41 +577,69 @@ public class profileController implements Initializable {
             MyDb connectNow = new MyDb();
             Connection connectDB = connectNow.getConn();
 
-            // If input validation fails, stop the execution
+            // If input validation fails, stop execution
             if (!isValidInputUpdate()) {
                 return;
             }
 
-            // Create a new UserService instance for updating the user
+            // Create a new UserService instance
             UserService userService = new UserService();
             User updatedUser = new User();
 
-
             updatedUser.setId(Integer.parseInt(idTextfield1.getText()));
-            updatedUser.setCin(Integer.parseInt(cinTextfield1.getText()));  // Set CIN
+            updatedUser.setCin(Integer.parseInt(cinTextfield1.getText()));
             updatedUser.setNom(nomTextfield1.getText());
             updatedUser.setPrenom(prenomTextfield1.getText());
             updatedUser.setTel(Integer.parseInt(telTextfield1.getText()));
             updatedUser.setEmail(emailTextfield1.getText());
-            updatedUser.setAdresse(adresseTextfield1.getText());  // Set Address
-            updatedUser.setUsername(usernameTextfield1.getText());  // Set Username
+            updatedUser.setAdresse(adresseTextfield1.getText());
+            updatedUser.setUsername(usernameTextfield1.getText());
             updatedUser.setPassword(setPasswordfield1.getText());
             updatedUser.setRole("client");
 
-            // Call the update method to save the changes
+            // Retrieve the current image path from the database
+            String existingPhotoProfile = userService.getPhotoProfileById(updatedUser.getId());
+
+            // Check if a new image is selected
+            if (selectedFile != null) {
+                // Use the new image path
+                updatedUser.setPhotoProfile(selectedFile.getAbsolutePath());
+            } else {
+                // Keep the existing image path
+                updatedUser.setPhotoProfile(existingPhotoProfile);
+            }
+
+            // Call the update method to save changes
             userService.update(updatedUser);
 
-            // Display success message and hide it after a delay
+            // Display success message
             usernaame.setText(loggedInUser);
             errormessage.setText("Utilisateur mis à jour avec succès !");
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
             pause.setOnFinished(event -> errormessage.setText(""));
             pause.play();
 
-
         } catch (Exception e) {
             // Handle exceptions, including validation failures or database issues
             errormessage.setText("Erreur : " + e.getMessage());
+        }
+    }
+
+
+    @FXML
+    private void handleImageSelection() {
+        FileChooser fileChooser = new FileChooser();
+
+        // Correctly format the extension filter
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+
+        selectedFile = fileChooser.showOpenDialog(null);
+
+        if (selectedFile != null) {
+            Image image = new Image(selectedFile.toURI().toString());
+            photoprofile.setImage(image);
         }
     }
 
@@ -623,6 +666,20 @@ public class profileController implements Initializable {
                 adresseTextfield1.setText(resultSet.getString("adresse"));
                 usernameTextfield1.setText(resultSet.getString("username"));
                 setPasswordfield1.setText(resultSet.getString("password"));
+
+                // Retrieve the photo path
+                String photoProfilePath = resultSet.getString("photo_profile");
+
+                // If photoProfilePath is not null, load and display the image
+                if (photoProfilePath != null && !photoProfilePath.trim().isEmpty()) {
+                    File file = new File(photoProfilePath);
+                    if (file.exists()) {
+                        Image image = new Image(file.toURI().toString());
+                        photoprofile.setImage(image);
+                    } else {
+                        System.out.println("Image file not found: " + photoProfilePath);
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -717,12 +774,13 @@ public class profileController implements Initializable {
 
     public void showOffreDetails(Offre selectedOffre) {
         if (selectedOffre != null) {
+            typeLabel.setWrapText(true);
             typeLabel.setText(selectedOffre.getType_offre());
             descripLabel.setWrapText(true);
             descripLabel.setText(selectedOffre.getDescription());
             tauxLabel.setText("-" + (int) selectedOffre.getTaux_reduction() + "%");
             dateLabel.setWrapText(true);
-            dateLabel.setText("Profitez! \nOffre valable de" + selectedOffre.getDate_debut() + " à " + selectedOffre.getDate_fin());
+            dateLabel.setText("Profitez! \nOffre valable de " + selectedOffre.getDate_debut() + " à " + selectedOffre.getDate_fin());
 
             // Set the equipment name (assuming you have a way to fetch the name)
             equipeLabel.setWrapText(true);
@@ -771,6 +829,9 @@ public class profileController implements Initializable {
 
         return equipementNom;
     }
+
+
+
 
 }
 

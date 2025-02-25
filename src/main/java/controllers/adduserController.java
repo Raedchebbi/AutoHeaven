@@ -24,7 +24,6 @@ import utils.MyDb;
 
 public class adduserController implements Initializable {
 
-
     @FXML
     private ImageView shieldImageview;
     @FXML
@@ -64,7 +63,6 @@ public class adduserController implements Initializable {
     @FXML
     private TextField photoTextfield;
 
-
     private UserService userService = new UserService();
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -74,51 +72,32 @@ public class adduserController implements Initializable {
     }
 
     public void inscritButtonOnAction(ActionEvent Event) throws Exception {
-
-            // Check if passwords match
-            if (!setPasswordfield.getText().equals(confirmPasswordfield.getText())) {
-                confirmPasswordLabel.setText("Le mot de passe ne correspond pas");
-                return;
-            }
-
-            // Clear error messages
-            errormessage.setText("");
-            confirmPasswordLabel.setText("");
-
-            // Retrieve user input
-            String cin = cinTextfield.getText();
-            String email = emailTextfield.getText();
-            String username = usernameTextfield.getText();
-            String password = setPasswordfield.getText();
-            String tel = telTextfield.getText();
-            String adresse = adresseTextfield.getText();
-
-
-            // Validate input
-            if (!isValidInput()) {
-                return;
-            }
-
-            // Add user to database
-            addUser();
-
-            // Show success message
-            errormessage.setText("Utilisateur enregistré avec succès !");
-            PauseTransition pause = new PauseTransition(Duration.seconds(5));
-            pause.setOnFinished(event -> errormessage.setText(""));
-            pause.play();
+        if (!setPasswordfield.getText().equals(confirmPasswordfield.getText())) {
+            confirmPasswordLabel.setText("Le mot de passe ne correspond pas");
+            return;
         }
 
+        errormessage.setText("");
+        confirmPasswordLabel.setText("");
 
+        if (!isValidInput()) {
+            return;
+        }
+
+        addUser();
+
+        errormessage.setText("Utilisateur enregistré avec succès !");
+        PauseTransition pause = new PauseTransition(Duration.seconds(5));
+        pause.setOnFinished(event -> errormessage.setText(""));
+        pause.play();
+    }
 
     public void fermerButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) fermerButton.getScene().getWindow();
         stage.close();
-        //Platform.exit();
     }
 
-
-    public void addUser(){
+    public void addUser() {
         MyDb connectNow = new MyDb();
         Connection connectDB = connectNow.getConn();
 
@@ -131,9 +110,10 @@ public class adduserController implements Initializable {
         String role = "client";
         String username = usernameTextfield.getText();
         String password = setPasswordfield.getText();
+        String photoProfile = photoTextfield.getText().isEmpty() ? null : photoTextfield.getText();
+        String ban = "non";
 
-
-        User newUser = new User( cin, nom, prénom, tel, email, password, role, adresse, username);
+        User newUser = new User(cin, nom, prénom, tel, email, password, role, adresse, username, photoProfile, ban);
         try {
             userService.create(newUser);
         } catch (Exception e) {
@@ -142,14 +122,6 @@ public class adduserController implements Initializable {
     }
 
     public void registerUser() throws Exception {
-
-        String cin = cinTextfield.getText();
-        String email = emailTextfield.getText();
-        String username = usernameTextfield.getText();
-        String password = setPasswordfield.getText();
-        String tel = telTextfield.getText();
-        String adresse = adresseTextfield.getText();
-
         errormessage.setText("");
 
         if (!isValidInput()) {
@@ -161,6 +133,7 @@ public class adduserController implements Initializable {
         PauseTransition pause = new PauseTransition(Duration.seconds(5));
         pause.setOnFinished(event -> errormessage.setText(""));
         pause.play();
+
     }
 
     private boolean isValidInput() throws Exception{
@@ -172,14 +145,12 @@ public class adduserController implements Initializable {
         String tel = telTextfield.getText();
         String adresse = adresseTextfield.getText();
 
-
-        // Validate CIN (7 digits)
-        if (!cin.matches("\\d{7}")) {
-            errors.append("Erreur : Le CIN doit être composé de 7 chiffres.\n");
+        if (!cin.matches("\\d{8}")) {
+            errors.append("Erreur : Le CIN doit être composé de 8 chiffres.\n");
         }
 
 
-        // Validate phone number (8 digits)
+
         if (!tel.matches("\\d{8}")) {
             errors.append("Erreur : Le numéro de téléphone doit être composé de 8 chiffres.\n");
         }
@@ -200,16 +171,14 @@ public class adduserController implements Initializable {
         }
 
 
-        // If there are any errors, display them all at once
         if (errors.length() > 0) {
             errormessage.setText(errors.toString()); // Display all accumulated errors
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
             pause.setOnFinished(event -> errormessage.setText(""));
             pause.play();
-            return false;  // Validation failed
+            return false;
         }
 
-        return true;  // Validation passed
+        return true;
     }
-
 }

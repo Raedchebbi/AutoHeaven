@@ -37,6 +37,7 @@ public class offreController implements Initializable {
     public void setData(Offre offre) {
         this.offre = offre;
 
+        nomLabel.setWrapText(true);
         nomLabel.setText(offre.getType_offre());
         tauxLabel.setText("-" + (int) offre.getTaux_reduction() + "%");
 
@@ -47,12 +48,12 @@ public class offreController implements Initializable {
         if (imageUrl != null && !imageUrl.isEmpty()) {
             if (imageUrl.startsWith("http") || imageUrl.startsWith("https")) {
                 // Load the image from a URL
-                equipImg.setImage(new Image(imageUrl, 200, 137, false, true));
+                equipImg.setImage(new Image(imageUrl, 200, 180, false, true));
             } else {
                 // Load the image from a file
                 File file = new File(imageUrl);
                 if (file.exists()) {
-                    equipImg.setImage(new Image(file.toURI().toString(), 200, 137, false, true));
+                    equipImg.setImage(new Image(file.toURI().toString(), 200, 180, false, true));
                 } else {
                     equipImg.setImage(new Image("file:/path/to/placeholder.png"));
                 }

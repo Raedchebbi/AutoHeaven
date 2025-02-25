@@ -5,8 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,6 +12,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
@@ -167,17 +168,21 @@
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <AnchorPane fx:id="Acceuil_form" layoutX="14.0" layoutY="14.0" prefHeight="554.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <AnchorPane fx:id="profile_form" prefHeight="554.4" prefWidth="868.0" visible="false">
+                  <AnchorPane fx:id="profile_form" prefHeight="554.4" prefWidth="868.0">
                      <children>
                         <AnchorPane layoutX="17.0" layoutY="16.0" prefHeight="521.0" prefWidth="834.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@profileDesign.css">
                            <children>
                               <AnchorPane layoutY="1.0" prefHeight="359.0" prefWidth="834.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@profileDesign.css">
                                  <children>
-                                    <ImageView fx:id="photoprofile" fitHeight="150.0" fitWidth="200.0" layoutX="67.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../../images/photoprofile.png" />
-                                       </image>
-                                    </ImageView>
+                                    <AnchorPane layoutX="67.0" layoutY="32.0" styleClass="shadow" stylesheets="@dashboardDesign.css">
+                                       <children>
+                                          <ImageView fx:id="photoprofile" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../images/photoprofile.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </AnchorPane>
                                     <Label layoutX="274.0" layoutY="55.0" text="Prénom">
                                        <font>
                                           <Font size="13.0" />
@@ -231,7 +236,7 @@
                                           <Font size="16.0" />
                                        </font>
                                     </Label>
-                                    <Button layoutX="69.0" layoutY="210.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="146.0" styleClass="add-btn" stylesheets="@profileDesign.css" text="Charger une photo" />
+                                    <Button fx:id="imageButton" layoutX="69.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleImageSelection" prefHeight="37.0" prefWidth="146.0" styleClass="add-btn" stylesheets="@profileDesign.css" text="Charger une photo" />
                                  </children>
                               </AnchorPane>
                               <TextField fx:id="idTextfield1" layoutX="410.0" layoutY="323.0" prefHeight="0.0" prefWidth="14.0" promptText="Prénom" style="-fx-background-color: Transparent;">
@@ -250,7 +255,7 @@
                   <AnchorPane fx:id="equip_form" prefHeight="554.4" prefWidth="868.0" visible="false" />
                   <AnchorPane fx:id="avis_form" prefHeight="554.4" prefWidth="868.0" visible="false" />
                   <AnchorPane fx:id="rec_form" prefHeight="554.4" prefWidth="868.0" visible="false" />
-                  <AnchorPane fx:id="offre_form" layoutX="14.0" layoutY="14.0" prefHeight="530.0" prefWidth="845.0">
+                  <AnchorPane fx:id="offre_form" layoutX="14.0" layoutY="14.0" prefHeight="530.0" prefWidth="845.0" visible="false">
                      <children>
                         <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="507.0" prefWidth="565.0" style="-fx-background-color: White;" styleClass="shadow" stylesheets="@dashboardDesign.css">
                            <children>
@@ -267,12 +272,62 @@
                         </AnchorPane>
                         <AnchorPane layoutX="594.0" layoutY="14.0" prefHeight="507.0" prefWidth="238.0" style="-fx-background-color: White;" styleClass="shadow" stylesheets="@dashboardDesign.css">
                            <children>
-                              <TableView layoutX="19.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" styleClass="shadow" stylesheets="@dashboardDesign.css">
-                                <columns>
-                                  <TableColumn prefWidth="75.0" text="C1" />
-                                  <TableColumn prefWidth="75.0" text="C2" />
-                                </columns>
-                              </TableView>
+                              <AnchorPane layoutX="19.0" layoutY="45.0" style="-fx-background-color: white;" styleClass="shadow" stylesheets="@profileDesign.css">
+                                 <children>
+                                    <ImageView fx:id="equipImageview" fitHeight="180.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="offreLabel" fitHeight="65.0" fitWidth="46.0" layoutX="142.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true" rotate="11.3">
+                                       <image>
+                                          <Image url="@../../../images/offreLabel.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="tauxLabel" layoutX="151.0" layoutY="-8.0" rotate="11.3" text="Taux" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fx:id="offreAutocollant" fitHeight="33.0" fitWidth="73.0" layoutX="-21.0" layoutY="-19.0" pickOnBounds="true" preserveRatio="true" rotate="-16.6">
+                                       <image>
+                                          <Image url="@../../../images/offreAutocollant.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </AnchorPane>
+                              <Label fx:id="typeLabel" alignment="TOP_LEFT" layoutX="16.0" layoutY="241.0" prefHeight="50.0" prefWidth="206.0" text="Type de L'offre">
+                                 <font>
+                                    <Font name="Cambria" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="equipeLabel" alignment="TOP_CENTER" layoutX="7.0" layoutY="284.0" prefHeight="37.0" prefWidth="218.0" text="Nom de l'equipement">
+                                 <font>
+                                    <Font name="Britannic Bold" size="16.0" />
+                                 </font>
+                                 <textFill>
+                                    <LinearGradient endX="1.0" startY="1.0">
+                                       <stops>
+                                          <Stop>
+                                             <color>
+                                                <Color />
+                                             </color>
+                                          </Stop>
+                                          <Stop offset="1.0">
+                                             <color>
+                                                <Color red="1.0" />
+                                             </color>
+                                          </Stop>
+                                       </stops>
+                                    </LinearGradient>
+                                 </textFill>
+                              </Label>
+                              <Label fx:id="descripLabel" alignment="TOP_LEFT" layoutX="25.0" layoutY="325.0" prefHeight="64.0" prefWidth="195.0" text="descrip">
+                                 <font>
+                                    <Font name="Arial Rounded MT Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="dateLabel" alignment="TOP_CENTER" layoutX="25.0" layoutY="396.0" prefHeight="52.0" prefWidth="190.0" text="date" textFill="#cc0d0d">
+                                 <font>
+                                    <Font name="Arial" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </children>

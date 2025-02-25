@@ -341,16 +341,18 @@ public class dashboardController implements Initializable {
         String role = "mecanicien";
         String username = usernameTextfield.getText();
         String password = setPasswordfield.getText();
+        String photoProfile = null;
+        String ban = "NON";  // Default value for ban is "NON"
 
         UserService userService = new UserService();
-        User newUser = new User( cin, nom, prénom, tel, email, password, role, adresse, username);
+        User newUser = new User(cin, nom, prénom, tel, email, password, role, adresse, username, photoProfile, ban);
         try {
             userService.create(newUser);
         } catch (Exception e) {
             System.out.println("Erreur : " + e.getMessage());
         }
-
     }
+
 
     public void registerMec() throws Exception {
 

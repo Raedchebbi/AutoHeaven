@@ -93,3 +93,42 @@
 .vider-btn:hover{
     -fx-background-color: #b46a4a;
 }
+
+.background-image{
+    -fx-background-image: url("file:/C:/Users/MSI/Desktop/pidev/AutoHeaven/images/back.jpg");
+    -fx-background-repeat: stretch;
+
+}
+
+.top-bar{
+    -fx-background-color: rgba(60, 59, 59, 0.8);
+}
+
+.transparent{
+    -fx-background-color: rgba(0,0,0,0);
+}
+
+.pink-button{
+    -fx-background-color: rgba(60, 59, 59, 0.8);
+    -fx-background-radius: 100;
+}
+
+.purple-button{
+    -fx-background-color: rgba(173, 1, 1, 0.8);
+    -fx-background-radius: 100;
+}
+
+.transparent-button{
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 100;
+}
+
+.shadow{
+    -fx-effect: dropShadow(one-pass-box,rgba(0,0,0,0.3), 10.0 , 0.0 , 0.0, 10.0);
+}
+
+.offer-background{
+    -fx-background-color: rgba(60, 59, 59, 0.8);
+    -fx-background-radius: 30;
+}
