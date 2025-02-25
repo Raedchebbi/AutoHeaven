@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -31,7 +32,7 @@
                            <image>
                               <Image url="@../../../images/employes.png" />
                            </image></ImageView>
-                        <Label layoutX="54.0" layoutY="17.0" text="système De Gestion Des Employées">
+                        <Label layoutX="54.0" layoutY="17.0" text="système De Gestion D'AutoHeaven">
                            <font>
                               <Font name="Tahoma" size="14.0" />
                            </font>
@@ -124,12 +125,15 @@
             </AnchorPane>
          </left>
          <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background-image" stylesheets="@profileDesign.css" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="Acceuil_form" layoutX="14.0" layoutY="14.0" prefHeight="554.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <AnchorPane fx:id="Acceuil_form" layoutX="14.0" layoutY="14.0" prefHeight="554.4" prefWidth="868.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="838.0" styleClass="profile-background" stylesheets="@profileDesign.css" />
+                     </children></AnchorPane>
                   <AnchorPane fx:id="Mecaniciens_form" layoutX="14.0" layoutY="14.0" prefHeight="554.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane layoutX="17.0" layoutY="16.0" prefHeight="521.0" prefWidth="834.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@dashboardDesign.css">
+                        <AnchorPane layoutX="17.0" layoutY="16.0" prefHeight="521.0" prefWidth="834.0" style="-fx-background-radius: 10px;" styleClass="profile-background">
                            <children>
                               <AnchorPane layoutY="1.0" prefHeight="293.0" prefWidth="834.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@dashboardDesign.css">
                                  <children>
@@ -137,13 +141,13 @@
                                        <top>
                                           <Label alignment="CENTER" prefHeight="30.0" prefWidth="839.0" styleClass="table-header" stylesheets="@dashboardDesign.css" text="Liste Des Mécaniciens" textFill="WHITE" BorderPane.alignment="CENTER" />
                                        </top>
-                                       <center>
-                                          <ScrollPane BorderPane.alignment="CENTER">
+                                       <bottom>
+                                          <ScrollPane prefHeight="263.0" prefWidth="837.0" BorderPane.alignment="CENTER">
                                              <BorderPane.margin>
                                                 <Insets left="10.0" />
                                              </BorderPane.margin>
                                              <content>
-                                                <VBox fx:id="tablecontainer" prefHeight="276.0" prefWidth="802.0" spacing="10.0" stylesheets="@dashboardDesign.css">
+                                                <VBox fx:id="tablecontainer" prefHeight="276.0" prefWidth="814.0" spacing="10.0" stylesheets="@dashboardDesign.css">
                                                    <children>
                                                       <HBox prefHeight="43.0" prefWidth="813.0" spacing="30.0" styleClass="table-row" stylesheets="@dashboardDesign.css">
                                                          <children>
@@ -222,7 +226,7 @@
                                                 </VBox>
                                              </content>
                                           </ScrollPane>
-                                       </center>
+                                       </bottom>
                                     </BorderPane>
                                  </children></AnchorPane>
                               <Label layoutX="31.0" layoutY="315.0" text="Prénom">
@@ -298,12 +302,16 @@
                                  </font>
                               </Button>
                            </children>
+                           <stylesheets>
+                              <URL value="@dashboardDesign.css" />
+                              <URL value="@profileDesign.css" />
+                           </stylesheets>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
                   <AnchorPane fx:id="clients_form" prefHeight="554.4" prefWidth="868.0" visible="false">
                      <children>
-                        <AnchorPane layoutX="17.0" layoutY="16.0" prefHeight="521.0" prefWidth="834.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@dashboardDesign.css">
+                        <AnchorPane layoutX="17.0" layoutY="16.0" prefHeight="521.0" prefWidth="834.0" style="-fx-background-radius: 10px;" styleClass="profile-background" stylesheets="@profileDesign.css">
                            <children>
                               <AnchorPane layoutY="1.0" prefHeight="293.0" prefWidth="834.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@dashboardDesign.css">
                                  <children>
@@ -461,18 +469,18 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="Offre_form" layoutX="208.0" layoutY="32.0" prefHeight="554.4" prefWidth="868.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="Offre_form" layoutX="208.0" layoutY="32.0" prefHeight="554.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="525.0" prefWidth="843.0">
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="525.0" prefWidth="843.0" styleClass="profile-background" stylesheets="@profileDesign.css">
                            <children>
                               <AnchorPane layoutX="1.0" layoutY="1.0" prefHeight="293.0" prefWidth="839.0" style="-fx-background-color: White;" styleClass="shadow" stylesheets="@dashboardDesign.css">
                                  <children>
-                                    <BorderPane prefHeight="293.6" prefWidth="834.4">
+                                    <BorderPane prefHeight="293.6" prefWidth="834.4" style="-fx-background-radius: 10;">
                                        <top>
                                           <Label alignment="CENTER" prefHeight="30.0" prefWidth="839.0" styleClass="table-header" stylesheets="@dashboardDesign.css" text="Nos Offres" textFill="WHITE" BorderPane.alignment="CENTER" />
                                        </top>
                                        <center>
-                                          <ScrollPane BorderPane.alignment="CENTER">
+                                          <ScrollPane style="-fx-background-radius: 10;" BorderPane.alignment="CENTER">
                                              <content>
                                                 <VBox fx:id="tableContainer1" prefHeight="276.0" prefWidth="822.0" spacing="10.0" stylesheets="@dashboardDesign.css">
                                                    <children>

@@ -201,6 +201,21 @@ public class profileController implements Initializable {
     @FXML
     private File selectedFile;
 
+    @FXML
+    private ImageView services;
+
+    @FXML
+    private ImageView voitures;
+
+    @FXML
+    private ImageView equipements;
+
+    @FXML
+    private ImageView avis;
+
+    @FXML
+    private ImageView reclamations;
+
 
     private ObservableList<Offre> cardListoffre = FXCollections.observableArrayList();
 
@@ -213,9 +228,10 @@ public class profileController implements Initializable {
         Image logoImage = new Image(logoFile.toURI().toString());
         logo.setImage(logoImage);
 
-        File clientsFile = new File("images/clients.png");
-        Image clientsImage = new Image(clientsFile.toURI().toString());
-        clients.setImage(clientsImage);
+        File ajoutFile = new File("images/ajout.png");
+        Image ajoutImage = new Image(ajoutFile.toURI().toString());
+        ajout.setImage(ajoutImage);
+
 
         File adminFile = new File("images/admin.png");
         Image adminImage = new Image(adminFile.toURI().toString());
@@ -245,6 +261,25 @@ public class profileController implements Initializable {
         Image offreautoImage = new Image(offreautoFile.toURI().toString());
         offreAutocollant.setImage(offreautoImage);
 
+        File servicesFile = new File("images/services.png");
+        Image servicesImage = new Image(servicesFile.toURI().toString());
+        services.setImage(servicesImage);
+
+        File voituresFile = new File("images/voitures.png");
+        Image voituresImage = new Image(voituresFile.toURI().toString());
+        voitures.setImage(voituresImage);
+
+        File reclamationsFile = new File("images/réclamations.png");
+        Image reclamationsImage = new Image(reclamationsFile.toURI().toString());
+        reclamations.setImage(reclamationsImage);
+
+        File equipFile = new File("images/equipements.png");
+        Image equipImage = new Image(equipFile.toURI().toString());
+        equipements.setImage(equipImage);
+
+        File avisFile = new File("images/avis.png");
+        Image avisImage = new Image(avisFile.toURI().toString());
+        avis.setImage(avisImage);
 
         showLoggedInUserDetails();
         menuDisplayCard();
@@ -490,7 +525,7 @@ public class profileController implements Initializable {
 
 
         // Validate CIN (7 digits)
-        if (!cin.matches("\\d{7}")) {
+        if (!cin.matches("\\d{8}")) {
             errors.append("Erreur : Le CIN doit être composé de 7 chiffres.\n");
         }
 

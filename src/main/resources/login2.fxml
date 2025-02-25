@@ -21,7 +21,7 @@
    <top>
       <HBox alignment="CENTER" prefHeight="67.0" prefWidth="1101.0" styleClass="top-bar" stylesheets="@profileDesign.css" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="reserveerbtn" alignment="CENTER" mnemonicParsing="false" prefHeight="52.0" prefWidth="110.0" styleClass="transparent" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
+            <Button fx:id="reserveerbtn" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="52.0" prefWidth="110.0" styleClass="transparent" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
                <font>
                   <Font name="Andalus" size="20.0" />
                </font>
@@ -29,17 +29,17 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="marquebtn" alignment="CENTER" mnemonicParsing="false" prefHeight="52.0" prefWidth="117.0" styleClass="transparent" stylesheets="@profileDesign.css" text="Marques" textFill="WHITE">
+            <Button fx:id="marquebtn" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="52.0" prefWidth="117.0" styleClass="transparent" stylesheets="@profileDesign.css" text="Marques" textFill="WHITE">
                <font>
                   <Font name="Andalus" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="equippbtn" alignment="CENTER" mnemonicParsing="false" prefHeight="52.0" prefWidth="148.0" styleClass="transparent" stylesheets="@profileDesign.css" text="Equipements" textFill="WHITE">
+            <Button fx:id="equippbtn" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="52.0" prefWidth="148.0" styleClass="transparent" stylesheets="@profileDesign.css" text="Equipements" textFill="WHITE">
                <font>
                   <Font name="Andalus" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="offresbtn" alignment="CENTER" mnemonicParsing="false" prefHeight="52.0" prefWidth="87.0" styleClass="transparent" stylesheets="@profileDesign.css" text="Offres" textFill="WHITE">
+            <Button fx:id="offresbtn" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="52.0" prefWidth="87.0" styleClass="transparent" stylesheets="@profileDesign.css" text="Offres" textFill="WHITE">
                <font>
                   <Font name="Andalus" size="20.0" />
                </font>
@@ -89,22 +89,22 @@
             </Label>
             <Label prefHeight="138.0" prefWidth="631.0" styleClass="shadow" stylesheets="@profileDesign.css" text="Votre Voiture, Notre Expertise&#10;avec AutoHeaven&#10;&#10;" textFill="WHITE">
                <font>
-                  <Font name="Andalus" size="40.0" />
+                  <Font name="Cambria" size="40.0" />
                </font>
             </Label>
-            <Label prefHeight="18.0" prefWidth="266.0" text="Réservez, entretenez, roulez en luxe." textFill="WHITE">
+            <Label prefHeight="18.0" prefWidth="266.0" styleClass="shadow" stylesheets="@profileDesign.css" text="Réservez, entretenez, roulez en luxe." textFill="WHITE">
                <font>
                   <Font name="Andalus" size="18.0" />
                </font>
             </Label>
             <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="1000.0" spacing="60.0" styleClass="shadow" stylesheets="@profileDesign.css">
                <children>
-                  <Button fx:id="joinbtn" mnemonicParsing="false" prefHeight="35.0" prefWidth="131.0" styleClass="pink-button" stylesheets="@profileDesign.css" text="Rejoindre" textFill="WHITE">
+                  <Button fx:id="joinbtn" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="35.0" prefWidth="131.0" styleClass="pink-button" stylesheets="@profileDesign.css" text="Rejoindre" textFill="WHITE">
                      <font>
                         <Font name="Andalus" size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="avisbtn" mnemonicParsing="false" prefHeight="0.0" prefWidth="126.0" styleClass="purple-button" stylesheets="@profileDesign.css" text="Avis" textFill="WHITE">
+                  <Button fx:id="avisbtn" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="0.0" prefWidth="126.0" styleClass="purple-button" stylesheets="@profileDesign.css" text="Avis" textFill="WHITE">
                      <font>
                         <Font name="Andalus" size="18.0" />
                      </font>
@@ -126,7 +126,7 @@
                      <children>
                         <Label prefHeight="42.0" prefWidth="150.0" text="Drive Test" textFill="WHITE">
                            <font>
-                              <Font name="Andalus" size="18.0" />
+                              <Font name="Cambria" size="18.0" />
                            </font>
                            <padding>
                               <Insets left="10.0" />
@@ -186,7 +186,7 @@
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                      <children>
-                        <Button fx:id="plusbtn" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Plus" textFill="WHITE">
+                        <Button fx:id="plusbtn" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Plus" textFill="WHITE">
                            <font>
                               <Font name="Andalus" size="18.0" />
                            </font>
@@ -195,7 +195,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </Button>
-                        <Button fx:id="reserverbtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
+                        <Button fx:id="reserverbtn" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
                            <font>
                               <Font name="Andalus" size="18.0" />
                            </font>
@@ -220,7 +220,7 @@
                      <children>
                         <Label prefHeight="42.0" prefWidth="150.0" text="Intervention " textFill="WHITE">
                            <font>
-                              <Font name="Andalus" size="18.0" />
+                              <Font name="Cambria" size="18.0" />
                            </font>
                            <padding>
                               <Insets left="10.0" />
@@ -280,7 +280,7 @@
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                      <children>
-                        <Button fx:id="plusbtn1" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Plus" textFill="WHITE">
+                        <Button fx:id="plusbtn1" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Plus" textFill="WHITE">
                            <font>
                               <Font name="Andalus" size="18.0" />
                            </font>
@@ -289,7 +289,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </Button>
-                        <Button fx:id="reserverbtn1" mnemonicParsing="false" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
+                        <Button fx:id="reserverbtn1" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
                            <font>
                               <Font name="Andalus" size="18.0" />
                            </font>
@@ -314,7 +314,7 @@
                      <children>
                         <Label prefHeight="42.0" prefWidth="150.0" text="Service" textFill="WHITE">
                            <font>
-                              <Font name="Andalus" size="18.0" />
+                              <Font name="Cambria" size="18.0" />
                            </font>
                            <padding>
                               <Insets left="10.0" />
@@ -374,7 +374,7 @@
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                      <children>
-                        <Button fx:id="plusbtn2" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Plus" textFill="WHITE">
+                        <Button fx:id="plusbtn2" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Plus" textFill="WHITE">
                            <font>
                               <Font name="Andalus" size="18.0" />
                            </font>
@@ -383,7 +383,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </Button>
-                        <Button fx:id="reserverbtn2" mnemonicParsing="false" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
+                        <Button fx:id="reserverbtn2" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
                            <font>
                               <Font name="Andalus" size="18.0" />
                            </font>
@@ -408,7 +408,7 @@
                      <children>
                         <Label prefHeight="30.0" prefWidth="211.0" text="Equipement&amp; Accessoires" textFill="WHITE">
                            <font>
-                              <Font name="Andalus" size="17.0" />
+                              <Font name="Cambria" size="18.0" />
                            </font>
                            <padding>
                               <Insets left="10.0" />
@@ -468,7 +468,7 @@
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                      <children>
-                        <Button fx:id="plusbtn3" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Plus" textFill="WHITE">
+                        <Button fx:id="plusbtn3" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Plus" textFill="WHITE">
                            <font>
                               <Font name="Andalus" size="18.0" />
                            </font>
@@ -477,7 +477,7 @@
                               <String fx:value="shadow" />
                            </styleClass>
                         </Button>
-                        <Button fx:id="reserverbtn3" mnemonicParsing="false" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
+                        <Button fx:id="reserverbtn3" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
                            <font>
                               <Font name="Andalus" size="18.0" />
                            </font>

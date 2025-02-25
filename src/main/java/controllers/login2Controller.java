@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -89,7 +90,7 @@ public class login2Controller implements Initializable {
 
         Stage profileStage = new Stage();
         profileStage.setScene(new Scene(root, 1100, 600));
-        profileStage.initStyle(StageStyle.UNDECORATED);
+        profileStage.initStyle(StageStyle.DECORATED);
         profileStage.show();
     } catch (Exception e) {
         e.printStackTrace();
@@ -106,12 +107,21 @@ public class login2Controller implements Initializable {
 
             Stage profileStage = new Stage();
             profileStage.setScene(new Scene(root, 1100, 600));
-            profileStage.initStyle(StageStyle.UNDECORATED);
+            profileStage.initStyle(StageStyle.DECORATED);
             profileStage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-}
+    public void showLoginSignupPrompt() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Action requise");
+        alert.setHeaderText(null);
+        alert.setContentText("Veuillez vous connecter ou vous inscrire d'abord.");
+
+        alert.showAndWait();
+    }
+
+    }
 

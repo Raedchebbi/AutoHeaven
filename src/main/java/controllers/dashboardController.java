@@ -618,7 +618,7 @@ public class dashboardController implements Initializable {
 
 
         // Validate CIN (7 digits)
-        if (!cin.matches("\\d{7}")) {
+        if (!cin.matches("\\d{8}")) {
             errors.append("Erreur : Le CIN doit être composé de 7 chiffres.\n");
         }
 

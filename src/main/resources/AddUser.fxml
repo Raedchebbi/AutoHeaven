@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="660.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.adduserController">
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" styleClass="background-image" stylesheets="@profileDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.adduserController">
    <children>
       <AnchorPane prefHeight="82.0" prefWidth="1100.0" style="-fx-background-color: #e00814;">
          <children>
@@ -24,94 +24,90 @@
                </font>
             </Label>
          </children></AnchorPane>
-      <Label layoutX="291.0" layoutY="177.0" text="Prénom">
-         <font>
-            <Font name="Tahoma" size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="prenomTextfield" layoutX="370.0" layoutY="175.0" prefHeight="26.0" prefWidth="250.0" promptText="Prénom" />
-      <Label layoutX="299.0" layoutY="224.0" text="Nom">
-         <font>
-            <Font name="Tahoma" size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="nomTextfield" layoutX="370.0" layoutY="222.0" prefHeight="26.0" prefWidth="250.0" promptText="Nom" />
-      <Label layoutX="308.0" layoutY="271.0" text="CIN">
-         <font>
-            <Font name="Tahoma" size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="cinTextfield" layoutX="370.0" layoutY="268.0" prefHeight="26.0" prefWidth="250.0" promptText="CIN" />
-      <Label layoutX="302.0" layoutY="315.0" text="Email">
-         <font>
-            <Font name="Tahoma" size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="emailTextfield" layoutX="370.0" layoutY="313.0" prefHeight="26.0" prefWidth="250.0" promptText="Email" />
-      <Label layoutX="310.0" layoutY="359.0" text="Tél">
-         <font>
-            <Font name="Tahoma" size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="telTextfield" layoutX="370.0" layoutY="357.0" prefHeight="26.0" prefWidth="250.0" promptText="Télephone" />
-      <Label layoutX="710.0" layoutY="216.0" text="Adresse">
-         <font>
-            <Font name="Tahoma" size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="adresseTextfield" layoutX="783.0" layoutY="214.0" prefHeight="26.0" prefWidth="250.0" promptText="Adresse" />
-      <Label layoutX="701.0" layoutY="260.0" text="Username">
-         <font>
-            <Font name="Tahoma" size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="usernameTextfield" layoutX="783.0" layoutY="258.0" prefHeight="26.0" prefWidth="250.0" promptText="Username" />
-      <Label layoutX="704.0" layoutY="306.0" text="Password">
-         <font>
-            <Font name="Tahoma" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="664.0" layoutY="351.0" text="confirm password">
-         <font>
-            <Font name="Tahoma" size="15.0" />
-         </font>
-      </Label>
-      <PasswordField fx:id="setPasswordfield" layoutX="785.0" layoutY="304.0" prefHeight="26.0" prefWidth="250.0" promptText="Password" />
-      <PasswordField fx:id="confirmPasswordfield" layoutX="786.0" layoutY="349.0" prefHeight="26.0" prefWidth="250.0" promptText="Confirm password" />
-      <Button fx:id="inscritButton" layoutX="365.0" layoutY="517.0" mnemonicParsing="false" onAction="#inscritButtonOnAction" prefHeight="58.0" prefWidth="370.0" style="-fx-background-color: #e00814;" styleClass="add-btn" stylesheets="@addUserdesign.css" text="S'inscrire" textFill="WHITE">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Button>
-      <Button fx:id="fermerButton" layoutX="365.0" layoutY="600.0" mnemonicParsing="false" onAction="#fermerButtonOnAction" prefHeight="26.0" prefWidth="370.0" style="-fx-background-color: #e00814;" styleClass="add-btn" stylesheets="@addUserdesign.css" text="Fermer" textFill="WHITE">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Button>
-      <Label fx:id="registrationMessageLabel" alignment="CENTER" layoutX="35.0" layoutY="110.0" prefHeight="42.0" prefWidth="533.0" textFill="#1b72ff">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Label fx:id="confirmPasswordLabel" alignment="CENTER" layoutX="781.0" layoutY="418.0" prefHeight="19.0" prefWidth="210.0" textFill="#ff4f3f">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Label>
-      <Label fx:id="errormessage" alignment="TOP_LEFT" layoutX="315.0" layoutY="437.0" prefHeight="58.0" prefWidth="402.0" textFill="#ff4f3f">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Label>
-      <AnchorPane layoutX="48.0" layoutY="190.0" prefHeight="204.0" prefWidth="182.0" style="-fx-border-color: #000000; -fx-border-radius: 10;">
+      <AnchorPane layoutX="158.0" layoutY="100.0" prefHeight="476.0" prefWidth="784.0" styleClass="offer-background" stylesheets="@profileDesign.css">
          <children>
-            <ImageView fx:id="photoprofil" fitHeight="160.0" fitWidth="226.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/photoprofile.png" />
-               </image></ImageView>
-            <Button fx:id="loadphotoBtn" layoutY="160.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="188.0" styleClass="delete-btn" stylesheets="@profileDesign.css" text="Importer" />
+            <Label layoutX="13.0" layoutY="62.0" text="Prénom" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="prenomTextfield" layoutX="78.0" layoutY="59.0" prefHeight="26.0" prefWidth="194.0" promptText="Prénom" />
+            <Label layoutX="23.0" layoutY="101.0" text="Nom" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nomTextfield" layoutX="78.0" layoutY="97.0" prefHeight="26.0" prefWidth="194.0" promptText="Nom" />
+            <Label layoutX="26.0" layoutY="141.0" text="CIN" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="cinTextfield" layoutX="78.0" layoutY="138.0" prefHeight="26.0" prefWidth="194.0" promptText="CIN" />
+            <Label layoutX="20.0" layoutY="186.0" text="Email" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="emailTextfield" layoutX="78.0" layoutY="185.0" prefHeight="26.0" prefWidth="194.0" promptText="Email" />
+            <Label layoutX="28.0" layoutY="230.0" text="Tél" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="telTextfield" layoutX="78.0" layoutY="227.0" prefHeight="26.0" prefWidth="194.0" promptText="Télephone" />
+            <Label layoutX="418.0" layoutY="87.0" text="Adresse" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="adresseTextfield" layoutX="491.0" layoutY="84.0" prefHeight="26.0" prefWidth="194.0" promptText="Adresse" />
+            <Label layoutX="409.0" layoutY="130.0" text="Username" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usernameTextfield" layoutX="491.0" layoutY="128.0" prefHeight="26.0" prefWidth="194.0" promptText="Username" />
+            <Label layoutX="409.0" layoutY="176.0" text="Password" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="356.0" layoutY="222.0" text="confirm password" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma" size="16.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="setPasswordfield" layoutX="493.0" layoutY="174.0" prefHeight="26.0" prefWidth="194.0" promptText="Password" />
+            <PasswordField fx:id="confirmPasswordfield" layoutX="494.0" layoutY="219.0" prefHeight="26.0" prefWidth="194.0" promptText="Confirm password" />
+            <Button fx:id="inscritButton" layoutX="229.0" layoutY="344.0" mnemonicParsing="false" onAction="#inscritButtonOnAction" prefHeight="58.0" prefWidth="285.0" styleClass="purple-button" stylesheets="@addUserdesign.css" text="S'inscrire" textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="fermerButton" layoutX="229.0" layoutY="414.0" mnemonicParsing="false" onAction="#fermerButtonOnAction" prefHeight="30.0" prefWidth="286.0" styleClass="transparent-button" stylesheets="@addUserdesign.css" text="Fermer" textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Button>
+            <Label fx:id="errormessage" alignment="TOP_LEFT" layoutX="171.0" layoutY="276.0" prefHeight="58.0" prefWidth="402.0" textFill="#ff4f3f">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="registrationMessageLabel" alignment="CENTER" layoutX="20.0" layoutY="14.0" prefHeight="42.0" prefWidth="533.0" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="confirmPasswordLabel" alignment="CENTER" layoutX="483.0" layoutY="253.0" prefHeight="19.0" prefWidth="210.0" textFill="#ff4f3f">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <TextField fx:id="photoTextfield" layoutX="76.0" layoutY="437.0" style="-fx-background-color: transparent;" />
+      <AnchorPane layoutX="75.0" layoutY="139.0" styleClass="shadow" stylesheets="@dashboardDesign.css" />
    </children>
 </AnchorPane>

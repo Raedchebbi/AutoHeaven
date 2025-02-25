@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -70,7 +71,7 @@
                            </font>
                         </Label>
                         <Line endX="100.0" layoutX="117.0" layoutY="218.0" startX="-100.0" stroke="WHITE" />
-                        <Button fx:id="acceuilBtn" layoutX="26.0" layoutY="227.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Acceuil">
+                        <Button fx:id="acceuilBtn" layoutX="31.0" layoutY="222.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Acceuil">
                            <graphic>
                               <ImageView fx:id="acceuil" fitHeight="28.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -79,7 +80,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="profileBtn" layoutX="27.0" layoutY="263.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Profile">
+                        <Button fx:id="profileBtn" layoutX="31.0" layoutY="256.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Profile">
                            <graphic>
                               <ImageView fx:id="ajout" fitHeight="34.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -88,11 +89,11 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="servicesBtn" layoutX="27.0" layoutY="298.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Nos Services">
+                        <Button fx:id="servicesBtn" layoutX="31.0" layoutY="292.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Nos Services">
                            <graphic>
-                              <ImageView fx:id="clients" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="services" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../images/clients.png" />
+                                    <Image url="@../../../images/services.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -114,45 +115,45 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Button fx:id="VoitureBtn" layoutX="29.0" layoutY="333.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Nos Voitures">
+                        <Button fx:id="VoitureBtn" layoutX="31.0" layoutY="328.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Nos Voitures">
                            <graphic>
-                              <ImageView fx:id="clients1" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="voitures" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../images/clients.png" />
+                                    <Image url="@../../../images/voitures.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="equipBtn" layoutX="29.0" layoutY="363.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Nos Equipements">
+                        <Button fx:id="equipBtn" layoutX="31.0" layoutY="363.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Nos Equipements">
                            <graphic>
-                              <ImageView fx:id="clients11" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="equipements" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../images/clients.png" />
+                                    <Image url="@../../../images/equipements.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="avisBtn" layoutX="29.0" layoutY="396.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Avis">
+                        <Button fx:id="avisBtn" layoutX="30.0" layoutY="395.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Avis">
                            <graphic>
-                              <ImageView fx:id="clients12" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="avis" fitHeight="37.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../images/clients.png" />
+                                    <Image url="@../../../images/avis.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="recBtn" layoutX="26.0" layoutY="431.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Réclamation">
+                        <Button fx:id="recBtn" layoutX="31.0" layoutY="432.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@profileDesign.css" text="Réclamation">
                            <graphic>
-                              <ImageView fx:id="clients13" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="reclamations" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../images/clients.png" />
+                                    <Image url="@../../../images/réclamations.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="OffreBtn" layoutX="26.0" layoutY="466.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../../target/classes/dashboardDesign.css" text="Promotions">
+                        <Button fx:id="OffreBtn" layoutX="31.0" layoutY="466.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../../../target/classes/dashboardDesign.css" text="Promotions">
                            <graphic>
-                              <ImageView fx:id="offre" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="offre" fitHeight="37.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../images/offre.png" />
                                  </image>
@@ -165,16 +166,19 @@
             </AnchorPane>
          </left>
          <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background-image" stylesheets="@profileDesign.css" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="Acceuil_form" layoutX="14.0" layoutY="14.0" prefHeight="554.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <AnchorPane fx:id="profile_form" prefHeight="554.4" prefWidth="868.0">
+                  <AnchorPane fx:id="Acceuil_form" layoutX="14.0" layoutY="14.0" prefHeight="554.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane layoutX="17.0" layoutY="16.0" prefHeight="521.0" prefWidth="834.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@profileDesign.css">
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="846.0" styleClass="profile-background" stylesheets="@profileDesign.css" />
+                     </children></AnchorPane>
+                  <AnchorPane fx:id="profile_form" prefHeight="554.4" prefWidth="868.0" visible="false">
+                     <children>
+                        <AnchorPane layoutX="17.0" layoutY="16.0" prefHeight="521.0" prefWidth="834.0" style="-fx-background-radius: 10px;" styleClass="profile-background" stylesheets="@profileDesign.css">
                            <children>
-                              <AnchorPane layoutY="1.0" prefHeight="359.0" prefWidth="834.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@profileDesign.css">
+                              <AnchorPane layoutY="1.0" prefHeight="359.0" prefWidth="834.0" style="-fx-background-radius: 10px;" stylesheets="@profileDesign.css">
                                  <children>
-                                    <AnchorPane layoutX="67.0" layoutY="32.0" styleClass="shadow" stylesheets="@dashboardDesign.css">
+                                    <AnchorPane layoutX="67.0" layoutY="41.0" styleClass="shadow" stylesheets="@dashboardDesign.css">
                                        <children>
                                           <ImageView fx:id="photoprofile" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -185,67 +189,80 @@
                                     </AnchorPane>
                                     <Label layoutX="274.0" layoutY="55.0" text="Prénom">
                                        <font>
-                                          <Font size="13.0" />
+                                          <Font name="Andalus" size="15.0" />
                                        </font>
                                     </Label>
                                     <TextField fx:id="prenomTextfield1" layoutX="342.0" layoutY="52.0" prefHeight="26.0" prefWidth="178.0" promptText="Prénom" />
                                     <Label layoutX="282.0" layoutY="97.0" text="Nom">
                                        <font>
-                                          <Font size="13.0" />
+                                          <Font name="Andalus" size="15.0" />
                                        </font>
                                     </Label>
                                     <TextField fx:id="nomTextfield1" layoutX="342.0" layoutY="94.0" prefHeight="26.0" prefWidth="178.0" promptText="Nom" />
                                     <Label layoutX="285.0" layoutY="140.0" text="CIN">
                                        <font>
-                                          <Font size="13.0" />
+                                          <Font name="Andalus" size="15.0" />
                                        </font>
                                     </Label>
                                     <TextField fx:id="cinTextfield1" layoutX="342.0" layoutY="137.0" prefHeight="26.0" prefWidth="178.0" promptText="CIN" />
                                     <Label layoutX="282.0" layoutY="177.0" text="Email">
                                        <font>
-                                          <Font size="13.0" />
+                                          <Font name="Andalus" size="15.0" />
                                        </font>
                                     </Label>
                                     <TextField fx:id="emailTextfield1" layoutX="339.0" layoutY="174.0" prefHeight="26.0" prefWidth="178.0" promptText="Email" />
                                     <Label layoutX="559.0" layoutY="101.0" text="Adresse">
                                        <font>
-                                          <Font size="13.0" />
+                                          <Font name="Andalus" size="15.0" />
                                        </font>
                                     </Label>
                                     <TextField fx:id="adresseTextfield1" layoutX="622.0" layoutY="98.0" prefHeight="26.0" prefWidth="178.0" promptText="Adresse" />
                                     <Label layoutX="551.0" layoutY="139.0" text="Username">
                                        <font>
-                                          <Font size="13.0" />
+                                          <Font name="Andalus" size="15.0" />
                                        </font>
                                     </Label>
                                     <TextField fx:id="usernameTextfield1" layoutX="622.0" layoutY="136.0" prefHeight="25.0" prefWidth="178.0" promptText="Username" />
                                     <Label layoutX="551.0" layoutY="176.0" text="Password">
                                        <font>
-                                          <Font size="13.0" />
+                                          <Font name="Andalus" size="15.0" />
                                        </font>
                                     </Label>
                                     <PasswordField fx:id="setPasswordfield1" layoutX="621.0" layoutY="173.0" prefHeight="26.0" prefWidth="178.0" promptText="Password" />
                                     <Label layoutX="571.0" layoutY="64.0" text="Tél">
                                        <font>
-                                          <Font size="13.0" />
+                                          <Font name="Andalus" size="15.0" />
                                        </font>
                                     </Label>
                                     <TextField fx:id="telTextfield1" layoutX="620.0" layoutY="61.0" prefHeight="26.0" prefWidth="178.0" promptText="Télephone" />
-                                    <Label fx:id="errormessage" alignment="TOP_LEFT" layoutX="241.0" layoutY="241.0" prefHeight="82.0" prefWidth="423.0" textFill="RED">
+                                    <Label fx:id="errormessage" alignment="TOP_LEFT" layoutX="339.0" layoutY="237.0" prefHeight="94.0" prefWidth="423.0" textFill="RED">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="imageButton" layoutX="69.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleImageSelection" prefHeight="37.0" prefWidth="146.0" styleClass="add-btn" stylesheets="@profileDesign.css" text="Charger une photo" />
+                                    <Button fx:id="imageButton" layoutX="65.0" layoutY="229.0" mnemonicParsing="false" onAction="#handleImageSelection" prefHeight="39.0" prefWidth="154.0" styleClass="transparent-button" stylesheets="@profileDesign.css" text="Charger une photo">
+                                       <font>
+                                          <Font name="Andalus" size="16.0" />
+                                       </font></Button>
                                  </children>
+                                 <styleClass>
+                                    <String fx:value="shadow" />
+                                    <String fx:value="profile-background" />
+                                 </styleClass>
                               </AnchorPane>
                               <TextField fx:id="idTextfield1" layoutX="410.0" layoutY="323.0" prefHeight="0.0" prefWidth="14.0" promptText="Prénom" style="-fx-background-color: Transparent;">
                                  <font>
                                     <Font size="1.0" />
                                  </font>
                               </TextField>
-                              <Button fx:id="readBtn2" layoutX="187.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleUpdateAction" onMouseClicked="#displayUsername" prefHeight="53.0" prefWidth="178.0" styleClass="update-btn" stylesheets="@profileDesign.css" text="Modifier" />
-                              <Button fx:id="deleteBtn2" layoutX="462.0" layoutY="388.0" mnemonicParsing="false" onAction="#handleDeleteActionclient" prefHeight="56.0" prefWidth="182.0" styleClass="delete-btn" stylesheets="@profileDesign.css" text="Supprimer" />
+                              <Button fx:id="readBtn2" layoutX="334.0" layoutY="413.0" mnemonicParsing="false" onAction="#handleUpdateAction" onMouseClicked="#displayUsername" prefHeight="53.0" prefWidth="178.0" styleClass="pink-button" stylesheets="@profileDesign.css" text="Modifier" textFill="WHITE">
+                                 <font>
+                                    <Font name="Andalus" size="18.0" />
+                                 </font></Button>
+                              <Button fx:id="deleteBtn2" layoutX="609.0" layoutY="412.0" mnemonicParsing="false" onAction="#handleDeleteActionclient" prefHeight="56.0" prefWidth="182.0" styleClass="purple-button" stylesheets="@profileDesign.css" text="Supprimer" textFill="WHITE">
+                                 <font>
+                                    <Font name="Andalus" size="18.0" />
+                                 </font></Button>
                            </children>
                         </AnchorPane>
                      </children>
@@ -255,9 +272,9 @@
                   <AnchorPane fx:id="equip_form" prefHeight="554.4" prefWidth="868.0" visible="false" />
                   <AnchorPane fx:id="avis_form" prefHeight="554.4" prefWidth="868.0" visible="false" />
                   <AnchorPane fx:id="rec_form" prefHeight="554.4" prefWidth="868.0" visible="false" />
-                  <AnchorPane fx:id="offre_form" layoutX="14.0" layoutY="14.0" prefHeight="530.0" prefWidth="845.0" visible="false">
+                  <AnchorPane fx:id="offre_form" layoutX="14.0" layoutY="14.0" prefHeight="530.0" prefWidth="845.0">
                      <children>
-                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="507.0" prefWidth="565.0" style="-fx-background-color: White;" styleClass="shadow" stylesheets="@dashboardDesign.css">
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="507.0" prefWidth="565.0" stylesheets="@profileDesign.css">
                            <children>
                               <ScrollPane fx:id="scroll" layoutX="14.0" layoutY="14.0" prefHeight="483.0" prefWidth="542.0">
                                  <content>
@@ -269,10 +286,14 @@
                                  </content>
                               </ScrollPane>
                            </children>
+                           <styleClass>
+                              <String fx:value="shadow" />
+                              <String fx:value="profile-background" />
+                           </styleClass>
                         </AnchorPane>
-                        <AnchorPane layoutX="594.0" layoutY="14.0" prefHeight="507.0" prefWidth="238.0" style="-fx-background-color: White;" styleClass="shadow" stylesheets="@dashboardDesign.css">
+                        <AnchorPane layoutX="594.0" layoutY="14.0" prefHeight="507.0" prefWidth="238.0" styleClass="profile-background" stylesheets="@profileDesign.css">
                            <children>
-                              <AnchorPane layoutX="19.0" layoutY="45.0" style="-fx-background-color: white;" styleClass="shadow" stylesheets="@profileDesign.css">
+                              <AnchorPane layoutX="19.0" layoutY="45.0" style="-fx-background-color: white;" styleClass="profile-background" stylesheets="@profileDesign.css">
                                  <children>
                                     <ImageView fx:id="equipImageview" fitHeight="180.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                                     <ImageView fx:id="offreLabel" fitHeight="65.0" fitWidth="46.0" layoutX="142.0" layoutY="-29.0" pickOnBounds="true" preserveRatio="true" rotate="11.3">
@@ -280,7 +301,7 @@
                                           <Image url="@../../../images/offreLabel.png" />
                                        </image>
                                     </ImageView>
-                                    <Label fx:id="tauxLabel" layoutX="151.0" layoutY="-8.0" rotate="11.3" text="Taux" textFill="WHITE">
+                                    <Label fx:id="tauxLabel" layoutX="151.0" layoutY="-8.0" rotate="11.3" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
@@ -292,12 +313,12 @@
                                     </ImageView>
                                  </children>
                               </AnchorPane>
-                              <Label fx:id="typeLabel" alignment="TOP_LEFT" layoutX="16.0" layoutY="241.0" prefHeight="50.0" prefWidth="206.0" text="Type de L'offre">
+                              <Label fx:id="typeLabel" alignment="TOP_LEFT" layoutX="16.0" layoutY="241.0" prefHeight="50.0" prefWidth="206.0">
                                  <font>
                                     <Font name="Cambria" size="18.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="equipeLabel" alignment="TOP_CENTER" layoutX="7.0" layoutY="284.0" prefHeight="37.0" prefWidth="218.0" text="Nom de l'equipement">
+                              <Label fx:id="equipeLabel" alignment="TOP_CENTER" layoutX="7.0" layoutY="284.0" prefHeight="37.0" prefWidth="218.0">
                                  <font>
                                     <Font name="Britannic Bold" size="16.0" />
                                  </font>
@@ -318,12 +339,12 @@
                                     </LinearGradient>
                                  </textFill>
                               </Label>
-                              <Label fx:id="descripLabel" alignment="TOP_LEFT" layoutX="25.0" layoutY="325.0" prefHeight="64.0" prefWidth="195.0" text="descrip">
+                              <Label fx:id="descripLabel" alignment="TOP_LEFT" layoutX="25.0" layoutY="325.0" prefHeight="64.0" prefWidth="195.0">
                                  <font>
                                     <Font name="Arial Rounded MT Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="dateLabel" alignment="TOP_CENTER" layoutX="25.0" layoutY="396.0" prefHeight="52.0" prefWidth="190.0" text="date" textFill="#cc0d0d">
+                              <Label fx:id="dateLabel" alignment="TOP_CENTER" layoutX="25.0" layoutY="396.0" prefHeight="52.0" prefWidth="190.0" textFill="#cc0d0d">
                                  <font>
                                     <Font name="Arial" size="12.0" />
                                  </font>
