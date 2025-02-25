@@ -2,9 +2,14 @@ package controllers;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,9 +18,15 @@ import javafx.scene.image.Image;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import models.User;
+import models.Offre;
+import services.OffreService;
 import services.UserService;
 import utils.MyDb;
 
@@ -70,6 +81,9 @@ public class profileController implements Initializable {
 
     @FXML
     private Button close;
+
+    @FXML
+    private Button full;
 
     @FXML
     private Button deleteBtn2;
@@ -147,6 +161,46 @@ public class profileController implements Initializable {
     @FXML
     private ImageView photoprofile;
 
+    @FXML
+    private GridPane grid;
+
+    @FXML
+    private AnchorPane offre_form;
+
+    @FXML
+    private ScrollPane scroll;
+
+    @FXML
+    private ImageView offre;
+
+    @FXML
+    private Button OffreBtn;
+
+    @FXML
+    private Label tauxLabel;
+
+    @FXML
+    private ImageView equipImageview;
+
+
+    @FXML
+    private Label typeLabel;
+
+    @FXML
+    private Label equipeLabel;
+
+    @FXML
+    private Label descripLabel;
+
+    @FXML
+    private Label dateLabel;
+
+
+    private ObservableList<Offre> cardListoffre = FXCollections.observableArrayList();
+
+    private double prevX, prevY, prevWidth, prevHeight;
+    private boolean isMaximized = false;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         File logoFile = new File("images/logo.png");
@@ -173,7 +227,12 @@ public class profileController implements Initializable {
         Image photoprofileImage = new Image(photoprofileFile.toURI().toString());
         photoprofile.setImage(photoprofileImage);
 
+        File offreFile = new File("images/offre.png");
+        Image offreImage = new Image(offreFile.toURI().toString());
+        offre.setImage(offreImage);
+
         showLoggedInUserDetails();
+        menuDisplayCard();
 
     }
 
@@ -184,6 +243,36 @@ public class profileController implements Initializable {
     public void displayUsername() {
         usernaame.setText(loggedInUser);
     }
+
+    public void toggleMaximize(ActionEvent event) {
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds(); // Gets screen size without taskbar
+
+        if (isMaximized) {
+            // Restore previous size and position
+            stage.setX(prevX);
+            stage.setY(prevY);
+            stage.setWidth(prevWidth);
+            stage.setHeight(prevHeight);
+        } else {
+            // Save current size and position before maximizing
+            prevX = stage.getX();
+            prevY = stage.getY();
+            prevWidth = stage.getWidth();
+            prevHeight = stage.getHeight();
+
+            // Resize to fit the screen
+            stage.setX(bounds.getMinX());
+            stage.setY(bounds.getMinY());
+            stage.setWidth(bounds.getWidth());
+            stage.setHeight(bounds.getHeight());
+        }
+
+        isMaximized = !isMaximized;
+    }
+
+
 
     public void logout(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -218,14 +307,17 @@ public class profileController implements Initializable {
             equip_form.setVisible(false);
             avis_form.setVisible(false);
             rec_form.setVisible(false);
+            offre_form.setVisible(false);
 
             acceuilBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
-            profile_form.setStyle("-fx-background-color: transparent");
-            services_form.setStyle("-fx-background-color: transparent");
-            voiture_form.setStyle("-fx-background-color: transparent");
-            equip_form.setStyle("-fx-background-color: transparent");
-            avis_form.setStyle("-fx-background-color: transparent");
-            rec_form.setStyle("-fx-background-color: transparent");
+            profileBtn.setStyle("-fx-background-color: transparent");
+            servicesBtn.setStyle("-fx-background-color: transparent");
+            VoitureBtn.setStyle("-fx-background-color: transparent");
+            equipBtn.setStyle("-fx-background-color: transparent");
+            avisBtn.setStyle("-fx-background-color: transparent");
+            recBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
+
 
         } else if (event.getSource() == profileBtn) {
             Acceuil_form.setVisible(false);
@@ -235,14 +327,17 @@ public class profileController implements Initializable {
             equip_form.setVisible(false);
             avis_form.setVisible(false);
             rec_form.setVisible(false);
+            offre_form.setVisible(false);
 
+            profileBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             acceuilBtn.setStyle("-fx-background-color: transparent");
-            profile_form.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
-            services_form.setStyle("-fx-background-color: transparent");
-            voiture_form.setStyle("-fx-background-color: transparent");
-            equip_form.setStyle("-fx-background-color: transparent");
-            avis_form.setStyle("-fx-background-color: transparent");
-            rec_form.setStyle("-fx-background-color: transparent");
+            servicesBtn.setStyle("-fx-background-color: transparent");
+            VoitureBtn.setStyle("-fx-background-color: transparent");
+            equipBtn.setStyle("-fx-background-color: transparent");
+            avisBtn.setStyle("-fx-background-color: transparent");
+            recBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
+
 
         } else if (event.getSource() == servicesBtn) {
             Acceuil_form.setVisible(false);
@@ -252,14 +347,17 @@ public class profileController implements Initializable {
             equip_form.setVisible(false);
             avis_form.setVisible(false);
             rec_form.setVisible(false);
+            offre_form.setVisible(false);
 
             acceuilBtn.setStyle("-fx-background-color: transparent");
-            profile_form.setStyle("-fx-background-color: transparent");
-            services_form.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
-            voiture_form.setStyle("-fx-background-color: transparent");
-            equip_form.setStyle("-fx-background-color: transparent");
-            avis_form.setStyle("-fx-background-color: transparent");
-            rec_form.setStyle("-fx-background-color: transparent");
+            profileBtn.setStyle("-fx-background-color: transparent");
+            servicesBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            VoitureBtn.setStyle("-fx-background-color: transparent");
+            equipBtn.setStyle("-fx-background-color: transparent");
+            avisBtn.setStyle("-fx-background-color: transparent");
+            recBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
+
 
         } else if (event.getSource() == VoitureBtn) {
             Acceuil_form.setVisible(false);
@@ -269,14 +367,17 @@ public class profileController implements Initializable {
             equip_form.setVisible(false);
             avis_form.setVisible(false);
             rec_form.setVisible(false);
+            offre_form.setVisible(false);
 
             acceuilBtn.setStyle("-fx-background-color: transparent");
-            profile_form.setStyle("-fx-background-color: transparent");
-            services_form.setStyle("-fx-background-color: transparent");
-            voiture_form.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
-            equip_form.setStyle("-fx-background-color: transparent");
-            avis_form.setStyle("-fx-background-color: transparent");
-            rec_form.setStyle("-fx-background-color: transparent");
+            profileBtn.setStyle("-fx-background-color: transparent");
+            servicesBtn.setStyle("-fx-background-color: transparent");
+            VoitureBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            equipBtn.setStyle("-fx-background-color: transparent");
+            avisBtn.setStyle("-fx-background-color: transparent");
+            recBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
+
 
 
         } else if (event.getSource() == equipBtn) {
@@ -287,14 +388,17 @@ public class profileController implements Initializable {
             equip_form.setVisible(true);
             avis_form.setVisible(false);
             rec_form.setVisible(false);
+            offre_form.setVisible(false);
 
             acceuilBtn.setStyle("-fx-background-color: transparent");
-            profile_form.setStyle("-fx-background-color: transparent");
-            services_form.setStyle("-fx-background-color: transparent");
-            voiture_form.setStyle("-fx-background-color: transparent");
-            equip_form.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
-            avis_form.setStyle("-fx-background-color: transparent");
-            rec_form.setStyle("-fx-background-color: transparent");
+            profileBtn.setStyle("-fx-background-color: transparent");
+            servicesBtn.setStyle("-fx-background-color: transparent");
+            VoitureBtn.setStyle("-fx-background-color: transparent");
+            equipBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            avisBtn.setStyle("-fx-background-color: transparent");
+            recBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
+
 
 
         } else if (event.getSource() == avisBtn) {
@@ -305,14 +409,17 @@ public class profileController implements Initializable {
             equip_form.setVisible(false);
             avis_form.setVisible(true);
             rec_form.setVisible(false);
+            offre_form.setVisible(false);
 
             acceuilBtn.setStyle("-fx-background-color: transparent");
-            profile_form.setStyle("-fx-background-color: transparent");
-            services_form.setStyle("-fx-background-color: transparent");
-            voiture_form.setStyle("-fx-background-color: transparent");
-            equip_form.setStyle("-fx-background-color: transparent");
-            avis_form.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
-            rec_form.setStyle("-fx-background-color: transparent");
+            profileBtn.setStyle("-fx-background-color: transparent");
+            servicesBtn.setStyle("-fx-background-color: transparent");
+            VoitureBtn.setStyle("-fx-background-color: transparent");
+            equipBtn.setStyle("-fx-background-color: transparent");
+            avisBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            recBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
+
 
 
         } else if (event.getSource() == recBtn) {
@@ -323,14 +430,36 @@ public class profileController implements Initializable {
             equip_form.setVisible(false);
             avis_form.setVisible(false);
             rec_form.setVisible(true);
+            offre_form.setVisible(false);
 
             acceuilBtn.setStyle("-fx-background-color: transparent");
-            profile_form.setStyle("-fx-background-color: transparent");
-            services_form.setStyle("-fx-background-color: transparent");
-            voiture_form.setStyle("-fx-background-color: transparent");
-            equip_form.setStyle("-fx-background-color: transparent");
-            avis_form.setStyle("-fx-background-color: transparent");
-            rec_form.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            profileBtn.setStyle("-fx-background-color: transparent");
+            servicesBtn.setStyle("-fx-background-color: transparent");
+            VoitureBtn.setStyle("-fx-background-color: transparent");
+            equipBtn.setStyle("-fx-background-color: transparent");
+            avisBtn.setStyle("-fx-background-color: transparent");
+            recBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            OffreBtn.setStyle("-fx-background-color: transparent");
+
+
+        } else if (event.getSource() == OffreBtn) {
+            Acceuil_form.setVisible(false);
+            profile_form.setVisible(false);
+            services_form.setVisible(false);
+            voiture_form.setVisible(false);
+            equip_form.setVisible(false);
+            avis_form.setVisible(false);
+            rec_form.setVisible(false);
+            offre_form.setVisible(true);
+
+            acceuilBtn.setStyle("-fx-background-color: transparent");
+            profileBtn.setStyle("-fx-background-color: transparent");
+            servicesBtn.setStyle("-fx-background-color: transparent");
+            VoitureBtn.setStyle("-fx-background-color: transparent");
+            equipBtn.setStyle("-fx-background-color: transparent");
+            avisBtn.setStyle("-fx-background-color: transparent");
+            recBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
         }
     }
 
@@ -458,10 +587,12 @@ public class profileController implements Initializable {
             userService.update(updatedUser);
 
             // Display success message and hide it after a delay
+            usernaame.setText(loggedInUser);
             errormessage.setText("Utilisateur mis à jour avec succès !");
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
             pause.setOnFinished(event -> errormessage.setText(""));
             pause.play();
+
 
         } catch (Exception e) {
             // Handle exceptions, including validation failures or database issues
@@ -497,4 +628,152 @@ public class profileController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    public ObservableList<Offre> getCardListoffre() {
+        String sql = "SELECT o.*, e.image FROM offre o " +
+                "JOIN equipement e ON o.id_equipement = e.id";
+
+        ObservableList<Offre> listData = FXCollections.observableArrayList();
+        MyDb connectNow = new MyDb();
+        Connection connectDB = connectNow.getConn();
+
+        try {
+            PreparedStatement preparedStatement = connectDB.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String imageUrl = resultSet.getString("image");
+
+                if (imageUrl == null || imageUrl.isEmpty()) {
+                    imageUrl = "file:/path/to/placeholder.png";  // Ensure a fallback placeholder image
+                }
+
+                Offre offre = new Offre(
+                        resultSet.getString("type_offre"),
+                        resultSet.getString("Description"),
+                        resultSet.getDouble("taux_reduction"),
+                        resultSet.getString("date_debut"),
+                        resultSet.getString("date_fin"),
+                        resultSet.getInt("id_equipement"),
+                        imageUrl // Use the always-retrieved image from equipement
+                );
+
+                listData.add(offre);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return listData;
+    }
+
+
+
+    public void menuDisplayCard() {
+        cardListoffre.clear();
+        cardListoffre.addAll(getCardListoffre());
+
+        int row = 0;
+        int column = 0;
+
+        grid.getRowConstraints().clear();
+        grid.getColumnConstraints().clear();
+
+        for (int q = 0; q < cardListoffre.size(); q++) {
+            try {
+                FXMLLoader load = new FXMLLoader();
+                load.setLocation(getClass().getResource("/Offre.fxml"));
+                AnchorPane pane = load.load();
+
+                offreController cardO = load.getController();
+                cardO.setData(cardListoffre.get(q)); // Ensure images are set correctly
+
+                // Get the button from the card (assuming it's called 'detailsButton' in your FXML file)
+                Button detailsButton = (Button) pane.lookup("#checkBtn"); // Adjust this selector to match your actual button id in FXML
+
+                // Attach event handler to the button only
+                if (detailsButton != null) {
+                    final Offre selectedOffre = cardListoffre.get(q);
+                    detailsButton.setOnAction(event -> {
+                        showOffreDetails(selectedOffre);
+                    });
+                }
+
+
+                if (column == 3) { // Ajustement des colonnes
+                    column = 0;
+                    row++;
+                }
+
+                grid.add(pane, column++, row);
+                grid.setMargin(pane, new Insets(10));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void showOffreDetails(Offre selectedOffre) {
+        if (selectedOffre != null) {
+            typeLabel.setText(selectedOffre.getType_offre());
+            descripLabel.setWrapText(true);
+            descripLabel.setText(selectedOffre.getDescription());
+            tauxLabel.setText("-" + (int) selectedOffre.getTaux_reduction() + "%");
+            dateLabel.setWrapText(true);
+            dateLabel.setText("Profitez! \nOffre valable de" + selectedOffre.getDate_debut() + " à " + selectedOffre.getDate_fin());
+
+            // Set the equipment name (assuming you have a way to fetch the name)
+            equipeLabel.setWrapText(true);
+            equipeLabel.setText(getEquipmentNameById(selectedOffre.getId_equipement()));
+
+
+            // Load and set the image
+            OffreService offreService = new OffreService();
+            String imageUrl = offreService.getImageUrlForEquipement(selectedOffre.getId_equipement());
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+            if (imageUrl.startsWith("http") || imageUrl.startsWith("https")) {
+                // Load the image from a URL
+                equipImageview.setImage(new Image(imageUrl, 200, 180, false, true));
+            } else {
+
+                File file = new File(imageUrl);
+                if (file.exists()) {
+                    equipImageview.setImage(new Image(file.toURI().toString(), 200, 180, false, true));
+                } else {
+                    equipImageview.setImage(new Image("file:/path/to/placeholder.png"));
+                }
+            }
+            } else {
+                equipImageview.setImage(new Image("file:/path/to/placeholder.png"));
+            }
+        }
+    }
+
+    public String getEquipmentNameById(int equipementId) {
+        String equipementNom = "Unknown";
+        MyDb connectNow = new MyDb();
+        Connection connectDB = connectNow.getConn();
+
+        String query = "SELECT nom FROM equipement WHERE id = ?";
+
+        try (PreparedStatement statement = connectDB.prepareStatement(query)) {
+            statement.setInt(1, equipementId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                equipementNom = resultSet.getString("nom"); // Get the equipment name
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération du nom de l'équipement: " + e.getMessage());
+        }
+
+        return equipementNom;
+    }
+
 }
+
+
+
+

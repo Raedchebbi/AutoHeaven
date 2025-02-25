@@ -111,9 +111,9 @@
                         </Label>
                         <Button fx:id="OffreBtn" layoutX="27.0" layoutY="349.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Gérer Les Offres">
                            <graphic>
-                              <ImageView fx:id="clients1" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="offre" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../images/clients.png" />
+                                    <Image url="@../../../images/offre.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -476,39 +476,34 @@
                                              <content>
                                                 <VBox fx:id="tableContainer1" prefHeight="276.0" prefWidth="822.0" spacing="10.0" stylesheets="@dashboardDesign.css">
                                                    <children>
-                                                      <HBox prefHeight="43.0" prefWidth="813.0" spacing="40.0" styleClass="table-row" stylesheets="@dashboardDesign.css">
+                                                      <HBox prefHeight="43.0" prefWidth="813.0" spacing="50.0" styleClass="table-row" stylesheets="@dashboardDesign.css">
                                                          <children>
                                                             <Label text="Type de l'offre" textFill="#b11c1c">
                                                                <font>
                                                                   <Font name="Arial Bold" size="13.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label text="Description" textFill="#b11c1c">
+                                                            <Label text="Description" textFill="#b11c1c" translateX="50.0">
                                                                <font>
                                                                   <Font name="Arial Bold" size="13.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label text="Taux" textFill="#b11c1c">
+                                                            <Label text="Taux" textFill="#b11c1c" translateX="125.0">
                                                                <font>
                                                                   <Font name="Arial Bold" size="13.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label text="Date Début" textFill="#b11c1c">
+                                                            <Label text="Date Début" textFill="#b11c1c" translateX="105.0">
                                                                <font>
                                                                   <Font name="Arial Bold" size="13.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label text="Date Fin" textFill="#b11c1c">
+                                                            <Label text="Date Fin" textFill="#b11c1c" translateX="105.0">
                                                                <font>
                                                                   <Font name="Arial Bold" size="13.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label text="Equipement" textFill="#b11c1c">
-                                                               <font>
-                                                                  <Font name="Arial Bold" size="13.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Label text="Image" textFill="#b11c1c">
+                                                            <Label text="Equipement" textFill="#b11c1c" translateX="130.0">
                                                                <font>
                                                                   <Font name="Arial Bold" size="13.0" />
                                                                </font>
@@ -541,47 +536,37 @@
                                  </font>
                               </Label>
                               <TextField fx:id="tauxTextfield" layoutX="92.0" layoutY="437.0" prefHeight="26.0" prefWidth="178.0" promptText="Taux" />
-                              <Label layoutX="291.0" layoutY="314.0" text="Date Début">
+                              <Label layoutX="296.0" layoutY="314.0" text="Date Début">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="300.0" layoutY="351.0" text="Date Fin">
+                              <Label layoutX="304.0" layoutY="359.0" text="Date Fin">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="ajouterOffreBtn" layoutX="86.0" layoutY="479.0" mnemonicParsing="false" onAction="#registerMec" prefHeight="21.0" prefWidth="138.0" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Ajouter" />
-                              <Button fx:id="updateOffreBtn" layoutX="242.0" layoutY="479.0" mnemonicParsing="false" onAction="#handleUpdateAction" prefHeight="21.0" prefWidth="138.0" styleClass="update-btn" stylesheets="@dashboardDesign.css" text="Modifier" />
-                              <DatePicker fx:id="dateDpick" layoutX="364.0" layoutY="311.0" />
-                              <DatePicker fx:id="DateFpick" layoutX="364.0" layoutY="347.0" />
-                              <Label layoutX="289.0" layoutY="391.0" text="Equipement">
+                              <Button fx:id="ajouterOffreBtn" layoutX="86.0" layoutY="479.0" mnemonicParsing="false" onAction="#registerOffre" prefHeight="21.0" prefWidth="138.0" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Ajouter" />
+                              <Button fx:id="updateOffreBtn" layoutX="242.0" layoutY="479.0" mnemonicParsing="false" onAction="#handleUpdateActionOffre" prefHeight="21.0" prefWidth="138.0" styleClass="update-btn" stylesheets="@dashboardDesign.css" text="Modifier" />
+                              <DatePicker fx:id="dateDpick" layoutX="369.0" layoutY="311.0" />
+                              <DatePicker fx:id="DateFpick" layoutX="368.0" layoutY="355.0" />
+                              <Label layoutX="578.0" layoutY="316.0" text="Equipement">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="equipCombobox" layoutX="364.0" layoutY="387.0" prefHeight="26.0" prefWidth="175.0" promptText="choisir" />
-                              <Label fx:id="errormessage3" alignment="TOP_LEFT" layoutX="288.0" layoutY="421.0" prefHeight="46.0" prefWidth="326.0" textFill="RED">
+                              <ComboBox fx:id="equipCombobox" layoutX="653.0" layoutY="312.0" prefHeight="26.0" prefWidth="175.0" promptText="choisir" />
+                              <Label fx:id="errormessage3" alignment="TOP_LEFT" layoutX="304.0" layoutY="392.0" prefHeight="66.0" prefWidth="506.0" textFill="RED">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="clearBtn3" layoutX="665.0" layoutY="479.0" mnemonicParsing="false" onAction="#viderOnActionclient" prefHeight="21.0" prefWidth="138.0" styleClass="vider-btn" stylesheets="@dashboardDesign.css" text="Vider" textFill="#fffdfd">
+                              <Button fx:id="clearBtn3" layoutX="665.0" layoutY="479.0" mnemonicParsing="false" onAction="#viderOnActionOffre" prefHeight="21.0" prefWidth="138.0" styleClass="vider-btn" stylesheets="@dashboardDesign.css" text="Vider" textFill="#fffdfd">
                                  <font>
                                     <Font size="1.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="deleteBtn3" layoutX="505.0" layoutY="479.0" mnemonicParsing="false" onAction="#handleDeleteActionclient" prefHeight="21.0" prefWidth="138.0" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Supprimer" />
-                              <AnchorPane fx:id="photoContainer" layoutX="652.0" layoutY="304.0" prefHeight="148.0" prefWidth="117.0" style="-fx-border-color: #000000; -fx-border-radius: 10;">
-                                 <children>
-                                    <ImageView fx:id="imageOffre" fitHeight="111.0" fitWidth="117.0" layoutX="4.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../../images/photoprofile.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Button fx:id="loadphotoBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="118.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="117.0" styleClass="clear-btn" stylesheets="@profileDesign.css" text="Importer" />
-                                 </children>
-                              </AnchorPane>
+                              <Button fx:id="deleteBtn3" layoutX="505.0" layoutY="479.0" mnemonicParsing="false" onAction="#handleDeleteActionOffre" prefHeight="21.0" prefWidth="138.0" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Supprimer" />
                            </children>
                         </AnchorPane>
                         <TextField fx:id="idTextfield3" layoutX="420.0" layoutY="333.0" prefHeight="0.0" prefWidth="14.0" promptText="Prénom" style="-fx-background-color: Transparent;">

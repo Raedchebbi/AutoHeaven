@@ -12,13 +12,20 @@ public class Offre {
 
     public Offre() {}
 
-    public Offre(int id_offre, String type_offre, String description, double taux_reduction, String date_debut, String date_fin, int id_equipement, String image) {
-        this.id_offre = id_offre;
+    public Offre(String type_offre, String description, double taux_reduction, String date_debut, String date_fin, int id_equipement, String image) {
         this.type_offre = type_offre;
         this.description = description;
         this.taux_reduction = taux_reduction;
         this.date_debut = date_debut;
         this.date_fin = date_fin;
+        this.id_equipement = id_equipement;
+        this.image = image;
+    }
+
+    public Offre(int id, String type_offre, double taux_reduction, int id_equipement, String image) {
+        this.id_offre = id;
+        this.type_offre = type_offre;
+        this.taux_reduction = taux_reduction;
         this.id_equipement = id_equipement;
         this.image = image;
     }
@@ -78,7 +85,6 @@ public class Offre {
     public void setImage(String image) {
         this.image = image;
     }
-
 
     @Override
     public String toString() {

@@ -19,8 +19,9 @@ public class Mainfx extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/LoginUser.fxml"));
         Parent root = loader.load();
         //Scene sc = new Scene(root);
+        stage.setTitle("Login");
         stage.setScene(new Scene(root, 1100, 600));
-        stage.initStyle(StageStyle.UNDECORATED);
+        //stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
 
 

@@ -8,12 +8,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -59,8 +61,7 @@ public class dashboardController implements Initializable {
     @FXML
     private AnchorPane Offre_form;
 
-    @FXML
-    private AnchorPane photoContainer;
+
 
     @FXML
     private ImageView acceuil;
@@ -107,8 +108,6 @@ public class dashboardController implements Initializable {
     @FXML
     private ImageView clients;
 
-    @FXML
-    private ImageView clients1;
 
     @FXML
     private Button clientsBtn;
@@ -145,6 +144,9 @@ public class dashboardController implements Initializable {
 
     @FXML
     private ImageView employes;
+
+    @FXML
+    private ImageView offre;
 
     @FXML
     private ComboBox<Pair<Integer, String>> equipCombobox;
@@ -238,6 +240,9 @@ public class dashboardController implements Initializable {
 
     @FXML
     private TextField usernameTextfield1;
+
+
+    private Image image;
 
 
     private UserService userService = new UserService();
@@ -485,7 +490,7 @@ public class dashboardController implements Initializable {
         usernaame.setText(loginuserController.loggedInUser);
     }
 
-    public void logout(){
+    public void logout(ActionEvent event){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Message de confirmation");
         alert.setHeaderText(null);
@@ -494,15 +499,14 @@ public class dashboardController implements Initializable {
         try{
         if (option.get().equals(ButtonType.OK)) {
 
-            logout.getScene().getWindow().hide();
-            Parent root = FXMLLoader.load(getClass().getResource("/dashboard.fxml"));
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
+            // Load the login interface
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/LoginUser.fxml"));
+            Parent root = loader.load();
 
-
-            stage.setScene(scene);
+            // Get current stage (window) and set the new scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
             stage.show();
-            Platform.exit();
         }
 
         } catch (Exception e){
@@ -584,6 +588,10 @@ public class dashboardController implements Initializable {
         File logoutFile = new File("images/déconnexion.png");
         Image logoutImage = new Image(logoutFile.toURI().toString());
         déconnexion.setImage(logoutImage);
+
+        File offreFile = new File("images/offre.png");
+        Image offreImage = new Image(offreFile.toURI().toString());
+        offre.setImage(offreImage);
 
         try {
             showMechanics();
@@ -831,33 +839,26 @@ public class dashboardController implements Initializable {
         for (Offre offre : offresList) {
             HBox row = new HBox(20); // Spacing between columns
 
-            Label idLabel = new Label(String.valueOf(offre.getId_offre()));
             Label typeLabel = new Label(offre.getType_offre());
             Label descLabel = new Label(offre.getDescription());
-            Label tauxLabel = new Label(String.valueOf(offre.getTaux_reduction()));
+            Label tauxLabel = new Label(offre.getTaux_reduction() + "%") ;
             Label debutLabel = new Label(offre.getDate_debut());
             Label finLabel = new Label(offre.getDate_fin());
             String equipementNom = getEquipementNom(offre.getId_equipement());
             Label equipLabel = new Label(equipementNom);
-            Label imageLabel = new Label(offre.getImage());
 
-            // Allow description wrapping
-            descLabel.setWrapText(true);
-            descLabel.setMaxWidth(200);
 
-            // Set fixed widths for alignment
-            idLabel.setPrefWidth(80);
             typeLabel.setPrefWidth(120);
-            descLabel.setPrefWidth(200);
-            tauxLabel.setPrefWidth(100);
-            debutLabel.setPrefWidth(120);
-            finLabel.setPrefWidth(120);
-            equipLabel.setPrefWidth(100);
-            imageLabel.setPrefWidth(150);
+            descLabel.setPrefWidth(250);
+            tauxLabel.setPrefWidth(50);
+            debutLabel.setPrefWidth(100);
+            finLabel.setPrefWidth(100);
+            equipLabel.setPrefWidth(150);
+
 
             row.getChildren().addAll(
-                    idLabel, typeLabel, descLabel, tauxLabel,
-                    debutLabel, finLabel, equipLabel, imageLabel
+                    typeLabel, descLabel, tauxLabel,
+                    debutLabel, finLabel, equipLabel
             );
 
             tableContainer1.getChildren().add(row);
@@ -890,9 +891,26 @@ public class dashboardController implements Initializable {
 
         return equipementNom;
     }
+    private int getEquipementIdByName(String equipementName) {
+        try {
+            Connection conn = MyDb.getInstance().getConn();
+            String query = "SELECT id FROM equipement WHERE nom = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, equipementName);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
 
     public void showOffreDetails(Offre selectedOffre) {
-        // Set the values of the text fields with the selected offer's details
+
         idTextfield3.setText(String.valueOf(selectedOffre.getId_offre()));
         typeTextfield.setText(selectedOffre.getType_offre());
         descTextfield.setText(selectedOffre.getDescription());
@@ -913,12 +931,6 @@ public class dashboardController implements Initializable {
             }
         }
 
-
-        ImageView imageView = new ImageView(new Image(selectedOffre.getImage()));
-        imageView.setFitWidth(117);  // Set the desired width
-        imageView.setPreserveRatio(true);  // Maintain aspect ratio of the image
-        photoContainer.getChildren().clear();  // Assuming imageContainer is the container for the ImageView
-        photoContainer.getChildren().add(imageView);  // Add the ImageView to the container
     }
 
     public void loadEquipements() {
@@ -957,6 +969,259 @@ public class dashboardController implements Initializable {
         } catch (Exception e) {
             System.out.println("Erreur de chargement des équipements : " + e.getMessage());
         }
+    }
+
+
+
+    public void addOffre() {
+        MyDb connectNow = new MyDb();
+        Connection connectDB = connectNow.getConn();
+
+        String type_offre = typeTextfield.getText();
+        String description = descTextfield.getText();
+        double taux_reduction = Double.parseDouble(tauxTextfield.getText());
+
+        // Get selected dates from DatePickers
+        String date_debut = dateDpick.getValue().toString();
+        String date_fin = DateFpick.getValue().toString();
+
+
+        // Get selected equipment ID from ComboBox (assuming it contains Pair<Integer, String>)
+        Pair<Integer, String> selectedEquipement = equipCombobox.getValue();
+        int id_equipement = (selectedEquipement != null) ? selectedEquipement.getKey() : -1;
+        if (id_equipement == -1) {
+            errormessage.setText("Équipement non valide.");
+            return;
+        }
+        int id_equip = selectedEquipement.getKey();
+
+        // Fetch the image URL for the selected equipment
+        OffreService offreService = new OffreService();
+        String imageUrl = offreService.getImageUrlForEquipement(id_equip);
+
+        if (imageUrl == null) {
+            errormessage.setText("Aucune image trouvée pour cet équipement.");
+            return;
+        }
+
+            Offre newOffre = new Offre(type_offre, description, taux_reduction, date_debut, date_fin, id_equipement, imageUrl);
+
+            try {
+                offreService.create(newOffre);
+                System.out.println("Offre ajoutée avec succès !");
+            } catch (Exception e) {
+                System.out.println("Erreur : " + e.getMessage());
+            }
+        }
+
+
+    public void registerOffre() throws Exception {
+            String typeOffre = typeTextfield.getText();
+            String description = descTextfield.getText();
+            String tauxReductionStr = tauxTextfield.getText();
+            LocalDate dateDebut = dateDpick.getValue(); // Get selected date
+            LocalDate dateFin = DateFpick.getValue(); // Get selected date
+            Pair<Integer, String> selectedEquipementPair = equipCombobox.getValue();
+
+            // Clear previous error messages
+            errormessage3.setText("");
+
+            // Validate inputs
+            if (!isValidInputOffre()) {
+                return; // Stop registration if validation fails
+            }
+            addOffre();
+            errormessage3.setText("Utilisateur enregistré avec succès !");
+            PauseTransition pause = new PauseTransition(Duration.seconds(5));
+            pause.setOnFinished(event -> errormessage3.setText(""));
+            pause.play();
+            showOffres();
+
+        }
+
+    private boolean isValidInputOffre() throws Exception {
+        StringBuilder errors = new StringBuilder();
+
+        String typeOffre = typeTextfield.getText();
+        String description = descTextfield.getText();
+        String tauxReductionStr = tauxTextfield.getText();
+        String dateDebut = dateDpick.getValue() != null ? dateDpick.getValue().toString() : "";
+        String dateFin = DateFpick.getValue() != null ? DateFpick.getValue().toString() : "";
+        Pair<Integer, String> selectedEquipement = equipCombobox.getValue();
+
+        // Validate that no field is empty
+        if (typeOffre.isBlank() || description.isBlank() || tauxReductionStr.isBlank() || dateDebut.isBlank() || dateFin.isBlank()) {
+            errors.append("Veuillez remplir tous les champs. \n");
+        }
+
+        if (errors.length() > 0) {
+            errormessage3.setText(errors.toString()); // Display all accumulated errors
+            PauseTransition pause = new PauseTransition(Duration.seconds(5));
+            pause.setOnFinished(event -> errormessage3.setText(""));
+            pause.play();
+            return false;  // Validation failed
+        }
+
+        if (selectedEquipement == null) {
+            errors.append("Veuillez sélectionner un équipement. \n");
+        }
+
+        // Validate that taux_reduction is a valid double
+        try {
+            Double.parseDouble(tauxReductionStr);
+        } catch (NumberFormatException e) {
+            errors.append("Erreur : Le taux de réduction doit être un nombre valide. \n");
+        }
+
+        // Validate that date_fin is not before date_debut
+        try {
+            LocalDate debutDate = LocalDate.parse(dateDebut);
+            LocalDate finDate = LocalDate.parse(dateFin);
+            if (finDate.isBefore(debutDate)) {
+                errors.append("Erreur : La date de fin ne peut pas être avant la date de début. \n");
+            }
+        } catch (Exception e) {
+            errors.append("Erreur : Les dates doivent être valides. \n");
+        }
+
+
+
+        // If there are any errors, display them all at once
+        if (errors.length() > 0) {
+            errormessage3.setText(errors.toString()); // Display all accumulated errors
+            PauseTransition pause = new PauseTransition(Duration.seconds(5));
+            pause.setOnFinished(event -> errormessage3.setText(""));
+            pause.play();
+            return false;  // Validation failed
+        }
+
+        return true;  // Validation passed
+    }
+
+    public void handleUpdateActionOffre(ActionEvent Event) {
+        try {
+            // Establish database connection
+            MyDb connectNow = new MyDb();
+            Connection connectDB = connectNow.getConn();
+
+            // If input validation fails, stop the execution (validation code can be uncommented if needed)
+            // if (!isValidInputUpdate()) {
+            //     return;
+            // }
+
+            // Create a new OffreService instance for updating the offer
+            OffreService offreService = new OffreService();
+            Offre updatedOffre = new Offre();
+
+            // Set the ID of the offer being updated
+            updatedOffre.setId_offre(Integer.parseInt(idTextfield3.getText())); // Set ID from the textfield
+
+            // Set the updated fields from the respective text fields
+            updatedOffre.setType_offre(typeTextfield.getText());  // Set type of offer
+            updatedOffre.setDescription(descTextfield.getText());  // Set description
+            updatedOffre.setTaux_reduction(Double.parseDouble(tauxTextfield.getText()));  // Set discount rate
+
+            // Ensure date fields are not null before parsing
+            String dateDebut = dateDpick.getValue() != null ? dateDpick.getValue().toString() : null;
+            String dateFin = DateFpick.getValue() != null ? DateFpick.getValue().toString() : null;
+
+            if (dateDebut != null && dateFin != null) {
+                updatedOffre.setDate_debut(dateDebut);  // Set start date
+                updatedOffre.setDate_fin(dateFin);  // Set end date
+            } else {
+                errormessage3.setText("Erreur : Les dates de début et de fin doivent être remplies.");
+                return;
+            }
+
+            // Get selected equipment ID from ComboBox (assuming it contains Pair<Integer, String>)
+            Pair<Integer, String> selectedEquipement = equipCombobox.getValue();
+            int idEquipement = (selectedEquipement != null) ? selectedEquipement.getKey() : -1;
+
+            if (idEquipement == -1) {
+                errormessage.setText("Erreur : Équipement non valide.");
+                return;
+            }
+
+            updatedOffre.setId_equipement(idEquipement);  // Set the equipment ID
+
+            // Call the update method in OffreService to save the changes
+            offreService.update(updatedOffre);
+
+            // Display success message and hide it after a delay
+            errormessage3.setText("Offre mise à jour avec succès !");
+            PauseTransition pause = new PauseTransition(Duration.seconds(5));
+            pause.setOnFinished(event -> errormessage3.setText(""));
+            pause.play();
+            showOffres();
+
+            // Optional: Refresh display after update (for example, calling a method to reload the offer list)
+            // showOffers(); // (Uncomment if you want to reload the offers list after updating)
+
+        } catch (Exception e) {
+            // Handle exceptions, including validation failures or database issues
+            errormessage3.setText("Erreur : " + e.getMessage());
+        }
+    }
+
+
+    public void handleDeleteActionOffre(ActionEvent Event) throws Exception {
+        try {
+            // Retrieve the ID from the idTextfield
+            String idText = idTextfield3.getText();
+
+            // If the ID field is empty or invalid, show an error message
+            if (idText.isBlank()) {
+                errormessage3.setText("Veuillez entrer un ID offre.");
+                return;
+            }
+
+            int offreId = Integer.parseInt(idText);  // Convert the ID from text to integer
+
+            // Create a new Offre object and set the ID
+            Offre offreToDelete = new Offre();
+            offreToDelete.setId_offre(offreId);  // Set the ID of the offre to be deleted
+
+            // Create a new OffreService instance for deleting the offre
+            OffreService offreService = new OffreService();
+
+            // Call the delete method to delete the offre based on the Offre object
+            offreService.delete(offreToDelete);
+
+            // Display success message and hide it after a delay
+            errormessage3.setText("Offre supprimée avec succès !");
+            PauseTransition pause = new PauseTransition(Duration.seconds(5));
+            pause.setOnFinished(event -> errormessage3.setText(""));
+            pause.play();
+            showOffres();  // Assuming this method displays updated offers
+
+            // Clear fields after deletion
+            idTextfield3.clear();
+            typeTextfield.clear();
+            descTextfield.clear();
+            tauxTextfield.clear();
+            dateDpick.setValue(null);
+            DateFpick.setValue(null);
+            equipCombobox.getSelectionModel().clearSelection();
+            showOffres();
+
+
+        } catch (SQLException e) {
+            errormessage.setText("Erreur : " + e.getMessage());
+        } catch (NumberFormatException e) {
+            // Handle case where the ID is not a valid integer
+            errormessage.setText("ID invalide. Veuillez entrer un numéro valide.");
+        }
+    }
+
+
+    public void viderOnActionOffre(ActionEvent Event) {
+        idTextfield3.clear();
+        typeTextfield.clear();
+        descTextfield.clear();
+        tauxTextfield.clear();
+        dateDpick.setValue(null);  // Clear date_debut DatePicker
+        DateFpick.setValue(null);    // Clear date_fin DatePicker
+        equipCombobox.getSelectionModel().clearSelection();  // Clear ComboBox selection
     }
 
 
