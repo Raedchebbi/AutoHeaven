@@ -19,46 +19,48 @@ public class ResRemorquageService implements Crud<ResRemorquage> {
 
     @Override
     public void create(ResRemorquage obj) throws Exception {
-        String sql = "INSERT INTO res_remorquage (id_res, id_cr, pickup_location, dropoff_location) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO res_remorquage (id_u, id_cr, point_ramassage, point_depot, date) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        stmt.setInt(1, obj.getId_res());
+        stmt.setInt(1, obj.getId_u());
         stmt.setInt(2, obj.getId_cr());
-        stmt.setString(3, obj.getPickup_location());
-        stmt.setString(4, obj.getDropoff_location());
+        stmt.setString(3, obj.getPoint_ramassage());
+        stmt.setString(4, obj.getPoint_depot());
+        stmt.setDate(5, obj.getDate());  // Set the date
 
         int rowsInserted = stmt.executeUpdate();
         if (rowsInserted > 0) {
             ResultSet generatedKeys = stmt.getGeneratedKeys();
             if (generatedKeys.next()) {
-                obj.setId_res_remo(generatedKeys.getInt(1));
+                obj.setId_rem(generatedKeys.getInt(1));
             }
         }
     }
 
     @Override
     public void update(ResRemorquage obj) throws Exception {
-        String sql = "UPDATE res_remorquage SET id_res = ?, id_cr = ?, pickup_location = ?, dropoff_location = ? WHERE id_res_remo = ?";
+        String sql = "UPDATE res_remorquage SET id_u = ?, id_cr = ?, point_ramassage = ?, point_depot = ?, date = ? WHERE id_rem = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, obj.getId_res());
+        stmt.setInt(1, obj.getId_u());
         stmt.setInt(2, obj.getId_cr());
-        stmt.setString(3, obj.getPickup_location());
-        stmt.setString(4, obj.getDropoff_location());
-        stmt.setInt(5, obj.getId_res_remo());
+        stmt.setString(3, obj.getPoint_ramassage());
+        stmt.setString(4, obj.getPoint_depot());
+        stmt.setDate(5, obj.getDate());  // Set the date
+        stmt.setInt(6, obj.getId_rem());
 
         stmt.executeUpdate();
     }
 
     @Override
     public void delete(ResRemorquage obj) throws Exception {
-        String sql = "DELETE FROM res_remorquage WHERE id_res_remo = ?";
+        String sql = "DELETE FROM res_remorquage WHERE id_rem = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, obj.getId_res_remo());
+        stmt.setInt(1, obj.getId_rem());
         stmt.executeUpdate();
     }
 
     @Override
     public void delete(int id) throws Exception {
-        String sql = "DELETE FROM res_remorquage WHERE id_res_remo = ?";
+        String sql = "DELETE FROM res_remorquage WHERE id_rem = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, id);
         stmt.executeUpdate();
@@ -73,11 +75,12 @@ public class ResRemorquageService implements Crud<ResRemorquage> {
 
         while (rs.next()) {
             ResRemorquage res = new ResRemorquage(
-                    rs.getInt("id_res_remo"),
-                    rs.getInt("id_res"),
+                    rs.getInt("id_rem"),
+                    rs.getInt("id_u"),
                     rs.getInt("id_cr"),
-                    rs.getString("pickup_location"),
-                    rs.getString("dropoff_location")
+                    rs.getString("point_ramassage"),
+                    rs.getString("point_depot"),
+                    rs.getDate("date")  // Get the date
             );
             reservations.add(res);
         }
@@ -85,18 +88,19 @@ public class ResRemorquageService implements Crud<ResRemorquage> {
     }
 
     public ResRemorquage getById(int id) throws Exception {
-        String sql = "SELECT * FROM res_remorquage WHERE id_res_remo = ?";
+        String sql = "SELECT * FROM res_remorquage WHERE id_rem = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
 
         if (rs.next()) {
             return new ResRemorquage(
-                    rs.getInt("id_res_remo"),
-                    rs.getInt("id_res"),
+                    rs.getInt("id_rem"),
+                    rs.getInt("id_u"),
                     rs.getInt("id_cr"),
-                    rs.getString("pickup_location"),
-                    rs.getString("dropoff_location")
+                    rs.getString("point_ramassage"),
+                    rs.getString("point_depot"),
+                    rs.getDate("date")  // Get the date
             );
         }
         return null;

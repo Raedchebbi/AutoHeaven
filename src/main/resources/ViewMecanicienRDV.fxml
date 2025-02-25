@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="mecanicien_pa" prefHeight="544.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ViewMecanicienRDVController">
+    <children>
+        <Label layoutX="105.0" layoutY="24.0" text="Liste des RDV Mécaniciens">
+            <font>
+                <Font name="Arial Bold" size="25.0" />
+            </font>
+        </Label>
+
+        <TextField fx:id="search_id" layoutX="742.0" layoutY="28.0" prefHeight="25.0" prefWidth="186.0" promptText="Recherche..." styleClass="search-bar" />
+
+        <HBox fx:id="mecanicien_header" layoutX="36.0" layoutY="125.0" prefHeight="19.0" prefWidth="902.0" styleClass="container_header">
+            <children>
+                <Label prefHeight="22.0" prefWidth="198.0" text="Adresse">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+                <Label prefHeight="22.0" prefWidth="204.0" text="Note">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+                <Label prefHeight="22.0" prefWidth="169.0" text="Utilisateur">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+                <Label prefHeight="22.0" prefWidth="170.0" text="Mécanicien">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+                <Label prefHeight="22.0" prefWidth="138.0" text="Date">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+
+        <ScrollPane layoutX="36.0" layoutY="155.0" prefHeight="372.0" prefWidth="902.0">
+            <content>
+                <VBox fx:id="mecanicien_container" prefHeight="372.0" prefWidth="890.0" spacing="5.0">
+                    <!-- Dynamic rows will be added here -->
+                </VBox>
+            </content>
+        </ScrollPane>
+
+        <Pane fx:id="popupContainer" layoutX="264.0" layoutY="2.0" prefHeight="534.0" prefWidth="440.0" visible="false" />
+
+        <Button fx:id="back_btn" layoutX="36.0" layoutY="27.0" mnemonicParsing="false" onAction="#goBack" text="Retour" />
+        <Button fx:id="add_btn" layoutX="783.0" layoutY="64.0" mnemonicParsing="false" onAction="#goToAddMecanicienRDV" text="Ajouter RDV Mécanicien" />
+    </children>
+</Pane>

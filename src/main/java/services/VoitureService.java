@@ -94,4 +94,26 @@ public class VoitureService implements Crud<Voiture> {
         }
         return voitures;
     }
+
+    public Voiture getById(int id_v) throws Exception {
+        String sql = "SELECT * FROM voiture WHERE id_v = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, id_v);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            return new Voiture(
+                    rs.getInt("id_v"),
+                    rs.getString("marque"),
+                    rs.getString("description"),
+                    rs.getInt("kilometrage"),
+                    rs.getString("couleur"),
+                    rs.getDouble("prix"),
+                    rs.getString("image"),
+                    rs.getInt("id_c"),
+                    rs.getString("disponibilite")
+            );
+        }
+        return null; // Return null if no voiture is found with the given ID
+    }
 }

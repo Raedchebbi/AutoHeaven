@@ -1,5 +1,6 @@
 package org.example;
 
+import controllers.NavigatorController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,13 +17,16 @@ public class Mainfx extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Navigatogir.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Navigator.fxml"));
         Parent root = loader.load();
-        Scene sc = new Scene(root);
-        stage.setScene(sc);
+
+        NavigatorController controller = loader.getController();
+        controller.setStage(stage);
+
+        Scene scene = new Scene(root, 800, 600);
+        stage.setScene(scene);
         stage.setTitle("Ajouter");
+        stage.setResizable(false);
         stage.show();
-
-
     }
 }

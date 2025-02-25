@@ -4,28 +4,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="root"
-      alignment="CENTER"
-      spacing="20.0"
-      xmlns="http://javafx.com/javafx/8"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controllers.NavigatorController">
-    <Button fx:id="btnCamionRemorquage" mnemonicParsing="false" onAction="#goToCamionRemorquage" text="Camion Remorquage">
+<VBox fx:id="root" alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.NavigatorController">
+
+    <Button fx:id="btnViewCamionRemorquage" mnemonicParsing="false" onAction="#goToViewCamionRemorquage" prefHeight="30.0" prefWidth="257.0" text="Liste Camions Remorquages">
         <font>
             <Font size="14.0" />
         </font>
     </Button>
-    <Button fx:id="btnResTestDrive" mnemonicParsing="false" onAction="#goToResTestDrive" text="Reservation Test Drive">
+    <Button fx:id="btnViewTestDrive" mnemonicParsing="false" onAction="#goToViewTestDrive" prefHeight="30.0" prefWidth="257.0" text="liste Test Drive">
         <font>
             <Font size="14.0" />
         </font>
     </Button>
-    <Button fx:id="btnResRemorquage" mnemonicParsing="false" onAction="#goToResRemorquage" text="Reservation Remorquage">
+    <Button fx:id="btnViewRemorquage" mnemonicParsing="false" onAction="#goToViewRemorquage" prefHeight="30.0" prefWidth="257.0" text="liste Reservations Remorquages">
         <font>
             <Font size="14.0" />
         </font>
     </Button>
-    <Button fx:id="btnResMecanicien" mnemonicParsing="false" onAction="#goToResMecanicien" text="Reservation Mecanicien">
+    <Button fx:id="btnViewMecanicienRDV" mnemonicParsing="false" onAction="#goToViewMecanicienRDV" prefHeight="30.0" prefWidth="258.0" text="Liste Rendez-vous Mecaniciens">
         <font>
             <Font size="14.0" />
         </font>

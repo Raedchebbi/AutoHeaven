@@ -2,6 +2,7 @@ package models;
 
 public class CamionRemorquage {
     private int id_cr;
+    private String nom_agence;
     private String modele;
     private int annee;
     private String num_tel;
@@ -9,8 +10,9 @@ public class CamionRemorquage {
 
     public CamionRemorquage() {}
 
-    public CamionRemorquage(int id_cr, String modele, int annee, String num_tel, String statut) {
+    public CamionRemorquage(int id_cr, String nom_agence, String modele, int annee, String num_tel, String statut) {
         this.id_cr = id_cr;
+        this.nom_agence = nom_agence;
         this.modele = modele;
         this.annee = annee;
         this.num_tel = num_tel;
@@ -19,6 +21,9 @@ public class CamionRemorquage {
 
     public int getId_cr() { return id_cr; }
     public void setId_cr(int id_cr) { this.id_cr = id_cr; }
+
+    public String getNomAgence() {return nom_agence;}
+    public void setNomAgence(String nom_agence) {this.nom_agence = nom_agence;}
 
     public String getModele() { return modele; }
     public void setModele(String modele) { this.modele = modele; }
@@ -37,4 +42,6 @@ public class CamionRemorquage {
         return "CamionRemorquage{id_cr=" + id_cr + ", modele='" + modele + "', annee=" + annee +
                 ", num_tel='" + num_tel + "', statut='" + statut + "'}";
     }
+
+
 }

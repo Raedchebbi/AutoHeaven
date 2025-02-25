@@ -187,4 +187,52 @@ public class UserService implements Crud<User> {
         }
         return null; // Aucun utilisateur trouvé
     }
+
+    public List<User> getAllClients() throws Exception {
+        List<User> clients = new ArrayList<>();
+        String sql = "SELECT * FROM user WHERE role = 'client'";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+
+        while (rs.next()) {
+            User user = new User(
+                    rs.getInt("id"),
+                    rs.getInt("cin"),
+                    rs.getString("nom"),
+                    rs.getString("prenom"),
+                    rs.getInt("tel"),
+                    rs.getString("email"),
+                    rs.getString("password"),
+                    rs.getString("role"),
+                    rs.getString("adresse"),
+                    rs.getString("username")
+            );
+            clients.add(user);
+        }
+        return clients;
+    }
+
+    public List<User> getAllMechanics() throws Exception {
+        List<User> mechanics = new ArrayList<>();
+        String sql = "SELECT * FROM user WHERE role = 'mecanicien'";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+
+        while (rs.next()) {
+            User user = new User(
+                    rs.getInt("id"),
+                    rs.getInt("cin"),
+                    rs.getString("nom"),
+                    rs.getString("prenom"),
+                    rs.getInt("tel"),
+                    rs.getString("email"),
+                    rs.getString("password"),
+                    rs.getString("role"),
+                    rs.getString("adresse"),
+                    rs.getString("username")
+            );
+            mechanics.add(user);
+        }
+        return mechanics;
+    }
 }

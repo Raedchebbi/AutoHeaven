@@ -1,29 +1,39 @@
 package models;
 
 public class ResTestDrive {
-    private int id_res_td;
-    private int id_res;
+    private int id_td;  // Auto-incremented in the database
+    private int id_u;
     private int id_v;
+    private String date;
+    private String status;
 
     public ResTestDrive() {}
 
-    public ResTestDrive(int id_res_td, int id_res, int id_v) {
-        this.id_res_td = id_res_td;
-        this.id_res = id_res;
+    public ResTestDrive(int id_td, int id_u, int id_v, String date, String status) {
+        this.id_td = id_td;
+        this.id_u = id_u;
         this.id_v = id_v;
+        this.date = date;
+        this.status = status;
     }
 
-    public int getId_res_td() { return id_res_td; }
-    public void setId_res_td(int id_res_td) { this.id_res_td = id_res_td; }
+    public int getId_td() { return id_td; }
 
-    public int getId_res() { return id_res; }
-    public void setId_res(int id_res) { this.id_res = id_res; }
+    public int getId_u() { return id_u; }
+    public void setId_u(int id_u) { this.id_u = id_u; }
 
     public int getId_v() { return id_v; }
     public void setId_v(int id_v) { this.id_v = id_v; }
 
+    public String getDate() { return date; }
+    public void setDate(String date) { this.date = date; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
     @Override
     public String toString() {
-        return "ResTestDrive{id_res_td=" + id_res_td + ", id_res=" + id_res + ", id_v=" + id_v + "}";
+        return "ResTestDrive{ID TestDrive = " + id_td + ", ID User =" + id_u + ", ID Voiture = " + id_v +
+                ", Date = '" + date + "', Status = '" + status + "'}";
     }
 }

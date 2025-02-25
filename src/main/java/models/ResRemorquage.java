@@ -1,40 +1,47 @@
 package models;
 
+import java.sql.Date;
+
 public class ResRemorquage {
-    private int id_res_remo;
-    private int id_res;
+    private int id_rem;
+    private int id_u;
     private int id_cr;
-    private String pickup_location;
-    private String dropoff_location;
+    private String point_ramassage;
+    private String point_depot;
+    private Date date;  // New date field
 
     public ResRemorquage() {}
 
-    public ResRemorquage(int id_res_remo, int id_res, int id_cr, String pickup_location, String dropoff_location) {
-        this.id_res_remo = id_res_remo;
-        this.id_res = id_res;
+    public ResRemorquage(int id_rem, int id_u, int id_cr, String point_ramassage, String point_depot, Date date) {
+        this.id_rem = id_rem;
+        this.id_u = id_u;
         this.id_cr = id_cr;
-        this.pickup_location = pickup_location;
-        this.dropoff_location = dropoff_location;
+        this.point_ramassage = point_ramassage;
+        this.point_depot = point_depot;
+        this.date = date;  // Set the new date field
     }
 
-    public int getId_res_remo() { return id_res_remo; }
-    public void setId_res_remo(int id_res_remo) { this.id_res_remo = id_res_remo; }
+    public int getId_rem() { return id_rem; }
+    public void setId_rem(int id_rem) { this.id_rem = id_rem; }
 
-    public int getId_res() { return id_res; }
-    public void setId_res(int id_res) { this.id_res = id_res; }
+    public int getId_u() { return id_u; }
+    public void setId_u(int id_u) { this.id_u = id_u; }
 
     public int getId_cr() { return id_cr; }
     public void setId_cr(int id_cr) { this.id_cr = id_cr; }
 
-    public String getPickup_location() { return pickup_location; }
-    public void setPickup_location(String pickup_location) { this.pickup_location = pickup_location; }
+    public String getPoint_ramassage() { return point_ramassage; }
+    public void setPoint_ramassage(String point_ramassage) { this.point_ramassage = point_ramassage; }
 
-    public String getDropoff_location() { return dropoff_location; }
-    public void setDropoff_location(String dropoff_location) { this.dropoff_location = dropoff_location; }
+    public String getPoint_depot() { return point_depot; }
+    public void setPoint_depot(String point_depot) { this.point_depot = point_depot; }
+
+    public Date getDate() { return date; }  // Getter for the date
+    public void setDate(Date date) { this.date = date; }  // Setter for the date
 
     @Override
     public String toString() {
-        return "ResRemorquage{id_res_remo=" + id_res_remo + ", id_res=" + id_res + ", id_cr=" + id_cr +
-                ", pickup_location='" + pickup_location + "', dropoff_location='" + dropoff_location + "'}";
+        return "ResRemorquage{ID Remorquage =" + id_rem + ", ID User =" + id_u + ", ID Camion Remorquage =" + id_cr +
+                ", Point Ramassage = '" + point_ramassage + "', Point Depot ='" + point_depot + "', Date = '" + date + "'}";
     }
 }

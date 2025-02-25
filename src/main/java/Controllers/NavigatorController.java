@@ -12,55 +12,51 @@ import java.io.IOException;
 public class NavigatorController {
 
     @FXML
-    private Button btnCamionRemorquage;
+    private Button btnViewCamionRemorquage;
+    @FXML
+    private Button btnViewTestDrive;
+    @FXML
+    private Button btnViewRemorquage;
+    @FXML
+    private Button btnViewMecanicienRDV;
 
     @FXML
-    private Button btnResTestDrive;
-
-    @FXML
-    private Button btnResRemorquage;
-
-    @FXML
-    private Button btnResMecanicien;
-
-    @FXML
-    private void goToCamionRemorquage() {
-        loadInterface("/views/camionRemorquage.fxml");
+    private void goToViewCamionRemorquage() {
+        loadInterface("/ViewCamionRemorquage.fxml");
     }
-
     @FXML
-    private void goToResTestDrive() {
-        loadInterface("/views/resTestDrive.fxml");
+    private void goToViewTestDrive() {
+        loadInterface("/ViewTestDrive.fxml");
     }
-
     @FXML
-    private void goToResRemorquage() {
-        loadInterface("/views/resRemorquage.fxml");
+    private void goToViewRemorquage() {
+        loadInterface("/ViewRemorquage.fxml");
     }
-
     @FXML
-    private void goToResMecanicien() {
-        loadInterface("/views/resMecanicien.fxml");
+    private void goToViewMecanicienRDV() {
+        loadInterface("/ViewMecanicienRDV.fxml");
     }
 
     private void loadInterface(String fxmlPath) {
         try {
-            // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
 
-            // Create a new scene with the loaded FXML
             Scene scene = new Scene(root);
 
-            // Get the current stage (window)
-            Stage stage = (Stage) btnCamionRemorquage.getScene().getWindow();
+            Stage stage = (Stage) btnViewCamionRemorquage.getScene().getWindow();
 
-            // Set the new scene to the stage
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error loading interface: " + fxmlPath);
         }
+    }
+
+    private Stage stage;
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

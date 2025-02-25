@@ -19,11 +19,13 @@ public class ResMecanicienService implements Crud<ResMecanicien> {
 
     @Override
     public void create(ResMecanicien obj) throws Exception {
-        String sql = "INSERT INTO res_mecanicien (id_res, id_mec, note) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO res_mecanicien (id_u, id_mec, adresse, note, date) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        stmt.setInt(1, obj.getId_res());
+        stmt.setInt(1, obj.getId_u());
         stmt.setInt(2, obj.getId_mec());
-        stmt.setString(3, obj.getNote());
+        stmt.setString(3, obj.getAdresse());
+        stmt.setString(4, obj.getNote());
+        stmt.setDate(5, new java.sql.Date(obj.getDate().getTime()));
 
         int rowsInserted = stmt.executeUpdate();
         if (rowsInserted > 0) {
@@ -36,12 +38,14 @@ public class ResMecanicienService implements Crud<ResMecanicien> {
 
     @Override
     public void update(ResMecanicien obj) throws Exception {
-        String sql = "UPDATE res_mecanicien SET id_res = ?, id_mec = ?, note = ? WHERE id_res_m = ?";
+        String sql = "UPDATE res_mecanicien SET id_u = ?, id_mec = ?, adresse = ?, note = ?, date = ? WHERE id_res_m = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, obj.getId_res());
+        stmt.setInt(1, obj.getId_u());
         stmt.setInt(2, obj.getId_mec());
-        stmt.setString(3, obj.getNote());
-        stmt.setInt(4, obj.getId_res_m());
+        stmt.setString(3, obj.getAdresse());
+        stmt.setString(4, obj.getNote());
+        stmt.setDate(5, new java.sql.Date(obj.getDate().getTime()));
+        stmt.setInt(6, obj.getId_res_m());
 
         stmt.executeUpdate();
     }
@@ -72,9 +76,11 @@ public class ResMecanicienService implements Crud<ResMecanicien> {
         while (rs.next()) {
             ResMecanicien res = new ResMecanicien(
                     rs.getInt("id_res_m"),
-                    rs.getInt("id_res"),
+                    rs.getInt("id_u"),
                     rs.getInt("id_mec"),
-                    rs.getString("note")
+                    rs.getString("adresse"),
+                    rs.getString("note"),
+                    rs.getDate("date")
             );
             reservations.add(res);
         }
@@ -90,9 +96,11 @@ public class ResMecanicienService implements Crud<ResMecanicien> {
         if (rs.next()) {
             return new ResMecanicien(
                     rs.getInt("id_res_m"),
-                    rs.getInt("id_res"),
+                    rs.getInt("id_u"),
                     rs.getInt("id_mec"),
-                    rs.getString("note")
+                    rs.getString("adresse"),
+                    rs.getString("note"),
+                    rs.getDate("date")
             );
         }
         return null;
