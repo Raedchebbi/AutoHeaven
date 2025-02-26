@@ -7,9 +7,11 @@
 <AnchorPane stylesheets="@style1.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.Detailsvoiture" prefHeight="600.0" prefWidth="1200.0">
     <VBox spacing="15" layoutX="50.0" layoutY="50.0" alignment="CENTER">
-        <Label fx:id="marqueLabel" text="Marque" />
-        <Label fx:id="descriptionLabel" text="Description" />
-        <Label fx:id="prixLabel" text="Prix" />
+        <Label fx:id="typeLabel" text="Type: " />
+        <Label fx:id="typeCarburantLabel" text="Type Carburant: " />
+        <Label fx:id="typeUtilisationLabel" text="Type Utilisation: " />
+        <Label fx:id="nbrPorteLabel" text="Nombre de Portes: " />
+        <Label fx:id="transmissionLabel" text="Transmission: " />
 
         <ImageView fx:id="imageView" fitWidth="300" fitHeight="200" />
 

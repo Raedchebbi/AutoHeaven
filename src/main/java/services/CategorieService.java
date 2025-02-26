@@ -85,4 +85,27 @@ public class CategorieService implements Crud<Categorie> {
         }
         return categories;
     }
+    public Categorie getCategorieById(int id_c) {
+        Categorie categorie = null;
+        String query = "SELECT * FROM categorie WHERE id_c = ?";
+
+        try (PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setInt(1, id_c);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                categorie = new Categorie(
+                        resultSet.getString("type"),
+                        resultSet.getString("type_carburant"),
+                        resultSet.getString("type_utilisation"),
+                        resultSet.getInt("nbr_porte"),
+                        resultSet.getString("transmission")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categorie;
+    }
 }

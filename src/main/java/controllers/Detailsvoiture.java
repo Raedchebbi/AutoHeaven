@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
+import models.Categorie;
 import models.Voiture;
 import java.io.File;
 import java.io.IOException;
@@ -15,18 +16,24 @@ import java.io.IOException;
 public class Detailsvoiture {
 
     @FXML
-    private Label marqueLabel;
+    private Label typeLabel;
     @FXML
-    private Label descriptionLabel;
+    private Label typeCarburantLabel;
     @FXML
-    private Label prixLabel;
+    private Label typeUtilisationLabel;
+    @FXML
+    private Label nbrPorteLabel;
+    @FXML
+    private Label transmissionLabel;
     @FXML
     private ImageView imageView;
 
-    public void setVoitureDetails(Voiture voiture) {
-        marqueLabel.setText(voiture.getMarque());
-        descriptionLabel.setText(voiture.getDescription());
-        prixLabel.setText(String.format("%,.2f", voiture.getPrix()) + " TND");
+    public void setDetails(Categorie categorie, Voiture voiture) {
+        typeLabel.setText("Type: " + categorie.getType());
+        typeCarburantLabel.setText("Type Carburant: " + categorie.getType_carburant());
+        typeUtilisationLabel.setText("Type Utilisation: " + categorie.getType_utilisation());
+        nbrPorteLabel.setText("Nombre de Portes: " + categorie.getNbr_porte());
+        transmissionLabel.setText("Transmission: " + categorie.getTransmission());
 
         File imageFile = new File(voiture.getImage());
         if (imageFile.exists()) {
@@ -39,11 +46,9 @@ public class Detailsvoiture {
 
     @FXML
     private void handleBack() {
-        // Go back to the previous scene (Listvoiture)
         Stage stage = (Stage) imageView.getScene().getWindow();
-        stage.close();  // Close the current stage
+        stage.close();
 
-        // Load the Listvoiture scene
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/listvoiture.fxml"));
             Parent root = loader.load();

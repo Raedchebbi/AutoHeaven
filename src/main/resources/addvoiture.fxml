@@ -7,50 +7,55 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="600.0" stylesheets="@style1.css"
-            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.Addvoiture">
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Addvoiture">
 
     <children>
-        <Label layoutX="164.0" layoutY="14.0" prefHeight="32.0" prefWidth="300.0" text="Formulaire d’Ajout de Voiture">
+        <Label alignment="TOP_LEFT" layoutX="423.0" layoutY="46.0" prefHeight="27.0" prefWidth="204.0" text="Formulaire d’Ajout de Voiture" textAlignment="JUSTIFY">
             <font>
-                <Font size="22.0" />
+                <Font name="Berlin Sans FB Demi Bold" size="1.0" />
             </font>
         </Label>
 
-        <Label layoutX="29.0" layoutY="60.0" text="Marque :" />
-        <TextField fx:id="marqueTextField" layoutX="193.0" layoutY="56.0" />
+        <Label layoutX="27.0" layoutY="168.0" text="Marque :" />
+        <TextField fx:id="marqueTextField" layoutX="191.0" layoutY="164.0" />
         <Label fx:id="errorMarque" layoutX="193.0" layoutY="80.0" textFill="RED" />
 
-        <Label layoutX="29.0" layoutY="100.0" text="Description :" />
-        <TextField fx:id="descriptionTextField" layoutX="193.0" layoutY="96.0" />
+        <Label layoutX="27.0" layoutY="208.0" text="Description :" />
+        <TextField fx:id="descriptionTextField" layoutX="191.0" layoutY="204.0" />
         <Label fx:id="errorDescription" layoutX="193.0" layoutY="120.0" textFill="RED" />
 
-        <Label layoutX="29.0" layoutY="140.0" text="Kilométrage :" />
-        <TextField fx:id="kilometrageTextField" layoutX="193.0" layoutY="136.0" />
-        <Label fx:id="errorKilometrage" layoutX="193.0" layoutY="160.0" textFill="RED" />
+        <Label layoutX="27.0" layoutY="248.0" text="Kilométrage :" />
+        <TextField fx:id="kilometrageTextField" layoutX="191.0" layoutY="244.0" />
+        <Label fx:id="errorKilometrage" layoutX="191.0" layoutY="268.0" textFill="RED" />
 
-        <Label layoutX="29.0" layoutY="180.0" text="Couleur :" />
-        <TextField fx:id="couleurTextField" layoutX="193.0" layoutY="176.0" />
-        <Label fx:id="errorCouleur" layoutX="193.0" layoutY="200.0" textFill="RED" />
+        <Label layoutX="27.0" layoutY="288.0" text="Couleur :" />
+        <TextField fx:id="couleurTextField" layoutX="191.0" layoutY="284.0" />
+        <Label fx:id="errorCouleur" layoutX="191.0" layoutY="308.0" textFill="RED" />
 
-        <Label layoutX="29.0" layoutY="220.0" text="Prix :" />
-        <TextField fx:id="prixTextField" layoutX="193.0" layoutY="216.0" />
-        <Label fx:id="errorPrix" layoutX="193.0" layoutY="240.0" textFill="RED" />
+        <Label layoutX="27.0" layoutY="328.0" text="Prix :" />
+        <TextField fx:id="prixTextField" layoutX="191.0" layoutY="324.0" />
+        <Label fx:id="errorPrix" layoutX="191.0" layoutY="348.0" textFill="RED" />
 
-        <Label layoutX="29.0" layoutY="260.0" text="Image :" />
-        <Button fx:id="imageButton" layoutX="193.0" layoutY="256.0" text="Choisir une image" onAction="#handleImageSelection"/>
-        <ImageView fx:id="imageView" layoutX="350.0" layoutY="250.0" fitHeight="100.0" fitWidth="150.0" />
+        <Label layoutX="525.0" layoutY="268.0" maxHeight="-Infinity" maxWidth="-Infinity" text="Image :">
+         <font>
+            <Font size="11.0" />
+         </font></Label>
+        <Button fx:id="imageButton" layoutX="718.0" layoutY="394.0" onAction="#handleImageSelection" styleClass="delete-btn" stylesheets="@style1.css" text="Charger image" />
+      <AnchorPane layoutX="625.0" layoutY="187.0" style="-fx-background-color: white;" styleClass="shadow" stylesheets="@style1.css">
+         <children>
+              <ImageView fx:id="imageView" fitHeight="182.0" fitWidth="315.0" />
+         </children>
+      </AnchorPane>
 
-        <Label layoutX="29.0" layoutY="300.0" text="Disponibilité :" />
-        <TextField fx:id="disponibleTextField" layoutX="193.0" layoutY="296.0" />
+        <Label layoutX="27.0" layoutY="372.0" text="Disponibilité :" />
+        <TextField fx:id="disponibleTextField" layoutX="191.0" layoutY="368.0" />
         <Label fx:id="errorDisponible" layoutX="193.0" layoutY="320.0" textFill="RED" />
 
-        <Label layoutX="29.0" layoutY="340.0" text="ID Catégorie :" />
-        <TextField fx:id="idCategorieTextField" layoutX="193.0" layoutY="336.0" />
+        <Label layoutX="27.0" layoutY="412.0" text="ID Catégorie :" />
+        <TextField fx:id="idCategorieTextField" layoutX="191.0" layoutY="408.0" />
         <Label fx:id="errorIdCategorie" layoutX="193.0" layoutY="360.0" textFill="RED" />
 
-        <Button fx:id="ajouterButton" layoutX="534.0" layoutY="400.0" mnemonicParsing="false" text="Ajouter" onAction="#handleAjouterVoiture" />
+        <Button fx:id="ajouterButton" layoutX="352.0" layoutY="483.0" mnemonicParsing="false" onAction="#handleAjouterVoiture" prefHeight="32.0" prefWidth="224.0" styleClass="add-btn" stylesheets="@style1.css" text="Ajouter" />
     </children>
 
 </AnchorPane>

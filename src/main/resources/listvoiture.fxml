@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane stylesheets="@style1.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.Listvoiture" prefHeight="600.0" prefWidth="1200.0">
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Listvoiture">
 
-    <HBox spacing="20" layoutX="20.0" layoutY="20.0" alignment="CENTER_LEFT">
+    <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" spacing="20">
         <Label text="Recherche:" />
-        <TextField fx:id="searchTextField" promptText="Entrez la marque ou description" prefWidth="400"/>
-        <Button text="Rechercher" onAction="#handleSearch"/>
+        <TextField fx:id="searchTextField" prefWidth="400" promptText="Entrez la marque" />
+        <Button onAction="#handleSearch" text="Rechercher" />
     </HBox>
 
     <VBox fx:id="voitureVBox" layoutX="20.0" layoutY="80.0" prefHeight="500.0" prefWidth="1160.0" spacing="15">
