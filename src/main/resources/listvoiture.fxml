@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Listvoiture">
 
-
+    <!-- Barre de recherche et bouton filtre -->
     <HBox layoutX="20" layoutY="20" prefWidth="1160" spacing="10">
         <HBox spacing="10">
             <Label text="Recherche:" />
@@ -24,6 +14,7 @@
             <Button onAction="#handleSearch" text="Rechercher" />
         </HBox>
 
+        <!-- Bouton filtre -->
         <Button fx:id="filterButton" onAction="#toggleFilterPanel" style="-fx-background-color: transparent; -fx-border-color: transparent;">
             <graphic>
                 <ImageView fitHeight="30" fitWidth="30">
@@ -35,7 +26,8 @@
         </Button>
     </HBox>
 
-    <VBox fx:id="filterPanel" layoutX="649.0" layoutY="145.0" prefHeight="375.0" prefWidth="422.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-width: 1px;                  -fx-padding: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4);">
+    <!-- Panneau de filtres (Popup dans le contrôleur) -->
+    <VBox fx:id="filterPanel" layoutX="649.0" layoutY="145.0" prefHeight="375.0" prefWidth="422.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-width: 1px; -fx-padding: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4);">
         <GridPane hgap="10" vgap="10">
             <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
             <ComboBox fx:id="typeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" />
@@ -49,20 +41,28 @@
             <Label text="Nombre de Portes:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
             <ComboBox fx:id="nbrPorteComboBox" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-            <Label text="Transmission:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <Label  text="Transmission:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
             <ComboBox fx:id="transmissionComboBox" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-            <Label text="Kilométrage:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-            <TextField fx:id="kilometrageField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="kilometrageLabel" text="Max Kilométrage:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="5">
+                <Slider fx:id="kilometrageSliderMin" min="0" max="500000" value="0" showTickMarks="true" showTickLabels="true" />
+                <Slider fx:id="kilometrageSliderMax" min="0" max="500000" value="500000" showTickMarks="true" showTickLabels="true" />
+            </VBox>
 
             <Label text="Couleur:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
             <ComboBox fx:id="couleurComboBox" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
-            <Label text="Prix Max:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-            <TextField fx:id="prixField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label fx:id="prixLabel" text="Max Prix:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+            <VBox GridPane.columnIndex="1" GridPane.rowIndex="7">
+                <Slider fx:id="prixSliderMin" min="0" max="500000" value="0" showTickMarks="true" showTickLabels="true" />
+                <Slider fx:id="prixSliderMax" min="0" max="500000" value="500000" showTickMarks="true" showTickLabels="true" />
+            </VBox>
 
             <Label text="Disponibilité:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
             <ComboBox fx:id="disponibiliteComboBox" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+
             <columnConstraints>
                 <ColumnConstraints />
                 <ColumnConstraints />
@@ -86,9 +86,8 @@
         </HBox>
     </VBox>
 
-
+    <!-- Liste des voitures avec ScrollPane -->
     <ScrollPane layoutX="20" layoutY="80" prefHeight="500" prefWidth="1160">
         <VBox fx:id="voitureVBox" spacing="15" />
     </ScrollPane>
-
 </AnchorPane>

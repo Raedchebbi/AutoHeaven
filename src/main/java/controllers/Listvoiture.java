@@ -21,6 +21,9 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 public class Listvoiture implements Initializable {
+    @FXML
+    private Label kilometrageLabel, prixLabel;
+
 
     @FXML
     private VBox voitureVBox;
@@ -34,7 +37,7 @@ public class Listvoiture implements Initializable {
     private ComboBox<String> typeComboBox, carburantComboBox, utilisationComboBox, nbrPorteComboBox,
             transmissionComboBox, disponibiliteComboBox, couleurComboBox;
     @FXML
-    private TextField kilometrageField, prixField;
+    private Slider kilometrageSlider, prixSlider;
     private ContextMenu categoryMenu = new ContextMenu();
     private Popup filterPopup = new Popup();
     @FXML
@@ -45,6 +48,7 @@ public class Listvoiture implements Initializable {
         loadCategoryMenu();
         setupFilterPopup();
         loadCategoryFilters();
+        setupSliders();
     }
 
     private void loadAllVoitures() {
@@ -171,6 +175,14 @@ public class Listvoiture implements Initializable {
         filterPanel.setStyle("-fx-background-color: white; -fx-border-color: #ccc; -fx-border-width: 1px; -fx-padding: 15; " +
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4);");
 
+        kilometrageSlider = new Slider(0, 300000, 150000);
+        kilometrageSlider.setShowTickMarks(true);
+        kilometrageSlider.setShowTickLabels(true);
+
+        prixSlider = new Slider(0, 100000, 50000);
+        prixSlider.setShowTickMarks(true);
+        prixSlider.setShowTickLabels(true);
+
         filterPanel.getChildren().addAll(
                 new Label("Type"), typeComboBox,
                 new Label("Carburant"), carburantComboBox,
@@ -179,8 +191,8 @@ public class Listvoiture implements Initializable {
                 new Label("Transmission"), transmissionComboBox,
                 new Label("Disponibilité"), disponibiliteComboBox,
                 new Label("Couleur"), couleurComboBox,
-                new Label("Kilométrage"), kilometrageField,
-                new Label("Prix"), prixField,
+                new Label("Kilométrage"), kilometrageSlider,
+                new Label("Prix"), prixSlider,
                 applyButton,
                 clearButton
         );
@@ -225,8 +237,8 @@ public class Listvoiture implements Initializable {
                         boolean matchesNbrPorte = nbrPorteComboBox.getValue() == null || nbrPorteComboBox.getValue().equals(categorie.getNbr_porte());
                         boolean matchesDisponibilite = disponibiliteComboBox.getValue() == null || disponibiliteComboBox.getValue().equals(voiture.getDisponibilite());
                         boolean matchesCouleur = couleurComboBox.getValue() == null || couleurComboBox.getValue().equals(voiture.getCouleur());
-                        boolean matchesKilometrage = kilometrageField.getText().isEmpty() || voiture.getKilometrage() <= Integer.parseInt(kilometrageField.getText());
-                        boolean matchesPrix = prixField.getText().isEmpty() || voiture.getPrix() <= Double.parseDouble(prixField.getText());
+                        boolean matchesKilometrage = voiture.getKilometrage() <= kilometrageSlider.getValue();
+                        boolean matchesPrix = voiture.getPrix() <= prixSlider.getValue();
 
                         return matchesType && matchesCarburant && matchesUtilisation && matchesTransmission && matchesNbrPorte && matchesDisponibilite &&  matchesKilometrage && matchesCouleur && matchesPrix;
                     })
@@ -257,8 +269,8 @@ public class Listvoiture implements Initializable {
             nbrPorteComboBox.getItems().clear();
             disponibiliteComboBox.getItems().clear();
             couleurComboBox.getItems().clear();
-            kilometrageField.clear();
-            prixField.clear();
+            kilometrageSlider.setValue(kilometrageSlider.getMin());
+            prixSlider.setValue(prixSlider.getMin());
 
             categorieService.getAll().forEach(categorie -> {
                 if (!typeComboBox.getItems().contains(categorie.getType())) {
@@ -292,7 +304,7 @@ public class Listvoiture implements Initializable {
         }
     }
     private void clearFilters() {
-        // Clear all the ComboBoxes
+
         typeComboBox.setValue(null);
         carburantComboBox.setValue(null);
         utilisationComboBox.setValue(null);
@@ -301,11 +313,43 @@ public class Listvoiture implements Initializable {
         disponibiliteComboBox.setValue(null);
         couleurComboBox.setValue(null);
 
-        // Clear all text fields
-        kilometrageField.clear();
-        prixField.clear();
 
-        // Optionally, you can refresh the list to show all cars again after clearing the filters
+        kilometrageSlider.setValue(kilometrageSlider.getMin());
+        prixSlider.setValue(prixSlider.getMin());
         loadAllVoitures();
     }
+    private void setupSliders() {
+
+        kilometrageSlider.setMin(0);
+        kilometrageSlider.setMax(500000);
+        kilometrageSlider.setValue(250000);
+        kilometrageSlider.setShowTickLabels(true);
+        kilometrageSlider.setShowTickMarks(true);
+        kilometrageSlider.setMajorTickUnit(100000);
+        kilometrageSlider.setMinorTickCount(0);
+        kilometrageSlider.setSnapToTicks(true);
+        kilometrageSlider.setBlockIncrement(10000);
+
+        kilometrageLabel.setText(String.format("%,d km", (int) kilometrageSlider.getValue()));
+        kilometrageSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            kilometrageLabel.setText(String.format("%,d km", newVal.intValue()));
+        });
+
+
+        prixSlider.setMin(0);
+        prixSlider.setMax(200000);
+        prixSlider.setValue(100000);
+        prixSlider.setShowTickLabels(true);
+        prixSlider.setShowTickMarks(true);
+        prixSlider.setMajorTickUnit(50000);
+        prixSlider.setMinorTickCount(0);
+        prixSlider.setSnapToTicks(true);
+        prixSlider.setBlockIncrement(5000);
+
+        prixLabel.setText(String.format("%,d TND", (int) prixSlider.getValue()));
+        prixSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            prixLabel.setText(String.format("%,d TND", newVal.intValue()));
+        });
+    }
+
 }
