@@ -1,59 +1,47 @@
 package controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import javafx.scene.control.*;
 import models.Reclamation;
 import services.ReclamationService;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 public class ReclamationController {
     @FXML
-    private VBox vboxReclamations;  // VBox pour contenir les HBox
+    private TextField txtTitre;
+    @FXML
+    private TextArea txtContenu;
+    @FXML
+    private TextArea txtContenuTraduit;
+    @FXML
+    private ComboBox<String> cmbStatus;
+    @FXML
+    private Button btnAjouter;
 
-    private final ReclamationService reclamationService = new ReclamationService();
+    private final ReclamationService service = new ReclamationService();
 
-    public void initialize() {
-        loadReclamations();
-    }
-
-    public void loadReclamations() {
+    @FXML
+    private void ajouterReclamation() {
         try {
-            // Ajouter un header HBox avec les titres des colonnes
-            HBox headerHBox = new HBox(20);
-            headerHBox.getChildren().addAll(
-                    new Text("Titre"), new Text("Contenu"),
-                    new Text("Status"), new Text("Date"),
-                    new Text("Nom"), new Text("Email"), new Text("Tel")
-            );
-            vboxReclamations.getChildren().add(headerHBox);
+            String titre = txtTitre.getText();
+            String contenu = txtContenu.getText();
+            String contenuTraduit = txtContenuTraduit.getText();
+            String status = cmbStatus.getValue();
 
-            // Récupérer les réclamations depuis la BD
-            List<Reclamation> reclamations = reclamationService.getAll();
-
-            for (Reclamation rec : reclamations) {
-                HBox hbox = afficherReclamation(rec);
-                vboxReclamations.getChildren().add(hbox);
-            }
+            Reclamation reclamation = new Reclamation(titre, contenu, contenuTraduit, status, LocalDateTime.now(), 1);
+            service.create(reclamation);
+            afficherMessage("Réclamation ajoutée avec succès !");
         } catch (Exception e) {
-            e.printStackTrace();
+            afficherMessage("Erreur : " + e.getMessage());
         }
     }
 
-    private HBox afficherReclamation(Reclamation rec) {
-        HBox hbox = new HBox(20);
-
-        Text titreText = new Text(rec.getTitre());
-        Text contenuText = new Text(rec.getContenu());
-        Text statusText = new Text(rec.getStatus());
-        Text dateText = new Text(rec.getDateCreation().toString());
-        Text nomText = new Text(rec.getNom());
-        Text emailText = new Text(rec.getEmail());
-        Text telText = new Text(rec.getTel());
-
-        hbox.getChildren().addAll(titreText, contenuText, statusText, dateText, nomText, emailText, telText);
-        return hbox;
+    private void afficherMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

@@ -1,21 +1,16 @@
 package websocket;
 
-import javax.websocket.ClientEndpoint;
-import javax.websocket.OnOpen;
-import javax.websocket.OnMessage;
-import javax.websocket.OnClose;
-import javax.websocket.Session;
-import javax.websocket.WebSocketContainer;
-import javax.websocket.ContainerProvider;
+import javax.websocket.*;
 import java.net.URI;
+import java.util.function.Consumer;
 
 @ClientEndpoint
 public class WebSocketClient {
     private Session session;
-    private MessageListener messageListener;
+    private Consumer<String> messageHandler;
 
-    public WebSocketClient(String uri, MessageListener listener) {
-        this.messageListener = listener;
+    public WebSocketClient(String uri, Consumer<String> messageHandler) {
+        this.messageHandler = messageHandler;
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
             container.connectToServer(this, new URI(uri));
@@ -27,19 +22,14 @@ public class WebSocketClient {
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
-        System.out.println("Connecté au serveur WebSocket");
+        System.out.println("✅ Connecté au serveur WebSocket.");
     }
 
     @OnMessage
     public void onMessage(String message) {
-        if (messageListener != null) {
-            messageListener.onMessageReceived(message);
+        if (messageHandler != null) {
+            messageHandler.accept(message);
         }
-    }
-
-    @OnClose
-    public void onClose() {
-        System.out.println("Connexion WebSocket fermée");
     }
 
     public void sendMessage(String message) {
@@ -50,9 +40,5 @@ public class WebSocketClient {
                 e.printStackTrace();
             }
         }
-    }
-
-    public interface MessageListener {
-        void onMessageReceived(String message);
     }
 }

@@ -1,6 +1,7 @@
 package models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Reclamation {
     private int idRec;
@@ -38,6 +39,9 @@ public class Reclamation {
         this.status = status;
         this.dateCreation = dateCreation;
         this.idUser = idUser;
+    }
+
+    public Reclamation(String titre, String contenu, String contenuTraduit, String status, LocalDateTime now, int idUser) {
     }
 
     // ✅ Getters obligatoires

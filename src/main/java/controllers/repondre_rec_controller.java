@@ -1,13 +1,13 @@
 package controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
 import utils.MyDb;
 
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -44,9 +44,8 @@ public class repondre_rec_controller {
     private void handleEnvoyerReponse() {
         if (validateInput()) {
             if (saveMessageToDatabase() && updateStatusInDatabase()) {
-                showSuccessAlert(); // Afficher l'alerte de succès
-                if (onSuccessCallback != null) onSuccessCallback.run(); // Rafraîchir l'affichage principal
-                closeWindow();
+                showSuccessAlert();
+                if (onSuccessCallback != null) onSuccessCallback.run(); // Refresh the main view and hide the form
             }
         }
     }
@@ -107,11 +106,6 @@ public class repondre_rec_controller {
         return false;
     }
 
-    private void closeWindow() {
-        Stage stage = (Stage) reponseField.getScene().getWindow();
-        stage.close();
-    }
-
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -124,20 +118,10 @@ public class repondre_rec_controller {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Succès");
         alert.setHeaderText("Réponse envoyée avec succès !");
-        alert.setContentText(""); // Supprime le texte inutile qui casse le style
-
-        // Appliquer le CSS
-        URL cssUrl = getClass().getResource("/repondrereclamation.css");
-        if (cssUrl != null) {
-            alert.getDialogPane().getStylesheets().add(cssUrl.toExternalForm());
-        } else {
-            System.out.println("⚠️ Fichier styles.css non trouvé !");
-        }
-
-        // Ajuster le style de la boîte de dialogue
-        alert.getDialogPane().setPrefSize(300, 150); // Ajuste la taille
+        alert.setContentText("");
         alert.showAndWait();
     }
 
-
+    public void setReclamationStatus(String status) {
+    }
 }

@@ -97,3 +97,17 @@
     -fx-font-size: 14px;
     -fx-text-fill: black;
 }
+.root {
+    -fx-background-color: #fff5f5;
+}
+
+.button {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.text-field, .text-area {
+    -fx-border-color: #ff0000;
+    -fx-border-width: 2;
+}

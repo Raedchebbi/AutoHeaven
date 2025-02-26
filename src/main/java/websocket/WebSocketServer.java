@@ -15,25 +15,18 @@ public class WebSocketServer {
     public void onOpen(Session session) {
         sessions.add(session);
         System.out.println("🔵 Nouvelle connexion WebSocket : " + session.getId());
-        sendMessageToAll("👤 Un nouvel utilisateur a rejoint le chat !");
     }
 
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println("📩 Message reçu de " + session.getId() + ": " + message);
-        sendMessageToAll("💬 " + message);
+        sendMessageToAll(message);
     }
 
     @OnClose
     public void onClose(Session session) {
         sessions.remove(session);
         System.out.println("🔴 Connexion fermée : " + session.getId());
-        sendMessageToAll("👤 Un utilisateur a quitté le chat.");
-    }
-
-    @OnError
-    public void onError(Session session, Throwable throwable) {
-        System.err.println("⚠️ Erreur WebSocket avec la session " + session.getId() + ": " + throwable.getMessage());
     }
 
     private void sendMessageToAll(String message) {
