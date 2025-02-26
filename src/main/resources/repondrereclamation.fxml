@@ -7,22 +7,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane prefHeight="700.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.repondre_rec_controller">
+<AnchorPane prefHeight="700.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.repondre_rec_controller">
 
    <VBox spacing="20" alignment="CENTER" prefHeight="700.0" fx:id="formContainer">
       <padding>
-         <Insets top="20" right="20" bottom="20" left="20" />
+         <Insets top="20" right="20" bottom="20" left="10" />
       </padding>
       <Label text="Répondre à la réclamation" styleClass="main-title" />
 
       <Label text="Titre :" styleClass="form-label" />
-      <TextField fx:id="titreField" editable="false" styleClass="form-field" />
+      <TextField fx:id="reclamationTitre" editable="false" styleClass="form-field" />
 
       <Label text="Contenu :" styleClass="form-label" />
-      <TextArea fx:id="contenuField" editable="false" styleClass="form-area" />
+      <TextArea fx:id="reclamationContent" editable="false" styleClass="text-area" />
 
       <Label text="Réponse :" styleClass="form-label" />
-      <TextArea fx:id="reponseField" styleClass="form-area" />
+      <TextArea fx:id="responseTextArea" styleClass="text-area" />
 
       <Button text="Envoyer Réponse" styleClass="btn-primary" onAction="#handleEnvoyerReponse" />
    </VBox>

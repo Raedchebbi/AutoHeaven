@@ -4,47 +4,40 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1250.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherReclamationController">
+<AnchorPane prefHeight="800.0" prefWidth="1300.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherReclamationController">
 
-    <HBox spacing="20" alignment="TOP_CENTER" prefHeight="700.0" styleClass="container">
-        <!-- Conteneur des réclamations avec scroll -->
-        <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="scroll-pane modern-scroll" prefWidth="1050.0" prefHeight="700.0" vbarPolicy="ALWAYS">
-            <VBox prefWidth="850" prefHeight="700.0" spacing="10" styleClass="container">
+    <HBox spacing="25" alignment="TOP_CENTER" prefHeight="750.0" styleClass="main-container">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20" />
+        </padding>
+        <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="data-container" prefWidth="1010.0" prefHeight="750.0" vbarPolicy="ALWAYS">
+            <VBox prefWidth="1000" prefHeight="750.0" spacing="15" styleClass="content-container">
                 <padding>
-                    <Insets bottom="10" left="10" right="10" top="10" />
+                    <Insets top="15" right="15" bottom="15" left="15" />
                 </padding>
-
-                <!-- Titre principal -->
-                <Label styleClass="main-title" text="Répondre aux réclamations" textAlignment="CENTER" />
-
-                <!-- Barre de recherche et filtre -->
-                <HBox spacing="15">
-                    <TextField fx:id="searchField" prefHeight="50" prefWidth="500" promptText="Rechercher une réclamation..." styleClass="form-field" />
-                    <CheckBox fx:id="filterBannedCheckBox" prefHeight="26.0" prefWidth="270.0" text="Afficher seulement les messages bannis" styleClass="check-box" />
+                <Label styleClass="main-title" text="Listes des Réclamations" textAlignment="CENTER" />
+                <HBox spacing="20">
+                    <TextField fx:id="searchField" prefHeight="50" prefWidth="460" promptText="Recherche d'une réclamation spécifique par son objet." styleClass="search-field" />
+                    <CheckBox fx:id="filterBannedCheckBox" prefHeight="30.0" prefWidth="300.0" text="Afficher uniquement les messages bannis" styleClass="checkbox" />
                 </HBox>
-
-                <!-- En-tête -->
                 <HBox styleClass="header-row">
-                    <Label prefWidth="165.0" styleClass="header-cell" text="Objet" />
-                    <Label prefWidth="272.0" styleClass="header-cell" text="Réclamation" />
-                    <Label prefWidth="121.0" styleClass="header-cell" text="Date" />
-                    <Label prefWidth="142.0" styleClass="header-cell" text="Nom" />
-                    <Label prefWidth="119.0" styleClass="header-cell" text="Téléphone" />
-                    <Label prefWidth="161.0" styleClass="header-cell" text="Email" />
-                    <Label prefWidth="119.0" styleClass="header-cell" text="Statut" />
+                    <Label prefWidth="160.0" styleClass="header-cell" text="Objet" />
+                    <Label prefWidth="300.0" styleClass="header-cell" text="Réclamation" wrapText="true" />
+                    <Label prefWidth="140.0" styleClass="header-cell" text="Date" />
+                    <Label prefWidth="140.0" styleClass="header-cell" text="Nom" />
+                    <Label prefWidth="120.0" styleClass="header-cell" text="Téléphone" />
+                    <Label prefWidth="280.0" styleClass="header-cell" text="Email" wrapText="true" />
+                    <Label prefWidth="160.0" styleClass="header-cell" text="Statut" />
                 </HBox>
-
-                <!-- Contenu dynamique -->
-                <VBox fx:id="contentBox" spacing="5" />
+                <VBox fx:id="contentBox" spacing="10" />
             </VBox>
         </ScrollPane>
-
-        <!-- Formulaire de réponse (inline, same level as the list) -->
-        <AnchorPane fx:id="repondreFormContainer" prefWidth="400.0" prefHeight="700.0" visible="false">
+        <AnchorPane fx:id="repondreFormContainer" prefWidth="400.0" prefHeight="750.0" visible="false">
             <fx:include source="repondrereclamation.fxml" />
         </AnchorPane>
     </HBox>

@@ -25,14 +25,15 @@ public class AfficherReclamationController {
     @FXML private VBox contentBox;
     @FXML private CheckBox filterBannedCheckBox;
     @FXML private TextField searchField;
+
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     @FXML
     public void initialize() {
-        // Load initial data
+        // Load initial data (all reclamations, not filtered by banned)
         loadDataFromDatabase(false, "");
 
-        // Set up listeners
+        // Set up listeners for the filter and search
         filterBannedCheckBox.setOnAction(e -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText()));
         searchField.textProperty().addListener((observable, oldValue, newValue) -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), newValue));
 
@@ -54,12 +55,12 @@ public class AfficherReclamationController {
     }
 
     private void loadDataFromDatabase(boolean showOnlyBanned, String searchQuery) {
-        String query = "SELECT r.id_rec, r.titre, r.contenu, "
-                + "COALESCE(r.status, 'en_attente') as status, "
-                + "r.datecreation, u.nom, u.tel, u.email "
-                + "FROM reclamation r "
-                + "JOIN user u ON r.id = u.id " // Foreign key in reclamation table is 'id', referencing user.id
-                + "ORDER BY r.datecreation DESC";
+        String query = "SELECT r.id_rec, r.titre, r.contenu, " +
+                "COALESCE(r.status, 'en_attente') as status, " +
+                "r.datecreation, u.nom, u.tel, u.email " +
+                "FROM reclamation r " +
+                "JOIN user u ON r.id = u.id " +
+                "ORDER BY r.datecreation DESC";
 
         try (Connection conn = MyDb.getInstance().getConn();
              PreparedStatement ps = conn.prepareStatement(query);
@@ -93,29 +94,42 @@ public class AfficherReclamationController {
             reclamations.add(reclamation);
         }
 
-        return reclamations.stream()
-                .filter(r -> (searchQuery.isEmpty() || r.getTitre().toLowerCase().contains(searchQuery.toLowerCase())) &&
-                        !(showOnlyBanned && containsBadWord(r.getContenu())))
-                .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
-                .collect(Collectors.toList());
+        String searchLower = searchQuery != null ? searchQuery.toLowerCase() : "";
+        if (showOnlyBanned) {
+            // Affiche uniquement les réclamations bannies (contenant des mots interdits) qui correspondent à la recherche
+            return reclamations.stream()
+                    .filter(r -> containsBadWord(r.getContenu())) // Filtre uniquement les réclamations bannies
+                    .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
+                    .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
+                    .collect(Collectors.toList());
+        } else {
+            // Affiche toutes les réclamations (non bannies incluses) qui correspondent à la recherche
+            return reclamations.stream()
+                    .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
+                    .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
+                    .collect(Collectors.toList());
+        }
     }
 
     private HBox createDataRow(int id_rec, String titre, String contenu, String status, Timestamp timestamp, String nom, String tel, String email, boolean isBannedContent) {
-        HBox row = new HBox(10);
+        HBox row = new HBox(15); // Espacement légèrement plus grand pour lisibilité
+        row.setPrefWidth(980.0); // Ajusté pour s’adapter au ScrollPane
         row.getStyleClass().add("data-row");
 
-        Label lblTitre = createCell(titre, 165.0);
-        Label lblContenu = createCell(isBannedContent ? "BANNED 🚩" : contenu, 272.0);
+        Label lblTitre = createCell(titre, 160.0);
+        Label lblContenu = createCell(isBannedContent ? "BANNED 🚩" : contenu, 260.0);
         if (isBannedContent) {
             lblContenu.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
         }
-        Label lblDate = createCell(timestamp.toLocalDateTime().format(dateFormatter), 121.0);
-        Label lblNom = createCell(nom, 142.0);
-        Label lblTel = createCell(tel, 119.0);
-        Label lblEmail = createCell(email, 161.0);
+        Label lblDate = createCell(timestamp.toLocalDateTime().format(dateFormatter), 140.0);
+        Label lblNom = createCell(nom, 140.0);
+        Label lblTel = createCell(tel, 120.0);
+        Label lblEmail = createCell(email, 240.0); // Augmenté pour plus de place
+        lblEmail.setWrapText(true); // Active wrapText pour les emails longs
 
         Button btnStatus = new Button(status);
-        btnStatus.setPrefWidth(119.0);
+        btnStatus.setPrefWidth(140.0); // Ajusté pour afficher "Répondu" ou "En attente" complètement
+        btnStatus.setWrapText(true); // Active wrapText pour les boutons
         updateButtonState(btnStatus, id_rec, titre, contenu, status, isBannedContent);
 
         row.getChildren().addAll(lblTitre, lblContenu, lblDate, lblNom, lblTel, lblEmail, btnStatus);
@@ -128,40 +142,37 @@ public class AfficherReclamationController {
             btn.setDisable(true);
             btn.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
         } else if ("repondu".equalsIgnoreCase(status)) {
-            btn.setStyle("-fx-background-color: linear-gradient(to right, #A5D6A7, #8BC34A); -fx-text-fill: #2E7D32; -fx-font-weight: bold; -fx-padding: 8px 20px; -fx-background-radius: 10px; -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);");
+            btn.setStyle("-fx-background-color: linear-gradient(to right, #A5D6A7, #8BC34A); -fx-text-fill: #2E7D32; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-background-radius: 8px; -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);");
             btn.setDisable(true);
         } else if ("en_attente".equalsIgnoreCase(status)) {
-            btn.setStyle("-fx-background-color: linear-gradient(to right, #FFCDD2, #FF8A80); -fx-text-fill: #C62828; -fx-font-weight: bold; -fx-padding: 8px 20px; -fx-background-radius: 10px; -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);");
+            btn.setStyle("-fx-background-color: linear-gradient(to right, #FFCDD2, #FF8A80); -fx-text-fill: #C62828; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-background-radius: 8px; -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);");
             btn.setOnAction(e -> openRepondreFormInline(id_rec, titre, contenu, status));
         }
     }
 
     private void openRepondreFormInline(int reclamationId, String titre, String contenu, String status) {
-        // Ensure the controller is not null
         if (repondreFormController == null) {
             System.err.println("repondreFormController is null. Check FXML loading.");
             return;
         }
 
-        // Set the form data
         repondreFormController.setReclamationId(reclamationId);
         repondreFormController.setReclamationTitre(titre);
         repondreFormController.setReclamationContent(contenu);
-        repondreFormController.setReclamationStatus(status);
         repondreFormController.setOnSuccessCallback(() -> {
             loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText());
             repondreFormContainer.setVisible(false);
         });
 
-        // Show the form container and ensure it’s managed in the layout
         repondreFormContainer.setVisible(true);
         repondreFormContainer.setManaged(true);
     }
 
     private Label createCell(String text, double width) {
-        Label label = new Label(text);
+        Label label = new Label(text != null ? text : "");
         label.setPrefWidth(width);
-        label.setWrapText(true);
+        label.setWrapText(true); // Active wrapText pour tous les labels
+        label.setMaxHeight(Double.MAX_VALUE); // Permet une hauteur illimitée pour wrapText
         label.getStyleClass().add("data-cell");
         return label;
     }
@@ -199,13 +210,13 @@ public class AfficherReclamationController {
 
         public Reclamation(int idRec, String titre, String contenu, String status, Timestamp timestamp, String nom, String tel, String email) {
             this.idRec = idRec;
-            this.titre = titre;
-            this.contenu = contenu;
-            this.status = status;
+            this.titre = titre != null ? titre : "";
+            this.contenu = contenu != null ? contenu : "";
+            this.status = status != null ? status : "en_attente";
             this.timestamp = timestamp;
-            this.nom = nom;
-            this.tel = tel;
-            this.email = email;
+            this.nom = nom != null ? nom : "";
+            this.tel = tel != null ? tel : "";
+            this.email = email != null ? email : "";
         }
 
         public int getIdRec() { return idRec; }

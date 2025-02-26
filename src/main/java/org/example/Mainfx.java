@@ -10,22 +10,15 @@ import java.io.IOException;
 
 public class Mainfx extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/AfficherReclamationController.fxml")); // Charge l'interface admin
+        primaryStage.setTitle("PiDev - Gestion des Réclamations (Admin)");
+        primaryStage.setScene(new Scene(root, 1250, 750)); // Ajuste les dimensions pour AfficherReclamation.fxml
+        primaryStage.show();
     }
 
-    @Override
-    public void start(Stage stage) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherReclamationController.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle("Ajouter Réclamation");
-            stage.show();
-        } catch (IOException e) {
-            System.err.println("Erreur FXML : " + e.getMessage());
-            e.printStackTrace();
-        }
+    public static void main(String[] args) {
+        launch(args);
     }
 }

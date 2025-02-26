@@ -1,31 +1,34 @@
 package controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import utils.MyDb;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import okhttp3.*;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class addreclamation_controller {
 
-    private static final int USER_ID = 3;  // L'ID de l'utilisateur
-    private static final int TITRE_MAX_LENGTH = 100;  // Longueur maximale du titre
-    private static final int CONTENU_MIN_LENGTH = 10;  // Longueur minimale du contenu
-    private static final int CONTENU_MAX_LENGTH = 1000;  // Longueur maximale du contenu
+    private static final int USER_ID = 3;  // L'ID de l'utilisateur client
+    private static final int TITRE_MAX_LENGTH = 100;
+    private static final int CONTENU_MIN_LENGTH = 10;
+    private static final int CONTENU_MAX_LENGTH = 1000;
 
     @FXML
-    private TextField objetTextField;  // Champ pour le titre de la réclamation
+    private TextField objetTextField;
     @FXML
-    private TextArea reclamationTextArea;  // Champ pour le contenu de la réclamation
+    private TextArea reclamationTextArea;
     @FXML
-    private Label erreurObjet;  // Label pour afficher l'erreur sur le titre
+    private Label erreurObjet;
     @FXML
-    private Label erreurReclamation;  // Label pour afficher l'erreur sur le contenu
+    private Label erreurReclamation;
+    @FXML
+    private Button correctButton;
 
     @FXML
     private void handleEnvoyerReclamation() {
@@ -35,7 +38,6 @@ public class addreclamation_controller {
         String contenu = reclamationTextArea.getText().trim();
         boolean isValid = true;
 
-        // Validation du titre
         if (titre.isEmpty()) {
             erreurObjet.setText("Ce champ est obligatoire");
             isValid = false;
@@ -47,7 +49,6 @@ public class addreclamation_controller {
             isValid = false;
         }
 
-        // Validation du contenu
         if (contenu.isEmpty()) {
             erreurReclamation.setText("Ce champ est obligatoire");
             isValid = false;
@@ -59,9 +60,81 @@ public class addreclamation_controller {
             isValid = false;
         }
 
-        // Si tout est valide, enregistrer la réclamation
         if (isValid) {
-            insererReclamation(titre, contenu);
+            insererReclamation(titre, contenu); // Pas de traduction, seulement le texte original corrigé si nécessaire
+        }
+    }
+
+    @FXML
+    private void handleCorrectReclamation() {
+        String titre = objetTextField.getText().trim();
+        String contenu = reclamationTextArea.getText().trim();
+
+        if (titre.isEmpty() && contenu.isEmpty()) {
+            showAlert("Erreur", "Veuillez entrer un titre ou une réclamation avant de corriger.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        if (!titre.isEmpty()) {
+            correctWithGemini(titre, true);
+        }
+        if (!contenu.isEmpty()) {
+            correctWithGemini(contenu, false);
+        }
+    }
+
+    private void correctWithGemini(String text, boolean isTitle) {
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyBovR0DquNLAyKmSjnYxN6BD1FgxckdHPU";
+
+        String prompt = isTitle
+                ? "Corrigez uniquement ce titre (max 100 caractères) : " + text
+                : "Corrigez uniquement ce texte pour une réclamation (max 1000 caractères) : " + text;
+
+        java.util.Map<String, Object> messagePart = new java.util.HashMap<>();
+        messagePart.put("text", prompt);
+
+        java.util.Map<String, Object> contentPart = new java.util.HashMap<>();
+        contentPart.put("parts", new Object[]{messagePart});
+
+        java.util.Map<String, Object> requestBody = new java.util.HashMap<>();
+        requestBody.put("contents", new Object[]{contentPart});
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonPayload = objectMapper.writeValueAsString(requestBody);
+
+            RequestBody body = RequestBody.create(jsonPayload, MediaType.get("application/json; charset=utf-8"));
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String responseBody = response.body().string();
+                    JsonNode rootNode = objectMapper.readTree(responseBody);
+                    String correctedText = rootNode.path("candidates")
+                            .get(0)
+                            .path("content")
+                            .path("parts")
+                            .get(0)
+                            .path("text")
+                            .asText();
+
+                    if (isTitle) {
+                        objetTextField.setText(correctedText);
+                    } else {
+                        reclamationTextArea.setText(correctedText);
+                    }
+                } else {
+                    showAlert("Erreur", "Échec de la correction : " + response.code(), Alert.AlertType.ERROR);
+                    System.out.println("Request failed: " + response.code());
+                }
+            }
+        } catch (IOException e) {
+            showAlert("Erreur", "Erreur technique lors de la correction : " + e.getMessage(), Alert.AlertType.ERROR);
+            e.printStackTrace();
         }
     }
 
@@ -83,7 +156,7 @@ public class addreclamation_controller {
             }
 
         } catch (SQLException e) {
-            showAlert("Erreur", "Erreur technique: " + e.getMessage(), Alert.AlertType.ERROR);
+            showAlert("Erreur", "Erreur technique : " + e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace();
         }
     }

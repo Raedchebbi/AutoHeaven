@@ -1,25 +1,21 @@
 package controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import utils.MyDb;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class repondre_rec_controller {
 
     @FXML
-    private TextField titreField;
+    private TextField reclamationTitre;
     @FXML
-    private TextArea contenuField;
+    private TextArea reclamationContent;
     @FXML
-    private TextArea reponseField;
+    private TextArea responseTextArea; // Corrigé pour corresponds à repondrereclamation.fxml
 
     private int reclamationId;
     private Runnable onSuccessCallback;
@@ -29,11 +25,11 @@ public class repondre_rec_controller {
     }
 
     public void setReclamationTitre(String titre) {
-        titreField.setText(titre);
+        reclamationTitre.setText(titre);
     }
 
     public void setReclamationContent(String content) {
-        contenuField.setText(content);
+        reclamationContent.setText(content);
     }
 
     public void setOnSuccessCallback(Runnable callback) {
@@ -51,7 +47,7 @@ public class repondre_rec_controller {
     }
 
     private boolean validateInput() {
-        if (reponseField.getText().trim().isEmpty()) {
+        if (responseTextArea.getText().trim().isEmpty()) { // Corrigé pour utiliser responseTextArea
             showAlert("Erreur", "Le champ réponse est obligatoire");
             return false;
         }
@@ -59,7 +55,7 @@ public class repondre_rec_controller {
     }
 
     private boolean saveMessageToDatabase() {
-        String query = "INSERT INTO messagerie (message, receiver, id_rec, datemessage) VALUES (?, 'admin', ?, NOW())";
+        String query = "INSERT INTO messagerie (message, sender, id_rec, datemessage, receiver) VALUES (?, ?, ?, NOW(), ?)";
 
         try (Connection conn = MyDb.getInstance().getConn();
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -69,8 +65,10 @@ public class repondre_rec_controller {
                 return false;
             }
 
-            ps.setString(1, reponseField.getText().trim());
-            ps.setInt(2, reclamationId);
+            ps.setString(1, responseTextArea.getText().trim()); // Utilise responseTextArea
+            ps.setString(2, "admin"); // sender est 'admin' selon ton code
+            ps.setInt(3, reclamationId);
+            ps.setString(4, "client"); // receiver est 'client' par défaut (ajustable selon ton besoin)
 
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) {
@@ -120,8 +118,5 @@ public class repondre_rec_controller {
         alert.setHeaderText("Réponse envoyée avec succès !");
         alert.setContentText("");
         alert.showAndWait();
-    }
-
-    public void setReclamationStatus(String status) {
     }
 }

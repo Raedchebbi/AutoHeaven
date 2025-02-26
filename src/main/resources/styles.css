@@ -227,3 +227,7 @@
     -fx-font-size: 14px;
     -fx-text-fill: black;
 }
+.checkbox {
+    -fx-font-size: 12px;
+    -fx-text-fill: #800020; /* Bordeaux pour le texte */
+}
