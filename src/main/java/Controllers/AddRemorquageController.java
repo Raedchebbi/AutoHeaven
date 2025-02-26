@@ -82,64 +82,63 @@ public class AddRemorquageController {
     }
 
     @FXML
-    private void addRemorquage() {
+    private void addRemorquage() throws Exception {
         errorMessage.setText("");
         successMessage.setText("");
 
+        String selectedUser = cbUser.getValue();
+        if (selectedUser == null) {
+            errorMessage.setText("User est requis !");
+            return;
+        }
+        int userId = extractIdFromComboBox(selectedUser);
+
+        String nomAgence = cbNomAgence.getValue();
+        if (nomAgence == null) {
+            errorMessage.setText("Nom de l'agence est requis !");
+            return;
+        }
+
+        CamionRemorquage selectedCamion = findCamionByNomAgence(nomAgence);
+        if (selectedCamion == null || !selectedCamion.getStatut().equals("Disponible")) {
+            errorMessage.setText("Le camion doit être 'Disponible' !");
+            return;
+        }
+
+        String pointRamassage = tfPointRamassage.getText();
+        if (pointRamassage.isEmpty()) {
+            errorMessage.setText("Point Ramassage est requis !");
+            return;
+        }
+
+        String pointDepot = tfPointDepot.getText();
+        if (pointDepot.isEmpty()) {
+            errorMessage.setText("Point Depot est requis !");
+            return;
+        }
+
+        LocalDate date = dpDate.getValue();
+        if (date == null || !date.isAfter(LocalDate.now())) {
+            errorMessage.setText("La date doit être supérieure à aujourd'hui !");
+            return;
+        }
+
+        int idCr = selectedCamion.getId_cr();
+        ResRemorquage resRemorquage = new ResRemorquage();
+        resRemorquage.setId_u(userId);
+        resRemorquage.setId_cr(idCr);
+        resRemorquage.setPoint_ramassage(pointRamassage);
+        resRemorquage.setPoint_depot(pointDepot);
+        resRemorquage.setDate(java.sql.Date.valueOf(date));
+        resRemorquage.setStatus("en_cours_de_traitement");
+
         try {
-            String selectedUser = cbUser.getValue();
-            if (selectedUser == null) {
-                errorMessage.setText("User est requis !");
-                return;
-            }
-            int userId = extractIdFromComboBox(selectedUser);
-
-            String nomAgence = cbNomAgence.getValue();
-            if (nomAgence == null) {
-                errorMessage.setText("Nom de l'agence est requis !");
-                return;
-            }
-
-            CamionRemorquage selectedCamion = findCamionByNomAgence(nomAgence);
-            if (selectedCamion == null || !selectedCamion.getStatut().equals("Disponible")) {
-                errorMessage.setText("CamionRemorquage doit etre 'Disponible'!");
-                return;
-            }
-
-            String pointRamassage = tfPointRamassage.getText();
-            if (pointRamassage.isEmpty()) {
-                errorMessage.setText("Point Ramassage est requis !");
-                return;
-            }
-
-            String pointDepot = tfPointDepot.getText();
-            if (pointDepot.isEmpty()) {
-                errorMessage.setText("Point Depot est requis !");
-                return;
-            }
-
-            LocalDate date = dpDate.getValue();
-            if (date == null || !date.isAfter(LocalDate.now())) {
-                errorMessage.setText("La date doit être supérieure à aujourd'hui !");
-                return;
-            }
-
-            int idCr = selectedCamion.getId_cr();
-
-            ResRemorquage resRemorquage = new ResRemorquage();
-            resRemorquage.setId_u(userId);
-            resRemorquage.setId_cr(idCr);
-            resRemorquage.setPoint_ramassage(pointRamassage);
-            resRemorquage.setPoint_depot(pointDepot);
-            resRemorquage.setDate(java.sql.Date.valueOf(date));
-
             resRemorquageService.create(resRemorquage);
-
             successMessage.setText("Remorquage ajouté avec succès !");
             clearFields();
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Error Ajout Remorquage Reservation : " + e.getMessage());
+            errorMessage.setText("Erreur lors de l'ajout : " + e.getMessage());
         }
     }
 

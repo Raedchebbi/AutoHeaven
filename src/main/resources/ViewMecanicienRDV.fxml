@@ -21,27 +21,32 @@
 
         <HBox fx:id="mecanicien_header" layoutX="36.0" layoutY="125.0" prefHeight="19.0" prefWidth="902.0" styleClass="container_header">
             <children>
-                <Label prefHeight="22.0" prefWidth="198.0" text="Adresse">
+                <Label prefHeight="22.0" prefWidth="174.0" text="Adresse">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <Label prefHeight="22.0" prefWidth="204.0" text="Note">
+                <Label prefHeight="22.0" prefWidth="164.0" text="Note">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <Label prefHeight="22.0" prefWidth="169.0" text="Utilisateur">
+                <Label prefHeight="22.0" prefWidth="138.0" text="Utilisateur">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
-                <Label prefHeight="22.0" prefWidth="170.0" text="Mécanicien">
+                <Label prefHeight="22.0" prefWidth="140.0" text="Mécanicien">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
                 <Label prefHeight="22.0" prefWidth="138.0" text="Date">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
+                <Label prefHeight="22.0" prefWidth="100.0" text="Action">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>
@@ -53,6 +58,18 @@
             <content>
                 <VBox fx:id="mecanicien_container" prefHeight="372.0" prefWidth="890.0" spacing="5.0">
                     <!-- Dynamic rows will be added here -->
+                    <!-- Example row with buttons -->
+                    <HBox spacing="10.0">
+                        <Label text="Adresse Example" />
+                        <Label text="Note Example" />
+                        <Label text="Utilisateur Example" />
+                        <Label text="Mécanicien Example" />
+                        <Label text="2023-10-10" />
+                        <HBox spacing="5.0">
+                            <Button style="-fx-background-color: green; -fx-text-fill: white;" text="Confirmer" />
+                            <Button style="-fx-background-color: red; -fx-text-fill: white;" text="Rejeter" />
+                        </HBox>
+                    </HBox>
                 </VBox>
             </content>
         </ScrollPane>

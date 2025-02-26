@@ -111,6 +111,7 @@ public class AddMecanicienRDVController {
             resMecanicien.setAdresse(adresse);
             resMecanicien.setNote(note);
             resMecanicien.setDate(java.sql.Date.valueOf(date));
+            resMecanicien.setStatus("en_cours_de_traitement"); // Définir le statut
 
             resMecanicienService.create(resMecanicien);
             successMessage.setText("Rendez-vous ajouté avec succès !");

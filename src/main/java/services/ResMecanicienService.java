@@ -19,13 +19,14 @@ public class ResMecanicienService implements Crud<ResMecanicien> {
 
     @Override
     public void create(ResMecanicien obj) throws Exception {
-        String sql = "INSERT INTO res_mecanicien (id_u, id_mec, adresse, note, date) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO res_mecanicien (id_u, id_mec, adresse, note, date, status) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         stmt.setInt(1, obj.getId_u());
         stmt.setInt(2, obj.getId_mec());
         stmt.setString(3, obj.getAdresse());
         stmt.setString(4, obj.getNote());
         stmt.setDate(5, new java.sql.Date(obj.getDate().getTime()));
+        stmt.setString(6, obj.getStatus()); // Ajouter le statut
 
         int rowsInserted = stmt.executeUpdate();
         if (rowsInserted > 0) {
@@ -38,14 +39,15 @@ public class ResMecanicienService implements Crud<ResMecanicien> {
 
     @Override
     public void update(ResMecanicien obj) throws Exception {
-        String sql = "UPDATE res_mecanicien SET id_u = ?, id_mec = ?, adresse = ?, note = ?, date = ? WHERE id_res_m = ?";
+        String sql = "UPDATE res_mecanicien SET id_u = ?, id_mec = ?, adresse = ?, note = ?, date = ?, status = ? WHERE id_res_m = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, obj.getId_u());
         stmt.setInt(2, obj.getId_mec());
         stmt.setString(3, obj.getAdresse());
         stmt.setString(4, obj.getNote());
         stmt.setDate(5, new java.sql.Date(obj.getDate().getTime()));
-        stmt.setInt(6, obj.getId_res_m());
+        stmt.setString(6, obj.getStatus()); // Ajouter le statut
+        stmt.setInt(7, obj.getId_res_m());
 
         stmt.executeUpdate();
     }
@@ -80,7 +82,8 @@ public class ResMecanicienService implements Crud<ResMecanicien> {
                     rs.getInt("id_mec"),
                     rs.getString("adresse"),
                     rs.getString("note"),
-                    rs.getDate("date")
+                    rs.getDate("date"),
+                    rs.getString("status") // Récupérer le statut
             );
             reservations.add(res);
         }
@@ -100,7 +103,8 @@ public class ResMecanicienService implements Crud<ResMecanicien> {
                     rs.getInt("id_mec"),
                     rs.getString("adresse"),
                     rs.getString("note"),
-                    rs.getDate("date")
+                    rs.getDate("date"),
+                    rs.getString("status") // Récupérer le statut
             );
         }
         return null;

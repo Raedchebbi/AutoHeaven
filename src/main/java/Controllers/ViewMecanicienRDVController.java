@@ -57,27 +57,44 @@ public class ViewMecanicienRDVController {
             hbox.setSpacing(20);
 
             Label adresseLabel = new Label(rdv.getAdresse());
-            adresseLabel.setPrefWidth(180.0);
+            adresseLabel.setPrefWidth(150.0);
 
             Label noteLabel = new Label(rdv.getNote());
-            noteLabel.setPrefWidth(180.0);
+            noteLabel.setPrefWidth(150.0);
 
             // Retrieve User details
             User user = userService.getById(rdv.getId_u()); // Get user by ID
             String userName = (user != null) ? user.getUsername() : "Unknown"; // Handle null case
             Label userLabel = new Label(userName + " (ID: " + rdv.getId_u() + ")");
-            userLabel.setPrefWidth(150.0);
+            userLabel.setPrefWidth(120.0);
 
             // Retrieve Mécanicien details (using UserService)
             User mecanicien = userService.getById(rdv.getId_mec()); // Get mechanic by ID
             String mecanicienName = (mecanicien != null) ? mecanicien.getUsername() : "Unknown"; // Handle null case
             Label mecanicienLabel = new Label(mecanicienName + " (ID: " + rdv.getId_mec() + ")");
-            mecanicienLabel.setPrefWidth(150.0);
+            mecanicienLabel.setPrefWidth(120.0);
 
             Label dateLabel = new Label(rdv.getDate().toString());
-            dateLabel.setPrefWidth(150.0);
+            dateLabel.setPrefWidth(120.0);
 
-            hbox.getChildren().addAll(adresseLabel, noteLabel, userLabel, mecanicienLabel, dateLabel);
+            // Create action buttons
+            Button confirmButton = new Button("Confirmer");
+            confirmButton.setStyle("-fx-background-color: green; -fx-text-fill: white;");
+            confirmButton.setOnAction(e -> {
+                // Add your confirm logic here
+                System.out.println("Confirmed: " + rdv.getId_res_m());
+            });
+
+            Button rejectButton = new Button("Rejeter");
+            rejectButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+            rejectButton.setOnAction(e -> {
+                // Add your reject logic here
+                System.out.println("Rejected: " + rdv.getId_res_m());
+            });
+
+            HBox actionButtons = new HBox(5, confirmButton, rejectButton);
+
+            hbox.getChildren().addAll(adresseLabel, noteLabel, userLabel, mecanicienLabel, dateLabel, actionButtons);
             mecanicien_container.getChildren().add(hbox);
         }
     }

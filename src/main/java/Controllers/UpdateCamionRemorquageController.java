@@ -13,9 +13,8 @@ import models.CamionRemorquage;
 import services.CamionRemorquageService;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
-public class AddCamionRemorquageController {
+public class UpdateCamionRemorquageController {
 
     @FXML
     private TextField tfNomAgence;
@@ -30,30 +29,45 @@ public class AddCamionRemorquageController {
     private TextField tfNumTel;
 
     @FXML
-    private Button btnAdd;
-
-    @FXML
-    private Button btnBack;
+    private Button btnUpdate;
 
     @FXML
     private Button btnCancel;
 
     @FXML
-    private Text errorMessage; // For error messages
+    private Button btnBack;
 
     @FXML
-    private Text successMessage; // For success messages
+    private Text errorMessage; // Pour les messages d'erreur
+
+    @FXML
+    private Text successMessage; // Pour les messages de succès
 
     private CamionRemorquageService camionRemorquageService = new CamionRemorquageService();
+    private CamionRemorquage camion;
 
     @FXML
-    private void addCamionRemorquage() {
+    public void initialize() {
+        // Initialiser les combobox et les champs
+        cbModele.getItems().addAll("Standard", "Grande Taille");
+    }
+
+    public void setCamion(CamionRemorquage camion) {
+        this.camion = camion;
+        tfNomAgence.setText(camion.getNomAgence());
+        cbModele.setValue(camion.getModele());
+        tfAnnee.setText(String.valueOf(camion.getAnnee()));
+        tfNumTel.setText(camion.getNum_tel());
+    }
+
+    @FXML
+    private void updateCamionRemorquage() {
         errorMessage.setText("");
         successMessage.setText("");
         successMessage.setVisible(false);
         errorMessage.setVisible(false);
 
-        // Vérification du nom de l'agence
+        // Vérification des champs
         String nomAgence = tfNomAgence.getText();
         if (nomAgence.isEmpty()) {
             errorMessage.setText("Le nom de l'agence est requis !");
@@ -61,7 +75,6 @@ public class AddCamionRemorquageController {
             return;
         }
 
-        // Vérification du modèle
         String modele = cbModele.getValue();
         if (modele == null) {
             errorMessage.setText("Le modèle est requis !");
@@ -69,7 +82,6 @@ public class AddCamionRemorquageController {
             return;
         }
 
-        // Vérification de l'année
         String anneeText = tfAnnee.getText();
         if (anneeText.isEmpty()) {
             errorMessage.setText("L'année est requise !");
@@ -86,13 +98,6 @@ public class AddCamionRemorquageController {
             return;
         }
 
-        int currentYear = LocalDate.now().getYear();
-        if (annee < 1900 || annee > currentYear) {
-            errorMessage.setText("Veuillez entrer une année valide :\n(1900 à " + currentYear + ") !");
-            errorMessage.setVisible(true);
-            return;
-        }
-
         String numTel = tfNumTel.getText();
         if (numTel.isEmpty()) {
             errorMessage.setText("Le numéro de téléphone est requis !");
@@ -100,26 +105,23 @@ public class AddCamionRemorquageController {
             return;
         }
         if (!numTel.matches("\\d{8}")) {
-            errorMessage.setText("Le numéro de téléphone doit contenir\nexactement 8 chiffres !");
+            errorMessage.setText("Le numéro de téléphone doit contenir exactement 8 chiffres !");
             errorMessage.setVisible(true);
             return;
         }
 
-        CamionRemorquage camion = new CamionRemorquage();
         camion.setNomAgence(nomAgence);
         camion.setModele(modele);
         camion.setAnnee(annee);
         camion.setNum_tel(numTel);
-        camion.setStatut("Disponible"); // Valeur par défaut
 
         try {
-            camionRemorquageService.create(camion);
-            successMessage.setText("Camion Remorquage ajouté avec succès !");
+            camionRemorquageService.update(camion);
+            successMessage.setText("Camion Remorquage mis à jour avec succès !");
             successMessage.setVisible(true);
-            clearFields();
         } catch (Exception e) {
             e.printStackTrace();
-            errorMessage.setText("Erreur lors de l'ajout du Camion Remorquage.");
+            errorMessage.setText("Erreur lors de la mise à jour du Camion Remorquage.");
             errorMessage.setVisible(true);
         }
     }
@@ -151,7 +153,7 @@ public class AddCamionRemorquageController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Error loading navigator interface.");
+            System.err.println("Erreur lors du chargement de ViewCamionRemorquage.fxml");
         }
     }
 }

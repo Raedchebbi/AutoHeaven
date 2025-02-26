@@ -6,19 +6,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.ResRemorquage;
 import services.ResRemorquageService;
-import services.UserService; // Assuming you have a UserService to get user details
-import services.CamionRemorquageService; // Assuming you have a VoitureService to get vehicle details
-import models.User; // Assuming you have a User model
-import models.CamionRemorquage; // Assuming you have a Voiture model
+import services.UserService;
+import services.CamionRemorquageService;
+import models.User;
+import models.CamionRemorquage;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViewRemorquageController {
@@ -36,13 +37,12 @@ public class ViewRemorquageController {
     private Button back_btn;
 
     private ResRemorquageService remorquageService = new ResRemorquageService();
-    private UserService userService = new UserService(); // Instantiate UserService
+    private UserService userService = new UserService();
     private CamionRemorquageService camionService = new CamionRemorquageService();
 
     @FXML
     public void initialize() {
         loadRemorquages();
-        setupSearch();
     }
 
     private void loadRemorquages() {
@@ -67,21 +67,88 @@ public class ViewRemorquageController {
             pointDepotLabel.setPrefWidth(200.0);
 
             // Retrieve User details
-            User user = userService.getById(remorquage.getId_u()); // Get user by ID
-            String userName = (user != null) ? user.getUsername() : "Unknown"; // Handle missing user
+            User user = userService.getById(remorquage.getId_u());
+            String userName = (user != null) ? user.getUsername() : "Unknown";
             Label userLabel = new Label(userName + " (ID: " + remorquage.getId_u() + ")");
             userLabel.setPrefWidth(200.0);
 
-            // Retrieve Voiture details
-            CamionRemorquage camion = camionService.getById(remorquage.getId_cr()); // Get vehicle by ID
-            String agenceName = (camion != null) ? camion.getNomAgence() : "Unknown"; // Handle missing vehicle
-            Label camionLabel = new Label(agenceName + " (ID: " + remorquage.getId_cr() + ")");
+            // Retrieve Camion details
+            CamionRemorquage camion = camionService.getById(remorquage.getId_cr());
+            String camionName = (camion != null) ? camion.getNomAgence() : "Unknown";
+            Label camionLabel = new Label(camionName + " (ID: " + remorquage.getId_cr() + ")");
             camionLabel.setPrefWidth(200.0);
 
             Label dateLabel = new Label(remorquage.getDate().toString());
             dateLabel.setPrefWidth(150.0);
 
-            hbox.getChildren().addAll(pointRamassageLabel, pointDepotLabel, userLabel, camionLabel, dateLabel);
+            Label statusLabel = new Label(remorquage.getStatus());
+            statusLabel.setPrefWidth(150.0);
+
+            // Action buttons
+            HBox actionButtons = new HBox(5);
+
+            // Add confirmation and rejection buttons for "en_cours_de_traitement"
+            if ("en_cours_de_traitement".equals(remorquage.getStatus())) {
+                Button confirmButton = new Button("Confirmer");
+                confirmButton.setStyle("-fx-background-color: green; -fx-text-fill: white;");
+                confirmButton.setOnAction(e -> {
+                    try {
+                        remorquage.setStatus("Confirmé");
+                        remorquageService.update(remorquage);
+                        loadRemorquages();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+                Button rejectButton = new Button("Rejeter");
+                rejectButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+                rejectButton.setOnAction(e -> {
+                    try {
+                        remorquage.setStatus("Rejeté");
+                        remorquageService.update(remorquage);
+                        loadRemorquages();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+                actionButtons.getChildren().addAll(confirmButton, rejectButton);
+            }
+
+            // Add update and delete buttons for "Confirmé" or "Rejeté"
+            if ("Confirmé".equals(remorquage.getStatus()) || "Rejeté".equals(remorquage.getStatus())) {
+                Button updateButton = new Button("Modifier");
+                updateButton.setOnAction(e -> {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateRemorquage.fxml"));
+                        Parent root = loader.load();
+
+                        UpdateCamionRemorquageController updateController = loader.getController();
+                        updateController.setCamion(camion); // Passer le camion
+
+                        Stage stage = (Stage) actionButtons.getScene().getWindow();
+                        stage.setScene(new Scene(root));
+                        stage.show();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+                Button deleteButton = new Button("Supprimer");
+                deleteButton.setOnAction(e -> {
+                    try {
+                        remorquageService.delete(remorquage.getId_rem());
+                        loadRemorquages();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                });
+
+                actionButtons.getChildren().addAll(updateButton, deleteButton);
+            }
+
+            hbox.getChildren().addAll(pointRamassageLabel, pointDepotLabel, userLabel, camionLabel, dateLabel, statusLabel, actionButtons);
             remorquage_container.getChildren().add(hbox);
         }
     }
@@ -96,7 +163,6 @@ public class ViewRemorquageController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Erreur lors du chargement de Navigator.fxml");
         }
     }
 
@@ -110,11 +176,34 @@ public class ViewRemorquageController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Erreur lors du chargement de AddRemorquage.fxml");
         }
     }
 
     private void setupSearch() {
-        // Implement search functionality here, if needed.
+        search_id.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterRemorquages(newValue);
+        });
+    }
+
+    private void filterRemorquages(String searchTerm) {
+        try {
+            List<ResRemorquage> remorquageList = remorquageService.getAll();
+            List<ResRemorquage> filteredList = new ArrayList<>();
+
+            for (ResRemorquage remorquage : remorquageList) {
+                // Récupérer le camion pour obtenir le nom de l'agence
+                CamionRemorquage camion = camionService.getById(remorquage.getId_cr());
+                String nomAgence = (camion != null) ? camion.getNomAgence() : "";
+
+                // Vérifier si le nom de l'agence contient le terme de recherche
+                if (nomAgence.toLowerCase().contains(searchTerm.toLowerCase())) {
+                    filteredList.add(remorquage);
+                }
+            }
+
+            populateRemorquageContainer(filteredList); // Mettre à jour l'affichage avec la liste filtrée
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

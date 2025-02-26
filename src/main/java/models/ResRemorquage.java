@@ -9,16 +9,18 @@ public class ResRemorquage {
     private String point_ramassage;
     private String point_depot;
     private Date date;  // New date field
+    private String status; // Nouveau champ status
 
     public ResRemorquage() {}
 
-    public ResRemorquage(int id_rem, int id_u, int id_cr, String point_ramassage, String point_depot, Date date) {
+    public ResRemorquage(int id_rem, int id_u, int id_cr, String point_ramassage, String point_depot, Date date, String status) {
         this.id_rem = id_rem;
         this.id_u = id_u;
         this.id_cr = id_cr;
         this.point_ramassage = point_ramassage;
         this.point_depot = point_depot;
         this.date = date;  // Set the new date field
+        this.status = status; // Initialiser le statut
     }
 
     public int getId_rem() { return id_rem; }
@@ -39,9 +41,12 @@ public class ResRemorquage {
     public Date getDate() { return date; }  // Getter for the date
     public void setDate(Date date) { this.date = date; }  // Setter for the date
 
+    public String getStatus() { return status; } // Getter pour le statut
+    public void setStatus(String status) { this.status = status; } // Setter pour le statut
+
     @Override
     public String toString() {
         return "ResRemorquage{ID Remorquage =" + id_rem + ", ID User =" + id_u + ", ID Camion Remorquage =" + id_cr +
-                ", Point Ramassage = '" + point_ramassage + "', Point Depot ='" + point_depot + "', Date = '" + date + "'}";
+                ", Point Ramassage = '" + point_ramassage + "', Point Depot ='" + point_depot + "', Date = '" + date + "', Status = '" + status + "'}";
     }
 }

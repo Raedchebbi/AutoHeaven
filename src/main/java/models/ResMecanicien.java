@@ -9,16 +9,18 @@ public class ResMecanicien {
     private String adresse; // Adresse
     private String note; // Note
     private Date date; // Date de la réservation
+    private String status; // Statut de la réservation
 
     public ResMecanicien() {}
 
-    public ResMecanicien(int id_res_m, int id_u, int id_mec, String adresse, String note, Date date) {
+    public ResMecanicien(int id_res_m, int id_u, int id_mec, String adresse, String note, Date date, String status) {
         this.id_res_m = id_res_m;
         this.id_u = id_u;
         this.id_mec = id_mec;
         this.adresse = adresse;
         this.note = note;
         this.date = date;
+        this.status = status; // Initialiser le statut
     }
 
     public int getId_res_m() { return id_res_m; }
@@ -39,8 +41,11 @@ public class ResMecanicien {
     public Date getDate() { return date; }
     public void setDate(Date date) { this.date = date; }
 
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; } // Getter et setter pour le statut
+
     @Override
     public String toString() {
-        return "ResMecanicien{id_res_m=" + id_res_m + ", id_u=" + id_u + ", id_mec=" + id_mec + ", adresse='" + adresse + "', note='" + note + "', date=" + date + "}";
+        return "ResMecanicien{id_res_m=" + id_res_m + ", id_u=" + id_u + ", id_mec=" + id_mec + ", adresse='" + adresse + "', note='" + note + "', date=" + date + ", status='" + status + "'}";
     }
 }

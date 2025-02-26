@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.ResTestDrive;
@@ -20,7 +21,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-public class AddTestDriveController {
+public class UpdateTestDriveController {
 
     @FXML
     private ComboBox<String> cbUser;
@@ -28,23 +29,41 @@ public class AddTestDriveController {
     private ComboBox<String> cbVehicle;
     @FXML
     private DatePicker dpDate;
-
     @FXML
     private Text errorMessage;
     @FXML
     private Text successMessage;
-
     @FXML
     private Button btnBack;
 
     private ResTestDriveService testDriveService = new ResTestDriveService();
     private UserService userService = new UserService();
     private VoitureService vehicleService = new VoitureService();
+    private ResTestDrive testDrive;
 
     @FXML
     public void initialize() {
         loadUsers();
         loadVehicles();
+    }
+
+    public void setTestDrive(ResTestDrive testDrive) {
+        this.testDrive = testDrive;
+        populateFields();
+    }
+
+    private void populateFields() {
+        try {
+            cbUser.setValue(testDrive.getId_u() + " - " + userService.getById(testDrive.getId_u()).getUsername());
+        } catch (Exception e) {
+            errorMessage.setText("Erreur lors du chargement de l'utilisateur : " + e.getMessage());
+        }
+        try {
+            cbVehicle.setValue(testDrive.getId_v() + " - " + vehicleService.getById(testDrive.getId_v()).getMarque());
+        } catch (Exception e) {
+            errorMessage.setText("Erreur lors du chargement du véhicule : " + e.getMessage());
+        }
+        dpDate.setValue(LocalDate.parse(testDrive.getDate()));
     }
 
     private void loadUsers() {
@@ -70,7 +89,7 @@ public class AddTestDriveController {
     }
 
     @FXML
-    public void addTestDrive() {
+    public void updateTestDrive() {
         errorMessage.setText("");
         successMessage.setText("");
 
@@ -105,23 +124,18 @@ public class AddTestDriveController {
             int userId = Integer.parseInt(user.split(" - ")[0]);
             int vehicleId = Integer.parseInt(vehicle.split(" - ")[0]);
 
-            Voiture selectedVehicle = vehicleService.getById(vehicleId);
-            if (selectedVehicle != null && selectedVehicle.getDisponibilite().equalsIgnoreCase("non")) {
-                errorMessage.setText("La voiture n'est pas disponible.");
-                return;
-            }
-
-            ResTestDrive testDrive = new ResTestDrive();
+            // Créer un nouvel objet ResTestDrive avec les nouvelles valeurs
             testDrive.setId_u(userId);
             testDrive.setId_v(vehicleId);
             testDrive.setDate(date.toString());
             testDrive.setStatus("en_cours_de_traitement");
 
-            testDriveService.create(testDrive);
-            successMessage.setText("Réservation de test drive ajoutée avec succès !");
+            // Appeler la méthode de mise à jour
+            testDriveService.update(testDrive);
+            successMessage.setText("Test Drive mis à jour avec succès !");
             clearFields();
         } catch (Exception e) {
-            errorMessage.setText("Erreur lors de l'ajout : " + e.getMessage());
+            errorMessage.setText("Erreur lors de la mise à jour : " + e.getMessage());
         }
     }
 
@@ -135,13 +149,12 @@ public class AddTestDriveController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewTestDrive.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
             Stage stage = (Stage) btnBack.getScene().getWindow();
-            stage.setScene(scene);
+            stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Erreur lors du chargement de l'interface de navigation.");
+            System.err.println("Erreur lors du chargement de ViewTestDrive.fxml");
         }
     }
 

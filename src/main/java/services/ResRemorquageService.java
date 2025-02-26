@@ -19,13 +19,14 @@ public class ResRemorquageService implements Crud<ResRemorquage> {
 
     @Override
     public void create(ResRemorquage obj) throws Exception {
-        String sql = "INSERT INTO res_remorquage (id_u, id_cr, point_ramassage, point_depot, date) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO res_remorquage (id_u, id_cr, point_ramassage, point_depot, date, status) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         stmt.setInt(1, obj.getId_u());
         stmt.setInt(2, obj.getId_cr());
         stmt.setString(3, obj.getPoint_ramassage());
         stmt.setString(4, obj.getPoint_depot());
         stmt.setDate(5, obj.getDate());  // Set the date
+        stmt.setString(6, obj.getStatus()); // Ajouter le statut
 
         int rowsInserted = stmt.executeUpdate();
         if (rowsInserted > 0) {
@@ -38,14 +39,15 @@ public class ResRemorquageService implements Crud<ResRemorquage> {
 
     @Override
     public void update(ResRemorquage obj) throws Exception {
-        String sql = "UPDATE res_remorquage SET id_u = ?, id_cr = ?, point_ramassage = ?, point_depot = ?, date = ? WHERE id_rem = ?";
+        String sql = "UPDATE res_remorquage SET id_u = ?, id_cr = ?, point_ramassage = ?, point_depot = ?, date = ?, status = ? WHERE id_rem = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, obj.getId_u());
         stmt.setInt(2, obj.getId_cr());
         stmt.setString(3, obj.getPoint_ramassage());
         stmt.setString(4, obj.getPoint_depot());
         stmt.setDate(5, obj.getDate());  // Set the date
-        stmt.setInt(6, obj.getId_rem());
+        stmt.setString(6, obj.getStatus()); // Ajouter le statut
+        stmt.setInt(7, obj.getId_rem());
 
         stmt.executeUpdate();
     }
@@ -80,7 +82,8 @@ public class ResRemorquageService implements Crud<ResRemorquage> {
                     rs.getInt("id_cr"),
                     rs.getString("point_ramassage"),
                     rs.getString("point_depot"),
-                    rs.getDate("date")  // Get the date
+                    rs.getDate("date"),  // Get the date
+                    rs.getString("status") // Récupérer le statut
             );
             reservations.add(res);
         }
@@ -100,7 +103,8 @@ public class ResRemorquageService implements Crud<ResRemorquage> {
                     rs.getInt("id_cr"),
                     rs.getString("point_ramassage"),
                     rs.getString("point_depot"),
-                    rs.getDate("date")  // Get the date
+                    rs.getDate("date"),  // Get the date
+                    rs.getString("status") // Récupérer le statut
             );
         }
         return null;
