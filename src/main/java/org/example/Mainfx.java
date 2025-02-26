@@ -15,7 +15,7 @@ public class Mainfx extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-     // FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
+     //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Dashboard.fxml"));
        // FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Statistique.fxml"));
        // FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ValidationCommande.fxml"));

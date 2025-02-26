@@ -15,8 +15,10 @@ import services.EquipementService;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class ListEquipement implements Initializable {
 
@@ -36,22 +38,44 @@ public class ListEquipement implements Initializable {
     private Pane equip_pa;
 
     @FXML
-    private TextField search_id;
+    private TextField input_search;
+    EquipementService es=new EquipementService();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        List<EquipementAffichage> l =new ArrayList<>();
         try {
-            reloadEquipements();
+            l=es.getAll();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        try {
+            reloadEquipements(l);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        input_search.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                if (newValue == null || newValue.trim().isEmpty()) {
+
+                    List<EquipementAffichage> allEquipements = es.getAll();
+                    reloadEquipements(allEquipements);
+                } else {
+
+                    List<EquipementAffichage> filtredName = handleSearch_name(newValue);
+                    reloadEquipements(filtredName);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
-    public void reloadEquipements() throws Exception {
+    public void reloadEquipements(List<EquipementAffichage>obs) throws Exception {
         equip_container.getChildren().clear();
 
         EquipementService es = new EquipementService();
-        List<EquipementAffichage> obs = es.getAll();
+       // List<EquipementAffichage> obs = es.getAll();
 
         for (EquipementAffichage e : obs) {
             try {
@@ -106,5 +130,14 @@ public class ListEquipement implements Initializable {
         } else {
             System.out.println("Erreur : equipementPanel est null !");
         }
+    }
+    public List<EquipementAffichage> handleSearch_name(String searchText) throws Exception {
+        List<EquipementAffichage> l = new ArrayList<>();
+        l = es.getAll().stream()
+                .filter(x -> x.getNom().toLowerCase().contains(searchText.toLowerCase()) ||
+                        x.getMarque().toLowerCase().contains(searchText.toLowerCase()) ||
+                        x.getReference().toLowerCase().contains(searchText.toLowerCase()))
+                .collect(Collectors.toList());
+        return l;
     }
 }

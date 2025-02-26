@@ -181,54 +181,54 @@ public class ValidationCommande implements Initializable {
 
     @FXML
     public void ExportExcel(List<Commande> list, String sheetName) throws Exception {
-        // Créer une boîte de dialogue pour choisir l'emplacement et le nom du fichier
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Enregistrer le fichier Excel");
-        fileChooser.setInitialFileName("Commandes.xlsx"); // Nom par défaut du fichier
+        fileChooser.setInitialFileName("Commandes.xlsx");
 
-        // Définir un filtre pour n'afficher que les fichiers Excel
+
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Fichiers Excel (*.xlsx)", "*.xlsx");
         fileChooser.getExtensionFilters().add(extFilter);
 
-        // Afficher la boîte de dialogue et attendre que l'utilisateur choisisse un emplacement
+
         File file = fileChooser.showSaveDialog(pane_1.getScene().getWindow());
 
-        // Si l'utilisateur annule la boîte de dialogue, ne rien faire
+
         if (file == null) {
             return;
         }
 
-        // Chemin du fichier sélectionné par l'utilisateur
+
         String filePath = file.getAbsolutePath();
 
         try (Workbook workbook = new XSSFWorkbook()) {
-            // Créer une feuille Excel
+
             Sheet sheet = workbook.createSheet(sheetName);
 
-            // Créer la ligne d'en-tête
+
             Row headerRow = sheet.createRow(0);
             headerRow.createCell(0).setCellValue("ID Commande");
             headerRow.createCell(1).setCellValue("Date Commande");
             headerRow.createCell(2).setCellValue("Statut");
             headerRow.createCell(3).setCellValue("Montant Total");
-            headerRow.createCell(4).setCellValue("Équipements"); // Nouvelle colonne pour les équipements
+            headerRow.createCell(4).setCellValue("Équipements");
 
-            // Remplir les données des commandes
+
             for (int i = 0; i < list.size(); i++) {
                 Commande commande = list.get(i);
                 Row row = sheet.createRow(i + 1);
 
-                // Ajouter les données de la commande
+
                 row.createCell(0).setCellValue(commande.getId_com());
                 row.createCell(1).setCellValue(commande.getDate_com().toString());
                 row.createCell(2).setCellValue(commande.getStatus());
                 row.createCell(3).setCellValue(commande.getMontant_total());
 
-                // Récupérer les équipements de la commande
+
                 LigneCommandeService ligneCommandeService = new LigneCommandeService();
                 List<Lignecommande> ligneCommandes = ligneCommandeService.getAllByIDC(commande.getId_com());
 
-                // Formater la liste des équipements en une chaîne de caractères
+
                 StringBuilder equipements = new StringBuilder();
                 for (Lignecommande ligne : ligneCommandes) {
                     EquipementService equipementService = new EquipementService();
@@ -236,21 +236,21 @@ public class ValidationCommande implements Initializable {
                     equipements.append(equipement.getNom()).append(" (Quantité: ").append(ligne.getQuantite()).append("), ");
                 }
 
-                // Supprimer la virgule finale
+
                 if (equipements.length() > 0) {
                     equipements.setLength(equipements.length() - 2);
                 }
 
-                // Ajouter les équipements dans la colonne correspondante
+
                 row.createCell(4).setCellValue(equipements.toString());
             }
 
-            // Sauvegarder le fichier Excel
+
             try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
                 workbook.write(fileOut);
             }
 
-            // Afficher une confirmation
+
             showAlert("Export réussi", "Le fichier Excel a été enregistré avec succès à l'emplacement : " + filePath);
         } catch (Exception e) {
             e.printStackTrace();
@@ -258,7 +258,7 @@ public class ValidationCommande implements Initializable {
         }
     }
 
-    // Méthode pour afficher une alerte
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

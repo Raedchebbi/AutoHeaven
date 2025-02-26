@@ -9,6 +9,7 @@ import models.EquipementAffichage;
 import services.EquipementService;
 
 import java.io.IOException;
+import java.util.List;
 
 public class EquipementItem {
     @FXML
@@ -56,7 +57,8 @@ public class EquipementItem {
             es.delete(equipement.getId());
 
             if (listEquipementController != null) {
-                listEquipementController.reloadEquipements();
+                List<EquipementAffichage> l=es.getAll();
+                listEquipementController.reloadEquipements(l);
             } else {
                 System.out.println("Erreur : listEquipementController est null !");
             }

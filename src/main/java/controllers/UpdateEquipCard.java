@@ -232,7 +232,7 @@ public class UpdateEquipCard {
         EquipementService sc = new EquipementService();
         sc.update(u1, quantite1, prix1);
         listEquipementController.hideUpdatePopup();
-        listEquipementController.reloadEquipements();
+        listEquipementController.reloadEquipements(sc.getAll());
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Succès");

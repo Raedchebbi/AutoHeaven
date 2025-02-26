@@ -199,19 +199,19 @@ public class CommandeItemAdmin {
     }
     @FXML
     private void exportToPDF(MouseEvent event) throws Exception {
-        // Créer une boîte de dialogue pour choisir l'emplacement et le nom du fichier
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Enregistrer la facture");
-        fileChooser.setInitialFileName("Facture.pdf"); // Nom par défaut du fichier
+        fileChooser.setInitialFileName("Facture.pdf");
 
-        // Définir un filtre pour n'afficher que les fichiers PDF
+
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Fichiers PDF (*.pdf)", "*.pdf");
         fileChooser.getExtensionFilters().add(extFilter);
 
-        // Afficher la boîte de dialogue et attendre que l'utilisateur choisisse un emplacement
+
         File file = fileChooser.showSaveDialog(((Node) event.getSource()).getScene().getWindow());
 
-        // Si l'utilisateur annule la boîte de dialogue, ne rien faire
+
         if (file == null) {
             return;
         }
@@ -219,7 +219,7 @@ public class CommandeItemAdmin {
         // Chemin du fichier sélectionné par l'utilisateur
         String filePath = file.getAbsolutePath();
 
-        // Générer le PDF à l'emplacement choisi
+
         EquipementService es = new EquipementService();
         LigneCommandeService ls = new LigneCommandeService();
         StockService ss = new StockService();
@@ -228,23 +228,22 @@ public class CommandeItemAdmin {
 
         List<Lignecommande> lc = ls.getAllByIDC(commande.getId_com());
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(filePath)); // Utiliser le chemin choisi
+        PdfWriter.getInstance(document, new FileOutputStream(filePath));
         document.open();
 
-        // Ajouter le titre "Facture" centré
+
         Paragraph title = new Paragraph("Facture");
         title.setAlignment(Paragraph.ALIGN_CENTER);
         document.add(title);
 
-        // Ajouter un saut de ligne
+
         document.add(new Paragraph("\n"));
 
-        // Ajouter les informations du client et la date de la facture
         document.add(new Paragraph("Client: " + user.getNom() + " " + user.getPrenom()));
         document.add(new Paragraph("Date de la facture: " + LocalDate.now()));
         document.add(new Paragraph("\n"));
 
-        // Créer la table avec les colonnes (Reference, Produit, Quantite, Prix, Prix total)
+
         PdfPTable table = new PdfPTable(5);
         table.addCell("Reference");
         table.addCell("Produit");
@@ -254,13 +253,13 @@ public class CommandeItemAdmin {
 
         double totalAPayer = 0;
 
-        // Remplir la table avec les données des équipements
+
         for (Lignecommande l : lc) {
             Equipement eq = es.getEquipementById(l.getId_e());
             Stock s = ss.getStockById(eq.getId());
             String ref = eq.getReference();
             String nom = eq.getNom();
-            int quantite_equip = l.getQuantite(); // Utiliser la quantité de la commande
+            int quantite_equip = l.getQuantite();
             double prix = s.getPrixvente();
             double prix_total = l.getPrix_unitaire() * l.getQuantite();
 
@@ -273,12 +272,12 @@ public class CommandeItemAdmin {
             totalAPayer += prix_total;
         }
 
-        // Ajouter une ligne pour le "Total à payer" avec des cellules vides pour aligner les colonnes
-        table.addCell(""); // Cellule vide pour "Reference"
-        table.addCell(""); // Cellule vide pour "Produit"
-        table.addCell(""); // Cellule vide pour "Quantite"
-        table.addCell("Total à payer"); // Cellule pour le libellé "Total à payer"
-        table.addCell(String.valueOf(totalAPayer)); // Cellule pour la valeur du total
+
+        table.addCell("");
+        table.addCell("");
+        table.addCell("");
+        table.addCell("Total à payer");
+        table.addCell(String.valueOf(totalAPayer));
 
         document.add(table);
         document.close();

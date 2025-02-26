@@ -17,7 +17,7 @@
                 <Font name="Arial Bold" size="25.0" />
             </font>
         </Label>
-        <TextField fx:id="search_id" layoutX="738.0" layoutY="22.0" prefHeight="31.0" prefWidth="186.0" promptText="search..." styleClass="search-bar" stylesheets="@Dashboard.css" />
+        <TextField fx:id="input_search" layoutX="738.0" layoutY="22.0" prefHeight="31.0" prefWidth="186.0" promptText="search..." styleClass="search-bar" stylesheets="@Dashboard.css" />
 
         <HBox fx:id="equip_header" layoutX="36.0" layoutY="102.0" prefHeight="42.0" prefWidth="902.0" styleClass="container_header" stylesheets="@Dashboard.css">
             <children>
