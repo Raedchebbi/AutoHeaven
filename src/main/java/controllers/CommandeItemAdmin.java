@@ -129,11 +129,17 @@ public class CommandeItemAdmin {
     }
 
     private void handleCancelClick(MouseEvent event) throws Exception {
-        // Mettre à jour le statut de la commande à "annulee"
+
         CommandeService cs = new CommandeService();
         cs.updateStatus(commande.getId_com(), "annulee");
+        LigneCommandeService ls = new LigneCommandeService();
+        User user =ls.getByID(commande.getId());
+        int tel =user.getTel();
+        String msg="Votre commande est annulee .";
+        sendSMS(String.valueOf(tel), msg);
 
-        // Recharger la liste des commandes après la mise à jour
+
+
        vc.reloadCommande(cs.getAll());
     }
     private void sendSMS(String phoneNumber, String message) {
