@@ -1,7 +1,11 @@
 package controllers;
 
 import javafx.animation.PauseTransition;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import models.User;
 import services.UserService;
@@ -92,9 +96,29 @@ public class adduserController implements Initializable {
         pause.play();
     }
 
+
     public void fermerButtonOnAction(ActionEvent event) {
+        MyDb connectNow = new MyDb();
+        Connection connectDB = connectNow.getConn();
+
         Stage stage = (Stage) fermerButton.getScene().getWindow();
-        stage.close();
+        //stage.close();*/
+
+        try {
+            fermerButton.getScene().getWindow().hide();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login2.fxml"));
+            Parent root = loader.load();
+
+
+            Stage login2Stage = new Stage();
+            login2Stage.setScene(new Scene(root, 1100, 600));
+            login2Stage.initStyle(StageStyle.DECORATED);
+            login2Stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public void addUser() {

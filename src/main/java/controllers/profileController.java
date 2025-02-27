@@ -525,7 +525,7 @@ public class profileController implements Initializable {
 
 
         // Validate CIN (7 digits)
-        if (!cin.matches("\\d{8}")) {
+        if (!cin.matches("\\d{7}")) {
             errors.append("Erreur : Le CIN doit être composé de 7 chiffres.\n");
         }
 
@@ -645,10 +645,10 @@ public class profileController implements Initializable {
             }
 
             // Call the update method to save changes
+            usernaame.setText(updatedUser.getUsername());
             userService.update(updatedUser);
 
             // Display success message
-            usernaame.setText(loggedInUser);
             errormessage.setText("Utilisateur mis à jour avec succès !");
             PauseTransition pause = new PauseTransition(Duration.seconds(5));
             pause.setOnFinished(event -> errormessage.setText(""));

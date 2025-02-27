@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #ECECE7;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.loginuserController">
    <left>
@@ -37,26 +38,31 @@
                      </font>
                   </Label>
                   <PasswordField fx:id="enterPasswordField" layoutX="263.0" layoutY="218.0" prefHeight="36.0" prefWidth="247.0" promptText="Mot de passe " />
-                  <Button fx:id="loginButton" layoutX="130.0" layoutY="329.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="41.0" prefWidth="266.0" styleClass="purple-button" stylesheets="@profileDesign.css" text="Se connecter" textFill="WHITE">
+                  <Button fx:id="loginButton" layoutX="130.0" layoutY="397.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="41.0" prefWidth="266.0" styleClass="purple-button" stylesheets="@profileDesign.css" text="Se connecter" textFill="WHITE">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Button>
-                  <Button fx:id="CancelButton" layoutX="130.0" layoutY="394.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="41.0" prefWidth="266.0" styleClass="transparent-button" stylesheets="@profileDesign.css" text="Annuler" textFill="WHITE">
+                  <Button fx:id="CancelButton" layoutX="130.0" layoutY="451.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="41.0" prefWidth="266.0" styleClass="transparent-button" stylesheets="@profileDesign.css" text="Annuler" textFill="WHITE">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </Button>
-                  <Label fx:id="loginMessageLabel" alignment="CENTER" layoutX="109.0" layoutY="272.0" prefHeight="43.0" prefWidth="313.0" textFill="#ff0f0f">
+                  <Label fx:id="loginMessageLabel" alignment="CENTER_RIGHT" layoutX="196.0" layoutY="255.0" prefHeight="30.0" prefWidth="314.0" textFill="#ff0f0f">
                      <font>
                         <Font name="Andalus" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="119.0" layoutY="452.0" onMouseClicked="#createAccountForm" prefHeight="40.0" prefWidth="293.0" text="Vous n'avez pas de compte ? Inscrivez-vous ici" textFill="WHITE" underline="true">
+                  <Label layoutX="119.0" layoutY="491.0" onMouseClicked="#createAccountForm" prefHeight="40.0" prefWidth="293.0" text="Vous n'avez pas de compte ? Inscrivez-vous ici" textFill="WHITE" underline="true">
                      <font>
                         <Font name="Andalus" size="15.0" />
                      </font>
                   </Label>
+
+                  <!-- Add WebView for hCaptcha -->
+                  <WebView fx:id="captchaWebView" layoutX="80.0" layoutY="289.0" prefHeight="100.0" prefWidth="365.0">
+                  </WebView>
+
                </children>
                <styleClass>
                   <String fx:value="shadow" />

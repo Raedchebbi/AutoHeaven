@@ -1021,14 +1021,14 @@ public class dashboardController implements Initializable {
             String typeOffre = typeTextfield.getText();
             String description = descTextfield.getText();
             String tauxReductionStr = tauxTextfield.getText();
-            LocalDate dateDebut = dateDpick.getValue(); // Get selected date
-            LocalDate dateFin = DateFpick.getValue(); // Get selected date
+            LocalDate dateDebut = dateDpick.getValue();
+            LocalDate dateFin = DateFpick.getValue();
             Pair<Integer, String> selectedEquipementPair = equipCombobox.getValue();
 
-            // Clear previous error messages
+
             errormessage3.setText("");
 
-            // Validate inputs
+
             if (!isValidInputOffre()) {
                 return; // Stop registration if validation fails
             }
