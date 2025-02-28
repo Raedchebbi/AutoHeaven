@@ -6,7 +6,6 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Listvoiture">
 
-    <!-- Barre de recherche et bouton filtre -->
     <HBox layoutX="20" layoutY="20" prefWidth="1160" spacing="10">
         <HBox spacing="10">
             <Label text="Recherche:" />
@@ -14,7 +13,6 @@
             <Button onAction="#handleSearch" text="Rechercher" />
         </HBox>
 
-        <!-- Bouton filtre -->
         <Button fx:id="filterButton" onAction="#toggleFilterPanel" style="-fx-background-color: transparent; -fx-border-color: transparent;">
             <graphic>
                 <ImageView fitHeight="30" fitWidth="30">
@@ -24,9 +22,10 @@
                 </ImageView>
             </graphic>
         </Button>
+        <Button fx:id="sortButton" onAction="#sortVoituresByMarque" text="Tri"
+                style="-fx-background-color: #ddd; -fx-text-fill: black; -fx-padding: 5px 10px; -fx-background-radius: 5px;" />
     </HBox>
 
-    <!-- Panneau de filtres (Popup dans le contrôleur) -->
     <VBox fx:id="filterPanel" layoutX="649.0" layoutY="145.0" prefHeight="375.0" prefWidth="422.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-width: 1px; -fx-padding: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4);">
         <GridPane hgap="10" vgap="10">
             <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
@@ -86,7 +85,6 @@
         </HBox>
     </VBox>
 
-    <!-- Liste des voitures avec ScrollPane -->
     <ScrollPane layoutX="20" layoutY="80" prefHeight="500" prefWidth="1160">
         <VBox fx:id="voitureVBox" spacing="15" />
     </ScrollPane>

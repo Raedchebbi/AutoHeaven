@@ -24,6 +24,8 @@ public class Listvoiture implements Initializable {
     @FXML
     private Label kilometrageLabel, prixLabel;
 
+    @FXML
+    private Button sortButton;
 
     @FXML
     private VBox voitureVBox;
@@ -49,6 +51,8 @@ public class Listvoiture implements Initializable {
         setupFilterPopup();
         loadCategoryFilters();
         setupSliders();
+        sortButton.setOnAction(event -> sortVoituresByMarque());
+
     }
 
     private void loadAllVoitures() {
@@ -350,6 +354,19 @@ public class Listvoiture implements Initializable {
         prixSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             prixLabel.setText(String.format("%,d TND", newVal.intValue()));
         });
+    }
+    @FXML
+    private void sortVoituresByMarque() {
+        voitureVBox.getChildren().clear();
+
+        try {
+            VoitureService voitureService = new VoitureService();
+            voitureService.getAll().stream()
+                    .sorted((v1, v2) -> v1.getMarque().compareToIgnoreCase(v2.getMarque())) // Sort alphabetically
+                    .forEach(voiture -> voitureVBox.getChildren().add(createVoitureBox(voiture)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
