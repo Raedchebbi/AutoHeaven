@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        .StripeElement {
+            box-sizing: border-box;
+            height: 40px;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            margin-bottom: 10px;
+        }
+        .StripeElement--focus {
+            border-color: #66afe9;
+        }
+        .StripeElement--invalid {
+            border-color: #fa755a;
+        }
+        .StripeElement--webkit-autofill {
+            background-color: #fefde5 !important;
+        }
+        #card-errors {
+            color: #fa755a;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Paiement</h1>
+<form id="payment-form">
+    <div id="card-element">
+        <!-- Stripe Card Element sera inséré ici -->
+    </div>
+    <div id="card-errors" role="alert"></div>
+    <button id="submit-button">Payer</button>
+</form>
+
+<script>
+    // Clé publique Stripe (remplacez par votre clé publique)
+    const stripe = Stripe('pk_test_51QwhI1H4NaQY1zAh7QDhMKBDbmLZ8Fkp2V12mXrzNoX3VKR6A4hW9HxANfGlajLjlqRAIq9NdTU93ZVLYYPNRFOE00bzEW9zSL');
+
+    // Créer une instance de Elements
+    const elements = stripe.elements();
+    const cardElement = elements.create('card');
+    cardElement.mount('#card-element');
+
+    // Gérer les erreurs de saisie
+    cardElement.on('change', (event) => {
+        const displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        } else {
+            displayError.textContent = '';
+        }
+    });
+
+    // Gérer la soumission du formulaire
+    const form = document.getElementById('payment-form');
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        console.log("Formulaire soumis"); // Log pour vérifier
+
+        if (!window.javaConnector) {
+            console.error("JavaConnector n'est pas défini"); // Log pour vérifier
+            return;
+        }
+
+        const { paymentMethod, error } = await stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+        });
+
+        if (error) {
+            const errorElement = document.getElementById('card-errors');
+            errorElement.textContent = error.message;
+        } else {
+            console.log("PaymentMethod ID:", paymentMethod.id); // Log pour vérifier
+            window.javaConnector.processPayment(paymentMethod.id); // Appeler Java
+        }
+    });
+</script>
+</body>
+</html>

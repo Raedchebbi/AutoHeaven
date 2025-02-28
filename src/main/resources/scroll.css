@@ -1,0 +1,45 @@
+/* Masquer la bordure et le fond de la ScrollPane */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Rendre le fond du viewport transparent */
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Personnalisation des barres de défilement */
+.scroll-pane .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+/* Agrandir et styliser les boutons (flèches) des barres de défilement */
+.scroll-pane .increment-button,
+.scroll-pane .decrement-button {
+    -fx-padding: 10px; /* Augmente l'espace autour des flèches */
+    -fx-background-color: #d3d3d3; /* Gris clair pour une meilleure visibilité */
+    -fx-shape: "M 0 0 L 8 0 L 4 6 Z"; /* Forme d’une flèche */
+    -fx-scale-x: 2; /* Double la taille horizontale */
+    -fx-scale-y: 2; /* Double la taille verticale */
+    -fx-border-radius: 5px; /* Bords arrondis */
+}
+
+/* Changer la couleur des flèches au survol */
+.scroll-pane .increment-button:hover,
+.scroll-pane .decrement-button:hover {
+    -fx-background-color: #a9a9a9; /* Gris plus foncé au survol */
+}
+
+/* Personnalisation du thumb (barre de défilement) */
+.scroll-pane .thumb {
+    -fx-background-color: #aaaaaa;
+    -fx-border-radius: 5px;
+}
+
+/* Rendre la barre de défilement plus visible */
+.scroll-pane .track {
+    -fx-background-color: #f0f0f0;
+    -fx-border-radius: 5px;
+}
+
