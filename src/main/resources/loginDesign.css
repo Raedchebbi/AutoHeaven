@@ -1,0 +1,39 @@
+
+
+
+.root {
+    -fx-background-color: #f4f4f4; /* Overall background color */
+}
+
+.header {
+    -fx-background-color: #e00814;
+}
+
+.button-style {
+    -fx-background-color: #e00814;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+}
+
+.label-style {
+    -fx-font-size: 13px;
+    -fx-text-fill: #000;
+}
+
+.textfield-style {
+    -fx-pref-height: 25.0;
+    -fx-pref-width: 336.0;
+    -fx-prompt-text-fill: #808080;
+}
+
+.add-btn{
+    -fx-background-color: #FF0000;
+    -fx-background-radius: 8px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-cursor:hand;
+}
+
+.add-btn:hover{
+    -fx-background-color: #fa4d4d;
+}

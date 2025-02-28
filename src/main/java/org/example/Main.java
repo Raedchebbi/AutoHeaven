@@ -1,62 +1,55 @@
-//package org.example;
 
-import models.Voiture;
-import models.Categorie;
-import services.VoitureService;
-import services.CategorieService;
+/*package org.example;
 
-import java.util.List;
+import models.Offre;
+import models.User;
+import services.OffreService;
+import services.UserService;
 
-//public class Main {
-  //  public static void main(String[] args) {
-        // try {
-        // Création des services
-        // CategorieService categorieService = new CategorieService();
-        // VoitureService voitureService = new VoitureService();
+public class Main {
+    public static void main(String[] args) {
+        OffreService offreService = new OffreService();
+        UserService userService = new UserService();
 
-        // -------------------- TEST CRUD CATEGORIE --------------------
+        try {
+            // Ajout user avec adresse et username
+            User newUser = new User(0, 98765532, "Sami", "Ben Ali", 55443322, "sami.benali@email.com", "securePass", "client", "Rue Ibn Khaldoun, Sfax, 3000", "sami_benali");
+            userService.create(newUser);  // Créer l'utilisateur dans la base de données
 
-        // 1. Création d'une catégorie
-        // Categorie categorie = new Categorie(0, "SUV", "Essence", "Urbaine", 5, "Automatique");
-        // CategorieService.create(categorie);
-        // System.out.println("✅ Catégorie créée : " + categorie);
+            // Ajout offre
+            Offre offre = new Offre(0, "Réduction de 20% sur tous les équipements", "Offre valable sur tous les équipements en magasin", 20.0, "2025-02-01", "2025-02-28", 1);
+            offreService.create(offre);
 
-        // 2. Récupération et affichage de toutes les catégories
-        //  List<Categorie> categories = CategorieService.getAll();
-        //  System.out.println("📋 Liste des catégories :");
-        //  for (Categorie cat : categories) {
-        //      System.out.println(cat);
-        //  }
+            // Affichage des offres
+            System.out.println("Liste des offres : ");
+            offreService.getAll().forEach(o -> System.out.println(o));
 
-        // 3. Mise à jour de la catégorie
-        //  categorie.setType("SUV de Luxe");
-        //  CategorieService.update(categorie);
-        //  System.out.println("✅ Catégorie mise à jour : " + categorie);
+            // Mise à jour de l'offre
+            offre.setType_offre("Réduction de 30% sur les équipements");
+            offre.setDescription("Nouvelle offre spéciale sur tous les équipements.");
+            offre.setTaux_reduction(30.0);
+            offreService.update(offre);
+            System.out.println("Offre mise à jour : " + offre);
 
-        // -------------------- TEST CRUD VOITURE --------------------
+            // Mise à jour de l'utilisateur (avec changement d'adresse et de username)
+            newUser.setNom("Ahmed");
+            newUser.setPrenom("Ben Mohamed");
+            newUser.setEmail("ahmed.benmohamed@email.com");
+            newUser.setTel(55443311);
+            newUser.setAdresse("Rue Mongi Slim, Tunis, 1000");
+            newUser.setUsername("ahmed_benmohamed"); // Mise à jour du username
+            userService.update(newUser);
+            System.out.println("Utilisateur mis à jour : " + newUser.getNom() + " " + newUser.getPrenom());
 
-        // 4. Création d'une voiture associée à cette catégorie
-        //  Voiture voiture = new Voiture(0, "BMW", "SUV performant", 15000, "Noir", 55000.0, "bmw_suv.jpg", categorie.getId_c(), "oui");
-        //  VoitureService.create(voiture);
-        //  System.out.println("✅ Voiture créée : " + voiture);
+            // Suppression de l'offre
+            offreService.delete(offre);
 
-        // 5. Récupération et affichage de toutes les voitures
-        //  List<Voiture> voitures = VoitureService.getAll();
-        //  System.out.println("📋 Liste des voitures :");
-        //  for (Voiture v : voitures) {
-        //    System.out.println(v);
-        // }
+            // Suppression de l'utilisateur
+            userService.delete(newUser);
 
-        // 6. Mise à jour de la voiture
-        // voiture.setPrix(53000.0);
-        // VoitureService.update(voiture);
-        // System.out.println("✅ Voiture mise à jour : " + voiture);
-
-        // -------------------- SUPPRESSION --------------------
-
-        // 7. Suppression de la voiture
-        // VoitureService.delete(voiture.getId_v());
-        // System.out.println("✅ Voiture supprimée avec succès.");
-
-        // 8. Suppression de la catégorie
- //   }
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
+    }
+}
+*/
