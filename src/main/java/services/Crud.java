@@ -12,6 +12,8 @@ public interface Crud<T> {
 
     void delete(T obj) throws Exception;
 
+    void delete(int obj) throws Exception;
+
     List<T> getAll() throws Exception;
 
 }

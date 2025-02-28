@@ -61,6 +61,13 @@ public class MessagerieService implements Crud<Messagerie> {
         deleteById(obj.getId_m());
     }
 
+
+    @Override
+    public void delete(int obj) throws Exception {
+
+    }
+
+
     public void deleteById(int id_m) throws Exception {
         String sql = "DELETE FROM messagerie WHERE id_m = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
