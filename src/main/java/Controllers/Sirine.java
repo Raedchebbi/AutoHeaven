@@ -1,118 +1,203 @@
 package Controllers;
+
+import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Pattern;
+import javafx.scene.layout.HBox;
+
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import service.AvisService;
 import models.avis;
+import service.AvisService;
 import utils.MyDb;
-import javafx.scene.control.Button;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Date;
-import java.sql.SQLException;
 
 public class Sirine {
+    private static final List<String> MOTS_INTERDITS = Arrays.asList(
+            "arnaque", "escroc", "nul", "arnaqueur", "fake", "arnaquer",
+            "insulte", "idiot", "inacceptable", "arnaqueuse", "banni", "inadmissible"
+    );
 
-    @FXML
-    private TextField note;
+    @FXML private TextField  iduser, idvoiture;
+    @FXML private TextArea commentaire;
+    @FXML private DatePicker date;
+    @FXML private Button creer, modifier, supprimer, list;
+    @FXML private Label reponse;
+    @FXML private Label note;  // Si c'est un Label
 
-    @FXML
-    private TextArea commentaire;
+    @FXML private HBox hboxStars;
+    @FXML private Button star1;
 
-    @FXML
-    private DatePicker date;
+    @FXML private Button star2;
 
-    @FXML
-    private Button creer;
+    @FXML private Button star3;
 
-    @FXML
-    private Button modifier;
-    @FXML
-    private TextField iduser;
-    @FXML
-    private Button list;
-    @FXML
-    private Button like;
-    @FXML
-    private TextField valeur;
-    private int likeCount = 0;
+    @FXML private Button star4;
+    private List<Button> stars;
 
-    @FXML
-    private TextField idvoiture;
+    private final AvisService avisService = new AvisService();
 
-    @FXML
-    private Button supprimer;
 
-    private AvisService avisService = new AvisService();
 
     @FXML
     private void initialize() {
-// Action pour le bouton "list"
-        list.setOnAction(event -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/list.fxml"));
-                Parent root = loader.load();
+        System.out.println("Initialisation du contrôleur...");
 
-                // Vérifie que le bouton a bien une scène avant d'appeler getWindow()
-                if (list.getScene() != null) {
-                    Stage stage = (Stage) list.getScene().getWindow();
-                    stage.setScene(new Scene(root));
-                    stage.show();
-                } else {
-                    System.out.println("Erreur : le bouton n'est pas attaché à une scène.");
+        // Initialisation des boutons pour les actions
+        list.setOnAction(event -> ouvrirListeAvis());
+        creer.setOnAction(event -> creerAvis());
+        modifier.setOnAction(event -> modifierAvis());
+        supprimer.setOnAction(event -> confirmerSuppression());
+
+        // Initialisation de la liste des étoiles
+        stars = Arrays.asList(star1, star2, star3, star4);
+
+        // Ensure buttons are not null before setting the event handlers
+        if (stars != null) {
+            for (Button star : stars) {
+                if (star != null) {
+                    star.setOnMouseClicked(this::handleStarClick);
                 }
-            } catch (Exception ex) {
-                ex.printStackTrace();
             }
-        });
+        } else {
+            System.out.println("Les boutons d'étoiles n'ont pas été initialisés correctement.");
+        }
 
-        // Action pour le bouton "Créer"
-        creer.setOnAction(event -> {
+        // Initialiser la note avec une valeur par défaut de 0 si vide
+        int initialRating = 0;
+        if (note != null && !note.getText().isEmpty()) {
             try {
-                if (validateFields()) {
-                    createAvis();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+                initialRating = Integer.parseInt(note.getText());
+            } catch (NumberFormatException e) {
+                System.out.println("La note n'est pas valide, utilisation de la note par défaut 0.");
             }
-        });
+        }
 
-        // Action pour le bouton "Modifier"
-        modifier.setOnAction(event -> {
-            try {
-                if (validateFields()) {
-                    updateAvis();
+        // Mettre à jour l'affichage des étoiles en fonction de la note initiale
+        updateStars(initialRating);
+    }
+
+
+    private void setupStarRating() {
+        // Boucle pour gérer les clics sur chaque étoile
+        for (int i = 0; i < stars.size(); i++) {
+            final int rating = i + 1;
+            stars.get(i).setOnAction(event -> updateStars(rating));  // Met à jour la note quand une étoile est cliquée
+        }
+    }
+
+    private void updateStars(int rating) {
+        if (stars != null && !stars.isEmpty()) {
+            for (int i = 0; i < stars.size(); i++) {
+                Button star = stars.get(i);
+                if (star != null) {
+                    if (i < rating) {
+                        star.getStyleClass().add("selected-star");
+                    } else {
+                        star.getStyleClass().remove("selected-star");
+                    }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-        });
+        }
+    }
 
-        // Action pour le bouton "Supprimer"
-        supprimer.setOnAction(event -> {
-            try {
-                if (validateFields()) {
-                    deleteAvis();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+    private void handleStarClick(MouseEvent event) {
+        Button clickedStar = (Button) event.getSource();
+        int rating = stars.indexOf(clickedStar) + 1;
+        updateStars(rating);
+    }
+
+    private void ouvrirListeAvis() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/list.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) list.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleStarClick(javafx.scene.input.MouseEvent event) {
+        Button clickedStar = (Button) event.getSource();
+        int starIndex = stars.indexOf(clickedStar) + 1; // Détermine l'index de l'étoile cliquée (1 à 4)
+
+        // Met à jour la valeur de la note dans le champ texte
+        note.setText(String.valueOf(starIndex));
+
+        // Met à jour l'affichage des étoiles
+        updateStars(starIndex);
+    }
+
+    private void genererReponseAutomatique(String commentaire) {
+        if (commentaire.isEmpty()) {
+            reponse.setText("");
+            return;
+        }
+
+        if (contientMotsInterdits(commentaire) || estSpam(commentaire) || contientLien(commentaire)) {
+            reponse.setText("Votre commentaire semble inapproprié.");
+            return;
+        }
+
+        // Liste de mots positifs
+        List<String> motsPositifs = Arrays.asList("super", "excellent", "top", "magnifique", "satisfait", "bien", "merci", "adoré", "bravo");
+
+        // Vérifier si le commentaire contient des mots positifs
+        boolean estPositif = motsPositifs.stream().anyMatch(commentaire.toLowerCase()::contains);
+
+        if (estPositif) {
+            reponse.setText("Merci pour votre avis positif ! 😊");
+        } else {
+            reponse.setText("Nous sommes désolés que votre expérience n’ait pas été satisfaisante. Nous allons nous améliorer !");
+        }
+    }
+
+    private boolean estSpam(String commentaire) {
+        if (commentaire.length() < 5 || commentaire.length() > 300) return true;
+
+        String[] words = commentaire.split("\\s+");
+        for (int i = 0; i < words.length - 2; i++) {
+            if (words[i].equalsIgnoreCase(words[i + 1]) && words[i].equalsIgnoreCase(words[i + 2])) {
+                return true;
             }
-        });
+        }
 
+        long countUpper = commentaire.chars().filter(Character::isUpperCase).count();
+        long totalLetters = commentaire.chars().filter(Character::isLetter).count();
+        return totalLetters > 0 && (countUpper / (double) totalLetters) > 0.7;
+    }
 
+    private boolean contientMotsInterdits(String commentaire) {
+        String regex = "\\b(" + String.join("|", MOTS_INTERDITS) + ")\\b";
+        return Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(commentaire).find();
+    }
 
+    private boolean contientLien(String commentaire) {
+        return Pattern.compile("(http|www\\.)\\S+", Pattern.CASE_INSENSITIVE).matcher(commentaire).find();
+    }
+
+    private boolean isCommentValid(String commentaire) {
+        if (contientMotsInterdits(commentaire) || estSpam(commentaire) || contientLien(commentaire)) {
+            showError("Commentaire refusé", "Votre commentaire est inapproprié ou non conforme.");
+            return false;
+        }
+        return true;
     }
 
     private boolean validateFields() {
-        // Vérifier si tous les champs sont remplis
         if (note.getText().isEmpty() || commentaire.getText().isEmpty() || date.getValue() == null ||
                 iduser.getText().isEmpty() || idvoiture.getText().isEmpty()) {
             showError("Erreur", "Tous les champs doivent être remplis !");
@@ -120,6 +205,136 @@ public class Sirine {
         }
         return true;
     }
+
+    private void creerAvis() {
+        if (!validateFields()) return;
+
+        try {
+            int noteValue = Integer.parseInt(note.getText());
+            String commentaireValue = commentaire.getText();
+            Date dateAvis = Date.valueOf(date.getValue());
+            int idUser = Integer.parseInt(iduser.getText());
+            int idVoiture = Integer.parseInt(idvoiture.getText());
+
+            if (!isCommentValid(commentaireValue)) return;
+
+            avis newAvis = new avis(noteValue, commentaireValue, dateAvis, idUser, idVoiture);
+
+            avisService.create(newAvis);
+            genererReponseAutomatique(commentaireValue);
+
+            showSuccess("Avis ajouté avec succès !");
+        } catch (Exception e) {
+            showError("Erreur", "Impossible d'ajouter l'avis.");
+            e.printStackTrace();
+        }
+    }
+
+    private void modifierAvis() {
+        // Valider les champs avant d'exécuter la logique
+        if (!validateFields()) return;
+
+        // Déclarez et initialisez la connexion
+        try (Connection connection = MyDb.getInstance().getConn()) {
+            // Vérifiez que la connexion est valide avant d'exécuter
+            if (connection == null || connection.isClosed()) {
+                showError("Erreur", "La connexion à la base de données est fermée.");
+                return;
+            }
+
+            // Récupérez les valeurs des champs de l'interface utilisateur
+            int idUser = Integer.parseInt(iduser.getText());
+            int idVoiture = Integer.parseInt(idvoiture.getText());
+            int noteValue = Integer.parseInt(note.getText());
+            String commentaireValue = commentaire.getText();
+            Date dateAvis = Date.valueOf(date.getValue());
+
+            // Valider le commentaire
+            if (!isCommentValid(commentaireValue)) {
+                showError("Erreur", "Le commentaire n'est pas valide.");
+                return;
+            }
+
+            // Créez et exécutez la requête de mise à jour
+            String updateQuery = "UPDATE avis SET note = ?, commentaire = ?, dateavis = ? WHERE id = ? AND id_v = ?";
+            try (PreparedStatement updateStmt = connection.prepareStatement(updateQuery)) {
+                updateStmt.setInt(1, noteValue);
+                updateStmt.setString(2, commentaireValue);
+                updateStmt.setDate(3, dateAvis);
+                updateStmt.setInt(4, idUser);
+                updateStmt.setInt(5, idVoiture);
+
+                // Exécutez la mise à jour
+                int rowsAffected = updateStmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    // Si des lignes ont été affectées, l'avis a été modifié avec succès
+                    showSuccess("Avis modifié avec succès !");
+                } else {
+                    // Si aucune ligne n'a été affectée, cela signifie que l'avis n'existe pas
+                    showError("Erreur", "Aucun avis trouvé avec les identifiants fournis.");
+                }
+            }
+        } catch (SQLException e) {
+            // Gérer les erreurs SQL
+            showError("Erreur", "Impossible de modifier l'avis.");
+            e.printStackTrace();
+        }
+    }
+
+
+    private void confirmerSuppression() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment supprimer cet avis ?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                supprimerAvis();
+            }
+        });
+    }
+
+    private void supprimerAvis() {
+        // Valider les champs avant d'exécuter la logique
+        if (!validateFields()) return;
+
+        // Déclarez et initialisez la connexion
+        try (Connection connection = MyDb.getInstance().getConn()) {
+            // Vérifiez que la connexion est valide avant d'exécuter
+            if (connection == null || connection.isClosed()) {
+                showError("Erreur", "La connexion à la base de données est fermée.");
+                return;
+            }
+
+            // Récupérez les valeurs des champs de l'interface utilisateur
+            int idUser = Integer.parseInt(iduser.getText());
+            int idVoiture = Integer.parseInt(idvoiture.getText());
+
+            // Créez et exécutez la requête de suppression
+            String deleteQuery = "DELETE FROM avis WHERE id = ? AND id_v = ?";
+            try (PreparedStatement deleteStmt = connection.prepareStatement(deleteQuery)) {
+                deleteStmt.setInt(1, idUser);
+                deleteStmt.setInt(2, idVoiture);
+
+                // Exécutez la suppression
+                int rowsAffected = deleteStmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    // Si des lignes ont été affectées, l'avis a été supprimé avec succès
+                    showSuccess("Avis supprimé avec succès !");
+                } else {
+                    // Si aucune ligne n'a été affectée, cela signifie que l'avis n'existe pas
+                    showError("Erreur", "Aucun avis trouvé avec les identifiants fournis.");
+                }
+            }
+        } catch (SQLException e) {
+            // Gérer les erreurs SQL
+            showError("Erreur", "Impossible de supprimer l'avis.");
+            e.printStackTrace();
+        }
+    }
+
+
+    private void showSuccess(String message) {
+        new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK).showAndWait();
+    }
+
     private void showError(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -127,195 +342,4 @@ public class Sirine {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
-    private void showSuccessAvis() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Succès");
-        alert.setHeaderText(null);
-        alert.setContentText("avis a été ajouté avec succès !");
-        alert.showAndWait();
-    }
-    private void showSuccessUpdateAvis() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Succès");
-        alert.setHeaderText(null);
-        alert.setContentText("avis a été modifié avec succès !");
-        alert.showAndWait();
-    }
-    private void showSuccessDeleteAvis() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Succès");
-        alert.setHeaderText(null);
-        alert.setContentText("avis a été supprimé !");
-        alert.showAndWait();
-    }
-
-
-    private void createAvis() throws Exception {
-        // Récupération des valeurs depuis les champs de texte
-        int noteValue = Integer.parseInt(note.getText());
-        String commentaireValue = commentaire.getText();
-        Date dateAvis = Date.valueOf(date.getValue());
-
-        // Valeurs existantes pour id (Utilisateur) et id_v (Voiture)
-        int idUser = 3;  // Remplacer par l'ID réel de l'utilisateur
-        int idVoiture = 12;  // Remplacer par l'ID réel de la voiture
-
-        // Création de l'objet avis avec les données récupérées
-        avis newAvis = new avis(noteValue, commentaireValue, dateAvis, idUser, idVoiture);
-
-        // Appel à la fonction de création pour insérer les données dans la base de données
-        avisService.create(newAvis);
-        System.out.println("Avis créé avec succès !");
-        showSuccessAvis();
-
-    }
-
-
-
-
-
-
-
-    @FXML
-
-
-    private void updateAvis() throws SQLException {
-        // Récupérer l'ID de l'utilisateur et l'ID de la voiture à partir des champs de texte
-        int idUser = Integer.parseInt(iduser.getText());  // ID de l'utilisateur
-        int idVoiture = Integer.parseInt(idvoiture.getText());  // ID de la voiture
-
-        // Connexion à la base de données
-        Connection connection = MyDb.getInstance().getConn();
-
-        // Requête pour récupérer l'avis en fonction de l'ID de l'utilisateur et de la voiture
-        String query = "SELECT * FROM avis WHERE id = ? AND id_v = ?";
-
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, idUser);
-            stmt.setInt(2, idVoiture);
-
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                // L'avis existe, on peut le mettre à jour
-                // Récupérer les anciennes valeurs
-                int oldNote = rs.getInt("note");
-                String oldCommentaire = rs.getString("commentaire");
-
-                // Affichage pour débogage (ancien et nouveau)
-                System.out.println("Ancienne note: " + oldNote);
-                System.out.println("Ancien commentaire: " + oldCommentaire);
-
-                // Initialiser les champs à vide
-                note.clear();  // Vider le champ note
-                commentaire.clear();  // Vider le champ commentaire
-
-                // Garder les valeurs ID intactes
-                iduser.setText(String.valueOf(idUser));  // Garder l'ID de l'utilisateur
-                idvoiture.setText(String.valueOf(idVoiture));  // Garder l'ID de la voiture
-
-                // Afficher les anciennes valeurs pour info
-                note.setPromptText(String.valueOf(oldNote)); // Vous pouvez afficher la note initiale en tant que texte de l'invite
-                commentaire.setPromptText(oldCommentaire);  // Même pour le commentaire initial
-
-            } else {
-                // Si aucun résultat n'est trouvé
-                System.out.println("Aucun avis trouvé pour cet utilisateur (id: " + idUser + ") et cette voiture (id: " + idVoiture + ").");
-            }
-        } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération de l'avis pour modification : " + e.getMessage());
-        }
-
-        // Vous n'avez pas besoin de faire la mise à jour tant que l'utilisateur n'a pas modifié 'note' ou 'commentaire'
-        // Mais vous pouvez ajouter un contrôle pour cela, et si les champs sont remplis, vous effectuez la mise à jour
-
-        // Appel de la méthode de mise à jour seulement si les nouveaux champs sont remplis
-        modifier.setOnAction(event -> {
-            try {
-                // Si les champs sont remplis, faire la mise à jour
-                if (!note.getText().isEmpty() && !commentaire.getText().isEmpty()) {
-                    // Récupérer les nouvelles valeurs des champs
-                    int noteValue = Integer.parseInt(note.getText());
-                    String commentaireValue = commentaire.getText();
-                    Date dateAvis = Date.valueOf(date.getValue()); // Nouvelle date
-
-                    // Requête de mise à jour
-                    String updateQuery = "UPDATE avis SET note = ?, commentaire = ?, dateavis = ? WHERE id = ? AND id_v = ?";
-
-                    try (PreparedStatement updateStmt = connection.prepareStatement(updateQuery)) {
-                        updateStmt.setInt(1, noteValue);
-                        updateStmt.setString(2, commentaireValue);
-                        updateStmt.setDate(3, dateAvis);
-                        updateStmt.setInt(4, idUser);
-                        updateStmt.setInt(5, idVoiture);
-
-                        // Exécution de la mise à jour
-                        int rowsAffected = updateStmt.executeUpdate();
-                        if (rowsAffected > 0) {
-                            System.out.println("Avis mis à jour avec succès !");
-                        } else {
-                            System.out.println("Aucun avis n'a été mis à jour.");
-                        }
-                    }
-
-                } else {
-                    System.out.println("Veuillez remplir tous les champs avant de soumettre.");
-                }
-            } catch (SQLException e) {
-                System.out.println("Erreur lors de la mise à jour de l'avis : " + e.getMessage());
-            }
-        });
-
-        showSuccessUpdateAvis();
-    }
-
-
-
-
-
-    private void deleteAvis() throws Exception {
-        try {
-            // Récupérer idUser et idVoiture à partir des champs de texte
-            int idUser = Integer.parseInt(iduser.getText());  // Id de l'utilisateur
-            int idVoiture = Integer.parseInt(idvoiture.getText());  // Id de la voiture associée
-
-            // Requête SQL pour supprimer l'avis en fonction de idUser et idVoiture
-            String query = "DELETE FROM avis WHERE id = ? AND id_v = ?";
-
-            // Connexion à la base de données
-            Connection connection = MyDb.getInstance().getConn();
-
-            // Exécution de la requête de suppression
-            try (PreparedStatement stmt = connection.prepareStatement(query)) {
-                stmt.setInt(1, idUser);  // Set idUser
-                stmt.setInt(2, idVoiture);  // Set idVoiture
-
-                int rowsAffected = stmt.executeUpdate();
-                if (rowsAffected > 0) {
-                    System.out.println("Avis de l'utilisateur avec idUser = " + idUser + " et idVoiture = " + idVoiture + " supprimé !");
-                } else {
-                    System.out.println("Aucun avis trouvé pour cet utilisateur et cette voiture.");
-                }
-            }
-
-        } catch (NumberFormatException e) {
-            // Si l'utilisateur entre une valeur non valide (non un entier)
-            System.out.println("Entrée invalide : assurez-vous que idUser et idVoiture sont des entiers.");
-        } catch (SQLException e) {
-            // Gestion des erreurs SQL
-            System.out.println("Erreur lors de la suppression de l'avis : " + e.getMessage());
-        } catch (Exception e) {
-            // Gestion générique des erreurs
-            System.out.println("Erreur inconnue : " + e.getMessage());
-        }
-        showSuccessDeleteAvis();
-    }
-
-
-
-
-
-
 }
