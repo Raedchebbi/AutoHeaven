@@ -59,6 +59,11 @@ public class VoitureService implements Crud<Voiture> {
     }
 
     @Override
+    public void updateStatus(int idRec, String newStatus) throws SQLException {
+
+    }
+
+    @Override
     public void delete(Voiture obj) throws Exception {
 
     }

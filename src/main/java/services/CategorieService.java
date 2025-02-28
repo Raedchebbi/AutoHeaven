@@ -41,6 +41,11 @@ public class CategorieService implements Crud<Categorie> {
     }
 
     @Override
+    public void updateStatus(int idRec, String newStatus) throws SQLException {
+
+    }
+
+    @Override
     public void delete(Categorie obj) throws Exception {
 
     }

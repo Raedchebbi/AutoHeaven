@@ -65,6 +65,11 @@ public class OffreService implements Crud<Offre> {
         }
     }
 
+    @Override
+    public void updateStatus(int idRec, String newStatus) throws SQLException {
+
+    }
+
 
     @Override
     public void delete(Offre offre) throws Exception {

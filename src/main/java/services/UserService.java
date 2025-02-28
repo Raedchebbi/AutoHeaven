@@ -92,6 +92,11 @@ public class UserService implements Crud<User> {
     }
 
     @Override
+    public void updateStatus(int idRec, String newStatus) throws SQLException {
+
+    }
+
+    @Override
     public void delete(User obj) throws Exception {
         String sql = "DELETE FROM user WHERE id = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
