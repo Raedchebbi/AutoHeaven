@@ -61,7 +61,7 @@ public class loginuserController implements Initializable {
         String siteKey = "6LcIu-QqAAAAAJ9E-6LRr9g4o8XPMxok5bZT-2mD";
         String captchaHTML = "<html>" +
                 "<head> <title>reCAPTCHA demo: Simple page</title>" +
-                "<script src='https://www.google.com/recaptcha/api.js' async defer></script></head>" +
+                "<script src='https://www.google.com/recaptcha/enterprise.js' async defer></script></head>" +
                 "<body>" +
                 "<form action='?' method='POST'>" +
                 "<div class='g-recaptcha' data-sitekey=" + siteKey + "></div>" +
@@ -70,12 +70,26 @@ public class loginuserController implements Initializable {
                 "</form>" +
                 "</body>" +
                 "</html>";
+/*"<html lang='fr'>" +
+"<head> <meta charset='UTF-8'> <meta name='viewport' content='width=device-width, initial-scale=1.0'>" +
+  "<title>reCAPTCHA Integration</title>" +
+  "<script src="https://www.google.com/recaptcha/api.js" async defer></script>" +
+"</head>" +
+"<body>" +
+"<form action='recaptcha' method='POST'>" +
+  "<div class='g-recaptcha' data-sitekey='6LcIu-QqAAAAAJ9E-6LRr9g4o8XPMxok5bZT-2mD'></div>" +
+   "<br/>" +
+  "<input type='submit' value='Soumettre'>" +
+"</form>" +
+"</body>" +
+"</html>";*/
 
 
 
 
 
-        webEngine.loadContent(captchaHTML);
+
+                webEngine.loadContent(captchaHTML);
         webEngine.setJavaScriptEnabled(true);
         webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
