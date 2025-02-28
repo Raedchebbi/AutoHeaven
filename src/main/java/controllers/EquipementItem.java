@@ -2,11 +2,14 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import models.EquipementAffichage;
+import models.Lignecommande;
 import services.EquipementService;
+import services.LigneCommandeService;
 
 import java.io.IOException;
 import java.util.List;
@@ -54,8 +57,15 @@ public class EquipementItem {
         if (equipement != null) {
             System.out.println("Tentative de suppression de l'équipement avec l'ID : " + equipement.getId());
             EquipementService es = new EquipementService();
-            es.delete(equipement.getId());
+            LigneCommandeService ls = new LigneCommandeService();
+            List<Lignecommande> lc =ls.getByIDE(equipement.getId());
+            if (lc.size() > 0) {
+                showErrorPopup("L'Equipement " + equipement.getNom() + " a été commandé par le client");
 
+            }
+            else {
+                es.delete(equipement.getId());
+            }
             if (listEquipementController != null) {
                 List<EquipementAffichage> l=es.getAll();
                 listEquipementController.reloadEquipements(l);
@@ -74,5 +84,12 @@ public class EquipementItem {
         } else {
             System.out.println("Erreur : listEquipementController est null !");
         }
+    }
+    private void showErrorPopup(String message) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

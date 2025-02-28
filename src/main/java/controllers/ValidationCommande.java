@@ -1,27 +1,23 @@
 package controllers;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import models.Commande;
 import models.Equipement;
-import models.EquipementAffichage;
+
 import models.Lignecommande;
-import org.apache.poi.ss.formula.functions.T;
+
+import org.apache.poi.ss.usermodel.*;
 import services.CommandeService;
 import services.EquipementService;
 
@@ -34,9 +30,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import services.LigneCommandeService;
 
@@ -79,18 +72,18 @@ public class ValidationCommande implements Initializable {
                 List<Commande> filteredList = new ArrayList<>();
 
                 if (selectedValue.equals("Tous")) {
-                    // Recharger la liste complète
+
                     filteredList = l;
                 } else if (selectedValue.equals("Date")) {
-                    // Filtrer par date
+
                     filteredList = filterComDate();
                 } else {
-                    // Filtrer par statut
+
                     String status = getStatus();
                     filteredList = filterComAccept(status);
                 }
 
-                // Recharger les commandes avec la liste filtrée ou complète
+
                 reloadCommande(filteredList);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -99,7 +92,7 @@ public class ValidationCommande implements Initializable {
         exportexcel.setOnAction(event -> {
             try {
 
-                // Recharger les commandes avec la liste filtrée ou complète
+
                ExportExcel(l,"datacommande");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -147,8 +140,9 @@ public class ValidationCommande implements Initializable {
     public void initCombo(){
         comCombo.getItems().add("Tous");
         comCombo.getItems().add("Date");
-        comCombo.getItems().add("Acceptée");
-        comCombo.getItems().add("Annulée");
+        comCombo.getItems().add("Traitée");
+        comCombo.getItems().add("Expédiée");
+
         comCombo.getItems().add("En attente");
         comCombo.setValue("Tous");
 
@@ -157,9 +151,10 @@ public class ValidationCommande implements Initializable {
     }
     public String  getStatus() {
         return switch (comCombo.getValue()) {
-            case "Acceptée" ->"confirmee";
-            case "Annulée" -> "annulee";
+            case "Traitée" ->"traitée";
+
             case "En attente" -> "en attente";
+            case "Expédiée"->"expédiée";
             default -> "All";
         };
     }
@@ -185,49 +180,40 @@ public class ValidationCommande implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Enregistrer le fichier Excel");
         fileChooser.setInitialFileName("Commandes.xlsx");
-
-
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Fichiers Excel (*.xlsx)", "*.xlsx");
-        fileChooser.getExtensionFilters().add(extFilter);
-
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers Excel (*.xlsx)", "*.xlsx"));
 
         File file = fileChooser.showSaveDialog(pane_1.getScene().getWindow());
-
-
         if (file == null) {
             return;
         }
 
-
         String filePath = file.getAbsolutePath();
 
         try (Workbook workbook = new XSSFWorkbook()) {
-
             Sheet sheet = workbook.createSheet(sheetName);
 
 
             Row headerRow = sheet.createRow(0);
-            headerRow.createCell(0).setCellValue("ID Commande");
-            headerRow.createCell(1).setCellValue("Date Commande");
-            headerRow.createCell(2).setCellValue("Statut");
-            headerRow.createCell(3).setCellValue("Montant Total");
-            headerRow.createCell(4).setCellValue("Équipements");
+            headerRow.createCell(0).setCellValue("Date Commande");
+            headerRow.createCell(1).setCellValue("Statut");
+            headerRow.createCell(2).setCellValue("Montant Total");
+            headerRow.createCell(3).setCellValue("Équipements");
 
+            double totalGeneral = 0;
 
             for (int i = 0; i < list.size(); i++) {
                 Commande commande = list.get(i);
                 Row row = sheet.createRow(i + 1);
 
+                row.createCell(0).setCellValue(commande.getDate_com().toString());
+                row.createCell(1).setCellValue(commande.getStatus());
+                row.createCell(2).setCellValue(commande.getMontant_total());
 
-                row.createCell(0).setCellValue(commande.getId_com());
-                row.createCell(1).setCellValue(commande.getDate_com().toString());
-                row.createCell(2).setCellValue(commande.getStatus());
-                row.createCell(3).setCellValue(commande.getMontant_total());
+                totalGeneral += commande.getMontant_total();
 
 
                 LigneCommandeService ligneCommandeService = new LigneCommandeService();
                 List<Lignecommande> ligneCommandes = ligneCommandeService.getAllByIDC(commande.getId_com());
-
 
                 StringBuilder equipements = new StringBuilder();
                 for (Lignecommande ligne : ligneCommandes) {
@@ -236,20 +222,31 @@ public class ValidationCommande implements Initializable {
                     equipements.append(equipement.getNom()).append(" (Quantité: ").append(ligne.getQuantite()).append("), ");
                 }
 
-
                 if (equipements.length() > 0) {
                     equipements.setLength(equipements.length() - 2);
                 }
 
-
-                row.createCell(4).setCellValue(equipements.toString());
+                row.createCell(3).setCellValue(equipements.toString());
             }
+
+
+            int lastRowNum = list.size() + 1;
+            Row totalRow = sheet.createRow(lastRowNum);
+            totalRow.createCell(1).setCellValue("TOTAL");
+            totalRow.createCell(2).setCellValue(totalGeneral);
+
+
+            CellStyle boldStyle = workbook.createCellStyle();
+            Font boldFont = workbook.createFont();
+            boldFont.setBold(true);
+            boldStyle.setFont(boldFont);
+            totalRow.getCell(1).setCellStyle(boldStyle);
+            totalRow.getCell(2).setCellStyle(boldStyle);
 
 
             try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
                 workbook.write(fileOut);
             }
-
 
             showAlert("Export réussi", "Le fichier Excel a été enregistré avec succès à l'emplacement : " + filePath);
         } catch (Exception e) {
@@ -257,6 +254,7 @@ public class ValidationCommande implements Initializable {
             throw new Exception("Erreur lors de l'exportation vers Excel : " + e.getMessage());
         }
     }
+
 
 
     private void showAlert(String title, String message) {

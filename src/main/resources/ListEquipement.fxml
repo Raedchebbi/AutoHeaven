@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -17,7 +20,7 @@
                 <Font name="Arial Bold" size="25.0" />
             </font>
         </Label>
-        <TextField fx:id="input_search" layoutX="738.0" layoutY="22.0" prefHeight="31.0" prefWidth="186.0" promptText="search..." styleClass="search-bar" stylesheets="@Dashboard.css" />
+        <TextField fx:id="input_search" layoutX="738.0" layoutY="22.0" prefHeight="31.0" prefWidth="186.0" promptText="  search..." styleClass="search-bar" stylesheets="@Dashboard.css" />
 
         <HBox fx:id="equip_header" layoutX="36.0" layoutY="102.0" prefHeight="42.0" prefWidth="902.0" styleClass="container_header" stylesheets="@Dashboard.css">
             <children>
@@ -63,6 +66,9 @@
             </content>
         </ScrollPane>
         <Button fx:id="add_btn" layoutX="36.0" layoutY="71.0" mnemonicParsing="false" onAction="#AjouterE" style="-fx-background-color: #254637; -fx-background-radius: 5; -fx-text-fill: #ffffff;" text="Ajouter" />
-        <Pane fx:id="popupContainer" layoutX="264.0" layoutY="2.0" prefHeight="534.0" prefWidth="440.0" visible="false" />
+
+      <FontAwesomeIconView glyphName="SEARCH" layoutX="754.0" layoutY="42.0" />
+      <ComboBox fx:id="comCombo" layoutX="578.0" layoutY="19.0" prefWidth="150.0" stylesheets="@commandeItem.css" />
+      <AnchorPane fx:id="popupContainer" layoutY="-4.0" prefHeight="552.0" prefWidth="972.0" visible="false" />
     </children>
 </Pane>

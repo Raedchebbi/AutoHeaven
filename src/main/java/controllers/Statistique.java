@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import services.CommandeService;
+import services.LigneCommandeService;
 import services.UserService;
 
 import java.net.URL;
@@ -26,6 +27,13 @@ public class Statistique implements Initializable {
 
     @FXML
     private Label nbCom;
+    @FXML
+    private BarChart<String, Number> barChartTopEquipements;
+    @FXML
+    private CategoryAxis xAxisEquipements;
+    @FXML
+    private NumberAxis yAxisVentes;
+
 
 
     @Override
@@ -35,6 +43,7 @@ public class Statistique implements Initializable {
             nbCom.setText(String.valueOf(nbrCom()));
             loadPieChart();
             loadPieChartVentes();
+            loadTopEquipements();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -77,15 +86,15 @@ public class Statistique implements Initializable {
         lineChartVentes.getData().clear(); // Nettoyer les anciennes données
         lineChartVentes.getData().add(series);*/
         try {
-            // Récupérer les données de ventes
+
             CommandeService cs = new CommandeService();
             Map<String, Double> data = cs.countVente();
 
-            // Créer une série de données pour le LineChart
+
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             series.setName("Ventes par mois");
 
-            // Ajouter les données à la série
+
             int index=1;
             for (Map.Entry<String, Double> entry : data.entrySet()) {
                // double total = data.getOrDefault(mois, 0.0);  // Si le mois n'a pas de données, utiliser 0
@@ -115,5 +124,26 @@ public class Statistique implements Initializable {
         int nbc =cs.getAll().size();
         return nbc;
     }
+    public void loadTopEquipements() throws Exception {
+        LigneCommandeService cs = new LigneCommandeService();
+        Map<String, Integer> topEquipements = cs.getTop5Equipements();
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Top 5 équipements vendus");
+
+        xAxisEquipements.getCategories().clear();
+
+        for (Map.Entry<String, Integer> entry : topEquipements.entrySet()) {
+            String equipement = entry.getKey();
+            int ventes = entry.getValue();
+
+            xAxisEquipements.getCategories().add(equipement);
+            series.getData().add(new XYChart.Data<>(equipement, ventes));
+        }
+
+        barChartTopEquipements.getData().clear();
+        barChartTopEquipements.getData().add(series);
+    }
+
 
 }

@@ -24,44 +24,59 @@ public class CommandeService implements CrudCommande<Commande> {
         this.conn = MyDb.getInstance().getConn();
     }
 
+
     @Override
     public int create(int id) throws Exception {
-        String sql = "INSERT INTO commande (id, date_com, status, montant_total) VALUES (?, NOW(), 'en attente', 0)";
+        // Démarrer une transaction
+        conn.setAutoCommit(false);
+
         int idCommande = -1;
 
+        try {
 
-        PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            String sql = "INSERT INTO commande (id, date_com, status, montant_total) VALUES (?, NOW(), 'en attente', 0)";
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
 
-        stmt.setInt(1, id);
-        stmt.executeUpdate();
-
-        ResultSet rs = stmt.getGeneratedKeys();
-        if (rs.next()) {
-            idCommande = rs.getInt(1);
-        }
-
-
-        if (idCommande > 0) {
-            List<Panier> panier = panierService.getAll(id);
-            double total = 0;
-
-            for (Panier item : panier) {
-                double prixUnitaire = getPrixEquipement(item.getId_e());
-                total += prixUnitaire * item.getQuantite();
-                Lignecommande l = new Lignecommande(item.getQuantite(), prixUnitaire, item.getId_e(), idCommande);
-                ligneCommandeService.create(l);
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                idCommande = rs.getInt(1);
             }
 
+            if (idCommande > 0) {
+                // Calculer le total du panier
+                List<Panier> panier = panierService.getAll(id);
+                double total = 0;
 
-            update(idCommande, total);
+                for (Panier item : panier) {
+                    double prixUnitaire = getPrixEquipement(item.getId_e());
+                    total += prixUnitaire * item.getQuantite();
+                    Lignecommande l = new Lignecommande(item.getQuantite(), prixUnitaire, item.getId_e(), idCommande);
+                    ligneCommandeService.create(l);
+                }
 
 
-            panierService.delete(id);
+                update(idCommande, total);
+
+
+                panierService.delete(id);
+
+
+                conn.commit();
+            } else {
+                throw new Exception("Erreur lors de la création de la commande : ID non récupéré");
+            }
+        } catch (Exception e) {
+            // En cas d'erreur, annuler la transaction
+            conn.rollback();
+            throw e;
+        } finally {
+            // Réactiver le mode de gestion des transactions
+            conn.setAutoCommit(true);
         }
 
-
         return idCommande;
-
     }
 
 
@@ -123,6 +138,7 @@ public class CommandeService implements CrudCommande<Commande> {
                     rs.getString("status"),
                     rs.getDouble("montant_total"),
                     rs.getInt("id")
+
             ));
         }
         return coms;
@@ -162,6 +178,7 @@ public class CommandeService implements CrudCommande<Commande> {
                     rs.getString("status"),
                     rs.getDouble("montant_total"),
                     rs.getInt("id")
+
             ));
         }
         return coms;
@@ -192,6 +209,15 @@ public class CommandeService implements CrudCommande<Commande> {
 
         }
         return map;
+    }
+
+    @Override
+    public void deleteCommande(int id) throws Exception {
+        String sql = "DELETE FROM commande WHERE id_com = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, id);
+        stmt.executeUpdate();
+
     }
 
 

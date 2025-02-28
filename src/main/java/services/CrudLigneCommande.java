@@ -4,6 +4,7 @@ import models.Lignecommande;
 import models.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CrudLigneCommande<T>
 {
@@ -11,6 +12,7 @@ public interface CrudLigneCommande<T>
 
     List<T> getAllByClient(int id) throws Exception;
     List<T> getAllByIDC(int id) throws Exception;
+    List<T> getByIDE(int id) throws Exception;
 
 
     Lignecommande getById(int id) throws Exception;
@@ -18,4 +20,5 @@ public interface CrudLigneCommande<T>
 
 
     int somEq(int idc, int id_e) throws Exception;
+    public Map<String, Integer> getTop5Equipements() throws Exception ;
 }

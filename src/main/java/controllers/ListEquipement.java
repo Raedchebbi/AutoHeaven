@@ -6,16 +6,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import models.Commande;
 import models.EquipementAffichage;
 import services.EquipementService;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -26,7 +31,7 @@ public class ListEquipement implements Initializable {
     private Button add_btn;
 
     @FXML
-    private Pane popupContainer;
+    private AnchorPane popupContainer;
 
     @FXML
     private VBox equip_container;
@@ -39,11 +44,17 @@ public class ListEquipement implements Initializable {
 
     @FXML
     private TextField input_search;
+
+
+    @FXML
+    private ComboBox<String> comCombo;
     EquipementService es=new EquipementService();
+    List<EquipementAffichage> l =new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<EquipementAffichage> l =new ArrayList<>();
+        initCombo();
+
         try {
             l=es.getAll();
         } catch (Exception e) {
@@ -54,6 +65,29 @@ public class ListEquipement implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        comCombo.setOnAction(event -> {
+            try {
+                String selectedValue = comCombo.getValue();
+                List<EquipementAffichage> filteredList = new ArrayList<>();
+
+                if (selectedValue.equals("Tous")) {
+
+                    filteredList = l;
+                } else if (selectedValue.equals("Nom")) {
+
+                    filteredList = filterName();
+                } else {
+
+
+                    filteredList = filterStock();
+                }
+
+
+                reloadEquipements(filteredList);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
         input_search.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 if (newValue == null || newValue.trim().isEmpty()) {
@@ -70,6 +104,16 @@ public class ListEquipement implements Initializable {
             }
         });
     }
+    public void initCombo(){
+        comCombo.getItems().add("Tous");
+        comCombo.getItems().add("Nom");
+        comCombo.getItems().add("Stock =0");
+
+        comCombo.setValue("Tous");
+
+        // comCombo.getSelectionModel().selectFirst();
+
+    }
 
     public void reloadEquipements(List<EquipementAffichage>obs) throws Exception {
         equip_container.getChildren().clear();
@@ -85,6 +129,7 @@ public class ListEquipement implements Initializable {
                 ie.initData(e);
                 ie.setListEquipementController(this);
                 equip_container.getChildren().add(item);
+
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -93,15 +138,21 @@ public class ListEquipement implements Initializable {
 
     public void showUpdatePopup(EquipementAffichage equipement) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateEquipCard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/update.fxml"));
             Parent updateEquip = loader.load();
             UpdateEquipCard updateEquipCardController = loader.getController();
             updateEquipCardController.setListEquipementController(this);
             updateEquipCardController.initData(equipement);
 
-            popupContainer.getChildren().clear();
-            popupContainer.getChildren().add(updateEquip);
-            popupContainer.setVisible(true);
+            equip_pa.getChildren().clear();
+            equip_pa.getChildren().add(updateEquip);
+
+            // Appliquer un effet de flou au Pane principal
+
+
+            equip_pa.setVisible(true);
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -140,4 +191,19 @@ public class ListEquipement implements Initializable {
                 .collect(Collectors.toList());
         return l;
     }
+    public List<EquipementAffichage> filterName() throws Exception {
+
+        List<EquipementAffichage> filtered = es.getAll().stream().sorted(Comparator.comparing(EquipementAffichage::getNom)).collect(Collectors.toList());
+        return filtered;
+
+    }
+    public  List<EquipementAffichage> filterStock() throws Exception {
+
+            List<EquipementAffichage> filtred = es.getAll().stream()
+                    .filter(c -> c.getQuantite()==0)
+                    .collect(Collectors.toList());
+            return filtred;
+        }
+
+
 }

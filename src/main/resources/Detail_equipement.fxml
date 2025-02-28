@@ -32,7 +32,7 @@
                 </VBox>
             </left>
             <top>
-                <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="972.0" style="-fx-background-color: #E0E0E0;" BorderPane.alignment="CENTER">
+                <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="972.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
                     <children>
                   <FontAwesomeIconView fx:id="back" glyphName="ARROW_LEFT" onMouseClicked="#handleBackAction">
                      <HBox.margin>
@@ -51,7 +51,7 @@
                 </HBox>
             </top>
             <right>
-                <VBox prefHeight="593.0" prefWidth="474.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
+                <VBox prefHeight="593.0" prefWidth="474.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
                     <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="474.0">
                             <children>

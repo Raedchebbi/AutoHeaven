@@ -15,10 +15,9 @@ public class Mainfx extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-     //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
-     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Dashboard.fxml"));
-       // FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Statistique.fxml"));
-       // FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ValidationCommande.fxml"));
+      //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxmlFXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
+     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
+       //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Statistique.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

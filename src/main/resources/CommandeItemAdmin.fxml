@@ -23,7 +23,6 @@
             <FontAwesomeIconView glyphName="CHECK" />
          </graphic>
       </Button>
-      <Button fx:id="cancel" mnemonicParsing="false" style="-fx-background-color: #f70909;" text="X" />
       <Button fx:id="pdf" mnemonicParsing="false" prefHeight="26.0" prefWidth="39.0" style="-fx-background-color: #000;" text="PDF" textFill="WHITE" />
    </children>
 </HBox>

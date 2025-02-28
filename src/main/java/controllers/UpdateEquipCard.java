@@ -2,6 +2,9 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -231,13 +234,36 @@ public class UpdateEquipCard {
 
         EquipementService sc = new EquipementService();
         sc.update(u1, quantite1, prix1);
-        listEquipementController.hideUpdatePopup();
+       // listEquipementController.hideUpdatePopup();
         listEquipementController.reloadEquipements(sc.getAll());
+        redirectToListEquipement();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Succès");
         alert.setHeaderText(null);
         alert.setContentText("L'équipement a été mis à jour avec succès !");
         alert.showAndWait();
+    }
+    @FXML
+    void closePopup(ActionEvent event) {
+        listEquipementController.hideUpdatePopup();
+    }
+
+    @FXML
+    void cancelUpdate(ActionEvent event) throws IOException {
+       // listEquipementController.hideUpdatePopup();
+
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
+            Parent root = loader.load();
+            Scene currentScene = update_btn.getScene();
+            currentScene.setRoot(root);
+
+    }
+    private void redirectToListEquipement() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
+        Parent root = loader.load();
+        Scene scene = update_btn.getScene();
+        scene.setRoot(root);
     }
 }

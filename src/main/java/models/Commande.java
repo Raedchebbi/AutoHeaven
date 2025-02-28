@@ -10,16 +10,18 @@ public class Commande {
     private int id;
 
 
+
     // Constructeur par défaut
     public Commande() {}
 
     // Constructeur avec paramètres
-    public Commande(int id_com, LocalDateTime date_com, String status, double montant_total, int id) {
+    public Commande(int id_com, LocalDateTime date_com, String status, double montant_total, int id ) {
         this.id_com = id_com;
         this.date_com = date_com;
         this.status = status;
         this.montant_total = montant_total;
         this.id = id;
+
 
     }
 
@@ -63,6 +65,8 @@ public class Commande {
     public void setId(int id) {
         this.id = id;
     }
+
+
 
 
 

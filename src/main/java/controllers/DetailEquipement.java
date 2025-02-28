@@ -87,7 +87,7 @@ public class DetailEquipement {
         System.err.println("la valeur du champ n'est pas un entier valide.");
     }
 
-       // PanierService es = new PanierService();
+        // PanierService es = new PanierService();
 
 
 
@@ -96,14 +96,14 @@ public class DetailEquipement {
     private void handleSousAction() throws Exception {try {
         int value = Integer.parseInt(input.getText());
         if (value > 1) {
-        input.setText(String.valueOf(value -1));}
+            input.setText(String.valueOf(value -1));}
     } catch (NumberFormatException e) {
         System.err.println("la valeur du champ n'est pas un entier valide.");
     }}
     @FXML
     private void handleAddToCart() throws Exception {
         int id =equipement.getId();
-        int idu =38;
+        int idu =5129;
         PanierService ps = new PanierService();
 
         Panier panier = new Panier(Integer.parseInt(input.getText()),idu,id);
@@ -112,7 +112,7 @@ public class DetailEquipement {
             ps.create(panier);
         showSuccessPopup();
 
-      //  redirectToEquipDetail(equipement);
+        //  redirectToEquipDetail(equipement);
 
     }
     private void showSuccessPopup() throws IOException {
@@ -154,3 +154,4 @@ public class DetailEquipement {
 
 
 }
+

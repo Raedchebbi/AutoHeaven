@@ -18,4 +18,5 @@ public interface CrudCommande<T> {
     List<T> getAll() throws Exception;
     Map<String , Integer> countCOM() throws Exception;
     Map<String , Double> countVente() throws Exception;
+    void deleteCommande(int id) throws Exception;
 }

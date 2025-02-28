@@ -238,5 +238,13 @@ public class AddEquipemntCard implements Initializable {
         Parent root = loader.load();
         nom.getScene().setRoot(root);
     }
+    @FXML
+    private void handleBackAction(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
+        Parent root = loader.load();
+        Scene currentScene = add_btn.getScene();
+        currentScene.setRoot(root);
+    }
 
 }

@@ -18,7 +18,7 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ListEquipementClient">
     <children>
-        <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="972.0" style="-fx-background-color: #E0E0E0;">
+        <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="972.0">
             <children>
                 <Label style="-fx-text-fill: #8b0000;" text="Equipement Marketplace">
                     <HBox.margin>
@@ -30,7 +30,10 @@
                 </Label>
                 <Pane prefHeight="66.0" prefWidth="328.0">
                <children>
-                  <Label fx:id="commande" layoutX="247.0" layoutY="25.0" text="Commandes" onMouseClicked="#handleCommandeClick"/>
+                  <Label fx:id="commande" layoutX="184.0" layoutY="25.0" onMouseClicked="#handleCommandeClick" text="Historique Commandes">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font></Label>
                </children></Pane>
                 <HBox alignment="CENTER" prefHeight="66.0" prefWidth="316.0" stylesheets="@equipclient.css">
                     <children>
@@ -55,7 +58,7 @@
                 </HBox>
                 <ImageView fx:id="panier" fitHeight="50.0" fitWidth="55.0" onMouseClicked="#handlePanierClick" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@dir/cart.png" />
+                  <Image url="@dir/cart-icon-28356.png" />
                </image>
                 </ImageView>
             </children>
@@ -71,7 +74,7 @@
                                         <Font name="Cambria Bold" size="18.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="10.0" layoutY="10.0" text="Over 5DT order" textFill="#878787">
+                                <Label layoutX="10.0" layoutY="10.0" text="Over 50DT order" textFill="#878787">
                                     <font>
                                         <Font name="Cambria" size="15.0" />
                                     </font>

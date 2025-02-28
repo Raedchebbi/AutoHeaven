@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
-<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="520.0" style="-fx-spacing: 20;" styleClass="equipement_cell_container" stylesheets="@detailequip.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HistoriqueComItem">
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="498.0" style="-fx-spacing: 10;" styleClass="equipement_cell_container" stylesheets="@detailequip.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HistoriqueComItem">
    <children>
       <Label fx:id="date" prefHeight="22.0" prefWidth="212.0" text="15/05/2002 22:00:00TM">
          <HBox.margin>

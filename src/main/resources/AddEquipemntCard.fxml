@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -27,7 +28,7 @@
         <Line endX="871.2928466796875" endY="-0.7071059942245483" startX="-100.0" />
         <ScrollPane prefHeight="439.0" prefWidth="972.0">
             <content>
-                <VBox prefHeight="440.0" prefWidth="954.0" style="-fx-background-color: #D3D3D3;">
+                <VBox prefHeight="440.0" prefWidth="954.0" style="-fx-background-color: #E0E0E0;">
                     <children>
                         <VBox alignment="TOP_CENTER" prefHeight="138.0" prefWidth="954.0">
                             <children>
@@ -36,6 +37,9 @@
                                     <VBox.margin>
                                         <Insets />
                                     </VBox.margin>
+                           <image>
+                              <Image url="@../../../../../feu.jpg" />
+                           </image>
                                 </ImageView>
                                 <Button fx:id="add_photo" mnemonicParsing="false" onAction="#ajouter_image" style="-fx-background-color: #cf4b27; -fx-background-radius: 5; -fx-text-fill: #ffffff;" text="Choisir une photo">
                                     <VBox.margin>
@@ -46,7 +50,7 @@
                                     <children>
                                         <Text fx:id="error_photo" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez choisir une photo ">
                                             <font>
-                                                <Font name="Arial Bold" size="12.0" />
+                                                <Font name="Arial" size="12.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -68,15 +72,15 @@
                                     <children>
                                         <Text fx:id="error_ref" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir le reference du produit">
                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
+                                                <Font name="Arial" size="13.0" />
                                             </font>
                                         </Text>
                                     </children>
                                 </HBox>
                             </children>
-                            <padding>
-                                <Insets left="20.0" right="600.0" />
-                            </padding>
+                     <padding>
+                        <Insets left="20.0" right="600.0" />
+                     </padding>
                         </VBox>
                         <VBox layoutX="10.0" layoutY="148.0" prefHeight="118.0" prefWidth="954.0" styleClass="box-container" stylesheets="@ListEquipements.css">
                             <children>
@@ -90,7 +94,7 @@
                                     <children>
                                         <Text fx:id="error_nom" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir le nom du produit">
                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
+                                                <Font name="Arial" size="13.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -112,7 +116,7 @@
                                     <children>
                                         <Text fx:id="error_marque" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir le marque du produit">
                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
+                                                <Font name="Arial" size="13.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -134,7 +138,7 @@
                                     <children>
                                         <Text fx:id="error_prix" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir le prix du produit">
                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
+                                                <Font name="Arial" size="13.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -156,7 +160,7 @@
                                     <children>
                                         <Text fx:id="error_quantite" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir le quantité du produit">
                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
+                                                <Font name="Arial" size="13.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -178,7 +182,7 @@
                                     <children>
                                         <Text fx:id="error_desc" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir la description du produit">
                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
+                                                <Font name="Arial" size="13.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -188,14 +192,15 @@
                                 <Insets left="20.0" right="600.0" />
                             </padding>
                         </VBox>
-                        <Button fx:id="add_btn" mnemonicParsing="false" onAction="#Ajouter" style="-fx-background-color: #cf4b27; -fx-background-radius: 5; -fx-text-fill: #ffffff;" text="Ajouter">
-                            <font>
-                                <Font name="Arial" size="13.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets bottom="20.0" left="20.0" top="30.0" />
-                            </VBox.margin>
-                        </Button>
+                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 10;">
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="20.0" top="30.0" />
+                     </VBox.margin>
+                     <children>
+                        <Button fx:id="add_btn" mnemonicParsing="false" onAction="#Ajouter" style="-fx-background-color: #cf4b27; -fx-background-radius: 5; -fx-text-alignment: #ffffff;" text="Ajouter" />
+                        <Button mnemonicParsing="false" onAction="#handleBackAction" style="-fx-background-color: #253321; -fx-background-radius: 5; -fx-text-fill: #ffffff;" text="Annuler" />
+                     </children>
+                  </HBox>
                     </children>
                 </VBox>
             </content>

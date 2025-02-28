@@ -6,7 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import models.Commande;
 import models.Lignecommande;
@@ -26,7 +28,12 @@ public class HistoriqueCommande implements Initializable {
 
     @FXML
     private FontAwesomeIconView back;
+
+    @FXML
+    private WebView webView;
+
     Commande commande;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Initialisation de HistoriqueCommande");
@@ -41,7 +48,7 @@ public class HistoriqueCommande implements Initializable {
         area.getChildren().clear();
 
         CommandeService ps = new CommandeService();
-        List<Commande> obs = ps.getAllByidU(3);
+        List<Commande> obs = ps.getAllByidU(5129);
         System.out.println("Nombre de commandes chargées : " + obs.size());
 
         for (Commande e : obs) {
@@ -56,26 +63,51 @@ public class HistoriqueCommande implements Initializable {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }}
-    public void showEquipementsAchetes(List<Lignecommande> ligneCommandes) throws Exception {
+        }
+    }
 
+    public void showEquipementsAchetes(List<Lignecommande> ligneCommandes) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/EquipementsAchetes.fxml"));
         Parent root = loader.load();
 
-
         EquipementsAchetes controller = loader.getController();
         controller.initData(ligneCommandes);
-
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("Équipements Achetés");
         stage.show();
-
     }
+
+
+
+    public void showPaymentPage(String checkoutUrl) {
+        webView.getEngine().load(checkoutUrl);
+        webView.setVisible(true);
+
+
+        webView.getEngine().locationProperty().addListener((obs, oldUrl, newUrl) -> {
+            if (newUrl.contains("pay/success")) {
+                afficherAlerte("Paiement réussi", "Votre paiement a été traité avec succès.", Alert.AlertType.INFORMATION);
+                webView.setVisible(false);
+            } else if (newUrl.contains("pay/cancel")) {
+                afficherAlerte("Paiement annulé", "Votre paiement a été annulé.", Alert.AlertType.WARNING);
+                webView.setVisible(false);
+            }
+        });
+    }
+
+
+    private void afficherAlerte(String titre, String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(titre);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     @FXML
     private void handleBackAction() throws IOException {
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
         Parent root = loader.load();
         Scene currentScene = back.getScene();

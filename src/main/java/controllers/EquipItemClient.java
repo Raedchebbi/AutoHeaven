@@ -3,6 +3,7 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -53,10 +54,18 @@ public class EquipItemClient {
                 DetailEquipement controller = loader.getController();
                 controller.initData(equipement);
 
+                Scene scene = new Scene(root);
 
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.show();
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+
+                stage.setScene(scene);
+
+
+            //    Stage stage = new Stage();
+              //  stage.setScene(new Scene(root));
+             //   stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new RuntimeException("Erreur de la vue Detail_equipement.fxml", e);

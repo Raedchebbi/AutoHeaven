@@ -1,7 +1,8 @@
 package controllers;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -21,13 +22,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommandeItemAdmin {
 
-    @FXML
-    private Button cancel;
+
 
     @FXML
     private Button check;
@@ -52,6 +54,8 @@ public class CommandeItemAdmin {
 
     @FXML
     private Button pdf;
+   // @FXML
+   // private Button exp;
     private Commande commande;
     private ValidationCommande vc;
 
@@ -62,7 +66,10 @@ public class CommandeItemAdmin {
         nom.setText(user.getNom());
         pren.setText(user.getPrenom());
         tel.setText(String.valueOf(user.getTel()));
-        date.setText(String.valueOf(commande.getDate_com()));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        date.setText(commande.getDate_com().format(formatter));
+
+        // date.setText(String.valueOf(commande.getDate_com()));
         //prix.setText(String.valueOf(commande.getMontant_total()));
         prix.setText(commande.getStatus());
         detail.setOnMouseClicked(event -> {
@@ -79,13 +86,8 @@ public class CommandeItemAdmin {
                 e.printStackTrace();
             }
         });
-        cancel.setOnMouseClicked(event -> {
-            try {
-                handleCancelClick(event);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+
+
         pdf.setOnMouseClicked(event -> {
             try {
                 exportToPDF(event);
@@ -100,7 +102,7 @@ public class CommandeItemAdmin {
         this.vc = vc;
     }
     private void handleDetailClick(MouseEvent event) throws Exception {
-        // Récupérer les équipements achetés pour cette commande
+
         LigneCommandeService ligneCommandeService = new LigneCommandeService();
         List<Lignecommande> ligneCommandes = new ArrayList<>();
         System.out.println(ligneCommandeService.getAllByIDC(commande.getId_com()));
@@ -116,32 +118,24 @@ public class CommandeItemAdmin {
     private void handleCheckClick(MouseEvent event) throws Exception {
         // Mettre à jour le statut de la commande à "confirmee"
         CommandeService cs = new CommandeService();
-        cs.updateStatus(commande.getId_com(), "confirmee");
+        cs.updateStatus(commande.getId_com(), "traitée");
         LigneCommandeService ls = new LigneCommandeService();
         User user =ls.getByID(commande.getId());
         int tel =user.getTel();
-        String msg="Votre commande est confirmée .merci pour votre confiance";
+        String msg="Votre commande est traitée .Vous la recevrez dans un délai de 24 heures";
         sendSMS(String.valueOf(tel), msg);
 
 
 
         vc.reloadCommande(cs.getAll());
     }
-
-    private void handleCancelClick(MouseEvent event) throws Exception {
-
+  /*  public void handleExp(MouseEvent event) throws Exception {
         CommandeService cs = new CommandeService();
-        cs.updateStatus(commande.getId_com(), "annulee");
-        LigneCommandeService ls = new LigneCommandeService();
-        User user =ls.getByID(commande.getId());
-        int tel =user.getTel();
-        String msg="Votre commande est annulee .";
-        sendSMS(String.valueOf(tel), msg);
+        cs.updateStatus(commande.getId_com(), "expédiée");
+        vc.reloadCommande(cs.getAll());
+    }*/
 
 
-
-       vc.reloadCommande(cs.getAll());
-    }
     private void sendSMS(String phoneNumber, String message) {
        /* ApiClient client = Configuration.getDefaultApiClient();
         String BASE_URL = "https://386n2m.api.infobip.com/sms/2/text/advanced";
@@ -168,20 +162,20 @@ public class CommandeItemAdmin {
         String s ="216";
         String phoneNumber1=s+phoneNumber;
         String apiKey = "b0b740ba353f3287fac9daa64415a615-ccdda96c-aafb-4c90-a7dc-862f17d16a3d";
-        // Remplacez par l'URL de votre endpoint Infobip
+
         String url = "https://386n2m.api.infobip.com/sms/2/text/advanced";
 
-        // Corps de la requête JSON
+
         String jsonBody = String.format("{\"messages\":[{\"destinations\":[{\"to\":\"%s\"}],\"from\":\"447491163443\",\"text\":\"%s\"}]}", phoneNumber1, message);
 
-        // Créez une instance d'OkHttpClient
+
         OkHttpClient client = new OkHttpClient();
 
-        // Créez le corps de la requête
+
         MediaType mediaType = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(jsonBody, mediaType);
 
-        // Créez la requête HTTP
+
         Request request = new Request.Builder()
                 .url(url)
                 .method("POST", body)
@@ -190,7 +184,7 @@ public class CommandeItemAdmin {
                 .addHeader("Accept", "application/json")
                 .build();
 
-        // Envoyez la requête et traitez la réponse
+
         try (Response response = client.newCall(request).execute()) {
             if (response.isSuccessful()) {
                 System.out.println("SMS sent successfully!");
@@ -205,26 +199,15 @@ public class CommandeItemAdmin {
     }
     @FXML
     private void exportToPDF(MouseEvent event) throws Exception {
-
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Enregistrer la facture");
         fileChooser.setInitialFileName("Facture.pdf");
-
-
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Fichiers PDF (*.pdf)", "*.pdf");
-        fileChooser.getExtensionFilters().add(extFilter);
-
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers PDF (*.pdf)", "*.pdf"));
 
         File file = fileChooser.showSaveDialog(((Node) event.getSource()).getScene().getWindow());
+        if (file == null) return;
 
-
-        if (file == null) {
-            return;
-        }
-
-        // Chemin du fichier sélectionné par l'utilisateur
         String filePath = file.getAbsolutePath();
-
 
         EquipementService es = new EquipementService();
         LigneCommandeService ls = new LigneCommandeService();
@@ -233,52 +216,46 @@ public class CommandeItemAdmin {
         User user = ls.getByID(commande.getId());
 
         List<Lignecommande> lc = ls.getAllByIDC(commande.getId_com());
-        Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(filePath));
+        Document document = new Document(PageSize.A4);
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
         document.open();
 
-
-        Paragraph title = new Paragraph("Facture");
+        // Ajouter le titre
+        Paragraph title = new Paragraph("Facture", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18));
         title.setAlignment(Paragraph.ALIGN_CENTER);
         document.add(title);
-
-
         document.add(new Paragraph("\n"));
 
+        // Ajouter les informations du client
         document.add(new Paragraph("Client: " + user.getNom() + " " + user.getPrenom()));
         document.add(new Paragraph("Date de la facture: " + LocalDate.now()));
         document.add(new Paragraph("\n"));
 
-
+        // Créer la table des produits
         PdfPTable table = new PdfPTable(5);
+        table.setWidthPercentage(100);
+        table.setSpacingBefore(10f);
+        table.setSpacingAfter(10f);
+
         table.addCell("Reference");
         table.addCell("Produit");
-        table.addCell("Quantite");
+        table.addCell("Quantité");
         table.addCell("Prix");
         table.addCell("Prix total");
 
         double totalAPayer = 0;
-
-
         for (Lignecommande l : lc) {
             Equipement eq = es.getEquipementById(l.getId_e());
             Stock s = ss.getStockById(eq.getId());
-            String ref = eq.getReference();
-            String nom = eq.getNom();
-            int quantite_equip = l.getQuantite();
-            double prix = s.getPrixvente();
-            double prix_total = l.getPrix_unitaire() * l.getQuantite();
-
-            table.addCell(ref);
-            table.addCell(nom);
-            table.addCell(String.valueOf(quantite_equip));
-            table.addCell(String.valueOf(prix));
-            table.addCell(String.valueOf(prix_total));
-
-            totalAPayer += prix_total;
+            table.addCell(eq.getReference());
+            table.addCell(eq.getNom());
+            table.addCell(String.valueOf(l.getQuantite()));
+            table.addCell(String.valueOf(s.getPrixvente()));
+            table.addCell(String.valueOf(l.getPrix_unitaire() * l.getQuantite()));
+            totalAPayer += l.getPrix_unitaire() * l.getQuantite();
         }
 
-
+        // Ajouter le total à payer
         table.addCell("");
         table.addCell("");
         table.addCell("");
@@ -286,10 +263,35 @@ public class CommandeItemAdmin {
         table.addCell(String.valueOf(totalAPayer));
 
         document.add(table);
-        document.close();
 
+
+        for (int i = 0; i < 10; i++) {
+            document.add(new Paragraph("\n"));
+        }
+
+
+        PdfContentByte canvas = writer.getDirectContent();
+        canvas.setLineWidth(1f);
+        canvas.moveTo(document.leftMargin(), document.bottomMargin() + 50);
+        canvas.lineTo(document.getPageSize().getWidth() - document.rightMargin(), document.bottomMargin() + 50);
+        canvas.stroke();
+
+
+        float x = document.getPageSize().getWidth() / 2;
+        float y = document.bottomMargin() + 40;
+
+
+        Font entrepriseFont = FontFactory.getFont(FontFactory.HELVETICA, 10, Font.BOLD);
+        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Entreprise : AutoHeaven", entrepriseFont), x, y, 0);
+        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Tel : +21698562433", entrepriseFont), x, y - 15, 0);
+        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Fax : 78965236", entrepriseFont), x, y - 30, 0);
+        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Email : contact@AutoHeaven.com", entrepriseFont), x, y - 45, 0);
+        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Adresse : Cite El Ghazela, Ariana 1080", entrepriseFont), x, y - 60, 0);
+
+        document.close();
         showAlert("Export réussi", "Le fichier PDF a été généré avec succès à l'emplacement : " + filePath);
     }
+
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

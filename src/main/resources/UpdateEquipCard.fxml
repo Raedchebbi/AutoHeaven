@@ -11,17 +11,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.effect.DropShadow?>
 
-<VBox fx:id="popupContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UpdateEquipCard" style="-fx-background-color: white; -fx-border-color: #cf4b27; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px;">
-    <effect>
-        <DropShadow color="#cf4b27" radius="10" spread="0.5" />
-    </effect>
+<VBox fx:id="popupContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UpdateEquipCard">
+
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20" />
+        <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
     <children>
-        <ScrollPane prefHeight="534.0" prefWidth="600.0">
+        <ScrollPane prefHeight="534.0" prefWidth="494.0">
             <content>
                 <VBox prefHeight="618.0" prefWidth="516.0">
                     <children>
@@ -33,7 +30,7 @@
                                     <children>
                                         <Text fx:id="error_ref" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir la référence du produit">
                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
+                                                <Font name="Arial" size="13.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -54,7 +51,7 @@
                                     <children>
                                         <Text fx:id="error_nom" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir le nom du produit">
                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
+                                                <Font name="Arial" size="13.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -75,7 +72,7 @@
                                     <children>
                                         <Text fx:id="error_marque" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir la marque du produit">
                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
+                                                <Font name="Arial" size="13.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -96,7 +93,7 @@
                                     <children>
                                         <Text fx:id="error_prix" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir le prix du produit">
                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
+                                                <Font name="Arial" size="13.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -117,7 +114,7 @@
                                     <children>
                                         <Text fx:id="error_quantite" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir la quantité du produit">
                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
+                                                <Font name="Arial" size="13.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -144,7 +141,7 @@
                                     <children>
                                         <Text fx:id="error_desc" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez saisir la description du produit">
                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
+                                                <Font name="Arial" size="13.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -162,7 +159,7 @@
                                     <children>
                                         <Text fx:id="error_image" fill="#d11616" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez choisir une image">
                                             <font>
-                                                <Font name="Arial Bold" size="13.0" />
+                                                <Font name="Arial" size="13.0" />
                                             </font>
                                         </Text>
                                     </children>
@@ -172,11 +169,15 @@
                                 <Insets left="30.0" />
                             </padding>
                         </VBox>
-                        <Button fx:id="update_btn" mnemonicParsing="false" onAction="#Update" style="-fx-background-color: #cf4b27; -fx-background-radius: 5; -fx-text-fill: #ffffff;" text="Update">
+                        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 10;">
                             <VBox.margin>
                                 <Insets bottom="20.0" left="30.0" top="30.0" />
                             </VBox.margin>
-                        </Button>
+                            <children>
+                                <Button fx:id="update_btn" mnemonicParsing="false" onAction="#Update" style="-fx-background-color: #cf4b27; -fx-background-radius: 5; -fx-text-fill: #ffffff;" text="Update" />
+                                <Button mnemonicParsing="false" onAction="#cancelUpdate" style="-fx-background-color: #253321; -fx-background-radius: 5; -fx-text-fill: #ffffff;" text="Annuler" textFill="#253321" />
+                            </children>
+                        </HBox>
                     </children>
                 </VBox>
             </content>

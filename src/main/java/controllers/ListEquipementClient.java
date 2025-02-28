@@ -169,15 +169,18 @@ public class ListEquipementClient implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/historiqueCommande.fxml"));
         Parent root = loader.load();
 
+        //Parent root = loader.load();
+        Scene currentScene =search_btn.getScene();
+        currentScene.setRoot(root);
 
-        Scene scene = new Scene(root);
+       // Scene scene = new Scene(root);
 
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+       // Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
 
-        stage.setScene(scene);
-        stage.show();
+       // stage.setScene(scene);
+       // stage.show();
     }
    /* public List<EquipementAffichage> handleSearch_name(MouseEvent event) throws Exception {
         String nom= this.input_search.getText();

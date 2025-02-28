@@ -37,6 +37,6 @@
          </content>
       </ScrollPane>
       <ComboBox fx:id="comCombo" layoutX="757.0" layoutY="44.0" prefWidth="150.0" stylesheets="@commandeItem.css" />
-      <Button fx:id="exportexcel" layoutX="45.0" layoutY="63.0" mnemonicParsing="false" text="Export EXCEL" />
+      <Button fx:id="exportexcel" layoutX="45.0" layoutY="63.0" mnemonicParsing="false" style="-fx-background-color: #4CAF50; -fx-background-radius: 5; -fx-text-fill: #ffffff;" text="Export EXCEL" />
    </children>
 </Pane>
