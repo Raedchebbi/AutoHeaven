@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="equip_pa" prefHeight="544.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ListEquipement">
+    <children>
+        <Label layoutX="36.0" layoutY="23.0" text="Liste des équipements">
+            <font>
+                <Font name="Arial Bold" size="25.0" />
+            </font>
+        </Label>
+        <TextField fx:id="input_search" layoutX="738.0" layoutY="22.0" prefHeight="31.0" prefWidth="186.0" promptText="  search..." styleClass="search-bar" stylesheets="@Dashboard.css" />
+
+        <HBox fx:id="equip_header" layoutX="36.0" layoutY="102.0" prefHeight="42.0" prefWidth="902.0" styleClass="container_header" stylesheets="@Dashboard.css">
+            <children>
+                <Label layoutX="20.0" layoutY="22.0" />
+                <Label prefHeight="18.0" prefWidth="234.0" text="Reference">
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                    <padding>
+                        <Insets left="20.0" />
+                    </padding>
+                </Label>
+                <Label layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="180.0" text="Nom">
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </Label>
+                <Label layoutX="63.0" layoutY="10.0" prefHeight="18.0" prefWidth="126.0" text="Marque">
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </Label>
+                <Label layoutX="89.0" layoutY="10.0" prefHeight="18.0" prefWidth="80.0" text="Prix">
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </Label>
+                <Label layoutX="131.0" layoutY="10.0" prefHeight="18.0" prefWidth="66.0" styleClass="container_header" stylesheets="@Dashboard.css" text="Quantite">
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </Label>
+                <Label layoutX="151.0" layoutY="10.0" text="Action">
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </Label>
+            </children>
+        </HBox>
+        <ScrollPane layoutX="36.0" layoutY="155.0" prefHeight="372.0" prefWidth="902.0">
+            <content>
+                <VBox fx:id="equip_container" prefHeight="372.0" prefWidth="890.0" />
+            </content>
+        </ScrollPane>
+        <Button fx:id="add_btn" layoutX="36.0" layoutY="71.0" mnemonicParsing="false" onAction="#AjouterE" style="-fx-background-color: #254637; -fx-background-radius: 5; -fx-text-fill: #ffffff;" text="Ajouter" />
+
+      <FontAwesomeIconView glyphName="SEARCH" layoutX="754.0" layoutY="42.0" />
+      <ComboBox fx:id="comCombo" layoutX="578.0" layoutY="19.0" prefWidth="150.0" stylesheets="@commandeItem.css" />
+      <AnchorPane fx:id="popupContainer" layoutY="-4.0" prefHeight="552.0" prefWidth="972.0" visible="false" />
+    </children>
+</Pane>
