@@ -3,13 +3,11 @@ package controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import utils.MyDb;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -19,6 +17,7 @@ import java.sql.*;
 import java.sql.Connection;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +28,7 @@ public class AfficherReclamationController {
     @FXML private VBox contentBox;
     @FXML private CheckBox filterBannedCheckBox;
     @FXML private TextField searchField;
+    @FXML private ComboBox<String> sortComboBox; // Ajouté pour le tri
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static final OkHttpClient client = new OkHttpClient();
@@ -36,6 +36,16 @@ public class AfficherReclamationController {
 
     @FXML
     public void initialize() {
+        // Initialisation du ComboBox pour le tri
+        sortComboBox.getItems().addAll(
+                "Date (Récent → Ancien)",
+                "Date (Ancien → Récent)",
+                "Titre (A → Z)",
+                "Titre (Z → A)"
+        );
+        sortComboBox.setValue("Date (Récent → Ancien)"); // Valeur par défaut
+        sortComboBox.setOnAction(e -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText()));
+
         loadDataFromDatabase(false, "");
         filterBannedCheckBox.setOnAction(e -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText()));
         searchField.textProperty().addListener((observable, oldValue, newValue) -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), newValue));
@@ -59,8 +69,7 @@ public class AfficherReclamationController {
                 "COALESCE(r.status, 'en_attente') as status, " +
                 "r.datecreation, u.nom, u.tel, u.email " +
                 "FROM reclamation r " +
-                "JOIN user u ON r.id = u.id " +
-                "ORDER BY r.datecreation DESC";
+                "JOIN user u ON r.id = u.id";
 
         try (Connection conn = MyDb.getInstance().getConn();
              PreparedStatement ps = conn.prepareStatement(query);
@@ -76,7 +85,6 @@ public class AfficherReclamationController {
     }
 
     private List<HBox> processResultSet(ResultSet rs, boolean showOnlyBanned, String searchQuery) throws SQLException {
-        List<HBox> rows = new ArrayList<>();
         List<Reclamation> reclamations = new ArrayList<>();
 
         while (rs.next()) {
@@ -94,17 +102,28 @@ public class AfficherReclamationController {
         }
 
         String searchLower = searchQuery != null ? searchQuery.toLowerCase() : "";
-        if (showOnlyBanned) {
-            return reclamations.stream()
-                    .filter(r -> containsBadWord(r.getContenu()))
-                    .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
-                    .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
-                    .collect(Collectors.toList());
-        } else {
-            return reclamations.stream()
-                    .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
-                    .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
-                    .collect(Collectors.toList());
+        String sortCriteria = sortComboBox.getValue();
+
+        return reclamations.stream()
+                .filter(r -> !showOnlyBanned || containsBadWord(r.getContenu()))
+                .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
+                .sorted(getComparator(sortCriteria)) // Ajout du tri
+                .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
+                .collect(Collectors.toList());
+    }
+
+    private Comparator<Reclamation> getComparator(String sortCriteria) {
+        switch (sortCriteria) {
+            case "Date (Récent → Ancien)":
+                return (r1, r2) -> r2.getTimestamp().compareTo(r1.getTimestamp());
+            case "Date (Ancien → Récent)":
+                return (r1, r2) -> r1.getTimestamp().compareTo(r2.getTimestamp());
+            case "Titre (A → Z)":
+                return Comparator.comparing(Reclamation::getTitre, String.CASE_INSENSITIVE_ORDER);
+            case "Titre (Z → A)":
+                return (r1, r2) -> r2.getTitre().compareToIgnoreCase(r1.getTitre());
+            default:
+                return (r1, r2) -> r2.getTimestamp().compareTo(r1.getTimestamp()); // Par défaut
         }
     }
 
@@ -129,7 +148,6 @@ public class AfficherReclamationController {
         btnStatus.setWrapText(true);
         updateButtonState(btnStatus, id_rec, titre, contenu, status, isBannedContent);
 
-        // Ajout de l'icône de traduction
         ImageView translateIcon = new ImageView(getClass().getResource("/images/langue.png").toExternalForm());
         translateIcon.setFitWidth(25.0);
         translateIcon.setFitHeight(25.0);
