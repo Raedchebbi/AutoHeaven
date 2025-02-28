@@ -17,7 +17,7 @@ public class Mainfx extends Application {
     @Override
 
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherReclamationController.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Sirine.fxml"));
         Parent root = loader.load();
         //Scene sc = new Scene(root);
         stage.setTitle("Login");

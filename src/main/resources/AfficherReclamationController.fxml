@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1300.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherReclamationController">
+<AnchorPane prefHeight="800.0" prefWidth="1300.0" stylesheets="@styless.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherReclamationController">
     <HBox spacing="25" alignment="TOP_CENTER" prefHeight="750.0" styleClass="main-container">
         <padding>
             <Insets top="20" right="20" bottom="20" left="20" />
