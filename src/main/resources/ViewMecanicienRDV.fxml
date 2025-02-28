@@ -46,6 +46,11 @@
                         <Font name="System Bold" size="15.0" />
                     </font>
                 </Label>
+                <Label prefHeight="22.0" prefWidth="100.0" text="Statut">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                </Label>
                 <Label prefHeight="22.0" prefWidth="100.0" text="Action">
                     <font>
                         <Font name="System Bold" size="15.0" />
@@ -58,25 +63,13 @@
             <content>
                 <VBox fx:id="mecanicien_container" prefHeight="372.0" prefWidth="890.0" spacing="5.0">
                     <!-- Dynamic rows will be added here -->
-                    <!-- Example row with buttons -->
-                    <HBox spacing="10.0">
-                        <Label text="Adresse Example" />
-                        <Label text="Note Example" />
-                        <Label text="Utilisateur Example" />
-                        <Label text="Mécanicien Example" />
-                        <Label text="2023-10-10" />
-                        <HBox spacing="5.0">
-                            <Button style="-fx-background-color: green; -fx-text-fill: white;" text="Confirmer" />
-                            <Button style="-fx-background-color: red; -fx-text-fill: white;" text="Rejeter" />
-                        </HBox>
-                    </HBox>
                 </VBox>
             </content>
         </ScrollPane>
 
-        <Pane fx:id="popupContainer" layoutX="264.0" layoutY="2.0" prefHeight="534.0" prefWidth="440.0" visible="false" />
-
         <Button fx:id="back_btn" layoutX="36.0" layoutY="27.0" mnemonicParsing="false" onAction="#goBack" text="Retour" />
-        <Button fx:id="add_btn" layoutX="783.0" layoutY="64.0" mnemonicParsing="false" onAction="#goToAddMecanicienRDV" text="Ajouter RDV Mécanicien" />
+        <Button fx:id="add_btn" layoutX="800.0" layoutY="64.0" mnemonicParsing="false" onAction="#goToAddMecanicienRDV" text="Ajouter un RDV Mécanicien" />
+
+        <Label fx:id="successMessage" textFill="green" visible="false" layoutX="36.0" layoutY="500.0" />
     </children>
 </Pane>

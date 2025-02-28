@@ -118,7 +118,11 @@ public class AddRemorquageController {
         }
 
         LocalDate date = dpDate.getValue();
-        if (date == null || !date.isAfter(LocalDate.now())) {
+        if (date == null) {
+            errorMessage.setText("Veuillez sélectionner une date de format : JJ/MM/AAAA.");
+            return;
+        }
+        if (!date.isAfter(LocalDate.now())) {
             errorMessage.setText("La date doit être supérieure à aujourd'hui !");
             return;
         }

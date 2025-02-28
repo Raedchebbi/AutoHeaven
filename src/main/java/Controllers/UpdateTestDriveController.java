@@ -90,8 +90,9 @@ public class UpdateTestDriveController {
 
     @FXML
     public void updateTestDrive() {
-        errorMessage.setText("");
         successMessage.setText("");
+        errorMessage.setText("");
+        successMessage.setVisible(false);
 
         // Vérification de l'utilisateur
         String user = cbUser.getValue();
@@ -107,16 +108,13 @@ public class UpdateTestDriveController {
             return;
         }
 
-        // Vérification de la date
         LocalDate date = dpDate.getValue();
         if (date == null) {
-            errorMessage.setText("Veuillez sélectionner une date.");
+            errorMessage.setText("Veuillez sélectionner une date de format : JJ/MM/AAAA.");
             return;
         }
-
-        // Vérification si la date est dans le passé
-        if (date.isBefore(LocalDate.now())) {
-            errorMessage.setText("La date ne peut pas être dans le passé.");
+        if (!date.isAfter(LocalDate.now())) {
+            errorMessage.setText("La date doit être supérieure à aujourd'hui !");
             return;
         }
 
@@ -124,16 +122,15 @@ public class UpdateTestDriveController {
             int userId = Integer.parseInt(user.split(" - ")[0]);
             int vehicleId = Integer.parseInt(vehicle.split(" - ")[0]);
 
-            // Créer un nouvel objet ResTestDrive avec les nouvelles valeurs
             testDrive.setId_u(userId);
             testDrive.setId_v(vehicleId);
             testDrive.setDate(date.toString());
             testDrive.setStatus("en_cours_de_traitement");
 
-            // Appeler la méthode de mise à jour
             testDriveService.update(testDrive);
             successMessage.setText("Test Drive mis à jour avec succès !");
-            clearFields();
+            successMessage.setVisible(true);
+
         } catch (Exception e) {
             errorMessage.setText("Erreur lors de la mise à jour : " + e.getMessage());
         }

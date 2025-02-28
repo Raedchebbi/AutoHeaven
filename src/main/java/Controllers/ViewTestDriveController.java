@@ -4,24 +4,26 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.ResTestDrive;
-import models.User; // Assuming you have a User model
-import models.Voiture; // Assuming you have a Voiture model
+import models.User;
+import models.Voiture;
 import services.ResTestDriveService;
-import services.UserService; // Assuming you have a UserService to get user details
-import services.VoitureService; // Assuming you have a VoitureService to get vehicle details
+import services.UserService;
+import services.VoitureService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ViewTestDriveController {
+
+    @FXML
+    private ComboBox<String> searchCriteria; // Ajout du ComboBox
 
     @FXML
     private TextField search_id;
@@ -36,22 +38,23 @@ public class ViewTestDriveController {
     private Button back_btn;
 
     @FXML
-    private Text successMessage; // Message de succès
+    private Text successMessage;
 
     private ResTestDriveService testDriveService = new ResTestDriveService();
-    private UserService userService = new UserService(); // Instantiate UserService
-    private VoitureService voitureService = new VoitureService(); // Instantiate VoitureService
+    private UserService userService = new UserService();
+    private VoitureService voitureService = new VoitureService();
+    private List<ResTestDrive> testDriveList; // Liste originale pour filtrage
 
     @FXML
     public void initialize() {
         loadTestDrives();
-        setupSearch();
-        successMessage.setVisible(false); // Cache le message de succès au démarrage
+        setupSearch(); // Configurer la recherche
+        successMessage.setVisible(false);
     }
 
     private void loadTestDrives() {
         try {
-            List<ResTestDrive> testDriveList = testDriveService.getAll();
+            testDriveList = testDriveService.getAll(); // Stocke la liste originale
             populateTestDriveContainer(testDriveList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,15 +67,13 @@ public class ViewTestDriveController {
             HBox hbox = new HBox();
             hbox.setSpacing(20);
 
-            // Display User: username (ID: id_u)
-            User user = userService.getById(testDrive.getId_u()); // Get user by ID
-            String username = (user != null) ? user.getUsername() : "Unknown"; // Handle null case
+            User user = userService.getById(testDrive.getId_u());
+            String username = (user != null) ? user.getUsername() : "Unknown";
             Label userLabel = new Label(username + " (ID: " + testDrive.getId_u() + ")");
             userLabel.setPrefWidth(170.0);
 
-            // Display Véhicule: marque (ID: id_v)
-            Voiture voiture = voitureService.getById(testDrive.getId_v()); // Get vehicle by ID
-            String marque = (voiture != null) ? voiture.getMarque() : "Unknown"; // Handle null case
+            Voiture voiture = voitureService.getById(testDrive.getId_v());
+            String marque = (voiture != null) ? voiture.getMarque() : "Unknown";
             Label vehicleLabel = new Label(marque + " (ID: " + testDrive.getId_v() + ")");
             vehicleLabel.setPrefWidth(170.0);
 
@@ -84,7 +85,6 @@ public class ViewTestDriveController {
 
             hbox.getChildren().addAll(userLabel, vehicleLabel, dateLabel, statusLabel);
 
-            // Add buttons for status "en_cours_de_traitement"
             if (testDrive.getStatus().equals("en_cours_de_traitement")) {
                 Button confirmButton = new Button("Confirmer");
                 confirmButton.setStyle("-fx-background-color: green; -fx-text-fill: white;");
@@ -119,23 +119,79 @@ public class ViewTestDriveController {
 
             if (testDrive.getStatus().equals("confirmee") || testDrive.getStatus().equals("rejetee")) {
                 Button updateButton = new Button("Modifier");
-                updateButton.setOnAction(e -> openUpdateInterface(testDrive)); // Appel de la méthode pour ouvrir l'interface de mise à jour
+                updateButton.setOnAction(e -> openUpdateInterface(testDrive));
 
                 Button deleteButton = new Button("Supprimer");
-                deleteButton.setOnAction(e -> {
-                    try {
-                        testDriveService.delete(testDrive.getId_td());
-                        successMessage.setText("Test Drive supprimé avec succès !");
-                        successMessage.setVisible(true);
-                        loadTestDrives();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                });
+                deleteButton.setOnAction(e -> confirmDeleteTestDrive(testDrive));
 
                 hbox.getChildren().addAll(updateButton, deleteButton);
             }
             testdrive_container.getChildren().add(hbox);
+        }
+    }
+
+    private void setupSearch() {
+        search_id.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                filterTestDrives(newValue);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    private void filterTestDrives(String searchTerm) throws Exception {
+        String selectedCriteria = searchCriteria.getValue(); // Récupérer la valeur sélectionnée
+        List<ResTestDrive> filteredList = testDriveList.stream()
+                .filter(testDrive -> {
+                    if (selectedCriteria != null) {
+                        switch (selectedCriteria) {
+                            case "Utilisateur":
+                                User user = null;
+                                try {
+                                    user = userService.getById(testDrive.getId_u());
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                                return (user != null && user.getUsername().toLowerCase().contains(searchTerm.toLowerCase()));
+                            case "Véhicule":
+                                Voiture voiture = null;
+                                try {
+                                    voiture = voitureService.getById(testDrive.getId_v());
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                                return (voiture != null && voiture.getMarque().toLowerCase().contains(searchTerm.toLowerCase()));
+                        }
+                    }
+                    return false; // Si aucun critère n'est sélectionné
+                })
+                .collect(Collectors.toList());
+
+        populateTestDriveContainer(filteredList);
+    }
+
+    private void confirmDeleteTestDrive(ResTestDrive testDrive) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation de Suppression");
+        alert.setHeaderText("Vous êtes sur le point de supprimer un Test Drive.");
+        alert.setContentText("Êtes-vous sûr de vouloir continuer ?");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                deleteTestDrive(testDrive);
+            }
+        });
+    }
+
+    private void deleteTestDrive(ResTestDrive testDrive) {
+        try {
+            testDriveService.delete(testDrive.getId_td());
+            successMessage.setText("Test Drive supprimé avec succès !");
+            successMessage.setVisible(true);
+            loadTestDrives();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -169,18 +225,13 @@ public class ViewTestDriveController {
 
     private void openUpdateInterface(ResTestDrive testDrive) {
         try {
-            // Charger le fichier FXML pour l'interface de mise à jour
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateTestDrive.fxml"));
             Parent root = loader.load();
 
-            // Récupérer le contrôleur de mise à jour
             UpdateTestDriveController updateController = loader.getController();
-
-            // Passer le test drive à l'interface de mise à jour
             updateController.setTestDrive(testDrive);
 
-            // Changer la scène pour afficher l'interface de mise à jour
-            Stage stage = (Stage) add_btn.getScene().getWindow(); // Récupérer la scène actuelle
+            Stage stage = (Stage) add_btn.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
 
@@ -189,9 +240,5 @@ public class ViewTestDriveController {
             e.printStackTrace();
             System.err.println("Erreur lors du chargement de UpdateTestDrive.fxml");
         }
-    }
-
-    private void setupSearch() {
-        // Implement search functionality here, if needed.
     }
 }

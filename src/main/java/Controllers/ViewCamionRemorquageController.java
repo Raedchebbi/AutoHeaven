@@ -1,14 +1,10 @@
 package controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -17,6 +13,7 @@ import services.CamionRemorquageService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ViewCamionRemorquageController {
 
@@ -33,6 +30,7 @@ public class ViewCamionRemorquageController {
     private Button back_btn;
 
     private CamionRemorquageService camionService = new CamionRemorquageService();
+    private List<CamionRemorquage> camionList; // Store original list for filtering
 
     @FXML
     public void initialize() {
@@ -42,30 +40,30 @@ public class ViewCamionRemorquageController {
 
     private void loadCamions() {
         try {
-            List<CamionRemorquage> camionList = camionService.getAll();
+            camionList = camionService.getAll(); // Store original list
             populateCamionContainer(camionList);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void populateCamionContainer(List<CamionRemorquage> camionList) {
+    private void populateCamionContainer(List<CamionRemorquage> camions) {
         camion_container.getChildren().clear();
-        for (CamionRemorquage camion : camionList) {
+        for (CamionRemorquage camion : camions) {
             HBox hbox = new HBox();
             hbox.setSpacing(20);
 
             Label nomAgenceLabel = new Label(camion.getNomAgence());
-            nomAgenceLabel.setPrefWidth(180.0);
+            nomAgenceLabel.setPrefWidth(160.0);
 
             Label modeleLabel = new Label(camion.getModele());
-            modeleLabel.setPrefWidth(139.0);
+            modeleLabel.setPrefWidth(130.0);
 
             Label anneeLabel = new Label(String.valueOf(camion.getAnnee()));
-            anneeLabel.setPrefWidth(98.0);
+            anneeLabel.setPrefWidth(90.0);
 
             Label numTelLabel = new Label(camion.getNum_tel());
-            numTelLabel.setPrefWidth(154.0);
+            numTelLabel.setPrefWidth(140.0);
 
             Label statutLabel = new Label(camion.getStatut());
             statutLabel.setPrefWidth(180.0);
@@ -73,7 +71,7 @@ public class ViewCamionRemorquageController {
             Button updateButton = new Button("Modifier");
             updateButton.setOnAction(e -> openUpdateInterface(camion));
             Button deleteButton = new Button("Supprimer");
-            deleteButton.setOnAction(e -> deleteCamion(camion));
+            deleteButton.setOnAction(e -> confirmDeleteCamion(camion));
 
             HBox actionButtons = new HBox(10, updateButton, deleteButton);
 
@@ -88,7 +86,6 @@ public class ViewCamionRemorquageController {
             Parent root = loader.load();
 
             UpdateCamionRemorquageController updateController = loader.getController();
-
             updateController.setCamion(camion);
 
             Stage stage = (Stage) add_btn.getScene().getWindow(); // Récupérer la scène actuelle
@@ -100,6 +97,19 @@ public class ViewCamionRemorquageController {
             e.printStackTrace();
             System.err.println("Error loading UpdateCamionRemorquage.fxml");
         }
+    }
+
+    private void confirmDeleteCamion(CamionRemorquage camion) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation de Suppression");
+        alert.setHeaderText("Vous êtes sur le point de supprimer un camion.");
+        alert.setContentText("Êtes-vous sûr de vouloir continuer ?");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                deleteCamion(camion);
+            }
+        });
     }
 
     private void deleteCamion(CamionRemorquage camion) {
@@ -141,6 +151,20 @@ public class ViewCamionRemorquageController {
     }
 
     private void setupSearch() {
+        search_id.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterCamions(newValue);
+        });
+    }
 
+    private void filterCamions(String query) {
+        List<CamionRemorquage> filteredList = camionList.stream()
+                .filter(camion -> camion.getNomAgence().toLowerCase().contains(query.toLowerCase()) ||
+                        camion.getModele().toLowerCase().contains(query.toLowerCase()) ||
+                        String.valueOf(camion.getAnnee()).contains(query) ||
+                        camion.getNum_tel().contains(query) ||
+                        camion.getStatut().toLowerCase().contains(query.toLowerCase()))
+                .collect(Collectors.toList());
+
+        populateCamionContainer(filteredList);
     }
 }

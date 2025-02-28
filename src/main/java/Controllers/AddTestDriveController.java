@@ -88,16 +88,13 @@ public class AddTestDriveController {
             return;
         }
 
-        // Vérification de la date
         LocalDate date = dpDate.getValue();
         if (date == null) {
-            errorMessage.setText("Veuillez sélectionner une date.");
+            errorMessage.setText("Veuillez sélectionner une date de format : JJ/MM/AAAA.");
             return;
         }
-
-        // Vérification si la date est dans le passé
-        if (date.isBefore(LocalDate.now())) {
-            errorMessage.setText("La date ne peut pas être dans le passé.");
+        if (!date.isAfter(LocalDate.now())) {
+            errorMessage.setText("La date doit être supérieure à aujourd'hui !");
             return;
         }
 
@@ -119,6 +116,8 @@ public class AddTestDriveController {
 
             testDriveService.create(testDrive);
             successMessage.setText("Réservation de test drive ajoutée avec succès !");
+            successMessage.setVisible(true);
+
             clearFields();
         } catch (Exception e) {
             errorMessage.setText("Erreur lors de l'ajout : " + e.getMessage());

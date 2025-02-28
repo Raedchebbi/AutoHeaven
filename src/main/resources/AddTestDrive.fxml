@@ -39,6 +39,6 @@
         </HBox>
 
         <Text fx:id="errorMessage" fill="red" />
-        <Text fx:id="successMessage" fill="green" />
+        <Text fx:id="successMessage" fill="green" visible="false"/>
     </VBox>
 </Pane>
