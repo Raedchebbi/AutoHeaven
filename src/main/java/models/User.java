@@ -9,10 +9,14 @@ public class User {
     private String email;
     private String password;
     private String role;
+    private String adresse;
+    private String username;
+    private String photoProfile; // New attribute for profile picture
+    private String ban = "non"; // New attribute with default value "non"
 
     public User() {}
 
-    public User(int id, int cin, String nom, String prenom, int tel, String email, String password, String role) {
+    public User(int id, int cin, String nom, String prenom, int tel, String email, String password, String role, String adresse, String username, String photoProfile, String ban) {
         this.id = id;
         this.cin = cin;
         this.nom = nom;
@@ -21,6 +25,24 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.adresse = adresse;
+        this.username = username;
+        this.photoProfile = photoProfile;
+        this.ban = (ban != null) ? ban : "non"; // Ensures default value
+    }
+
+    public User(int cin, String nom, String prenom, int tel, String email, String password, String role, String adresse, String username, String photoProfile, String ban) {
+        this.cin = cin;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.tel = tel;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.adresse = adresse;
+        this.username = username;
+        this.photoProfile = photoProfile;
+        this.ban = (ban != null) ? ban : "non";
     }
 
     public int getId() { return id; }
@@ -47,10 +69,22 @@ public class User {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 
+    public String getAdresse() { return adresse; }
+    public void setAdresse(String adresse) { this.adresse = adresse; }
+
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+
+    public String getPhotoProfile() { return photoProfile; }
+    public void setPhotoProfile(String photoProfile) { this.photoProfile = photoProfile; }
+
+    public String getBan() { return ban; }
+    public void setBan(String ban) { this.ban = (ban != null) ? ban : "non"; }
 
     @Override
     public String toString() {
         return "User{id=" + id + ", cin=" + cin + ", nom='" + nom + "', prenom='" + prenom + "', tel=" + tel +
-                ", email='" + email + "', role='" + role  + "}";
+                ", email='" + email + "', username='" + username + "', role='" + role + "', adresse='" + adresse +
+                "', photoProfile='" + photoProfile + "', ban='" + ban + "'}";
     }
 }

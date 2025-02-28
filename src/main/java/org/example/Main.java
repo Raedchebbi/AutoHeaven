@@ -1,101 +1,54 @@
-package org.example;
+/*package org.example;
 
-import models.Adresse;
-import services.AdresseService;
-import services.UserService;
+import models.Offre;
 import models.User;
-import models.Reclamation;
-import models.Messagerie;
-import services.ReclamationService;
-import services.MessagerieService;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import services.OffreService;
+import services.UserService;
 
 public class Main {
     public static void main(String[] args) {
-        // Création des services
-        AdresseService adresseService = new AdresseService();
+        OffreService offreService = new OffreService();
         UserService userService = new UserService();
-        ReclamationService reclamationService = new ReclamationService();
-        MessagerieService messagerieService = new MessagerieService();
 
         try {
-            // Ajout user
-            User newUser = new User(0, 98765532, "Sami", "Ben Ali", 55443322, "sami.benali@email.com", "securePass", "client");
+            // Ajout user avec adresse et username
+            User newUser = new User(0, 98765532, "Sami", "Ben Ali", 55443322, "sami.benali@email.com", "securePass", "client", "Rue Ibn Khaldoun, Sfax, 3000", "sami_benali");
             userService.create(newUser);  // Créer l'utilisateur dans la base de données
-            System.out.println("Nouvel utilisateur ajouté : " + newUser.getNom() + " " + newUser.getPrenom());
-            System.out.println("Utilisateur ajouté avec ID : " + newUser.getId());
 
-            // Ajout adresse
-            Adresse adresse = new Adresse(0, "Rue Ibn Khaldoun", "Sfax", "3000", "Immeuble El-Naoufel", "5", newUser.getId());
-            adresseService.create(adresse);
-            System.out.println("Adresse ajoutée pour l'utilisateur " + newUser.getNom() + " " + newUser.getPrenom() + " : " + adresse);
+            // Ajout offre
+            Offre offre = new Offre(0, "Réduction de 20% sur tous les équipements", "Offre valable sur tous les équipements en magasin", 20.0, "2025-02-01", "2025-02-28", 1);
+            offreService.create(offre);
 
-            // Affichage adresses
-            System.out.println("Liste des adresses : " + adresseService.getAll());
+            // Affichage des offres
+            System.out.println("Liste des offres : ");
+            offreService.getAll().forEach(o -> System.out.println(o));
 
-            // Update adresse
-            adresse.setRue("Avenue Habib Bourguiba");
-            adresse.setNomBatiment("Immeuble Al-Fourat");
-            adresse.setNumeroPorte("7");
-            adresseService.update(adresse);
-            System.out.println("Adresse mise à jour : " + adresse);
+            // Mise à jour de l'offre
+            offre.setType_offre("Réduction de 30% sur les équipements");
+            offre.setDescription("Nouvelle offre spéciale sur tous les équipements.");
+            offre.setTaux_reduction(30.0);
+            offreService.update(offre);
+            System.out.println("Offre mise à jour : " + offre);
 
-            // Update user
+            // Mise à jour de l'utilisateur (avec changement d'adresse et de username)
             newUser.setNom("Ahmed");
             newUser.setPrenom("Ben Mohamed");
             newUser.setEmail("ahmed.benmohamed@email.com");
             newUser.setTel(55443311);
+            newUser.setAdresse("Rue Mongi Slim, Tunis, 1000");
+            newUser.setUsername("ahmed_benmohamed"); // Mise à jour du username
             userService.update(newUser);
             System.out.println("Utilisateur mis à jour : " + newUser.getNom() + " " + newUser.getPrenom());
 
-            // Supprimer l'adresse
-            adresseService.delete(1);  // Supprimer l'adresse dans la base de données
-            System.out.println("Adresse supprimée.");
+            // Suppression de l'offre
+            offreService.delete(offre);
 
-            // Supprimer user
-            userService.delete(1);  // Supprimer l'utilisateur dans la base de données
-            System.out.println("Utilisateur supprimé.");
-
-            /////////////////////////// ==== TEST MESSAGERIE ====
-            Messagerie message = new Messagerie("client", "bonsoir, comment allez-vous ?", "admin", LocalDateTime.now(), 43);
-            messagerieService.create(message);
-            System.out.println("✅ Message envoyé !");
-            System.out.println(messagerieService.getAll());
-
-            /////////////////////////////// ==== TEST UPDATE MESSAGERIE ====
-            Messagerie updatedMessage = new Messagerie(58, "client", "Message mis à jour !", "client", LocalDateTime.now(), 43);
-            messagerieService.update(updatedMessage);
-            System.out.println("✅ Message mis à jour !");
-            System.out.println(messagerieService.getAll());
-
-            ////////////////////////// ==== TEST DELETE MESSAGERIE ====
-            messagerieService.delete(4);
-            System.out.println("✅ Message supprimé !");
-            System.out.println(messagerieService.getAll());
-
-            /////////////////////////// ==== TEST RECLAMATION ====
-            Reclamation reclamation = new Reclamation("Problème de connexion", "Je n'arrive pas à me connecter.", "rejetee", LocalDate.now(), 4);
-            reclamationService.create(reclamation);
-            System.out.println("✅ Réclamation créée !");
-            System.out.println(reclamationService.getAll());
-
-            ////////////////////////// ==== TEST UPDATE RECLAMATION ====
-            Reclamation updatedReclamation = new Reclamation(50, "Problème de connexion", "Connexion rétablie, mise à jour !", "rejetee", LocalDate.now(), 4);
-            reclamationService.update(updatedReclamation);
-            System.out.println("✅ Réclamation mise à jour !");
-            System.out.println(reclamationService.getAll());
-
-            reclamationService.delete(50);
-            System.out.println("✅ Réclamation supprimée !");
-            System.out.println(reclamationService.getAll());
-
-            // Vérifier si les messages associés sont supprimés
-            System.out.println(messagerieService.getAll());
+            // Suppression de l'utilisateur
+            userService.delete(newUser);
 
         } catch (Exception e) {
-            System.out.println("❌ Erreur : " + e.getMessage());
+            System.out.println("Erreur : " + e.getMessage());
         }
     }
 }
+*/
