@@ -1,0 +1,139 @@
+.nav-form{
+    -fx-background-color: linear-gradient(to bottom right, red, black);
+}
+.nav-btn{
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-text-fill: #fff;
+    -fx-alignment: CENTER-LEFT;
+}
+
+
+.logout:hover{
+    -fx-background-color: red;
+}
+
+.shadow{
+    -fx-effect:dropshadow(three-pass-box, rgba(0,0,0,0.5), 6,0,0,0);
+}
+.table-header {
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(to bottom right, red, black);
+    -fx-padding: 5px;
+    -fx-border-color: black;
+    -fx-border-width: 1px 0px 1px 0px;
+}
+
+.table-row {
+    -fx-background-color: white;
+    -fx-padding: 5px;
+    -fx-border-color: black;
+    -fx-border-width: 0px 0px 1px 0px; /* Bottom border */
+}
+
+.table-data {
+    -fx-padding: 5px;
+}
+
+.add-btn{
+    -fx-background-color: #304575;
+    -fx-background-radius: 8px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-cursor:hand;
+}
+
+.add-btn:hover{
+    -fx-background-color: #3357a4;
+}
+.update-btn{
+    -fx-background-color: #327252;
+    -fx-background-radius: 8px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-cursor:hand;
+}
+
+.update-btn:hover{
+    -fx-background-color: #309a65;
+}
+.delete-btn{
+    -fx-background-color: #86253f;
+    -fx-background-radius: 8px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-cursor:hand;
+}
+
+.delete-btn:hover{
+    -fx-background-color: #ae1d46;
+}
+.clear-btn{
+    -fx-background-color: #753566;
+    -fx-background-radius: 8px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-cursor:hand;
+}
+
+.clear-btn:hover{
+    -fx-background-color: #9d3485;
+}
+
+.vider-btn{
+    -fx-background-color: #894a2d;
+    -fx-background-radius: 8px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-cursor:hand;
+}
+
+.vider-btn:hover{
+    -fx-background-color: #b46a4a;
+}
+
+.background-image{
+    -fx-background-image: url("file:/C:/Users/MSI/Desktop/pidev/AutoHeaven/images/back.jpg");
+    -fx-background-repeat: stretch;
+
+}
+
+.top-bar{
+    -fx-background-color: rgba(60, 59, 59, 0.8);
+}
+
+.transparent{
+    -fx-background-color: rgba(0,0,0,0);
+}
+
+.pink-button{
+    -fx-background-color: rgba(60, 59, 59, 0.8);
+    -fx-background-radius: 100;
+}
+
+.purple-button{
+    -fx-background-color: rgba(173, 1, 1, 0.8);
+    -fx-background-radius: 100;
+}
+
+.transparent-button{
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 100;
+}
+
+.shadow{
+    -fx-effect: dropShadow(one-pass-box,rgba(0,0,0,0.3), 10.0 , 0.0 , 0.0, 10.0);
+}
+
+.offer-background{
+    -fx-background-color: rgba(60, 59, 59, 0.8);
+    -fx-background-radius: 30;
+}
+
+.profile-background{
+    -fx-background-color: rgba(255, 255, 255, 0.72);
+    -fx-background-radius: 30;
+}
