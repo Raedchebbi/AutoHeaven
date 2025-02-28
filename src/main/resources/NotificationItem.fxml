@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<HBox fx:id="item" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="78.0" prefWidth="808.0" styleClass="equipement_cell_container" stylesheets="@detailequip.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fx:id="message" fill="#f20707" strokeType="OUTSIDE" strokeWidth="0.0" text="Roue est en rupture de stock" wrappingWidth="461.372314453125">
+         <HBox.margin>
+            <Insets left="30.0" />
+         </HBox.margin>
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Label fx:id="date" text="15/05/2010 T22:00:30PM">
+         <HBox.margin>
+            <Insets left="100.0" />
+         </HBox.margin>
+         <font>
+            <Font name="Cambria" size="14.0" />
+         </font>
+      </Label>
+      <FontAwesomeIconView fx:id="status" glyphName="EYE" size="20.0" text="">
+         <HBox.margin>
+            <Insets left="20.0" />
+         </HBox.margin>
+      </FontAwesomeIconView>
+   </children>
+</HBox>

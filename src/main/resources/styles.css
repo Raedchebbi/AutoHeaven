@@ -1,0 +1,61 @@
+/* Style général de la fenêtre */
+.root {
+    -fx-background-color: #f0f2f5;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Style de la zone de chat */
+.chat-area {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #000000;
+}
+
+/* Style des messages de l'utilisateur */
+.user-message {
+    -fx-background-color: #0078ff;
+    -fx-background-radius: 10px 10px 0 10px;
+    -fx-padding: 8px 12px;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-alignment: center-right;
+}
+
+/* Style des messages du chatbot */
+.bot-message {
+    -fx-background-color: #e4e6eb;
+    -fx-background-radius: 10px 10px 10px 0;
+    -fx-padding: 8px 12px;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+    -fx-alignment: center-left;
+}
+
+/* Style du champ de saisie */
+.input-field {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #000000;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+}
+
+/* Style du bouton Envoyer */
+.send-button {
+    -fx-background-color: #0078ff;
+    -fx-background-radius: 20px;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+}
+
+.send-button:hover {
+    -fx-background-color: #005bb5;
+}
