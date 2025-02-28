@@ -4,27 +4,23 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox prefHeight="400.0" prefWidth="600.0" styleClass="VBox" stylesheets="@styless.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="600.0" styleClass="VBox" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <!-- HBox pour la ligne de titres -->
-        <HBox prefHeight="50.0" prefWidth="600.0" spacing="10.0" styleClass="HBox" stylesheets="@styless.css">
+        <HBox prefHeight="50.0" prefWidth="600.0" spacing="10.0" styleClass="HBox" stylesheets="@styles.css">
             <children>
                 <Label styleClass="date" text="Titre" />
-                <Label styleClass="contenu" stylesheets="@styless.css" text="Contenu" />
-                <Label styleClass="date" stylesheets="@styless.css" text="Status" />
-                <Label styleClass="date" stylesheets="@styless.css" text="Date" />
-                <Label styleClass="date" stylesheets="@styless.css" text="Nom" />
-
+                <Label styleClass="contenu" stylesheets="@styles.css" text="Contenu" />
+                <Label styleClass="date" stylesheets="@styles.css" text="Status" />
+                <Label styleClass="date" stylesheets="@styles.css" text="Date" />
+                <Label styleClass="date" stylesheets="@styles.css" text="Nom" />
                 <Label styleClass="date" text="Tel" />
                 <Label styleClass="date" text="Email" />
             </children>
         </HBox>
 
         <!-- HBox pour la première réclamation -->
-
-        <HBox prefHeight="50.0" prefWidth="600.0" spacing="10.0" styleClass="HBox" stylesheets="@styless.css">
-
+        <HBox prefHeight="50.0" prefWidth="600.0" spacing="10.0" styleClass="HBox" stylesheets="@styles.css">
             <children>
                 <Label text="Titre 1" />
                 <Label text="Contenu 1" />

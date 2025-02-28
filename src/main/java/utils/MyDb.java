@@ -11,7 +11,9 @@ public class MyDb {
     private Connection conn;
     private static MyDb instance;
 
-    public MyDb() {
+
+    private MyDb() {
+
         try {
             // Charger explicitement le pilote JDBC
             Class.forName("com.mysql.cj.jdbc.Driver");

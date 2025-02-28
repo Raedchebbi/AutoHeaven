@@ -162,6 +162,7 @@ public class AfficherReclamationController {
         if (isBannedContent) {
             btn.setText("Bloqué");
             btn.setDisable(true);
+
             btn.setStyle("-fx-background-color: grey; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-background-radius: 8px; -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);");
         } else if ("repondu".equalsIgnoreCase(status)) {
             btn.setText("repondu");
@@ -174,6 +175,7 @@ public class AfficherReclamationController {
         } else {
             // Default case for any unexpected status
             btn.setText("en_attente");
+
             btn.setStyle("-fx-background-color: linear-gradient(to right, #FFCDD2, #FF8A80); -fx-text-fill: #C62828; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-background-radius: 8px; -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);");
             btn.setOnAction(e -> openRepondreFormInline(id_rec, titre, contenu, status));
         }

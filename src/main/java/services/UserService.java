@@ -92,7 +92,15 @@ public class UserService implements Crud<User> {
     }
 
     @Override
-    public void updateStatus(int idRec, String newStatus) throws SQLException {
+
+    public void updateStatus(int userId, String newStatus) throws SQLException {
+        String sql = "UPDATE user SET status = ? WHERE id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, newStatus);
+            stmt.setInt(2, userId);
+            stmt.executeUpdate();
+        }
 
     }
 
