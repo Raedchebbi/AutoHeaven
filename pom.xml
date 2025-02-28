@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>PiDev</artifactId>
+    <artifactId>AutoHeaven</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -17,10 +17,16 @@
     <dependencies>
         <!-- MySQL Connector -->
         <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>17.0.6</version>
+        </dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.33</version>
         </dependency>
+
 
         <!-- JavaFX Dependencies -->
         <dependency>
@@ -117,9 +123,25 @@
             <groupId>com.stripe</groupId>
             <artifactId>stripe-java</artifactId>
             <version>20.124.0</version>
+
         </dependency>
 
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+
+                        <mainClass>org.example.mainFXvoiture</mainClass>
+
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 
     <build>
         <plugins>

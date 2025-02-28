@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<AnchorPane stylesheets="@style1.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.Detailsvoiture" prefHeight="600.0" prefWidth="1200.0">
+    <VBox spacing="15" layoutX="50.0" layoutY="50.0" alignment="CENTER">
+        <Label fx:id="typeLabel" text="Type: " />
+        <Label fx:id="typeCarburantLabel" text="Type Carburant: " />
+        <Label fx:id="typeUtilisationLabel" text="Type Utilisation: " />
+        <Label fx:id="nbrPorteLabel" text="Nombre de Portes: " />
+        <Label fx:id="transmissionLabel" text="Transmission: " />
+
+        <ImageView fx:id="imageView" fitWidth="300" fitHeight="200" />
+
+        <Button fx:id="backButton" text="Back" onAction="#handleBack" />
+    </VBox>
+
+</AnchorPane>

@@ -22,10 +22,12 @@ public class MyDb {
         return conn;
     }
 
+
     public MyDb() {
         try {
             this.conn = DriverManager.getConnection(url, user, password);
             //System.out.println("Connection established");
+
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -33,6 +35,7 @@ public class MyDb {
 
 
     }
+
 }
 
 
