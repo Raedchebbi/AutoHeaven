@@ -102,6 +102,11 @@ public class UserService implements Crud<User> {
     }
 
     @Override
+    public void delete(int obj) throws Exception {
+
+    }
+
+    @Override
     public List<User> getAll() throws Exception {
         String sql = "SELECT * FROM user";
         Statement stmt = conn.createStatement();

@@ -59,6 +59,11 @@ public class VoitureService implements Crud<Voiture> {
     }
 
     @Override
+    public void delete(Voiture obj) throws Exception {
+
+    }
+
+    @Override
     public void delete(int id_v) throws Exception {
         String sql = "DELETE FROM voiture WHERE id_v = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);

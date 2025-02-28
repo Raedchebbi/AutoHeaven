@@ -168,7 +168,7 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background-image" stylesheets="@profileDesign.css" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="Acceuil_form" layoutX="14.0" layoutY="14.0" prefHeight="554.4" prefWidth="868.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="Acceuil_form" layoutX="14.0" layoutY="14.0" prefHeight="554.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="846.0" styleClass="profile-background" stylesheets="@profileDesign.css" />
                      </children></AnchorPane>
@@ -270,7 +270,7 @@
                   <AnchorPane fx:id="services_form" layoutX="14.0" layoutY="14.0" prefHeight="554.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <AnchorPane fx:id="voiture_form" prefHeight="554.4" prefWidth="868.0" visible="false" />
                   <AnchorPane fx:id="equip_form" prefHeight="554.4" prefWidth="868.0" visible="false" />
-                  <AnchorPane fx:id="avis_form" prefHeight="554.4" prefWidth="868.0" visible="false" />
+                  <AnchorPane fx:id="avis_form" prefHeight="554.4" prefWidth="868.0" />
                   <AnchorPane fx:id="rec_form" prefHeight="554.4" prefWidth="868.0" visible="false" />
                   <AnchorPane fx:id="offre_form" layoutX="14.0" layoutY="14.0" prefHeight="530.0" prefWidth="845.0" visible="false">
                      <children>

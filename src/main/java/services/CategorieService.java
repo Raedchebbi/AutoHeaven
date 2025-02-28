@@ -41,6 +41,11 @@ public class CategorieService implements Crud<Categorie> {
     }
 
     @Override
+    public void delete(Categorie obj) throws Exception {
+
+    }
+
+    @Override
 
     public void delete(int id_c) throws Exception {
         String checkSql = "SELECT id_c FROM categorie WHERE id_c = ?";

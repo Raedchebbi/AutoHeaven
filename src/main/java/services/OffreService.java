@@ -81,6 +81,11 @@ public class OffreService implements Crud<Offre> {
     }
 
     @Override
+    public void delete(int obj) throws Exception {
+
+    }
+
+    @Override
     public List<Offre> getAll() throws Exception {
         String sql = "SELECT o.* FROM offre o";
         Statement stmt = conn.createStatement();
