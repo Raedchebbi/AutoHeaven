@@ -29,27 +29,15 @@
             <children>
                 <Button fx:id="star1" prefHeight="43.0" prefWidth="69.0" style="-fx-font-size: 18px;" text="★" />
                 <Button fx:id="star2" style="-fx-font-size: 18px;" text="★" />
-                <Button fx:id="star3" style="-fx-font-size: 18px;" text="★" />
             </children>
         </HBox>
 
-        <!-- Label Commentaire -->
-        <Label layoutX="55.0" layoutY="258.0" text="Commentaire :">
+        <Label layoutX="28.0" layoutY="275.0" text="Commentaire :">
             <font>
                 <Font size="23.0" />
             </font>
         </Label>
-
-        <!-- Date Picker -->
-        <DatePicker fx:id="date" layoutX="215.0" layoutY="407.0" stylesheets="@Testsirine.css" />
-        <Label layoutX="100.0" layoutY="412.0" text="Date :">
-            <font>
-                <Font size="23.0" />
-            </font>
-        </Label>
-
-        <!-- TextArea Commentaire -->
-        <TextArea fx:id="commentaire" layoutX="212.0" layoutY="234.0" prefHeight="103.0" prefWidth="254.0" styleClass="text-field" stylesheets="@Testsirine.css" />
+        <TextArea fx:id="commentaire" layoutX="206.0" layoutY="252.0" prefHeight="103.0" prefWidth="254.0" styleClass="text-field" stylesheets="@Testsirine.css" />
 
         <!-- Boutons -->
         <Button fx:id="creer" layoutX="551.0" layoutY="477.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="122.0" stylesheets="@Testsirine.css" text="Créer" />
@@ -70,17 +58,20 @@
             </font>
         </Label>
 
-        <!-- Titre de l'avis -->
         <Text layoutX="227.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text-field" text="AVIS" textAlignment="CENTER" wrappingWidth="199.9999999999999">
             <font>
                 <Font size="36.0" />
             </font>
         </Text>
 
-        <!-- Bouton pour la liste -->
         <Button fx:id="list" layoutX="28.0" layoutY="477.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="114.0" stylesheets="@Testsirine.css" text="List" />
-
-        <!-- Label Réponse -->
-        <Label fx:id="reponse" layoutX="18.0" layoutY="345.0" prefHeight="40.0" prefWidth="669.0" text="Réponse:" />
+        <Label fx:id="reponse" layoutX="7.0" layoutY="362.0" prefHeight="40.0" prefWidth="669.0" text="Réponse:" />
+          <Button fx:id="star3" layoutX="354.0" layoutY="179.0" style="-fx-font-size: 18px;" text="★" />
+      <DatePicker fx:id="date" layoutX="203.0" layoutY="402.0" />
+      <Label layoutX="28.0" layoutY="411.0" text="Date:">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

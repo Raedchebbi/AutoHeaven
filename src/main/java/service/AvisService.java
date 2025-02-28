@@ -101,6 +101,40 @@ public class AvisService implements Crud<avis> {
         return avisList;
     }
 
+    // Nouvelle méthode pour récupérer les avis par page
+    public List<avis> getAvisByPage(int currentPage, int pageSize) throws SQLException {
+        if (!isConnectionValid()) {
+            System.err.println("❌ Connexion fermée, impossible d'effectuer l'opération.");
+            return new ArrayList<>();  // Retourne une liste vide en cas de connexion fermée
+        }
+
+        // Calcul de l'OFFSET pour la pagination
+        int offset = currentPage * pageSize;
+        String sql = "SELECT * FROM avis LIMIT ? OFFSET ?";
+
+        List<avis> avisList = new ArrayList<>();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, pageSize);  // Nombre d'éléments par page
+            stmt.setInt(2, offset);  // Position de départ des résultats
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    avis a = new avis();
+                    a.setId_a(rs.getInt("id_a"));  // Utilise id_a si c'est la colonne correcte
+                    a.setNote(rs.getInt("note"));
+                    a.setCommentaire(rs.getString("commentaire"));
+                    a.setDateavis(rs.getDate("dateavis"));
+                    a.setIdUser(rs.getInt("id"));
+                    a.setIdVoiture(rs.getInt("id_v"));
+                    avisList.add(a);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur lors de la récupération des avis par page : " + e.getMessage());
+            return new ArrayList<>();
+        }
+        return avisList;
+    }
+
     private boolean isConnectionValid() {
         try {
             // Vérifie si la connexion est ouverte et valide
@@ -111,5 +145,4 @@ public class AvisService implements Crud<avis> {
             return false;
         }
     }
-
 }

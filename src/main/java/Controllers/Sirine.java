@@ -1,5 +1,6 @@
 package Controllers;
-
+import javafx.animation.FadeTransition;
+import javafx.scene.Node;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,7 +12,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 import javafx.scene.layout.HBox;
-
+import javafx.animation.FadeTransition;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
+import javafx.animation.ScaleTransition;
+import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -95,7 +100,21 @@ public class Sirine {
             stars.get(i).setOnAction(event -> updateStars(rating));  // Met à jour la note quand une étoile est cliquée
         }
     }
-
+    public class StarRatingAnimation {
+        public void animateStar(HBox starContainer) {
+            // Créer une transition d'échelle pour agrandir les étoiles et les rendre plus brillantes
+            ScaleTransition scaleTransition = new ScaleTransition();
+            scaleTransition.setNode(starContainer);
+            scaleTransition.setCycleCount(2);
+            scaleTransition.setAutoReverse(true);
+            scaleTransition.setDuration(Duration.millis(500));
+            scaleTransition.setFromX(1);
+            scaleTransition.setToX(1.5);
+            scaleTransition.setFromY(1);
+            scaleTransition.setToY(1.5);
+            scaleTransition.play();
+        }
+    }
     private void updateStars(int rating) {
         if (stars != null && !stars.isEmpty()) {
             for (int i = 0; i < stars.size(); i++) {
@@ -147,23 +166,35 @@ public class Sirine {
             return;
         }
 
-        if (contientMotsInterdits(commentaire) || estSpam(commentaire) || contientLien(commentaire)) {
-            reponse.setText("Votre commentaire semble inapproprié.");
-            return;
+        String sentiment = analyserSentiment(commentaire);
+        String message;
+        Color color;
+
+        switch (sentiment) {
+            case "positif":
+                message = "😊 Merci pour votre avis positif !";
+                color = Color.GREEN;
+                break;
+            case "négatif":
+                message = "😔 Nous sommes désolés pour votre expérience. Contactez-nous pour améliorer nos services.";
+                color = Color.RED;
+                break;
+            default:
+                message = "🙂 Merci pour votre retour !";
+                color = Color.ORANGE;
+                break;
         }
 
-        // Liste de mots positifs
-        List<String> motsPositifs = Arrays.asList("super", "excellent", "top", "magnifique", "satisfait", "bien", "merci", "adoré", "bravo");
+        // Mettre à jour l'affichage
+        reponse.setText(message);
+        reponse.setTextFill(color);
 
-        // Vérifier si le commentaire contient des mots positifs
-        boolean estPositif = motsPositifs.stream().anyMatch(commentaire.toLowerCase()::contains);
-
-        if (estPositif) {
-            reponse.setText("Merci pour votre avis positif ! 😊");
-        } else {
-            reponse.setText("Nous sommes désolés que votre expérience n’ait pas été satisfaisante. Nous allons nous améliorer !");
-        }
+        // Utiliser FadeEffect pour l'animation
+        FadeEffect fadeEffect = new FadeEffect();
+        fadeEffect.fadeIn(reponse);  // Applique l'effet de fondu en entrée
     }
+
+
 
     private boolean estSpam(String commentaire) {
         if (commentaire.length() < 5 || commentaire.length() > 300) return true;
@@ -212,7 +243,7 @@ public class Sirine {
         try {
             int noteValue = Integer.parseInt(note.getText());
             String commentaireValue = commentaire.getText();
-            Date dateAvis = Date.valueOf(date.getValue());
+            Date dateAvis = new Date(System.currentTimeMillis()); // Date du système
             int idUser = Integer.parseInt(iduser.getText());
             int idVoiture = Integer.parseInt(idvoiture.getText());
 
@@ -247,7 +278,7 @@ public class Sirine {
             int idVoiture = Integer.parseInt(idvoiture.getText());
             int noteValue = Integer.parseInt(note.getText());
             String commentaireValue = commentaire.getText();
-            Date dateAvis = Date.valueOf(date.getValue());
+            Date dateAvis = new Date(System.currentTimeMillis()); // Date du système
 
             // Valider le commentaire
             if (!isCommentValid(commentaireValue)) {
@@ -282,6 +313,32 @@ public class Sirine {
     }
 
 
+    private String analyserSentiment(String commentaire) {
+        // Liste de mots positifs et négatifs
+        List<String> motsPositifs = Arrays.asList("super", "excellent", "top", "magnifique", "satisfait", "bien", "merci", "adoré", "bravo", "content");
+        List<String> motsNegatifs = Arrays.asList("déçu", "mauvais", "horrible", "nul", "mécontent", "arnaque", "insatisfait", "triste", "inadmissible");
+
+        int score = 0;
+
+        // Vérifier si le commentaire contient des mots positifs ou négatifs
+        for (String mot : commentaire.toLowerCase().split("\\s+")) {
+            if (motsPositifs.contains(mot)) {
+                score++;
+            } else if (motsNegatifs.contains(mot)) {
+                score--;
+            }
+        }
+
+        // Retourner le type d'avis en fonction du score
+        if (score > 0) {
+            return "positif";
+        } else if (score < 0) {
+            return "négatif";
+        } else {
+            return "neutre";
+        }
+    }
+
     private void confirmerSuppression() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment supprimer cet avis ?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(response -> {
@@ -290,6 +347,8 @@ public class Sirine {
             }
         });
     }
+
+
 
     private void supprimerAvis() {
         // Valider les champs avant d'exécuter la logique
@@ -318,6 +377,10 @@ public class Sirine {
                 if (rowsAffected > 0) {
                     // Si des lignes ont été affectées, l'avis a été supprimé avec succès
                     showSuccess("Avis supprimé avec succès !");
+
+                    // Utiliser l'effet de fondu après la suppression
+                    FadeEffect fadeEffect = new FadeEffect();
+                    fadeEffect.fadeOut(reponse);  // Applique l'effet de fondu en sortie sur la réponse
                 } else {
                     // Si aucune ligne n'a été affectée, cela signifie que l'avis n'existe pas
                     showError("Erreur", "Aucun avis trouvé avec les identifiants fournis.");
@@ -329,6 +392,7 @@ public class Sirine {
             e.printStackTrace();
         }
     }
+
 
 
     private void showSuccess(String message) {

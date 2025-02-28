@@ -5,59 +5,68 @@
     -fx-background-position: center;
     -fx-font-family: "Segoe UI", Arial, sans-serif;
     -fx-font-size: 14px;
+    -fx-background-blend-mode: multiply; /* Rendre l'image de fond plus douce */
 }
 
 /* ----------- Style des sections en Glassmorphism ----------- */
 .section {
-    -fx-background-color: rgba(255, 255, 255, 0.15); /* Fond semi-transparent */
-    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-background-color: rgba(255, 255, 255, 0.2); /* Fond semi-transparent */
+    -fx-border-color: rgba(255, 255, 255, 0.5);
     -fx-border-width: 1px;
-    -fx-background-radius: 10px;
-    -fx-border-radius: 10px;
-    -fx-padding: 15px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 2);
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 15, 0.5, 0, 5);
+    -fx-transition: all 0.3s ease-in-out; /* Animation douce */
 }
 
 /* ----------- Style des Titres ----------- */
 .title {
-    -fx-font-size: 28px;
-    -fx-text-fill: #d32f2f;
+    -fx-font-size: 32px;
+    -fx-text-fill: #ff4081; /* Couleur rose tendance */
     -fx-font-weight: bold;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0.5, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.5, 0, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+.title:hover {
+    -fx-text-fill: #d32f2f; /* Changer la couleur au survol */
 }
 
 /* ----------- Style des TextFields ----------- */
 .text-field {
-    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-background-color: rgba(255, 255, 255, 0.9);
     -fx-text-fill: #333;
     -fx-border-color: rgba(255, 255, 255, 0.5);
     -fx-border-radius: 8px;
     -fx-padding: 12px;
+    -fx-transition: all 0.2s ease-in-out;
 }
 
 .text-field:focused {
-    -fx-border-color: #d32f2f;
-    -fx-effect: dropshadow(gaussian, rgba(211, 47, 47, 0.5), 10, 0, 0, 0);
+    -fx-border-color: #ff4081;
+    -fx-effect: dropshadow(gaussian, rgba(255, 64, 129, 0.5), 10, 0, 0, 2);
 }
 
 /* ----------- Style des Boutons ----------- */
 .button {
-    -fx-background-color: linear-gradient(to right, #d32f2f, #ff6f61);
+    -fx-background-color: linear-gradient(to right, #ff4081, #ff6f61); /* Dégradé dynamique */
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 16px;
     -fx-padding: 12px 25px;
-    -fx-border-radius: 10px;
+    -fx-border-radius: 25px; /* Bords plus arrondis pour un look plus moderne */
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 6, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0.5, 0, 5);
+    -fx-transition: all 0.3s ease;
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(to right, #b71c1c, #ff3d00);
+    -fx-background-color: linear-gradient(to right, #d81b60, #ff3d00); /* Changer la couleur au survol */
 }
 
 .button:pressed {
-    -fx-background-color: #8e0000;
+    -fx-background-color: #d50000; /* Couleur quand le bouton est pressé */
 }
 
 /* ----------- Style de la liste des avis ----------- */
@@ -71,29 +80,38 @@
     -fx-padding: 15px;
     -fx-font-size: 14px;
     -fx-border-radius: 8px;
+    -fx-transition: background-color 0.3s ease; /* Transition fluide */
 }
 
 .styled-list .list-cell:filled:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-color: rgba(255, 255, 255, 0.3); /* Légère modification du fond au survol */
     -fx-cursor: hand;
 }
 
 .styled-list .list-cell:filled:selected {
-    -fx-background-color: #e57373;
+    -fx-background-color: #ff4081; /* Couleur de fond au survol */
     -fx-text-fill: white;
 }
 
 /* ----------- Personnalisation des étoiles de notation ----------- */
 .star {
     -fx-background-color: lightgray;
+    -fx-shape: "M 8,0 L 10,6 L 16,6 L 11,9 L 13,15 L 8,12 L 3,15 L 5,9 L 0,6 L 6,6 Z"; /* Forme d'une étoile */
+    -fx-padding: 8px;
+    -fx-transition: all 0.3s ease;
 }
 
 .star.selected {
-    -fx-background-color: gold;
+    -fx-background-color: gold; /* Couleur dorée pour une étoile sélectionnée */
 }
 
-/* Animation au survol */
 .star:hover {
-    -fx-fill: #ffea00;
-    -fx-effect: dropshadow(gaussian, rgba(255,255,0,0.5), 8, 0, 0, 0);
+    -fx-background-color: #ffea00;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.5), 10, 0, 0, 5); /* Effet lumineux au survol */
+}
+
+/* Animation au survol de l'étoile */
+.star:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
 }
