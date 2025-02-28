@@ -15,6 +15,7 @@ public class Mainfx extends Application {
     }
 
     @Override
+
     public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/login2.fxml"));
         Parent root = loader.load();
@@ -23,6 +24,7 @@ public class Mainfx extends Application {
         stage.setScene(new Scene(root, 1100, 600));
         //stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
+
 
 
     }
