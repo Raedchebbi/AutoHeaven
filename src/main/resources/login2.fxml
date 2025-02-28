@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" styleClass="background-image" stylesheets="@profileDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.login2Controller">
+   <top>
+      <HBox alignment="CENTER" prefHeight="67.0" prefWidth="1101.0" styleClass="top-bar" stylesheets="@profileDesign.css" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="reserveerbtn" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="52.0" prefWidth="110.0" styleClass="transparent" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
+               <font>
+                  <Font name="Andalus" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="marquebtn" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="52.0" prefWidth="117.0" styleClass="transparent" stylesheets="@profileDesign.css" text="Marques" textFill="WHITE">
+               <font>
+                  <Font name="Andalus" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="equippbtn" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="52.0" prefWidth="148.0" styleClass="transparent" stylesheets="@profileDesign.css" text="Equipements" textFill="WHITE">
+               <font>
+                  <Font name="Andalus" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="offresbtn" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="52.0" prefWidth="87.0" styleClass="transparent" stylesheets="@profileDesign.css" text="Offres" textFill="WHITE">
+               <font>
+                  <Font name="Andalus" size="20.0" />
+               </font>
+            </Button>
+            <Pane prefHeight="67.0" prefWidth="159.0" />
+            <HBox alignment="CENTER" prefHeight="67.0" prefWidth="259.0">
+               <children>
+                  <ImageView fx:id="searchImageView" fitHeight="25.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/search.png" />
+                     </image>
+                  </ImageView>
+                  <TextField promptText="Marque de Voiture ..." styleClass="transparent" stylesheets="@profileDesign.css">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Andalus" size="18.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <Button fx:id="loginButton" alignment="CENTER" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="52.0" prefWidth="142.0" styleClass="transparent" stylesheets="@profileDesign.css" text="Se Connecter" textFill="WHITE">
+               <font>
+                  <Font name="Andalus" size="20.0" />
+               </font>
+            </Button>
+            <Separator maxHeight="40.0" minHeight="40.0" orientation="VERTICAL" prefHeight="40.0" />
+            <Button fx:id="signupButton" alignment="CENTER" mnemonicParsing="false" onAction="#signupButtonOnAction" prefHeight="52.0" prefWidth="115.0" styleClass="transparent" stylesheets="@profileDesign.css" text="S'inscrire" textFill="WHITE">
+               <font>
+                  <Font name="Andalus" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="BOTTOM_LEFT">
+         <children>
+            <Label prefHeight="19.0" prefWidth="409.0" text="Nous sommes ouverts 24h/24, y compris les jours fériés" textFill="WHITE">
+               <font>
+                  <Font name="Andalus" size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="138.0" prefWidth="631.0" styleClass="shadow" stylesheets="@profileDesign.css" text="Votre Voiture, Notre Expertise&#10;avec AutoHeaven&#10;&#10;" textFill="WHITE">
+               <font>
+                  <Font name="Cambria" size="40.0" />
+               </font>
+            </Label>
+            <Label prefHeight="18.0" prefWidth="266.0" styleClass="shadow" stylesheets="@profileDesign.css" text="Réservez, entretenez, roulez en luxe." textFill="WHITE">
+               <font>
+                  <Font name="Andalus" size="18.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="1000.0" spacing="60.0" styleClass="shadow" stylesheets="@profileDesign.css">
+               <children>
+                  <Button fx:id="joinbtn" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="35.0" prefWidth="131.0" styleClass="pink-button" stylesheets="@profileDesign.css" text="Rejoindre" textFill="WHITE">
+                     <font>
+                        <Font name="Andalus" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="avisbtn" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="0.0" prefWidth="126.0" styleClass="purple-button" stylesheets="@profileDesign.css" text="Avis" textFill="WHITE">
+                     <font>
+                        <Font name="Andalus" size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets left="100.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="193.0" prefWidth="1100.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="206.0" prefWidth="266.0" styleClass="offer-background" stylesheets="@profileDesign.css">
+               <children>
+                  <HBox prefHeight="50.0" prefWidth="266.0">
+                     <children>
+                        <Label prefHeight="42.0" prefWidth="150.0" text="Drive Test" textFill="WHITE">
+                           <font>
+                              <Font name="Cambria" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label prefHeight="61.0" prefWidth="214.0" styleClass="shadow" stylesheets="@profileDesign.css" text="Range Rover Velar ">
+                     <font>
+                        <Font name="Andalus" size="26.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                     <textFill>
+                        <LinearGradient endX="0.25757575125405285" endY="0.8257575468583541" startX="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+                  <HBox prefHeight="42.0" prefWidth="303.0">
+                     <children>
+                        <Label prefHeight="39.0" prefWidth="186.0" text="À partir de " textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="39.0" prefWidth="81.0" text="75 DT" textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <Button fx:id="plusbtn" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Plus" textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="18.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="transparent-button" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                        </Button>
+                        <Button fx:id="reserverbtn" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="18.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="purple-button" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="178.0" prefWidth="266.0" styleClass="offer-background" stylesheets="@profileDesign.css">
+               <children>
+                  <HBox prefHeight="50.0" prefWidth="266.0">
+                     <children>
+                        <Label prefHeight="42.0" prefWidth="150.0" text="Intervention " textFill="WHITE">
+                           <font>
+                              <Font name="Cambria" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label prefHeight="61.0" prefWidth="214.0" styleClass="shadow" stylesheets="@profileDesign.css" text="mécanicien express">
+                     <font>
+                        <Font name="Andalus" size="26.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                     <textFill>
+                        <LinearGradient endX="0.25757575125405285" endY="0.8257575468583541" startX="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+                  <HBox prefHeight="42.0" prefWidth="303.0">
+                     <children>
+                        <Label prefHeight="39.0" prefWidth="186.0" text="À partir de " textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="39.0" prefWidth="81.0" text="50 DT" textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <Button fx:id="plusbtn1" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Plus" textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="18.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="transparent-button" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                        </Button>
+                        <Button fx:id="reserverbtn1" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="18.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="purple-button" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="5.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="178.0" prefWidth="266.0" styleClass="offer-background" stylesheets="@profileDesign.css">
+               <children>
+                  <HBox prefHeight="50.0" prefWidth="266.0">
+                     <children>
+                        <Label prefHeight="42.0" prefWidth="150.0" text="Service" textFill="WHITE">
+                           <font>
+                              <Font name="Cambria" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label prefHeight="61.0" prefWidth="214.0" styleClass="shadow" stylesheets="@profileDesign.css" text="Remorquage 24/7">
+                     <font>
+                        <Font name="Andalus" size="26.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                     <textFill>
+                        <LinearGradient endX="0.25757575125405285" endY="0.8257575468583541" startX="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+                  <HBox prefHeight="42.0" prefWidth="303.0">
+                     <children>
+                        <Label prefHeight="39.0" prefWidth="186.0" text="À partir de " textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="39.0" prefWidth="98.0" text="100 DT" textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <Button fx:id="plusbtn2" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Plus" textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="18.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="transparent-button" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                        </Button>
+                        <Button fx:id="reserverbtn2" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="18.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="purple-button" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="5.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="178.0" prefWidth="266.0" styleClass="offer-background" stylesheets="@profileDesign.css">
+               <children>
+                  <HBox prefHeight="50.0" prefWidth="266.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="211.0" text="Equipement&amp; Accessoires" textFill="WHITE">
+                           <font>
+                              <Font name="Cambria" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label prefHeight="42.0" prefWidth="242.0" styleClass="shadow" stylesheets="@profileDesign.css" text="Kit entretien premium&#10; (huiles &amp; filtres) ">
+                     <font>
+                        <Font name="Andalus" size="25.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                     <textFill>
+                        <LinearGradient endX="0.25757575125405285" endY="0.8257575468583541" startX="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+                  <HBox prefHeight="42.0" prefWidth="303.0">
+                     <children>
+                        <Label prefHeight="39.0" prefWidth="186.0" text="À partir de " textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="39.0" prefWidth="102.0" text="120 DT" textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <Button fx:id="plusbtn3" alignment="CENTER" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Plus" textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="18.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="transparent-button" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                        </Button>
+                        <Button fx:id="reserverbtn3" mnemonicParsing="false" onAction="#showLoginSignupPrompt" prefHeight="26.0" prefWidth="122.0" stylesheets="@profileDesign.css" text="Réserver" textFill="WHITE">
+                           <font>
+                              <Font name="Andalus" size="18.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="purple-button" />
+                              <String fx:value="shadow" />
+                           </styleClass>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="5.0" right="5.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
