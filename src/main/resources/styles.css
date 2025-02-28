@@ -124,6 +124,21 @@
     -fx-background-color: rgba(255, 100, 100, 0.8);
 }
 
+.scroll-pane .scroll-bar:horizontal { /* Ajouté pour le défilement horizontal */
+    -fx-pref-height: 15;
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:horizontal .thumb {
+    -fx-background-color: rgba(255, 150, 150, 0.5);
+    -fx-background-radius: 4px;
+    -fx-transition: all 0.3s ease;
+}
+
+.scroll-pane .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: rgba(255, 100, 100, 0.8);
+}
+
 .scroll-pane .increment-button, .scroll-pane .decrement-button {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
@@ -187,7 +202,7 @@
 
 /* 📦 Conteneur du formulaire principal */
 #repondreFormContainer {
-    -fx-background-color: transparent; /* Allow #formContainer to handle the background */
+    -fx-background-color: transparent; /* Permet à #formContainer de gérer le fond */
 }
 
 /* 🗃️ CheckBox */
@@ -227,7 +242,29 @@
     -fx-font-size: 14px;
     -fx-text-fill: black;
 }
+
 .checkbox {
     -fx-font-size: 12px;
     -fx-text-fill: #800020; /* Bordeaux pour le texte */
+}
+
+.combo-box {
+    -fx-font-size: 14px;
+    -fx-background-color: #fff;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+
+.category-badge {
+    -fx-background-color: #4CAF50; /* Vert pour "non_classé" */
+    -fx-text-fill: white;
+    -fx-padding: 5px;
+    -fx-background-radius: 10;
+}
+.error-dialog .dialog-pane {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 10px;
+    -fx-padding: 10px;
 }

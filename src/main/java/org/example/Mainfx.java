@@ -12,9 +12,12 @@ public class Mainfx extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/AfficherReclamationController.fxml")); // Charge l'interface admin
+        // Charger le fichier FXML avec le nom exact (ajusté selon votre fichier réel)
+        Parent root = FXMLLoader.load(getClass().getResource("/AfficherReclamationController.fxml"));
         primaryStage.setTitle("PiDev - Gestion des Réclamations (Admin)");
-        primaryStage.setScene(new Scene(root, 1250, 750)); // Ajuste les dimensions pour AfficherReclamation.fxml
+
+        // Utiliser les dimensions du FXML pour cohérence
+        primaryStage.setScene(new Scene(root, 1300, 800));
         primaryStage.show();
     }
 

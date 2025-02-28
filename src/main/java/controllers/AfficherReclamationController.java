@@ -5,14 +5,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import utils.MyDb;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import okhttp3.*;
 import java.io.IOException;
 import java.sql.*;
+import java.sql.Connection;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,20 +31,16 @@ public class AfficherReclamationController {
     @FXML private TextField searchField;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private static final OkHttpClient client = new OkHttpClient();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @FXML
     public void initialize() {
-        // Load initial data (all reclamations, not filtered by banned)
         loadDataFromDatabase(false, "");
-
-        // Set up listeners for the filter and search
         filterBannedCheckBox.setOnAction(e -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText()));
         searchField.textProperty().addListener((observable, oldValue, newValue) -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), newValue));
-
-        // Hide the form container by default and ensure the controller is set
         repondreFormContainer.setVisible(false);
 
-        // Ensure the controller is properly injected by JavaFX from repondrereclamation.fxml
         if (repondreFormController == null) {
             System.err.println("repondreFormController is not injected. Check FXML and controller setup.");
             try {
@@ -67,7 +67,6 @@ public class AfficherReclamationController {
              ResultSet rs = ps.executeQuery()) {
 
             contentBox.getChildren().clear();
-
             List<HBox> rows = processResultSet(rs, showOnlyBanned, searchQuery);
             contentBox.getChildren().addAll(rows);
 
@@ -96,14 +95,12 @@ public class AfficherReclamationController {
 
         String searchLower = searchQuery != null ? searchQuery.toLowerCase() : "";
         if (showOnlyBanned) {
-            // Affiche uniquement les réclamations bannies (contenant des mots interdits) qui correspondent à la recherche
             return reclamations.stream()
-                    .filter(r -> containsBadWord(r.getContenu())) // Filtre uniquement les réclamations bannies
+                    .filter(r -> containsBadWord(r.getContenu()))
                     .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
                     .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
                     .collect(Collectors.toList());
         } else {
-            // Affiche toutes les réclamations (non bannies incluses) qui correspondent à la recherche
             return reclamations.stream()
                     .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
                     .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
@@ -112,8 +109,8 @@ public class AfficherReclamationController {
     }
 
     private HBox createDataRow(int id_rec, String titre, String contenu, String status, Timestamp timestamp, String nom, String tel, String email, boolean isBannedContent) {
-        HBox row = new HBox(15); // Espacement légèrement plus grand pour lisibilité
-        row.setPrefWidth(980.0); // Ajusté pour s’adapter au ScrollPane
+        HBox row = new HBox(15);
+        row.setPrefWidth(980.0);
         row.getStyleClass().add("data-row");
 
         Label lblTitre = createCell(titre, 160.0);
@@ -124,15 +121,22 @@ public class AfficherReclamationController {
         Label lblDate = createCell(timestamp.toLocalDateTime().format(dateFormatter), 140.0);
         Label lblNom = createCell(nom, 140.0);
         Label lblTel = createCell(tel, 120.0);
-        Label lblEmail = createCell(email, 240.0); // Augmenté pour plus de place
-        lblEmail.setWrapText(true); // Active wrapText pour les emails longs
+        Label lblEmail = createCell(email, 240.0);
+        lblEmail.setWrapText(true);
 
         Button btnStatus = new Button(status);
-        btnStatus.setPrefWidth(140.0); // Ajusté pour afficher "Répondu" ou "En attente" complètement
-        btnStatus.setWrapText(true); // Active wrapText pour les boutons
+        btnStatus.setPrefWidth(140.0);
+        btnStatus.setWrapText(true);
         updateButtonState(btnStatus, id_rec, titre, contenu, status, isBannedContent);
 
-        row.getChildren().addAll(lblTitre, lblContenu, lblDate, lblNom, lblTel, lblEmail, btnStatus);
+        // Ajout de l'icône de traduction
+        ImageView translateIcon = new ImageView(getClass().getResource("/images/langue.png").toExternalForm());
+        translateIcon.setFitWidth(25.0);
+        translateIcon.setFitHeight(25.0);
+        translateIcon.setPreserveRatio(true);
+        setupTranslationMenu(translateIcon, lblContenu, contenu);
+
+        row.getChildren().addAll(lblTitre, lblContenu, lblDate, lblNom, lblTel, lblEmail, btnStatus, translateIcon);
         return row;
     }
 
@@ -147,6 +151,61 @@ public class AfficherReclamationController {
         } else if ("en_attente".equalsIgnoreCase(status)) {
             btn.setStyle("-fx-background-color: linear-gradient(to right, #FFCDD2, #FF8A80); -fx-text-fill: #C62828; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-background-radius: 8px; -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);");
             btn.setOnAction(e -> openRepondreFormInline(id_rec, titre, contenu, status));
+        }
+    }
+
+    private void setupTranslationMenu(ImageView translateIcon, Label contenuLabel, String originalContent) {
+        ContextMenu contextMenu = new ContextMenu();
+        String[] languages = {"Anglais", "Français", "Espagnol", "Allemand", "Italien"};
+
+        for (String lang : languages) {
+            MenuItem item = new MenuItem(lang);
+            item.setOnAction(e -> translateContent(originalContent, lang.toLowerCase(), contenuLabel));
+            contextMenu.getItems().add(item);
+        }
+
+        translateIcon.setOnMouseClicked(e -> contextMenu.show(translateIcon, javafx.geometry.Side.BOTTOM, 0, 0));
+    }
+
+    private void translateContent(String content, String targetLanguage, Label contenuLabel) {
+        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyBovR0DquNLAyKmSjnYxN6BD1FgxckdHPU";
+        String prompt = "Traduisez ce texte en " + targetLanguage + " : " + content;
+
+        java.util.Map<String, Object> messagePart = new java.util.HashMap<>();
+        messagePart.put("text", prompt);
+
+        java.util.Map<String, Object> contentPart = new java.util.HashMap<>();
+        contentPart.put("parts", new Object[]{messagePart});
+
+        java.util.Map<String, Object> requestBody = new java.util.HashMap<>();
+        requestBody.put("contents", new Object[]{contentPart});
+
+        try {
+            String jsonPayload = objectMapper.writeValueAsString(requestBody);
+            RequestBody body = RequestBody.create(jsonPayload, MediaType.get("application/json; charset=utf-8"));
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String responseBody = response.body().string();
+                    JsonNode rootNode = objectMapper.readTree(responseBody);
+                    String translatedText = rootNode.path("candidates")
+                            .get(0)
+                            .path("content")
+                            .path("parts")
+                            .get(0)
+                            .path("text")
+                            .asText();
+                    contenuLabel.setText(translatedText);
+                } else {
+                    showError("Erreur", "Échec de la traduction : " + response.code());
+                }
+            }
+        } catch (IOException e) {
+            showError("Erreur", "Erreur technique lors de la traduction : " + e.getMessage());
         }
     }
 
@@ -171,8 +230,8 @@ public class AfficherReclamationController {
     private Label createCell(String text, double width) {
         Label label = new Label(text != null ? text : "");
         label.setPrefWidth(width);
-        label.setWrapText(true); // Active wrapText pour tous les labels
-        label.setMaxHeight(Double.MAX_VALUE); // Permet une hauteur illimitée pour wrapText
+        label.setWrapText(true);
+        label.setMaxHeight(Double.MAX_VALUE);
         label.getStyleClass().add("data-cell");
         return label;
     }
