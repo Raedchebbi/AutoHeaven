@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="camion_pa" prefHeight="544.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddTestDriveController">
+    <VBox alignment="CENTER" layoutX="354.0" layoutY="92.0" prefHeight="360.0" prefWidth="265.0" spacing="10">
+        <Label alignment="CENTER" prefHeight="34.0" prefWidth="162.0" text="Ajouter une">
+            <font>
+                <Font name="System Bold" size="23.0" />
+            </font>
+        </Label>
+      <Label alignment="CENTER" prefHeight="34.0" prefWidth="256.0" text="Reservation TestDrive">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+
+        <Label text="Utilisateur :" />
+        <ComboBox fx:id="cbUser" promptText="Choisir un Utilisateur" />
+
+        <Label text="Vehicle:" />
+        <ComboBox fx:id="cbVehicle" promptText="Choisir une Vehicle" />
+
+        <Label text="Date:" />
+        <DatePicker fx:id="dpDate" />
+
+        <HBox alignment="CENTER" spacing="10">
+            <Button fx:id="btnAdd" onAction="#addTestDrive" text="Ajouter" />
+            <Button fx:id="btnCancel" onAction="#cancelAction" text="Annuler" />
+            <Button fx:id="btnBack" onAction="#goBack" text="Retour" />
+        </HBox>
+
+        <Text fx:id="errorMessage" fill="red" />
+        <Text fx:id="successMessage" fill="green" visible="false"/>
+    </VBox>
+</Pane>

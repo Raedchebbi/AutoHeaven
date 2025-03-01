@@ -12,7 +12,7 @@ public class MyDb {
     private static MyDb instance;
 
 
-    private MyDb() {
+    public MyDb() {
 
         try {
             // Charger explicitement le pilote JDBC
