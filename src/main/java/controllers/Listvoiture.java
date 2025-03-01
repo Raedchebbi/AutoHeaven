@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,8 +22,6 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 public class Listvoiture implements Initializable {
-    @FXML
-    private Label kilometrageLabel, prixLabel;
 
     @FXML
     private Button sortButton;
@@ -31,15 +30,13 @@ public class Listvoiture implements Initializable {
     private VBox voitureVBox;
     @FXML
     private TextField searchTextField;
-    @FXML
-    private ImageView filterImageView;
+
     @FXML
     private Button filterButton;
     @FXML
-    private ComboBox<String> typeComboBox, carburantComboBox, utilisationComboBox, nbrPorteComboBox,
-            transmissionComboBox, disponibiliteComboBox, couleurComboBox;
-    @FXML
-    private Slider kilometrageSlider, prixSlider;
+    private ComboBox<String> typeComboBox, carburantComboBox,
+            disponibiliteComboBox ,couleurComboBox;
+
     private ContextMenu categoryMenu = new ContextMenu();
     private Popup filterPopup = new Popup();
     @FXML
@@ -50,7 +47,6 @@ public class Listvoiture implements Initializable {
         loadCategoryMenu();
         setupFilterPopup();
         loadCategoryFilters();
-        setupSliders();
         sortButton.setOnAction(event -> sortVoituresByMarque());
 
     }
@@ -174,31 +170,21 @@ public class Listvoiture implements Initializable {
     private void setupFilterPopup() {
         Button applyButton = new Button("Appliquer");
         Button clearButton = new Button("Clear");
+        applyButton.setOnAction(event -> applyFilters());
         clearButton.setOnAction(event -> clearFilters());
+        HBox buttonContainer = new HBox(10, applyButton, clearButton);
+        buttonContainer.setAlignment(Pos.CENTER);
+
         filterPanel = new VBox(10);
         filterPanel.setStyle("-fx-background-color: white; -fx-border-color: #ccc; -fx-border-width: 1px; -fx-padding: 15; " +
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4);");
 
-        kilometrageSlider = new Slider(0, 300000, 150000);
-        kilometrageSlider.setShowTickMarks(true);
-        kilometrageSlider.setShowTickLabels(true);
-
-        prixSlider = new Slider(0, 100000, 50000);
-        prixSlider.setShowTickMarks(true);
-        prixSlider.setShowTickLabels(true);
-
         filterPanel.getChildren().addAll(
                 new Label("Type"), typeComboBox,
                 new Label("Carburant"), carburantComboBox,
-                new Label("Utilisation"), utilisationComboBox,
-                new Label("Nombre de portes"), nbrPorteComboBox,
-                new Label("Transmission"), transmissionComboBox,
-                new Label("Disponibilité"), disponibiliteComboBox,
                 new Label("Couleur"), couleurComboBox,
-                new Label("Kilométrage"), kilometrageSlider,
-                new Label("Prix"), prixSlider,
-                applyButton,
-                clearButton
+                new Label("Disponibilité"), disponibiliteComboBox,
+                buttonContainer
         );
 
         StackPane container = new StackPane(filterPanel);
@@ -237,16 +223,9 @@ public class Listvoiture implements Initializable {
 
                         boolean matchesType = typeComboBox.getValue() == null || typeComboBox.getValue().equals(categorie.getType());
                         boolean matchesCarburant = carburantComboBox.getValue() == null || carburantComboBox.getValue().equals(categorie.getType_carburant());
-                        boolean matchesUtilisation = utilisationComboBox.getValue() == null || utilisationComboBox.getValue().equals(categorie.getType_utilisation());
-                        boolean matchesTransmission = transmissionComboBox.getValue() == null || transmissionComboBox.getValue().equals(categorie.getTransmission());
-                        boolean matchesNbrPorte = nbrPorteComboBox.getValue() == null || nbrPorteComboBox.getValue().equals(String.valueOf(categorie.getNbr_porte()));
                         boolean matchesDisponibilite = disponibiliteComboBox.getValue() == null || disponibiliteComboBox.getValue().equals(voiture.getDisponibilite());
                         boolean matchesCouleur = couleurComboBox.getValue() == null || couleurComboBox.getValue().equals(voiture.getCouleur());
-                        boolean matchesKilometrage = voiture.getKilometrage() <= kilometrageSlider.getValue();
-                        boolean matchesPrix = voiture.getPrix() <= prixSlider.getValue();
-
-                        return matchesType && matchesCarburant && matchesUtilisation && matchesTransmission &&
-                                matchesNbrPorte && matchesDisponibilite && matchesKilometrage && matchesCouleur && matchesPrix;
+                        return matchesType && matchesCarburant && matchesDisponibilite && matchesCouleur;
                     })
                     .forEach(voiture -> {
                         voitureVBox.getChildren().add(createVoitureBox(voiture));
@@ -269,13 +248,8 @@ public class Listvoiture implements Initializable {
         try {
             typeComboBox.getItems().clear();
             carburantComboBox.getItems().clear();
-            utilisationComboBox.getItems().clear();
-            transmissionComboBox.getItems().clear();
-            nbrPorteComboBox.getItems().clear();
             disponibiliteComboBox.getItems().clear();
             couleurComboBox.getItems().clear();
-            kilometrageSlider.setValue(kilometrageSlider.getMin());
-            prixSlider.setValue(prixSlider.getMin());
 
             categorieService.getAll().forEach(categorie -> {
                 if (!typeComboBox.getItems().contains(categorie.getType())) {
@@ -284,69 +258,26 @@ public class Listvoiture implements Initializable {
                 if (!carburantComboBox.getItems().contains(categorie.getType_carburant())) {
                     carburantComboBox.getItems().add(categorie.getType_carburant());
                 }
-                if (!utilisationComboBox.getItems().contains(categorie.getType_utilisation())) {
-                    utilisationComboBox.getItems().add(categorie.getType_utilisation());
-                }
-                if (!transmissionComboBox.getItems().contains(categorie.getTransmission())) {
-                    transmissionComboBox.getItems().add(categorie.getTransmission());
-                }
-                if (!nbrPorteComboBox.getItems().contains(categorie.getNbr_porte())) {
-                    nbrPorteComboBox.getItems().add(String.valueOf(categorie.getNbr_porte()));
-                }
             });
             voitureService.getAll().forEach(voiture -> {
                 if (!disponibiliteComboBox.getItems().contains(voiture.getDisponibilite())) {
-                    disponibiliteComboBox.getItems().add(String.valueOf(voiture.getDisponibilite()));
+                    disponibiliteComboBox.getItems().add(voiture.getDisponibilite());
                 }
                 if (!couleurComboBox.getItems().contains(voiture.getCouleur())) {
-                    couleurComboBox.getItems().add(String.valueOf(voiture.getCouleur()));
+                    couleurComboBox.getItems().add(voiture.getCouleur());
                 }
             });
 
         } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
     private void clearFilters() {
-
         typeComboBox.setValue(null);
         carburantComboBox.setValue(null);
-        utilisationComboBox.setValue(null);
-        transmissionComboBox.setValue(null);
-        nbrPorteComboBox.setValue(null);
         disponibiliteComboBox.setValue(null);
         couleurComboBox.setValue(null);
-
-
-        kilometrageSlider.setValue(kilometrageSlider.getMin());
-        prixSlider.setValue(prixSlider.getMin());
         loadAllVoitures();
-    }
-    private void setupSliders() {
-        // Setup Kilometrage Slider
-        kilometrageSlider.setMin(0);
-        kilometrageSlider.setMax(500000);
-        kilometrageSlider.setValue(250000);
-        kilometrageSlider.setShowTickLabels(true);
-        kilometrageSlider.setShowTickMarks(true);
-        kilometrageSlider.setMajorTickUnit(50000); // Adjusted to avoid excessive ticks
-        kilometrageSlider.setMinorTickCount(4); // Adds small ticks for better control
-        kilometrageSlider.setBlockIncrement(10000); // Moves in steps of 10,000
-        kilometrageSlider.valueProperty().addListener((obs, oldVal, newVal) ->
-                kilometrageLabel.setText(String.format("%,d km", newVal.intValue())));
-
-        // Setup Prix Slider
-        prixSlider.setMin(0);
-        prixSlider.setMax(200000);
-        prixSlider.setValue(100000);
-        prixSlider.setShowTickLabels(true);
-        prixSlider.setShowTickMarks(true);
-        prixSlider.setMajorTickUnit(50000); // Adjusted tick spacing
-        prixSlider.setMinorTickCount(4); // Adds smaller ticks between major ones
-        prixSlider.setBlockIncrement(5000); // Moves in steps of 5000
-        prixSlider.valueProperty().addListener((obs, oldVal, newVal) ->
-                prixLabel.setText(String.format("%,d TND", newVal.intValue())));
     }
 
     @FXML

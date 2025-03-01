@@ -15,7 +15,7 @@ public class Mainfx extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         // Charger le fichier FXML avec le nom exact (ajusté selon votre fichier réel)
-        Parent root = FXMLLoader.load(getClass().getResource("/navigate.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/listvoiture.fxml"));
         primaryStage.setTitle("PiDev - Gestion des Réclamations (Admin)");
 
         // Utiliser les dimensions du FXML pour cohérence

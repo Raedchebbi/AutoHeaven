@@ -4,7 +4,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Listvoiture">
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@style1.css"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.Listvoiture">
 
     <HBox layoutX="20" layoutY="20" prefWidth="1160" spacing="10">
         <HBox spacing="10">
@@ -13,7 +15,7 @@
             <Button onAction="#handleSearch" text="Rechercher" />
         </HBox>
 
-        <Button fx:id="filterButton" onAction="#toggleFilterPanel" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+        <Button fx:id="filterButton" onAction="#toggleFilterPanel" style="-fx-background-color: transparent;">
             <graphic>
                 <ImageView fitHeight="30" fitWidth="30">
                     <image>
@@ -26,7 +28,8 @@
                 style="-fx-background-color: #ddd; -fx-text-fill: black; -fx-padding: 5px 10px; -fx-background-radius: 5px;" />
     </HBox>
 
-    <VBox fx:id="filterPanel" layoutX="649.0" layoutY="145.0" prefHeight="375.0" prefWidth="422.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-border-width: 1px; -fx-padding: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 4);">
+    <!-- Simplified Filter Panel -->
+    <VBox fx:id="filterPanel" layoutX="700" layoutY="100" prefWidth="300" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-padding: 10;">
         <GridPane hgap="10" vgap="10">
             <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
             <ComboBox fx:id="typeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" />
@@ -34,52 +37,14 @@
             <Label text="Carburant:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
             <ComboBox fx:id="carburantComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-            <Label text="Utilisation:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <ComboBox fx:id="utilisationComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Couleur:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <ComboBox fx:id="couleurComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-            <Label text="Nombre de Portes:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-            <ComboBox fx:id="nbrPorteComboBox" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-
-            <Label  text="Transmission:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-            <ComboBox fx:id="transmissionComboBox" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-
-            <Label fx:id="kilometrageLabel" text="Max Kilométrage:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-
-            <VBox GridPane.columnIndex="1" GridPane.rowIndex="5">
-                <Slider fx:id="kilometrageSliderMin" min="0" max="500000" value="0" showTickMarks="true" showTickLabels="true" />
-                <Slider fx:id="kilometrageSliderMax" min="0" max="500000" value="500000" showTickMarks="true" showTickLabels="true" />
-            </VBox>
-
-            <Label text="Couleur:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-            <ComboBox fx:id="couleurComboBox" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-
-            <Label fx:id="prixLabel" text="Max Prix:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-            <VBox GridPane.columnIndex="1" GridPane.rowIndex="7">
-                <Slider fx:id="prixSliderMin" min="0" max="500000" value="0" showTickMarks="true" showTickLabels="true" />
-                <Slider fx:id="prixSliderMax" min="0" max="500000" value="500000" showTickMarks="true" showTickLabels="true" />
-            </VBox>
-
-            <Label text="Disponibilité:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
-            <ComboBox fx:id="disponibiliteComboBox" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-
-            <columnConstraints>
-                <ColumnConstraints />
-                <ColumnConstraints />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints />
-                <RowConstraints />
-                <RowConstraints />
-                <RowConstraints />
-                <RowConstraints />
-                <RowConstraints />
-                <RowConstraints />
-                <RowConstraints />
-                <RowConstraints />
-            </rowConstraints>
+            <Label text="Disponibilité:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <ComboBox fx:id="disponibiliteComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         </GridPane>
 
-        <HBox alignment="CENTER_RIGHT" spacing="10">
+        <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10;">
             <Button onAction="#applyFilters" text="Appliquer" />
             <Button onAction="#toggleFilterPanel" text="Fermer" />
         </HBox>
