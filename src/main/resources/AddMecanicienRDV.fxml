@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="camion_pa" prefHeight="544.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddMecanicienRDVController">
+    <children>
+        <VBox alignment="CENTER" layoutX="333.0" layoutY="37.0" prefHeight="470.0" prefWidth="306.0" spacing="10">
+            <Label alignment="BOTTOM_CENTER" prefHeight="0.0" prefWidth="205.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Ajouter un Rendez-vous">
+            <font>
+               <Font size="15.0" />
+            </font></Label>
+         <Label alignment="TOP_CENTER" prefHeight="0.0" prefWidth="96.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Mécanicien">
+            <font>
+               <Font name="System Bold" size="15.0" />
+            </font>
+         </Label>
+         <HBox alignment="BOTTOM_CENTER" prefHeight="42.0" prefWidth="306.0">
+            <children>
+      
+                  <Label alignment="CENTER" prefHeight="25.0" prefWidth="122.0" text="Utilisateur :" />
+                  <ComboBox fx:id="cbUser" prefHeight="26.0" prefWidth="192.0" promptText="Sélectionner un utilisateur" />
+            </children>
+         </HBox>
+         <HBox prefHeight="0.0" prefWidth="306.0">
+            <children>
+      
+                  <Label alignment="CENTER" prefHeight="24.0" prefWidth="118.0" text="Mécanicien :" />
+                  <ComboBox fx:id="cbMec" prefHeight="26.0" prefWidth="188.0" promptText="Sélectionner un mécanicien" />
+            </children>
+         </HBox>
+
+            <Label text="Adresse:" />
+            <TextField fx:id="adresseField" />
+
+            <Label text="Note:" />
+            <TextArea fx:id="noteField" prefHeight="100" prefWidth="200" />
+
+            <Label text="Date:" />
+            <DatePicker fx:id="dateField" />
+
+            <HBox alignment="CENTER" spacing="10">
+                <Button fx:id="btnAdd" onAction="#handleAdd" text="Ajouter" />
+                <Button fx:id="btnCancel" onAction="#cancelAction" text="Annuler" />
+                <Button fx:id="btnBack" onAction="#handleBack" text="Retour" />
+            </HBox>
+
+            <Text fx:id="errorMessage" fill="red" />
+            <Text fx:id="successMessage" fill="green" />
+        </VBox>
+    </children>
+</Pane>
