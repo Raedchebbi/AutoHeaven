@@ -14,10 +14,12 @@ import javafx.scene.web.WebView;
 import models.*;
 import services.*;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import static controllers.loginuserController.loggedInUser;
 
 public class Paniers implements Initializable {
 
@@ -32,6 +34,15 @@ public class Paniers implements Initializable {
 
     @FXML
     private AnchorPane anc;
+    private profileController dashboardController;
+
+    // Référence au contrôleur du Dashboard
+
+
+    // Méthode pour définir la référence au contrôleur du Dashboard
+    public void setDashboardController(profileController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         StripeConfig.initialize();
@@ -46,7 +57,8 @@ public class Paniers implements Initializable {
         contenu.getChildren().clear();
 
         PanierService ps = new PanierService();
-        List<Panier> obs = ps.getAll(5129);
+        //List<Panier> obs = ps.getAll(5129);
+        List<Panier> obs = ps.getAll(loginuserController.loggedInUserID);
         if (obs.size()==0) {
             anc2.setVisible(true);
         }
@@ -71,7 +83,7 @@ public class Paniers implements Initializable {
         EquipementService es = new EquipementService();
         StockService ss = new StockService();
         CommandeService cs = new CommandeService();
-        List<Panier> paniers = ps.getAll(5129);
+        List<Panier> paniers = ps.getAll(loginuserController.loggedInUserID);
         Equipement e =new Equipement();
 
         if (paniers.isEmpty()) {
@@ -106,28 +118,32 @@ public class Paniers implements Initializable {
 
         showPaymentPage(checkoutUrl);
     }
-        private void showSuccessPopup() throws IOException {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Succès");
-            alert.setHeaderText(null);
-            alert.setContentText("Votre commande est passée attendez la confirmation de admin!");
-            alert.showAndWait();
-            // redirectToEquipDetail();
-        }
+    private void showSuccessPopup() throws IOException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Succès");
+        alert.setHeaderText(null);
+        alert.setContentText("Votre commande est passée attendez la confirmation de admin!");
+        alert.showAndWait();
+        // redirectToEquipDetail();
+    }
 
-        private void redirectToPaniers() throws IOException {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Paniers.fxml"));
-            Parent root = loader.load();
-            Scene scene = contenu.getScene();
-            scene.setRoot(root);
-        }
+    private void redirectToPaniers() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Paniers.fxml"));
+        Parent root = loader.load();
+        Scene scene = contenu.getScene();
+        scene.setRoot(root);
+    }
     @FXML
     private void handleBackAction() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
+       /* FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
         Parent root = loader.load();
         Scene currentScene = back.getScene();
-        currentScene.setRoot(root);
+        currentScene.setRoot(root);*/
+        if (dashboardController != null) {
+            dashboardController.loadListEquipementClientForm();  // Appeler une méthode dans Dashboard1 pour charger ListEquipementClient.fxml
+        }
+
     }
     private void showErrorPopup(String message) throws IOException {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -147,7 +163,7 @@ public class Paniers implements Initializable {
             if (newUrl.contains("pay/success")) {
                 try {
                     CommandeService cs = new CommandeService();
-                    cs.create(5129);
+                    cs.create(loginuserController.loggedInUserID);
                     afficherAlerte("Paiement réussi", "Votre paiement a été traité avec succès.", Alert.AlertType.INFORMATION);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -157,8 +173,8 @@ public class Paniers implements Initializable {
                 webView.setVisible(false);
             } else if (newUrl.contains("pay/cancel")) {
                 try {
-                   // CommandeService cs = new CommandeService();
-                  //  cs.deleteCommande(id);
+                    // CommandeService cs = new CommandeService();
+                    //  cs.deleteCommande(id);
 
                     afficherAlerte("Paiement annulé", "Votre paiement a été annulé.", Alert.AlertType.WARNING);
                 } catch (IOException e) {
@@ -178,9 +194,13 @@ public class Paniers implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-        redirectToPaniers();
+        //redirectToPaniers();
+        if (dashboardController != null) {
+            dashboardController.loadPaniersForm();  // Appeler la méthode pour charger Paniers.fxml dans le Dashboard
+        } else {
+            System.err.println("DashboardController is null!");
+        }
     }
 
 
 }
-

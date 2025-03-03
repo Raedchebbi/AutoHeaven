@@ -98,10 +98,14 @@ public class AddEquipemntCard implements Initializable {
 
     @FXML
     private ImageView imageInput;
+    private Button equipbtn;
 
 
     @FXML
     private TextField reference;
+    public void setEquipbtn(Button equipbtn) {
+        this.equipbtn = equipbtn;
+    }
     private boolean ckeck ;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -225,9 +229,22 @@ public class AddEquipemntCard implements Initializable {
         alert.showAndWait();
     }
 
+    /*  private void redirectToListEquipement() throws IOException {
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
+          Parent root = loader.load();
+          Scene scene = add_btn.getScene();
+          scene.setRoot(root);
+      }*/
     private void redirectToListEquipement() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
+        // Chargez Dashboard1.fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Dashboard.fxml"));
         Parent root = loader.load();
+        dashboardController dashboardController = loader.getController();
+
+        // Chargez ListEquipement dans le Dashboard
+        dashboardController.loadListEquipementForm();
+
+        // Mettez à jour la scène actuelle avec la nouvelle racine
         Scene scene = add_btn.getScene();
         scene.setRoot(root);
     }
@@ -241,10 +258,28 @@ public class AddEquipemntCard implements Initializable {
     @FXML
     private void handleBackAction(ActionEvent event) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
-        Parent root = loader.load();
-        Scene currentScene = add_btn.getScene();
-        currentScene.setRoot(root);
-    }
+        // Charger le Dashboard1.fxml
 
+        // listEquipementController.hideUpdatePopup();
+
+
+           /* FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
+            Parent root = loader.load();
+            Scene currentScene = update_btn.getScene();
+            currentScene.setRoot(root);
+*/
+
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Dashboard.fxml"));
+        Parent root = loader.load();
+        dashboardController dashboardController = loader.getController();
+
+
+        dashboardController.loadListEquipementForm();
+
+
+        Scene scene = add_btn.getScene();
+        scene.setRoot(root);
+
+    }
 }

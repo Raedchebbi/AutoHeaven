@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import models.EquipementAffichage;
 import models.Offre;
 import models.User;
 import services.UserService;
@@ -30,8 +31,10 @@ import services.OffreService;
 import utils.MyDb;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -240,14 +243,66 @@ public class dashboardController implements Initializable {
 
     @FXML
     private TextField usernameTextfield1;
+    @FXML
+    private Button combtn;
 
+    @FXML
+    private AnchorPane comform;
+   @FXML
+   private AnchorPane equipement_form;
+    @FXML
+    Button equipbtn;
+    @FXML
+    private ListEquipement listEquipementController;
+    @FXML
+    private ListEquipementClient listc;
+    @FXML
+    private ValidationCommande commandeController;
+
+    @FXML
+    private DetailEquipement dd;
+    @FXML
+    private AnchorPane pan_form;
+    @FXML
+    private Button pan ;
+    @FXML
+    private AnchorPane rec_form;
+    @FXML
+    private Button recbtn;
+    @FXML
+    private ComboBox<String> banCombobox;
+
+    @FXML
+    private ComboBox<String> banCombobox1;
+
+
+    private String[] banList = {"oui", "non"};
 
     private Image image;
 
-
+    public Button getPan() {
+        return pan;
+    }
     private UserService userService = new UserService();
 
     private OffreService offreService = new OffreService();
+    @FXML
+    AfficherReclamationController aff = new AfficherReclamationController();
+
+    public void regLbanList() {
+        List<String> listQ = new ArrayList();
+        String[] var2 = this.banList;
+        int var3 = var2.length;
+
+        for (int var4 = 0; var4 < var3; ++var4) {
+            String data = var2[var4];
+            listQ.add(data);
+        }
+        ObservableList listData = FXCollections.observableArrayList(listQ);
+        this.banCombobox.setItems(listData);
+        this.banCombobox1.setItems(listData);
+    }
+
 
     public void close(){
         System.exit(0);
@@ -257,20 +312,15 @@ public class dashboardController implements Initializable {
         List<User> allUsers = userService.getAll(); // Get all users
         ObservableList<User> mecaniciens = FXCollections.observableArrayList();
 
-
-
-        // Filter users with role "mecanicien"
         for (User user : allUsers) {
             if ("mecanicien".equals(user.getRole())) {
                 mecaniciens.add(user);
             }
         }
 
-        // Clear the table container before adding new content
         if (tablecontainer.getChildren().size() > 1) {
             tablecontainer.getChildren().remove(1, tablecontainer.getChildren().size());
         }
-        // Loop through the list of mecaniciens to display them in the table
         for (User user : mecaniciens) {
             HBox row = new HBox(20); // Spacing between columns
 
@@ -285,29 +335,30 @@ public class dashboardController implements Initializable {
             adresseLabel.setWrapText(true);
             adresseLabel.setMaxWidth(180);
             Label usernameLabel = new Label(user.getUsername());
+            Label baniLabel = new Label(user.getBan());
 
 
-            // Set fixed widths for proper alignment
             cinLabel.setPrefWidth(130);
             nomLabel.setPrefWidth(130);
             prenomLabel.setPrefWidth(110);
             telLabel.setPrefWidth(120);
             emailLabel.setPrefWidth(200);
             passwordLabel.setPrefWidth(100);
-            roleLabel.setPrefWidth(100);
+            roleLabel.setPrefWidth(50);
             adresseLabel.setPrefWidth(180);
-            usernameLabel.setPrefWidth(150);
+            usernameLabel.setPrefWidth(120);
+            baniLabel.setPrefWidth(100);
             row.getChildren().addAll(
                     cinLabel, nomLabel, prenomLabel, telLabel,
-                    emailLabel, passwordLabel, roleLabel, adresseLabel, usernameLabel
+                    emailLabel, passwordLabel, roleLabel, adresseLabel, usernameLabel, baniLabel
             );
 
             tablecontainer.getChildren().add(row);
             row.getStyleClass().add("table-data");
             row.getStyleClass().add("table-row");
             row.setOnMouseClicked(e -> {
-                // Retrieve data of the selected mechanic (user)
-                showMechanicDetails(user);// Call a method to show or process the selected mechanic's data
+
+                showMechanicDetails(user);
             });
         }
     }
@@ -325,8 +376,8 @@ public class dashboardController implements Initializable {
         usernameTextfield.setText(selectedUser.getUsername());
         setPasswordfield.setText(selectedUser.getPassword());
         mecRadioBtn.setSelected(true);
+        banCombobox1.setValue(selectedUser.getBan());
     }
-
 
     public void addMec(){
         MyDb connectNow = new MyDb();
@@ -342,10 +393,12 @@ public class dashboardController implements Initializable {
         String username = usernameTextfield.getText();
         String password = setPasswordfield.getText();
         String photoProfile = null;
-        String ban = "NON";  // Default value for ban is "NON"
+        String ban = banCombobox1.getValue();
+        String question = null;
+        String reponse = null;
 
         UserService userService = new UserService();
-        User newUser = new User(cin, nom, prénom, tel, email, password, role, adresse, username, photoProfile, ban);
+        User newUser = new User(cin, nom, prénom, tel, email, password, role, adresse, username, photoProfile, ban, question, reponse);
         try {
             userService.create(newUser);
         } catch (Exception e) {
@@ -362,8 +415,8 @@ public class dashboardController implements Initializable {
         String password = setPasswordfield.getText();
         String tel = telTextfield.getText();
         String adresse = adresseTextfield.getText();
+        String ban = banCombobox1.getValue();
 
-        // Clear previous error messages
         errormessage.setText("");
 
         // Use isValidInput() to validate fields and display errors if needed
@@ -378,7 +431,6 @@ public class dashboardController implements Initializable {
         pause.setOnFinished(event -> errormessage.setText(""));
         pause.play();
     }
-
 
     public void handleUpdateAction(ActionEvent Event) {
         try {
@@ -408,7 +460,8 @@ public class dashboardController implements Initializable {
             updatedUser.setAdresse(adresseTextfield.getText());  // Set Address
             updatedUser.setUsername(usernameTextfield.getText());  // Set Username
             updatedUser.setPassword(setPasswordfield.getText());
-            updatedUser.setRole("mecanicien");  // Assuming the role is 'mecanicien', change if needed
+            updatedUser.setRole("mecanicien");
+            updatedUser.setBan(banCombobox1.getValue());
 
             // Call the update method to save the changes
             userService.update(updatedUser);
@@ -423,6 +476,57 @@ public class dashboardController implements Initializable {
         } catch (Exception e) {
             // Handle exceptions, including validation failures or database issues
             errormessage.setText("Erreur : " + e.getMessage());
+        }
+    }
+
+    public void handleBannirAction(ActionEvent event) {
+        try {
+            // Création d'un nouvel objet User basé sur les champs actuels
+            User updatedUser = new User();
+            updatedUser.setId(Integer.parseInt(idTextfield1.getText()));
+            updatedUser.setCin(Integer.parseInt(cinTextfield1.getText()));
+            updatedUser.setNom(nomTextfield1.getText());
+            updatedUser.setPrenom(prenomTextfield1.getText());
+            updatedUser.setTel(Integer.parseInt(telTextfield1.getText()));
+            updatedUser.setEmail(emailTextfield1.getText());
+            updatedUser.setAdresse(adresseTextfield1.getText());
+            updatedUser.setUsername(usernameTextfield1.getText());
+            updatedUser.setPassword(setPasswordfield1.getText());
+            updatedUser.setRole("client");
+
+            // Bannir l'utilisateur temporairement
+            updatedUser.setBan("oui");
+            userService.update(updatedUser);
+            banCombobox.setValue("oui");
+            showClients();
+
+            // Affichage du message
+
+            errormessage1.setText("L'utilisateur est banni pour une durée limitée. Il sera débanni automatiquement après quelques secondes.");
+            System.out.println("Utilisateur banni : Oui");
+            errormessage1.setWrapText(true);
+            PauseTransition pause1 = new PauseTransition(Duration.seconds(5));
+            pause1.setOnFinished(e -> errormessage1.setText(""));
+            pause1.play();
+
+
+            PauseTransition pause = new PauseTransition(Duration.seconds(1000));
+            pause.setOnFinished(e -> {
+                try {
+                    updatedUser.setBan("non");
+                    userService.update(updatedUser);
+                    banCombobox.setValue("non");
+                    errormessage1.setText("L'utilisateur a été débanni.");
+                    System.out.println("Utilisateur débanni : Non");
+                    showClients();
+                } catch (Exception ex) {
+                    errormessage1.setText("Erreur lors du débannissement : " + ex.getMessage());
+                }
+            });
+            pause.play();
+
+        } catch (Exception e) {
+            errormessage1.setText("Erreur : " + e.getMessage());
         }
     }
 
@@ -466,6 +570,7 @@ public class dashboardController implements Initializable {
             usernameTextfield.clear();
             setPasswordfield.clear();
             mecRadioBtn.setSelected(false);
+            banCombobox1.setValue(null);
 
         } catch (SQLException e) {
             // Handle database issues or other exceptions
@@ -486,6 +591,7 @@ public class dashboardController implements Initializable {
         usernameTextfield.clear();
         setPasswordfield.clear();
         mecRadioBtn.setSelected(false);
+        banCombobox1.setValue(null);
     }
 
     public void displayUsername(){
@@ -522,45 +628,127 @@ public class dashboardController implements Initializable {
             Mecaniciens_form.setVisible(false);
             clients_form.setVisible(false);
             Offre_form.setVisible(false);
+            equipement_form.setVisible(false);
+            comform.setVisible(false);
+            rec_form.setVisible(false);
+
 
             acceuilBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             addMecanicienBtn.setStyle("-fx-background-color: transparent");
             clientsBtn.setStyle("-fx-background-color: transparent");
             OffreBtn.setStyle("-fx-background-color: transparent");
-
+            equipbtn.setStyle("-fx-background-color: transparent");
+            combtn.setStyle("-fx-background-color: transparent");
+            recbtn.setStyle("-fx-background-color: transparent");
 
         } else if (event.getSource() == addMecanicienBtn){
             Acceuil_form.setVisible(false);
             Mecaniciens_form.setVisible(true);
             clients_form.setVisible(false);
             Offre_form.setVisible(false);
+            equipement_form.setVisible(false);
+            comform.setVisible(false);
+            rec_form.setVisible(false);
 
             addMecanicienBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             acceuilBtn.setStyle("-fx-background-color: transparent");
             clientsBtn.setStyle("-fx-background-color: transparent");
             OffreBtn.setStyle("-fx-background-color: transparent");
+            equipbtn.setStyle("-fx-background-color: transparent");
+            combtn.setStyle("-fx-background-color: transparent");
+            recbtn.setStyle("-fx-background-color: transparent");
 
         } else if (event.getSource() == clientsBtn){
             Acceuil_form.setVisible(false);
             Mecaniciens_form.setVisible(false);
             clients_form.setVisible(true);
             Offre_form.setVisible(false);
+            equipement_form.setVisible(false);
+            comform.setVisible(false);
+            rec_form.setVisible(false);
 
             clientsBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             addMecanicienBtn.setStyle("-fx-background-color: transparent");
             acceuilBtn.setStyle("-fx-background-color: transparent");
             OffreBtn.setStyle("-fx-background-color: transparent");
+            combtn.setStyle("-fx-background-color: transparent");
+            equipbtn.setStyle("-fx-background-color: transparent");
+            recbtn.setStyle("-fx-background-color: transparent");
 
         } else if (event.getSource() == OffreBtn) {
             Acceuil_form.setVisible(false);
             Mecaniciens_form.setVisible(false);
             clients_form.setVisible(false);
             Offre_form.setVisible(true);
+            equipement_form.setVisible(false);
+            comform.setVisible(false);
+            rec_form.setVisible(false);
 
             OffreBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             clientsBtn.setStyle("-fx-background-color: transparent");
             addMecanicienBtn.setStyle("-fx-background-color: transparent");
             acceuilBtn.setStyle("-fx-background-color: transparent");
+            equipbtn.setStyle("-fx-background-color: transparent");
+            combtn.setStyle("-fx-background-color: transparent");
+            recbtn.setStyle("-fx-background-color: transparent");
+
+
+        }
+     else if (event.getSource() == equipbtn) {
+        Acceuil_form.setVisible(false);
+        Mecaniciens_form.setVisible(false);
+        clients_form.setVisible(false);
+        Offre_form.setVisible(false);
+        equipement_form.setVisible(true);
+        comform.setVisible(false);
+        rec_form.setVisible(false);
+
+        OffreBtn.setStyle("-fx-background-color: transparent");
+        clientsBtn.setStyle("-fx-background-color: transparent");
+        addMecanicienBtn.setStyle("-fx-background-color: transparent");
+        acceuilBtn.setStyle("-fx-background-color: transparent");
+        equipbtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+        combtn.setStyle("-fx-background-color: transparent");
+        recbtn.setStyle("-fx-background-color: transparent");
+
+
+    }
+        else if (event.getSource() == combtn) {
+            Acceuil_form.setVisible(false);
+            Mecaniciens_form.setVisible(false);
+            clients_form.setVisible(false);
+            Offre_form.setVisible(false);
+            equipement_form.setVisible(false);
+            comform.setVisible(true);
+            rec_form.setVisible(false);
+
+            OffreBtn.setStyle("-fx-background-color: transparent");
+            clientsBtn.setStyle("-fx-background-color: transparent");
+            addMecanicienBtn.setStyle("-fx-background-color: transparent");
+            acceuilBtn.setStyle("-fx-background-color: transparent");
+            equipbtn.setStyle("-fx-background-color: transparent");
+            combtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            recbtn.setStyle("-fx-background-color: transparent");
+
+
+        }
+        else if (event.getSource() == recbtn) {
+            Acceuil_form.setVisible(false);
+            Mecaniciens_form.setVisible(false);
+            clients_form.setVisible(false);
+            Offre_form.setVisible(false);
+            equipement_form.setVisible(false);
+            comform.setVisible(false);
+            rec_form.setVisible(true);
+
+            OffreBtn.setStyle("-fx-background-color: transparent");
+            clientsBtn.setStyle("-fx-background-color: transparent");
+            addMecanicienBtn.setStyle("-fx-background-color: transparent");
+            acceuilBtn.setStyle("-fx-background-color: transparent");
+            equipbtn.setStyle("-fx-background-color: transparent");
+            combtn.setStyle("-fx-background-color: transparent");
+            recbtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+
 
         }
     }
@@ -603,7 +791,65 @@ public class dashboardController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
+            Parent listEquipement = loader.load();
+            listEquipementController = loader.getController();
+            equipement_form.getChildren().add(listEquipement);
+            listEquipementController.setDashboardController(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ValidationCommande.fxml"));
+            Parent listCommandes = loader.load();
+            commandeController = loader.getController();
+            comform.getChildren().add(listCommandes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherReclamationController.fxml"));
+            Parent listrec = loader.load();
+            aff = loader.getController();
+            rec_form.getChildren().add(listrec);
+            aff.setDashboardController(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+
+
+    }
+    public void loadListEquipementForm() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
+            Parent listEquipement = loader.load();
+            listEquipementController = loader.getController();
+            listEquipementController.setDashboardController(this);
+
+            // Assurez-vous que la vue ListEquipement est ajoutée au bon conteneur dans le Dashboard
+            equipement_form.getChildren().clear();
+            equipement_form.getChildren().add(listEquipement);
+
+            // Masquer les autres formulaires et afficher uniquement equipement_form
+            Acceuil_form.setVisible(false);
+            Mecaniciens_form.setVisible(false);
+            clients_form.setVisible(false);
+            Offre_form.setVisible(false);
+            equipement_form.setVisible(true);
+            comform.setVisible(false);
+
+            // Mettre à jour le style du bouton pour indiquer que le formulaire est actif
+            equipbtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            acceuilBtn.setStyle("-fx-background-color: transparent");
+            clientsBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
+            combtn.setStyle("-fx-background-color: transparent");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -704,7 +950,6 @@ public class dashboardController implements Initializable {
         List<User> allUsers = userService.getAll(); // Get all users
         ObservableList<User> clients = FXCollections.observableArrayList();
 
-
         for (User user : allUsers) {
             if ("client".equals(user.getRole())) {
                 clients.add(user);
@@ -715,7 +960,8 @@ public class dashboardController implements Initializable {
         if (tableContainer.getChildren().size() > 1) {
             tableContainer.getChildren().remove(1, tableContainer.getChildren().size());
         }
-        // Loop through the list of mecaniciens to display them in the table
+
+        // Loop through the list of clients to display them in the table
         for (User user : clients) {
             HBox row = new HBox(20); // Spacing between columns
             Label cinLabel = new Label(String.valueOf(user.getCin()));
@@ -726,9 +972,10 @@ public class dashboardController implements Initializable {
             Label passwordLabel = new Label(user.getPassword());
             Label adresseLabel = new Label(user.getAdresse());
             Label usernameLabel = new Label(user.getUsername());
+            Label banLabel = new Label(user.getBan()); // Display ban status as label
 
             // Set fixed widths for proper alignment
-            cinLabel.setPrefWidth(140);
+            cinLabel.setPrefWidth(130);
             nomLabel.setPrefWidth(130);
             prenomLabel.setPrefWidth(110);
             telLabel.setPrefWidth(120);
@@ -736,20 +983,23 @@ public class dashboardController implements Initializable {
             passwordLabel.setPrefWidth(100);
             adresseLabel.setPrefWidth(180);
             usernameLabel.setPrefWidth(120);
+            banLabel.setPrefWidth(100);
+
             row.getChildren().addAll(
                     cinLabel, nomLabel, prenomLabel, telLabel,
-                    emailLabel, passwordLabel, adresseLabel, usernameLabel
+                    emailLabel, passwordLabel, adresseLabel, usernameLabel, banLabel
             );
 
             tableContainer.getChildren().add(row);
             row.getStyleClass().add("table-data");
             row.getStyleClass().add("table-row");
             row.setOnMouseClicked(e -> {
-                // Retrieve data of the selected mechanic (user)
-                showClientsDetails(user);// Call a method to show or process the selected mechanic's data
+                // Retrieve data of the selected client (user)
+                showClientsDetails(user);// Call a method to show or process the selected client's data
             });
         }
     }
+
 
     public void showClientsDetails(User selectedUser) {
         // Set the values of the text fields with the selected mechanic's details
@@ -762,6 +1012,7 @@ public class dashboardController implements Initializable {
         adresseTextfield1.setText(selectedUser.getAdresse());
         usernameTextfield1.setText(selectedUser.getUsername());
         setPasswordfield1.setText(selectedUser.getPassword());
+        banCombobox.setValue(selectedUser.getBan());
 
     }
 
@@ -804,6 +1055,7 @@ public class dashboardController implements Initializable {
             adresseTextfield1.clear();
             usernameTextfield1.clear();
             setPasswordfield1.clear();
+            banCombobox.setValue(null);
 
 
         } catch (SQLException e) {
@@ -824,7 +1076,9 @@ public class dashboardController implements Initializable {
         adresseTextfield1.clear();
         usernameTextfield1.clear();
         setPasswordfield1.clear();
+        banCombobox.setValue(null);
     }
+
 
 
     public void showOffres() throws Exception {

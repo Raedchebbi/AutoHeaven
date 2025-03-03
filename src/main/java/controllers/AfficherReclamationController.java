@@ -1,5 +1,7 @@
 package controllers;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +14,7 @@ import utils.MyDb;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import okhttp3.*;
+
 import java.io.IOException;
 import java.sql.*;
 import java.sql.Connection;
@@ -28,7 +31,11 @@ public class AfficherReclamationController {
     @FXML private VBox contentBox;
     @FXML private CheckBox filterBannedCheckBox;
     @FXML private TextField searchField;
-    @FXML private ComboBox<String> sortComboBox; // Ajouté pour le tri
+    @FXML private ComboBox<String> sortComboBox;
+    private dashboardController dashboardController;
+    public void setDashboardController(dashboardController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static final OkHttpClient client = new OkHttpClient();
@@ -43,7 +50,7 @@ public class AfficherReclamationController {
                 "Titre (A → Z)",
                 "Titre (Z → A)"
         );
-        sortComboBox.setValue("Date (Récent → Ancien)"); // Valeur par défaut
+        sortComboBox.setValue("Date (Récent → Ancien)");
         sortComboBox.setOnAction(e -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText()));
 
         loadDataFromDatabase(false, "");
@@ -58,6 +65,10 @@ public class AfficherReclamationController {
                 Parent form = loader.load();
                 repondreFormController = loader.getController();
                 repondreFormContainer.getChildren().setAll(form);
+                repondreFormController.setOnSuccessCallback(() -> {
+                    loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText());
+                    repondreFormContainer.setVisible(false);
+                });
             } catch (IOException e) {
                 showError("Erreur", "Erreur de chargement du formulaire : " + e.getMessage());
             }
@@ -107,7 +118,7 @@ public class AfficherReclamationController {
         return reclamations.stream()
                 .filter(r -> !showOnlyBanned || containsBadWord(r.getContenu()))
                 .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
-                .sorted(getComparator(sortCriteria)) // Ajout du tri
+                .sorted(getComparator(sortCriteria))
                 .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
                 .collect(Collectors.toList());
     }
@@ -123,7 +134,7 @@ public class AfficherReclamationController {
             case "Titre (Z → A)":
                 return (r1, r2) -> r2.getTitre().compareToIgnoreCase(r1.getTitre());
             default:
-                return (r1, r2) -> r2.getTimestamp().compareTo(r1.getTimestamp()); // Par défaut
+                return (r1, r2) -> r2.getTimestamp().compareTo(r1.getTimestamp());
         }
     }
 
@@ -162,20 +173,12 @@ public class AfficherReclamationController {
         if (isBannedContent) {
             btn.setText("Bloqué");
             btn.setDisable(true);
-
-            btn.setStyle("-fx-background-color: grey; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-background-radius: 8px; -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);");
+            btn.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
         } else if ("repondu".equalsIgnoreCase(status)) {
-            btn.setText("repondu");
-            btn.setDisable(true);
             btn.setStyle("-fx-background-color: linear-gradient(to right, #A5D6A7, #8BC34A); -fx-text-fill: #2E7D32; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-background-radius: 8px; -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);");
+            btn.setDisable(true);
         } else if ("en_attente".equalsIgnoreCase(status)) {
-            btn.setText("en_attente");
-            btn.setStyle("-fx-background-color: linear-gradient(to right, #FFCDD2, #FF8A80); -fx-text-fill: #C62828; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-background-radius: 8px; -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);");
-            btn.setOnAction(e -> openRepondreFormInline(id_rec, titre, contenu, status));
-        } else {
-            // Default case for any unexpected status
-            btn.setText("en_attente");
-
+            btn.setText("En attente");
             btn.setStyle("-fx-background-color: linear-gradient(to right, #FFCDD2, #FF8A80); -fx-text-fill: #C62828; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-background-radius: 8px; -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);");
             btn.setOnAction(e -> openRepondreFormInline(id_rec, titre, contenu, status));
         }
@@ -264,13 +267,15 @@ public class AfficherReclamationController {
     }
 
     private void showError(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.getDialogPane().getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        alert.getDialogPane().setStyle("-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 10px; -fx-padding: 10px;");
-        alert.showAndWait();
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(title);
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.getDialogPane().getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+            alert.getDialogPane().setStyle("-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 10px; -fx-padding: 10px;");
+            alert.showAndWait();
+        });
     }
 
     private boolean containsBadWord(String text) {

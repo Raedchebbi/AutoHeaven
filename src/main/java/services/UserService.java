@@ -28,7 +28,7 @@ public class UserService implements Crud<User> {
         }
 
         // Insert new user
-        String sql = "INSERT INTO user (cin, nom, prenom, tel, email, password, role, adresse, username, photo_profile, ban) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO user (cin, nom, prenom, tel, email, password, role, adresse, username, photo_profile, ban, question, reponse) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         stmt.setInt(1, obj.getCin());
         stmt.setString(2, obj.getNom());
@@ -41,6 +41,8 @@ public class UserService implements Crud<User> {
         stmt.setString(9, obj.getUsername());
         stmt.setString(10, obj.getPhotoProfile());
         stmt.setString(11, obj.getBan() == null ? "non" : obj.getBan());
+        stmt.setString(12, obj.getQuestion());
+        stmt.setString(13, obj.getReponse());
 
         int rowsInserted = stmt.executeUpdate();
         System.out.println("Nouvel utilisateur ajouté : " + obj.getNom() + " " + obj.getPrenom());
@@ -72,7 +74,7 @@ public class UserService implements Crud<User> {
         }
 
         // Update user (CIN can be updated now)
-        String sql = "UPDATE user SET cin = ?, nom = ?, prenom = ?, tel = ?, email = ?, password = ?, role = ?, adresse = ?, username = ?, photo_profile = ?, ban = ? WHERE id = ?";
+        String sql = "UPDATE user SET cin = ?, nom = ?, prenom = ?, tel = ?, email = ?, password = ?, role = ?, adresse = ?, username = ?, photo_profile = ?, ban = ?, question = ?, reponse = ? WHERE id = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
 
         stmt.setInt(1, obj.getCin()); // Allow CIN to be updated
@@ -86,22 +88,11 @@ public class UserService implements Crud<User> {
         stmt.setString(9, obj.getUsername());
         stmt.setString(10, obj.getPhotoProfile());
         stmt.setString(11, obj.getBan() == null ? "non" : obj.getBan());
-        stmt.setInt(12, obj.getId());
+        stmt.setString(12, obj.getQuestion());
+        stmt.setString(13, obj.getReponse());
+        stmt.setInt(14, obj.getId());
 
         stmt.executeUpdate();
-    }
-
-    @Override
-
-    public void updateStatus(int userId, String newStatus) throws SQLException {
-        String sql = "UPDATE user SET status = ? WHERE id = ?";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, newStatus);
-            stmt.setInt(2, userId);
-            stmt.executeUpdate();
-        }
-
     }
 
     @Override
@@ -112,11 +103,6 @@ public class UserService implements Crud<User> {
 
         stmt.executeUpdate();
         System.out.println("Utilisateur supprimé.");
-    }
-
-    @Override
-    public void delete(int obj) throws Exception {
-
     }
 
     @Override
@@ -140,38 +126,13 @@ public class UserService implements Crud<User> {
             user.setUsername(rs.getString("username"));
             user.setPhotoProfile(rs.getString("photo_profile"));
             user.setBan(rs.getString("ban"));
+            user.setQuestion(rs.getString("question"));
+            user.setReponse(rs.getString("reponse"));
 
             users.add(user);
         }
         return users;
     }
-
-    public User getById(int id) throws Exception {
-        String sql = "SELECT * FROM user WHERE id = ?";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, id);
-        ResultSet rs = stmt.executeQuery();
-
-        if (rs.next()) {
-            return new User(
-                    rs.getInt("id"),
-                    rs.getInt("cin"),
-                    rs.getString("nom"),
-                    rs.getString("prenom"),
-                    rs.getInt("tel"),
-                    rs.getString("email"),
-                    rs.getString("password"),
-                    rs.getString("role"),
-                    rs.getString("adresse"),
-                    rs.getString("username"),
-                    rs.getString("photoProfile"),
-                    rs.getString("ban")
-
-            );
-        }
-        return null; // Aucun utilisateur trouvé
-    }
-
     public boolean cinExists(String cin) throws Exception {
         String sql = "SELECT COUNT(*) FROM user WHERE cin = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -228,6 +189,58 @@ public class UserService implements Crud<User> {
         return photoProfile;
     }
 
+
+
+
+
+    @Override
+
+    public void updateStatus(int userId, String newStatus) throws SQLException {
+        String sql = "UPDATE user SET status = ? WHERE id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, newStatus);
+            stmt.setInt(2, userId);
+            stmt.executeUpdate();
+        }
+
+    }
+
+    @Override
+    public void delete(int obj) throws Exception {
+
+    }
+
+
+
+    public User getById(int id) throws Exception {
+        String sql = "SELECT * FROM user WHERE id = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, id);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            return new User(
+                    rs.getInt("id"),
+                    rs.getInt("cin"),
+                    rs.getString("nom"),
+                    rs.getString("prenom"),
+                    rs.getInt("tel"),
+                    rs.getString("email"),
+                    rs.getString("password"),
+                    rs.getString("role"),
+                    rs.getString("adresse"),
+                    rs.getString("username"),
+                    rs.getString("photoProfile"),
+                    rs.getString("ban"),
+                    rs.getString("question"),
+                    rs.getString("reponse")
+
+            );
+        }
+        return null; // Aucun utilisateur trouvé
+    }
+
     public List<User> getAllClients() throws Exception {
         List<User> clients = new ArrayList<>();
         String sql = "SELECT * FROM user WHERE role = 'client'";
@@ -247,7 +260,9 @@ public class UserService implements Crud<User> {
                     rs.getString("adresse"),
                     rs.getString("username"),
                     rs.getString("photoProfile"),
-                    rs.getString("ban")
+                    rs.getString("ban"),
+                    rs.getString("question"),
+                    rs.getString("reponse")
             );
             clients.add(user);
         }
@@ -273,7 +288,9 @@ public class UserService implements Crud<User> {
                     rs.getString("adresse"),
                     rs.getString("username"),
                     rs.getString("photoProfile"),
-                    rs.getString("ban")
+                    rs.getString("ban"),
+                    rs.getString("question"),
+                    rs.getString("reponse")
             );
             mechanics.add(user);
         }

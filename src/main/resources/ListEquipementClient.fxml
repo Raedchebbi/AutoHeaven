@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="650.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ListEquipementClient">
+<AnchorPane prefHeight="560.0" prefWidth="972.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ListEquipementClient">
     <children>
         <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="972.0">
             <children>
@@ -120,7 +120,7 @@
                 </HBox>
             </children>
         </HBox>
-        <HBox alignment="CENTER" layoutX="-2.0" layoutY="168.0" prefHeight="483.0" prefWidth="972.0">
+        <HBox alignment="CENTER" layoutX="-2.0" layoutY="168.0" prefHeight="377.0" prefWidth="972.0">
             <children>
                 <ScrollPane fx:id="scroll" prefHeight="473.0" prefWidth="826.0" styleClass="transparent" stylesheets="@equipclient.css">
                     <content>

@@ -28,6 +28,12 @@ public class EquipItemClient {
     @FXML
     private Label prix;
     private ListEquipement listEquipementController;
+    private profileController dashboardController;  // Référence au Dashboard1
+
+    public void setDashboardController(profileController dashboardController) {
+        System.out.println("Setting DashboardController in EquipItemClient: " + (dashboardController != null ? "not null" : "null"));
+        this.dashboardController = dashboardController;
+    }
 
     public void setListEquipementController(ListEquipement listEquipementController) {
         this.listEquipementController = listEquipementController;
@@ -45,33 +51,34 @@ public class EquipItemClient {
         System.out.println(equipement.getImage());
         image.setImage(image_p);
         equip_area.setOnMouseClicked(event -> {
+          /*  try {
+                if (dashboardController != null) {
+                    dashboardController.loadDetailsForm(equipement); // Utiliser la méthode de Dashboard1
+                } else {
+                    System.err.println("DashboardController is null in EquipItemClient!");
+                }*/
             try {
+                if (dashboardController != null) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Detail_equipement.fxml"));
+                    try {
+                        Parent root = loader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Detail_equipement.fxml"));
-                Parent root = loader.load();
+                    DetailEquipement controller = loader.getController();
+                    controller.initData(equipement);
+                    controller.setDashboardController(dashboardController); // Passer dashboardController à DetailEquipement
 
-
-                DetailEquipement controller = loader.getController();
-                controller.initData(equipement);
-
-                Scene scene = new Scene(root);
-
-
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-
-                stage.setScene(scene);
-
-
-            //    Stage stage = new Stage();
-              //  stage.setScene(new Scene(root));
-             //   stage.show();
-            } catch (IOException e) {
+                    dashboardController.loadDetailsForm(equipement); // Utiliser loadDetailsForm de Dashboard1
+                } else {
+                    System.err.println("DashboardController is null in EquipItemClient!");
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
-                throw new RuntimeException("Erreur de la vue Detail_equipement.fxml", e);
+                throw new RuntimeException("Erreur lors de l’affichage des détails de l’équipement", e);
             }
         });
-
 
 
 

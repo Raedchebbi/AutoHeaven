@@ -13,10 +13,12 @@ public class User {
     private String username;
     private String photoProfile; // New attribute for profile picture
     private String ban = "non"; // New attribute with default value "non"
+    private String question;
+    private String reponse;
 
     public User() {}
 
-    public User(int id, int cin, String nom, String prenom, int tel, String email, String password, String role, String adresse, String username, String photoProfile, String ban) {
+    public User(int id, int cin, String nom, String prenom, int tel, String email, String password, String role, String adresse, String username, String photoProfile, String ban, String question, String reponse) {
         this.id = id;
         this.cin = cin;
         this.nom = nom;
@@ -29,9 +31,11 @@ public class User {
         this.username = username;
         this.photoProfile = photoProfile;
         this.ban = (ban != null) ? ban : "non"; // Ensures default value
+        this.question = question;
+        this.reponse = reponse;
     }
 
-    public User(int cin, String nom, String prenom, int tel, String email, String password, String role, String adresse, String username, String photoProfile, String ban) {
+    public User(int cin, String nom, String prenom, int tel, String email, String password, String role, String adresse, String username, String photoProfile, String ban, String question, String reponse) {
         this.cin = cin;
         this.nom = nom;
         this.prenom = prenom;
@@ -43,6 +47,8 @@ public class User {
         this.username = username;
         this.photoProfile = photoProfile;
         this.ban = (ban != null) ? ban : "non";
+        this.question = question;
+        this.reponse = reponse;
     }
 
     public int getId() { return id; }
@@ -81,10 +87,16 @@ public class User {
     public String getBan() { return ban; }
     public void setBan(String ban) { this.ban = (ban != null) ? ban : "non"; }
 
+    public String getQuestion() { return question; }
+    public void setQuestion(String question) { this.question = question; }
+
+    public String getReponse() { return reponse; }
+    public void setReponse(String reponse) { this.reponse = reponse; }
+
     @Override
     public String toString() {
         return "User{id=" + id + ", cin=" + cin + ", nom='" + nom + "', prenom='" + prenom + "', tel=" + tel +
                 ", email='" + email + "', username='" + username + "', role='" + role + "', adresse='" + adresse +
-                "', photoProfile='" + photoProfile + "', ban='" + ban + "'}";
+                "', photoProfile='" + photoProfile + "', ban='" + ban + "', question='" + question + "', reponse='" + reponse + "'}";
     }
 }

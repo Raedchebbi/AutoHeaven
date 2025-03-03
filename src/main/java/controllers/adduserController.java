@@ -1,6 +1,8 @@
 package controllers;
 
 import javafx.animation.PauseTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,6 +25,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import utils.MyDb;
 
@@ -66,13 +70,34 @@ public class adduserController implements Initializable {
 
     @FXML
     private TextField photoTextfield;
+    @FXML
+    private ComboBox<String> su_question;
+    @FXML
+    private TextField su_answer;
 
     private UserService userService = new UserService();
+
+    private String[] questionList = {"Quel est le nom de votre premier animal de compagnie ?", "Dans quelle ville êtes-vous né(e) ?", "Quelle est votre couleur préférée ?"};
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         File shieldFile = new File("images/shield.png");
         Image shieldImage = new Image(shieldFile.toURI().toString());
         shieldImageview.setImage(shieldImage);
+        regLquestionList();
+    }
+
+    public void regLquestionList() {
+        List<String> listQ = new ArrayList();
+        String[] var2 = this.questionList;
+        int var3 = var2.length;
+
+        for(int var4 = 0; var4 < var3; ++var4) {
+            String data = var2[var4];
+            listQ.add(data);
+        }
+
+        ObservableList listData = FXCollections.observableArrayList(listQ);
+        this.su_question.setItems(listData);
     }
 
     public void inscritButtonOnAction(ActionEvent Event) throws Exception {
@@ -136,8 +161,11 @@ public class adduserController implements Initializable {
         String password = setPasswordfield.getText();
         String photoProfile = photoTextfield.getText().isEmpty() ? null : photoTextfield.getText();
         String ban = "non";
+        String question = su_question.getValue();
+        String reponse = su_answer.getText();
 
-        User newUser = new User(cin, nom, prénom, tel, email, password, role, adresse, username, photoProfile, ban);
+        User newUser = new User(cin, nom, prénom, tel, email, password, role, adresse, username, photoProfile, ban, question, reponse);
+
         try {
             userService.create(newUser);
         } catch (Exception e) {
@@ -168,6 +196,7 @@ public class adduserController implements Initializable {
         String password = setPasswordfield.getText();
         String tel = telTextfield.getText();
         String adresse = adresseTextfield.getText();
+        String reponse = su_answer.getText();
 
         if (!cin.matches("\\d{8}")) {
             errors.append("Erreur : Le CIN doit être composé de 8 chiffres.\n");
@@ -183,7 +212,7 @@ public class adduserController implements Initializable {
         if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             errors.append("Erreur : L'email n'est pas valide.\n");
         }
-        if (cin.isBlank() || email.isBlank() || username.isBlank() || password.isBlank() || tel.isBlank() || adresse.isBlank() ) {
+        if (cin.isBlank() || email.isBlank() || username.isBlank() || password.isBlank() || tel.isBlank() || adresse.isBlank() || reponse.isBlank()) {
             errors.append("Veuillez remplir tous les champs. \n");
         }
         if (userService.cinExists(cin)) {

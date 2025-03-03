@@ -1,6 +1,7 @@
 package controllers;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -59,7 +60,11 @@ public class DetailEquipement {
     private Button sous;
     @FXML
     private FontAwesomeIconView back;
+    private profileController dashboardController;  // Référence au Dashboard1
 
+    public void setDashboardController(profileController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
 
     EquipementAffichage equipement;
     public void initData(EquipementAffichage equipement) {
@@ -132,23 +137,51 @@ public class DetailEquipement {
         redirectToEquipDetail(equipement ,cart.getScene());
     }
 
+    /* private void redirectToEquipDetail(EquipementAffichage equipement, Scene currentScene) throws IOException {
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Detail_equipement.fxml"));
+         Parent root = loader.load();
+         DetailEquipement controller = loader.getController();
+         controller.initData(equipement);
+
+
+         currentScene.setRoot(root);
+     }*/
     private void redirectToEquipDetail(EquipementAffichage equipement, Scene currentScene) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Detail_equipement.fxml"));
-        Parent root = loader.load();
-        DetailEquipement controller = loader.getController();
-        controller.initData(equipement);
-
-
-        currentScene.setRoot(root);
+        System.out.println("Redirecting to EquipDetail. DashboardController: " + (dashboardController != null ? "not null" : "null"));
+        if (dashboardController != null) {
+            dashboardController.loadDetailsForm(equipement);
+        } else {
+            System.err.println("DashboardController is null in DetailEquipement!");
+            // Gestion de secours (optionnel) : charger Detail_equipement.fxml sans Dashboard1
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/controllers/Detail_equipement.fxml"));
+            Parent root = loader.load();
+            DetailEquipement controller = loader.getController();
+            controller.initData(equipement);
+            currentScene.setRoot(root);
+        }
     }
 
+    /* @FXML
+     private void handleBackAction() throws IOException {
+
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
+         Parent root = loader.load();
+         Scene currentScene = back.getScene();
+         currentScene.setRoot(root);
+     }*/
     @FXML
     private void handleBackAction() throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
-        Parent root = loader.load();
-        Scene currentScene = back.getScene();
-        currentScene.setRoot(root);
+        if (dashboardController != null) {
+            dashboardController.loadListEquipementClientForm(); // Recharger ListEquipementClient dans pan_form
+            dashboardController.switchForm(new ActionEvent(dashboardController.getPan(), null)); // Assurez-vous que pan_form est visible
+        } else {
+            System.err.println("DashboardController is null in DetailEquipement!");
+            // Gestion de secours si dashboardController est null (optionnel)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/controllers/ListEquipementClient.fxml"));
+            Parent root = loader.load();
+            Scene currentScene = back.getScene();
+            currentScene.setRoot(root);
+        }
     }
 
 

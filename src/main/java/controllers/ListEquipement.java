@@ -44,6 +44,12 @@ public class ListEquipement implements Initializable {
 
     @FXML
     private TextField input_search;
+    private Button equipbtn;
+    private dashboardController dashboardController;
+
+    public void setDashboardController(dashboardController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
 
 
     @FXML
@@ -119,7 +125,7 @@ public class ListEquipement implements Initializable {
         equip_container.getChildren().clear();
 
         EquipementService es = new EquipementService();
-       // List<EquipementAffichage> obs = es.getAll();
+        // List<EquipementAffichage> obs = es.getAll();
 
         for (EquipementAffichage e : obs) {
             try {
@@ -178,6 +184,9 @@ public class ListEquipement implements Initializable {
         if (equip_pa != null) {
             equip_pa.getChildren().clear();
             equip_pa.getChildren().add(addEquip);
+            AddEquipemntCard addEquipemntCardController = loader.getController();
+            addEquipemntCardController.setEquipbtn(equipbtn);
+
         } else {
             System.out.println("Erreur : equipementPanel est null !");
         }
@@ -199,11 +208,11 @@ public class ListEquipement implements Initializable {
     }
     public  List<EquipementAffichage> filterStock() throws Exception {
 
-            List<EquipementAffichage> filtred = es.getAll().stream()
-                    .filter(c -> c.getQuantite()==0)
-                    .collect(Collectors.toList());
-            return filtred;
-        }
+        List<EquipementAffichage> filtred = es.getAll().stream()
+                .filter(c -> c.getQuantite()==0)
+                .collect(Collectors.toList());
+        return filtred;
+    }
 
 
 }

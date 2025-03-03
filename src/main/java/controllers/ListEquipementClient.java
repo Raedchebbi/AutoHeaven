@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,6 +34,7 @@ public class ListEquipementClient implements Initializable {
     @FXML
     private ImageView panier;
 
+
     @FXML
     private TextField input_search;
 
@@ -43,22 +45,27 @@ public class ListEquipementClient implements Initializable {
     private Button search_btn;
     @FXML
     private Label commande;
+
+    private profileController dashboardController;  // Référence au contrôleur du Dashboard
+
+    private boolean isInitialized = false;
+
+    public void setDashboardController(profileController dashboardController) {
+        System.out.println("Setting DashboardController in ListEquipementClient: " + (dashboardController != null ? "not null" : "null"));
+        this.dashboardController = dashboardController;
+        if (!isInitialized) {
+            initializeData(); // Initialiser les données une fois dashboardController est défini
+        }
+    }
+
+
     EquipementService es=new EquipementService();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Ne rien faire ici pour éviter d’appeler reloadEquipements avant que dashboardController ne soit défini
+        System.out.println("ListEquipementClient initialized. DashboardController: " + (dashboardController != null ? "not null" : "null"));
 
-        List<EquipementAffichage> l =new ArrayList<>();
-        try {
-            l=es.getAll();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            reloadEquipements(l);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         panier.setOnMouseClicked(event -> {
             try {
                 handlePanierClick(event);
@@ -66,14 +73,13 @@ public class ListEquipementClient implements Initializable {
                 e.printStackTrace();
             }
         });
+
         input_search.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
-                if (newValue == null || newValue.trim().isEmpty()) {
-                    // Si le champ de recherche est vide, recharger tous les équipements
-                    List<EquipementAffichage> allEquipements = es.getAll();
+                if (dashboardController != null && (newValue == null || newValue.trim().isEmpty())) {
+                    List<EquipementAffichage> allEquipements = new EquipementService().getAll();
                     reloadEquipements(allEquipements);
-                } else {
-                    // Sinon, effectuer la recherche
+                } else if (dashboardController != null) {
                     List<EquipementAffichage> filtredName = handleSearch_name(newValue);
                     reloadEquipements(filtredName);
                 }
@@ -82,17 +88,17 @@ public class ListEquipementClient implements Initializable {
             }
         });
 
-        // Écouteur pour le bouton de recherche
         search_btn.setOnMouseClicked(event -> {
             try {
-                String searchText = input_search.getText();
-                List<EquipementAffichage> filtredName = handleSearch_name(searchText);
-                reloadEquipements(filtredName);
+                if (dashboardController != null) {
+                    String searchText = input_search.getText();
+                    List<EquipementAffichage> filtredName = handleSearch_name(searchText);
+                    reloadEquipements(filtredName);
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
-
 
         commande.setOnMouseClicked(event -> {
             try {
@@ -101,12 +107,24 @@ public class ListEquipementClient implements Initializable {
                 e.printStackTrace();
             }
         });
+    }
 
+    private void initializeData() {
+        EquipementService es = new EquipementService();
+        List<EquipementAffichage> l = new ArrayList<>();
+        try {
+            l = es.getAll();
+            reloadEquipements(l);
+            isInitialized = true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
     public void handlePanierClick(MouseEvent event) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Paniers.fxml"));
+       /* FXMLLoader loader = new FXMLLoader(getClass().getResource("/Paniers.fxml"));
         Parent root = loader.load();
+
 
 
         Scene scene = new Scene(root);
@@ -116,98 +134,103 @@ public class ListEquipementClient implements Initializable {
 
 
         stage.setScene(scene);
-        stage.show();
+        stage.show();*/
+        System.out.println("Panier button clicked!");
+        if (dashboardController != null) {
+            System.out.println("DashboardController is not null, loading Paniers form...");
+            dashboardController.loadPaniersForm();
+        } else {
+            System.err.println("DashboardController is null!");
+        }
     }
     public void reloadEquipements(List<EquipementAffichage> obs) throws Exception {
-        int column =0 ;
-        int row=1;
+        System.out.println("Reloading equipements in ListEquipementClient. DashboardController: " + (dashboardController != null ? "not null" : "null"));
+        if (dashboardController == null) {
+            System.err.println("DashboardController is null in ListEquipementClient! Skipping reload.");
+            return; // ou lancer une exception si cela n’est pas acceptable
+        }
+
+        int column = 0;
+        int row = 1;
 
         grid.getChildren().clear();
 
-        //EquipementService es = new EquipementService();
-        //List<EquipementAffichage> obs = es.getAll();
-
         for (EquipementAffichage e : obs) {
             try {
-                FXMLLoader fxml1 =new FXMLLoader();
-                // FXMLLoader loader = new FXMLLoader(getClass().getResource("/EquipItemClient.fxml"));
-                fxml1.setLocation(getClass().getResource("/equipItemClient.fxml"));
+                FXMLLoader fxml1 = new FXMLLoader(getClass().getResource("/equipItemClient.fxml"));
                 AnchorPane item = fxml1.load();
-                //AnchorPane item = loader.load();
-                //EquipItemClient ie = loader.getController();
                 EquipItemClient ie = fxml1.getController();
                 ie.initData(e);
-                //ie.setListEquipementController(this);  // Passer la référence du contrôleur parent
+                if (dashboardController != null) {
+                    ie.setDashboardController(dashboardController);
+                    System.out.println("DashboardController passed to EquipItemClient: not null");
+                } else {
+                    System.err.println("DashboardController is null in ListEquipementClient! This should not happen.");
+                    throw new RuntimeException("DashboardController is null in ListEquipementClient. Check initialization.");
+                }
 
-                if(column==3){
-                    column=0;
+                if (column == 3) {
+                    column = 0;
                     row++;
                 }
-                grid.add(item,column++,row);
-                grid.setMinWidth(Region.USE_COMPUTED_SIZE);
-                grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
-                grid.setMaxWidth(Region.USE_PREF_SIZE);
-
-
-                grid.setMinHeight(Region.USE_COMPUTED_SIZE);
-                grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
-                grid.setMaxHeight(Region.USE_PREF_SIZE);
-
-                GridPane.setMargin(item,new Insets(20,20,20,20));
-                System.out.println("Adding item at column: " + column + ", row: " + row);
-                System.out.println("Nombre d'équipements à afficher : " + obs.size());
-
-
+                grid.add(item, column++, row);
+                GridPane.setMargin(item, new Insets(20, 20, 20, 20));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
-        // grid.autosize();
     }
     public void handleCommandeClick(MouseEvent event) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/historiqueCommande.fxml"));
+      /*  FXMLLoader loader = new FXMLLoader(getClass().getResource("/historiqueCommande.fxml"));
         Parent root = loader.load();
 
         //Parent root = loader.load();
         Scene currentScene =search_btn.getScene();
-        currentScene.setRoot(root);
-
-       // Scene scene = new Scene(root);
-
-
-       // Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-
-       // stage.setScene(scene);
-       // stage.show();
-    }
-   /* public List<EquipementAffichage> handleSearch_name(MouseEvent event) throws Exception {
-        String nom= this.input_search.getText();
-        List<EquipementAffichage> l =new ArrayList<>();
-      //  l=es.getAll().stream().filter(x -> x.getNom().equals(nom)).collect(Collectors.toList());
-        l=es.getAll().stream().filter(x->x.getNom().toLowerCase().contains(nom.toLowerCase())).collect(Collectors.toList());
-        System.out.println(l);
-        if (l.isEmpty()){
-            l=es.getAll().stream().filter(x->x.getMarque().toLowerCase().contains(nom.toLowerCase())).collect(Collectors.toList());
-            System.out.println(l);
-
+        currentScene.setRoot(root);*/
+        System.out.println("Commande button clicked!");
+        if (dashboardController != null) {
+            System.out.println("DashboardController is not null, loading Paniers form...");
+            dashboardController.loadComForm();
+        } else {
+            System.err.println("DashboardController is null!");
         }
 
-        System.out.println(l);
+        // Scene scene = new Scene(root);
+
+
+        // Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+
+        // stage.setScene(scene);
+        // stage.show();
+    }
+    /* public List<EquipementAffichage> handleSearch_name(MouseEvent event) throws Exception {
+         String nom= this.input_search.getText();
+         List<EquipementAffichage> l =new ArrayList<>();
+       //  l=es.getAll().stream().filter(x -> x.getNom().equals(nom)).collect(Collectors.toList());
+         l=es.getAll().stream().filter(x->x.getNom().toLowerCase().contains(nom.toLowerCase())).collect(Collectors.toList());
+         System.out.println(l);
+         if (l.isEmpty()){
+             l=es.getAll().stream().filter(x->x.getMarque().toLowerCase().contains(nom.toLowerCase())).collect(Collectors.toList());
+             System.out.println(l);
+
+         }
+
+         System.out.println(l);
+         return l;
+
+
+     }*/
+    public List<EquipementAffichage> handleSearch_name(String searchText) throws Exception {
+        List<EquipementAffichage> l = new ArrayList<>();
+        l = es.getAll().stream()
+                .filter(x -> x.getNom().toLowerCase().contains(searchText.toLowerCase()) ||
+                        x.getMarque().toLowerCase().contains(searchText.toLowerCase()) ||
+                        x.getReference().toLowerCase().contains(searchText.toLowerCase()))
+                .collect(Collectors.toList());
         return l;
-
-
-    }*/
-   public List<EquipementAffichage> handleSearch_name(String searchText) throws Exception {
-       List<EquipementAffichage> l = new ArrayList<>();
-       l = es.getAll().stream()
-               .filter(x -> x.getNom().toLowerCase().contains(searchText.toLowerCase()) ||
-                       x.getMarque().toLowerCase().contains(searchText.toLowerCase()) ||
-                       x.getReference().toLowerCase().contains(searchText.toLowerCase()))
-               .collect(Collectors.toList());
-       return l;
-   }
+    }
 
 
 }

@@ -2,7 +2,10 @@ package controllers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,10 +16,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import netscape.javascript.JSObject;
 import utils.MyDb;
 
@@ -25,6 +30,8 @@ import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.net.URL;
 
@@ -43,9 +50,37 @@ public class loginuserController implements Initializable {
     private Button loginButton;
     @FXML
     private WebView captchaWebView;
+    @FXML
+    private ComboBox<String> fp_question;
+    @FXML
+    private TextField fp_answer;
+    @FXML
+    private TextField fp_username;
+    @FXML
+    private AnchorPane fp_questionForm;
+    @FXML
+    private Button fp_proceedBtn;
+    @FXML
+    private Button fp_back;
+    @FXML
+    private AnchorPane si_loginForm;
+    @FXML
+    private AnchorPane np_newPassForm;
+    @FXML
+    private PasswordField np_newPassword;
+    @FXML
+    private PasswordField np_confirmPassword;
+    @FXML
+    private Button np_changePassBtn;
+    @FXML
+    private Button np_back;
+
 
     private String captchaToken = null;
     public static String loggedInUser;
+   public  static int loggedInUserID;
+    private String[] questionList = {"Quel est le nom de votre premier animal de compagnie ?", "Dans quelle ville êtes-vous né(e) ?", "Quelle est votre couleur préférée ?"};
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,6 +89,125 @@ public class loginuserController implements Initializable {
         lockImageView.setImage(lockImage);
         setupCaptcha();
     }
+
+    public void switchForgotPass() {
+        this.fp_questionForm.setVisible(true);
+        this.si_loginForm.setVisible(false);
+        this.forgotPassQuestionList();
+    }
+
+    public void changePassBtn() {
+        if (!np_newPassword.getText().isEmpty() && !np_confirmPassword.getText().isEmpty()) {
+            if (np_newPassword.getText().equals(np_confirmPassword.getText())) {
+                String updatePass = "UPDATE user SET password = ?, question = ?, reponse = ? WHERE username = ?";
+
+                MyDb connectNow = new MyDb();
+                Connection connectDB = connectNow.getConn();
+
+                try {
+                    PreparedStatement preparedStatement = connectDB.prepareStatement(updatePass);
+                    preparedStatement = connectDB.prepareStatement(updatePass);
+                    preparedStatement.setString(1, np_newPassword.getText());
+                    preparedStatement.setString(2, (String) fp_question.getSelectionModel().getSelectedItem());
+                    preparedStatement.setString(3, fp_answer.getText());
+                    preparedStatement.setString(4, fp_username.getText());
+
+                    preparedStatement.executeUpdate();
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Successfully changed password!");
+                    alert.showAndWait();
+
+                    // Reset UI fields
+                    si_loginForm.setVisible(true);
+                    np_newPassForm.setVisible(false);
+                    np_confirmPassword.setText("");
+                    np_newPassword.setText("");
+                    fp_question.getSelectionModel().clearSelection();
+                    fp_answer.setText("");
+                    fp_username.setText("");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Passwords do not match");
+                alert.showAndWait();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all blank fields");
+            alert.showAndWait();
+        }
+    }
+
+    public void proceedBtn() {
+        if (!this.fp_username.getText().isEmpty() && this.fp_question.getSelectionModel().getSelectedItem() != null && !this.fp_answer.getText().isEmpty()) {
+            String selectData = "SELECT username, question, reponse FROM user WHERE username = ? AND question = ? AND reponse = ?";
+            MyDb connectNow = new MyDb();
+            Connection connectDB = connectNow.getConn();
+
+            try {
+                PreparedStatement preparedStatement = connectDB.prepareStatement(selectData);
+                preparedStatement.setString(1, this.fp_username.getText());
+                preparedStatement.setString(2, (String) this.fp_question.getSelectionModel().getSelectedItem());
+                preparedStatement.setString(3, this.fp_answer.getText());
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    np_newPassForm.setVisible(true);
+                    fp_questionForm.setVisible(false);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Incorrect Information");
+                    alert.showAndWait();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Message");
+            alert.setHeaderText(null);
+            alert.setContentText("Please fill all blank fields");
+            alert.showAndWait();
+        }
+
+    }
+
+    public void forgotPassQuestionList() {
+        List<String> listQ = new ArrayList();
+        String[] var2 = this.questionList;
+        int var3 = var2.length;
+
+        for(int var4 = 0; var4 < var3; ++var4) {
+            String data = var2[var4];
+            listQ.add(data);
+        }
+
+        ObservableList listData = FXCollections.observableArrayList(listQ);
+        this.fp_question.setItems(listData);
+    }
+
+    public void backToLoginForm() {
+        this.si_loginForm.setVisible(true);
+        this.fp_questionForm.setVisible(false);
+    }
+
+    public void backToQuestionForm() {
+        this.fp_questionForm.setVisible(true);
+        this.np_newPassForm.setVisible(false);
+    }
+
 
     private void setupCaptcha() {
         WebEngine webEngine = captchaWebView.getEngine();
@@ -89,7 +243,7 @@ public class loginuserController implements Initializable {
 
 
 
-                webEngine.loadContent(captchaHTML);
+        webEngine.loadContent(captchaHTML);
         webEngine.setJavaScriptEnabled(true);
         webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
@@ -167,8 +321,18 @@ public class loginuserController implements Initializable {
             ResultSet queryResult = preparedStatement.executeQuery();
 
             if (queryResult.next()) {
+                String banStatus = queryResult.getString("ban");
+
+                // Vérification si l'utilisateur est banni
+                if ("Oui".equalsIgnoreCase(banStatus)) {
+                    loginMessageLabel.setWrapText(true);
+                    loginMessageLabel.setText("Votre compte est temporairement banni. Veuillez réessayer plus tard.");
+                    return; // Stop execution if user is banned
+                }
+
                 loginMessageLabel.setText("Connexion réussie !");
                 loggedInUser = queryResult.getString("username");
+                loggedInUserID = queryResult.getInt("id");
 
                 String role = queryResult.getString("role");
 
@@ -178,7 +342,7 @@ public class loginuserController implements Initializable {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
                         Parent root = loader.load();
 
-                        // Pass username to dashboard
+                        // Passer le username au dashboard
                         dashboardController dashboardCtrl = loader.getController();
                         dashboardCtrl.displayUsername();
 
@@ -195,12 +359,12 @@ public class loginuserController implements Initializable {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/profile.fxml"));
                         Parent root = loader.load();
 
-                        // Pass username to profile
+                        // Passer le username au profil
                         profileController profileCtrl = loader.getController();
                         profileCtrl.displayUsername();
 
                         Stage profileStage = new Stage();
-                        profileStage.setScene(new Scene(root, 1100, 600));
+                        profileStage.setScene(new Scene(root, 1180, 600));
                         profileStage.initStyle(StageStyle.UNDECORATED);
                         profileStage.show();
                     } catch (Exception e) {
@@ -241,7 +405,7 @@ public class loginuserController implements Initializable {
             Parent root = loader.load();
             Stage adduserstage = new Stage();
             adduserstage.setScene(new Scene(root, 1100, 660));
-            adduserstage.initStyle(StageStyle.UNDECORATED);
+            adduserstage.initStyle(StageStyle.DECORATED);
             adduserstage.show();
         } catch (Exception e) {
             e.printStackTrace();

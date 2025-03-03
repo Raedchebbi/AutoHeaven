@@ -15,11 +15,14 @@ public class Mainfx extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         // Charger le fichier FXML avec le nom exact (ajusté selon votre fichier réel)
-        Parent root = FXMLLoader.load(getClass().getResource("/navigate.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/login2.fxml"));
         primaryStage.setTitle("PiDev - Gestion des Réclamations (Admin)");
 
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+
         // Utiliser les dimensions du FXML pour cohérence
-        primaryStage.setScene(new Scene(root, 1300, 800));
+      //  primaryStage.setScene(new Scene(root, 1300, 800));
         primaryStage.show();
     }
 

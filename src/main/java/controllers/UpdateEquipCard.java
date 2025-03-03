@@ -234,7 +234,7 @@ public class UpdateEquipCard {
 
         EquipementService sc = new EquipementService();
         sc.update(u1, quantite1, prix1);
-       // listEquipementController.hideUpdatePopup();
+        // listEquipementController.hideUpdatePopup();
         listEquipementController.reloadEquipements(sc.getAll());
         redirectToListEquipement();
 
@@ -251,18 +251,36 @@ public class UpdateEquipCard {
 
     @FXML
     void cancelUpdate(ActionEvent event) throws IOException {
-       // listEquipementController.hideUpdatePopup();
+        // listEquipementController.hideUpdatePopup();
 
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
+           /* FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
             Parent root = loader.load();
             Scene currentScene = update_btn.getScene();
             currentScene.setRoot(root);
+*/
+
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Dashboard.fxml"));
+        Parent root = loader.load();
+        dashboardController dashboardController = loader.getController();
+
+
+        dashboardController.loadListEquipementForm();
+
+
+        Scene scene = update_btn.getScene();
+        scene.setRoot(root);
 
     }
     private void redirectToListEquipement() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Dashboard.fxml"));
         Parent root = loader.load();
+        dashboardController dashboardController = loader.getController();
+
+        // Assurez-vous que la vue ListEquipement est chargée dans le Dashboard
+        dashboardController.loadListEquipementForm();
+
         Scene scene = update_btn.getScene();
         scene.setRoot(root);
     }

@@ -3,28 +3,36 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="700.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.repondre_rec_controller">
-
-   <VBox spacing="20" alignment="CENTER" prefHeight="700.0" fx:id="formContainer">
+<AnchorPane prefHeight="1000.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.repondre_rec_controller">
+   <VBox spacing="20" alignment="CENTER" prefHeight="1000.0" fx:id="formContainer">
       <padding>
-         <Insets top="20" right="20" bottom="20" left="10" />
+         <Insets top="20" right="20" bottom="20" left="20" />
       </padding>
-      <Label text="Répondre à la réclamation" styleClass="main-title" />
-
-      <Label text="Titre :" styleClass="form-label" />
-      <TextField fx:id="reclamationTitre" editable="false" styleClass="form-field" />
-
-      <Label text="Contenu :" styleClass="form-label" />
-      <TextArea fx:id="reclamationContent" editable="false" styleClass="text-area" />
-
-      <Label text="Réponse :" styleClass="form-label" />
-      <TextArea fx:id="responseTextArea" styleClass="text-area" />
-
-      <Button text="Envoyer Réponse" styleClass="btn-primary" onAction="#handleEnvoyerReponse" />
+      <Label text="Répondre à la Réclamation" styleClass="main-title" />
+      <VBox alignment="CENTER_LEFT" spacing="10.0">
+         <Label text="Titre :" styleClass="form-label" />
+         <TextField fx:id="reclamationTitre" editable="false" styleClass="form-field" />
+      </VBox>
+      <VBox alignment="CENTER_LEFT" spacing="10.0">
+         <Label text="Contenu :" styleClass="form-label" />
+         <TextArea fx:id="reclamationContent" editable="false" styleClass="text-area" />
+      </VBox>
+      <VBox alignment="CENTER_LEFT" spacing="10.0">
+         <Label text="Réponse :" styleClass="form-label" />
+         <TextArea fx:id="responseTextArea" styleClass="text-area" />
+      </VBox>
+      <HBox spacing="10.0" alignment="CENTER">
+         <Button text="Envoyer Réponse" styleClass="button" onAction="#handleEnvoyerReponse" prefWidth="150.0" />
+         <Button text="Fermer" styleClass="button" onAction="#closeForm" prefWidth="150.0" />
+      </HBox>
+      <!-- Section de la messagerie (conversation uniquement, sans saisie de nouveaux messages) -->
+      <Label text="Messagerie (Administrateur)" styleClass="main-title" />
+      <ListView fx:id="messageList" prefHeight="250.0" prefWidth="350.0" styleClass="chat-list" />
    </VBox>
-
 </AnchorPane>

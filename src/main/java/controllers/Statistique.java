@@ -39,7 +39,7 @@ public class Statistique implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            nbClient.setText(String.valueOf(nbrClient()));
+            //nbClient.setText(String.valueOf(nbrClient()));
             nbCom.setText(String.valueOf(nbrCom()));
             loadPieChart();
             loadPieChartVentes();

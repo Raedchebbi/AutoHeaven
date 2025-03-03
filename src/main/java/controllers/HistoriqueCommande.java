@@ -31,8 +31,12 @@ public class HistoriqueCommande implements Initializable {
 
     @FXML
     private WebView webView;
+    private profileController dashboardController;
 
     Commande commande;
+    public void setDashboardController(profileController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -48,7 +52,7 @@ public class HistoriqueCommande implements Initializable {
         area.getChildren().clear();
 
         CommandeService ps = new CommandeService();
-        List<Commande> obs = ps.getAllByidU(5129);
+        List<Commande> obs = ps.getAllByidU(loginuserController.loggedInUserID);
         System.out.println("Nombre de commandes chargées : " + obs.size());
 
         for (Commande e : obs) {
@@ -108,9 +112,12 @@ public class HistoriqueCommande implements Initializable {
 
     @FXML
     private void handleBackAction() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
+       /* FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
         Parent root = loader.load();
         Scene currentScene = back.getScene();
-        currentScene.setRoot(root);
+        currentScene.setRoot(root);*/
+        if (dashboardController != null) {
+            dashboardController.loadListEquipementClientForm();  // Appeler une méthode dans Dashboard1 pour charger ListEquipementClient.fxml
+        }
     }
 }
