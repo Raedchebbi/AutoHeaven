@@ -92,7 +92,6 @@ public class UpdateTestDriveController {
     public void updateTestDrive() {
         successMessage.setText("");
         errorMessage.setText("");
-        successMessage.setVisible(false);
 
         // Vérification de l'utilisateur
         String user = cbUser.getValue();
@@ -128,12 +127,17 @@ public class UpdateTestDriveController {
             testDrive.setStatus("en_cours_de_traitement");
 
             testDriveService.update(testDrive);
-            successMessage.setText("Test Drive mis à jour avec succès !");
-            successMessage.setVisible(true);
+            showSuccessPopup("Test Drive mis à jour avec succès !");
+            goBack();
 
         } catch (Exception e) {
             errorMessage.setText("Erreur lors de la mise à jour : " + e.getMessage());
         }
+    }
+
+    private void showSuccessPopup(String message) {
+        successMessage.setText(message);
+        successMessage.setVisible(true);
     }
 
     @FXML

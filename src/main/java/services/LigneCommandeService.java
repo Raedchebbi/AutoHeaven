@@ -123,7 +123,7 @@ public class LigneCommandeService implements CrudLigneCommande<Lignecommande> {
         stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
-            return new User(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getInt("tel"), rs.getString("email"), rs.getString("password"), rs.getString("role"), rs.getString("adresse"), rs.getString("username"),rs.getString("photo_profile"),rs.getString("ban"));
+            return new User(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getInt("tel"), rs.getString("email"), rs.getString("password"), rs.getString("role"), rs.getString("adresse"), rs.getString("username"),rs.getString("photoProfile"),rs.getString("ban"));
 
     } else {
             throw new Exception("Ligne de commande non trouvée avec l'id_l : " + id);

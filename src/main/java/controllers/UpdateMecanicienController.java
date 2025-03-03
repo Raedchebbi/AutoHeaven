@@ -107,7 +107,7 @@ public class UpdateMecanicienController {
                 return;
             }
             if (dateField.getValue() == null) {
-                errorMessage.setText("Veuillez sélectionner une date  de format : JJ/MM/AAAA.");
+                errorMessage.setText("Veuillez sélectionner une date !");
                 return;
             }
 
@@ -131,10 +131,18 @@ public class UpdateMecanicienController {
             resMecanicien.setStatus("en_cours_de_traitement");
 
             resMecanicienService.update(resMecanicien);
-            successMessage.setText("Rendez-vous mis à jour avec succès !");
+            showSuccessPopup("Rendez-vous mis à jour avec succès !");
+            goBack();
+
         } catch (Exception e) {
             errorMessage.setText("Erreur lors de la mise à jour : " + e.getMessage());
+            errorMessage.setVisible(true);
         }
+    }
+
+    private void showSuccessPopup(String message) {
+        successMessage.setText(message);
+        successMessage.setVisible(true);
     }
 
     @FXML
@@ -143,7 +151,7 @@ public class UpdateMecanicienController {
     }
 
     @FXML
-    private void handleBack() {
+    private void goBack() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewMecanicienRDV.fxml"));
             Parent root = loader.load();

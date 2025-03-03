@@ -28,7 +28,7 @@ public class UserService implements Crud<User> {
         }
 
         // Insert new user
-        String sql = "INSERT INTO user (cin, nom, prenom, tel, email, password, role, adresse, username, photo_profile, ban) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO user (cin, nom, prenom, tel, email, password, role, adresse, username, photoProfile, ban) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         stmt.setInt(1, obj.getCin());
         stmt.setString(2, obj.getNom());
@@ -72,7 +72,7 @@ public class UserService implements Crud<User> {
         }
 
         // Update user (CIN can be updated now)
-        String sql = "UPDATE user SET cin = ?, nom = ?, prenom = ?, tel = ?, email = ?, password = ?, role = ?, adresse = ?, username = ?, photo_profile = ?, ban = ? WHERE id = ?";
+        String sql = "UPDATE user SET cin = ?, nom = ?, prenom = ?, tel = ?, email = ?, password = ?, role = ?, adresse = ?, username = ?, photoProfile = ?, ban = ? WHERE id = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
 
         stmt.setInt(1, obj.getCin()); // Allow CIN to be updated
@@ -138,7 +138,7 @@ public class UserService implements Crud<User> {
             user.setRole(rs.getString("role"));
             user.setAdresse(rs.getString("adresse"));
             user.setUsername(rs.getString("username"));
-            user.setPhotoProfile(rs.getString("photo_profile"));
+            user.setPhotoProfile(rs.getString("photoProfile"));
             user.setBan(rs.getString("ban"));
 
             users.add(user);
@@ -169,7 +169,7 @@ public class UserService implements Crud<User> {
 
             );
         }
-        return null; // Aucun utilisateur trouvé
+        return null;
     }
 
     public boolean cinExists(String cin) throws Exception {
@@ -206,7 +206,7 @@ public class UserService implements Crud<User> {
     }
 
     public String getPhotoProfileById(int userId) {
-        String query = "SELECT photo_profile FROM user WHERE id = ?";
+        String query = "SELECT photoProfile FROM user WHERE id = ?";
         String photoProfile = null;
 
         // Create an instance of MyDb to get the connection
@@ -218,7 +218,7 @@ public class UserService implements Crud<User> {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                photoProfile = rs.getString("photo_profile");
+                photoProfile = rs.getString("photoProfile");
             }
 
         } catch (SQLException e) {

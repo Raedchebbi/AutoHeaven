@@ -74,14 +74,12 @@ public class AddTestDriveController {
         errorMessage.setText("");
         successMessage.setText("");
 
-        // Vérification de l'utilisateur
         String user = cbUser.getValue();
         if (user == null) {
             errorMessage.setText("Veuillez sélectionner un utilisateur.");
             return;
         }
 
-        // Vérification du véhicule
         String vehicle = cbVehicle.getValue();
         if (vehicle == null) {
             errorMessage.setText("Veuillez sélectionner un véhicule.");

@@ -703,7 +703,7 @@ public class profileController implements Initializable {
                 setPasswordfield1.setText(resultSet.getString("password"));
 
                 // Retrieve the photo path
-                String photoProfilePath = resultSet.getString("photo_profile");
+                String photoProfilePath = resultSet.getString("photoProfile");
 
                 // If photoProfilePath is not null, load and display the image
                 if (photoProfilePath != null && !photoProfilePath.trim().isEmpty()) {

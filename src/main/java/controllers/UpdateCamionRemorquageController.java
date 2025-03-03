@@ -67,7 +67,6 @@ public class UpdateCamionRemorquageController {
         successMessage.setVisible(false);
         errorMessage.setVisible(false);
 
-        // Vérification des champs
         String nomAgence = tfNomAgence.getText();
         if (nomAgence.isEmpty()) {
             errorMessage.setText("Le nom de l'agence est requis !");
@@ -117,13 +116,17 @@ public class UpdateCamionRemorquageController {
 
         try {
             camionRemorquageService.update(camion);
-            successMessage.setText("Camion Remorquage mis à jour avec succès !");
-            successMessage.setVisible(true);
+            showSuccessPopup("Camion Remorquage mis à jour avec succès !");
+            goBack();
         } catch (Exception e) {
-            e.printStackTrace();
             errorMessage.setText("Erreur lors de la mise à jour du Camion Remorquage.");
             errorMessage.setVisible(true);
         }
+    }
+
+    private void showSuccessPopup(String message) {
+        successMessage.setText(message);
+        successMessage.setVisible(true);
     }
 
     @FXML

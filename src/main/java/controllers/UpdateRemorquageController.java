@@ -66,7 +66,7 @@ public class UpdateRemorquageController {
             List<User> users = userService.getAll();
             ObservableList<String> userNames = FXCollections.observableArrayList();
             for (User user : users) {
-                userNames.add(user.getUsername() + " (ID : " + user.getId() + ")");
+                userNames.add(user.getId() + "-" + user.getUsername());
             }
             cbUser.setItems(userNames);
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class UpdateRemorquageController {
             List<CamionRemorquage> camions = camionService.getAll();
             ObservableList<String> nomAgenceList = FXCollections.observableArrayList();
             for (CamionRemorquage camion : camions) {
-                nomAgenceList.add(camion.getNomAgence() + " : " + camion.getStatut());
+                nomAgenceList.add(camion.getId_cr() + " - " + camion.getNomAgence() + " : " + camion.getStatut());
             }
             cbCamion.setItems(nomAgenceList);
         } catch (Exception e) {
@@ -95,7 +95,6 @@ public class UpdateRemorquageController {
         successMessage.setText("");
 
         try {
-            // Vérification des champs obligatoires
             if (cbUser.getValue() == null) {
                 errorMessage.setText("Utilisateur est requis !");
                 return;
@@ -121,31 +120,20 @@ public class UpdateRemorquageController {
             remorquage.setId_u(userId);
             remorquage.setId_cr(camionId);
             remorquage.setDate(java.sql.Date.valueOf(date));
-            remorquageService.update(remorquage);
-            successMessage.setText("Remorquage mis à jour avec succès !");
+            remorquage.setStatus("en_cours_de_traitement");
 
-            // Retour à la vue
-            goToViewRemorquage("Remorquage mis à jour avec succès !");
+            remorquageService.update(remorquage);
+            showSuccessPopup("Remorquage mis à jour avec succès !");
+            goBack();
+
         } catch (Exception e) {
             errorMessage.setText("Erreur lors de la mise à jour : " + e.getMessage());
         }
     }
 
-    private void goToViewRemorquage(String message) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewRemorquage.fxml"));
-            Parent root = loader.load();
-
-            // Passer le message de succès à la vue
-            ViewRemorquageController viewController = loader.getController();
-            viewController.displaySuccessMessage(message); // Méthode à créer dans ViewRemorquageController
-
-            Stage stage = (Stage) btnBack.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void showSuccessPopup(String message) {
+        successMessage.setText(message);
+        successMessage.setVisible(true);
     }
 
     @FXML

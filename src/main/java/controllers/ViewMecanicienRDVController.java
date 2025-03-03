@@ -186,7 +186,7 @@ public class ViewMecanicienRDVController {
             Parent root = loader.load();
 
             UpdateMecanicienController updateController = loader.getController();
-            updateController.setResMecanicien(rdv); // Pass the selected ResMecanicien
+            updateController.setResMecanicien(rdv);
 
             Stage stage = (Stage) add_btn.getScene().getWindow();
             stage.setScene(new Scene(root));
