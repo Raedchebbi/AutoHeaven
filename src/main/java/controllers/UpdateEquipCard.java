@@ -120,8 +120,7 @@ public class UpdateEquipCard {
             String uniqueID = UUID.randomUUID().toString();
             String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf("."));
             imageName = uniqueID + extension;
-
-            Path destination = Paths.get("C:\\Users\\ASUS\\Downloads\\pi3A21\\AutoHeaven\\src\\main\\resources\\dir\\", imageName);
+            Path destination = Paths.get("C:\\Users\\ASUS\\Downloads\\rayen\\AutoHeaven\\src\\main\\resources\\dir\\", imageName);
             try {
                 Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
@@ -171,7 +170,7 @@ public class UpdateEquipCard {
 
         String imagePath;
         if (selectedImageFile != null) {
-            imagePath = "C:\\Users\\ASUS\\Downloads\\pi3A21\\AutoHeaven\\src\\main\\resources\\dir\\" + imageName;
+            imagePath = "C:\\Users\\ASUS\\Downloads\\rayen\\AutoHeaven\\src\\main\\resources\\dir\\" + imageName;
         } else {
             imagePath = equipement.getImage();
         }
