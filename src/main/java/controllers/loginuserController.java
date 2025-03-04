@@ -364,7 +364,7 @@ public class loginuserController implements Initializable {
                         profileCtrl.displayUsername();
 
                         Stage profileStage = new Stage();
-                        profileStage.setScene(new Scene(root, 1180, 600));
+                        profileStage.setScene(new Scene(root));
                         profileStage.initStyle(StageStyle.UNDECORATED);
                         profileStage.show();
                     } catch (Exception e) {
