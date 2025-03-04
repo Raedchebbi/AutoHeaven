@@ -38,11 +38,17 @@ public class ViewMecanicienRDVController {
     private UserService userService = new UserService();
     private List<ResMecanicien> mecanicienList; // Liste originale pour filtrage
 
+    private dashboardController dashboardController;
+
     @FXML
     public void initialize() {
         loadMecanicienRDVs();
         successMessage.setVisible(false);
         setupSearch(); // Configurer la recherche
+    }
+
+    public void setDashboardController(dashboardController controller) {
+        this.dashboardController = controller;
     }
 
     private void loadMecanicienRDVs() {

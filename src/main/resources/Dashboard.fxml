@@ -271,10 +271,10 @@
 
 
 
-                        <VBox fx:id="camion_form" layoutX="10" layoutY="10" prefHeight="400.0" prefWidth="600.0" visible="false"></VBox>
-                        <VBox fx:id="rdvmec_form" layoutX="10" layoutY="10" prefHeight="400.0" prefWidth="600.0" visible="false"></VBox>
-                        <VBox fx:id="remo_form" layoutX="10" layoutY="10" prefHeight="400.0" prefWidth="600.0" visible="false"></VBox>
-                        <VBox fx:id="testd_form" layoutX="10" layoutY="10" prefHeight="400.0" prefWidth="600.0" visible="false"></VBox>
+                        <VBox fx:id="camion_form" layoutX="0" layoutY="0" prefHeight="400.0" prefWidth="600.0" visible="false"></VBox>
+                        <VBox fx:id="rdvmec_form" layoutX="0" layoutY="0" prefHeight="400.0" prefWidth="600.0" visible="false"></VBox>
+                        <VBox fx:id="remo_form" layoutX="0" layoutY="0" prefHeight="400.0" prefWidth="600.0" visible="false"></VBox>
+                        <VBox fx:id="testd_form" layoutX="0" layoutY="0" prefHeight="400.0" prefWidth="600.0" visible="false"></VBox>
 
 
 

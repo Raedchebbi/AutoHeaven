@@ -35,6 +35,19 @@
             <version>8.0.33</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.mailjet</groupId>
+            <artifactId>mailjet-client</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+
+        <!-- Email API -->
+        <dependency>
+            <groupId>com.mailjet</groupId>
+            <artifactId>mailjet-client</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+
         <!-- WebSocket API -->
         <dependency>
             <groupId>javax.websocket</groupId>
@@ -118,11 +131,11 @@
         </dependency>
 
         <!-- Google Recaptcha -->
-       <!-- <dependency>
-            <groupId>com.google.cloud</groupId>
-            <artifactId>google-cloud-recaptchaenterprise</artifactId>
-            <version>2.12.0</version>
-        </dependency>-->
+        <!-- <dependency>
+             <groupId>com.google.cloud</groupId>
+             <artifactId>google-cloud-recaptchaenterprise</artifactId>
+             <version>2.12.0</version>
+         </dependency>-->
 
         <!-- Infobip API -->
         <dependency>

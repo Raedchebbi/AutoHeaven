@@ -23,9 +23,11 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import models.CamionRemorquage;
 import models.EquipementAffichage;
 import models.Offre;
 import models.User;
+import services.CamionRemorquageService;
 import services.UserService;
 import services.OffreService;
 import utils.MyDb;
@@ -248,8 +250,8 @@ public class dashboardController implements Initializable {
 
     @FXML
     private AnchorPane comform;
-   @FXML
-   private AnchorPane equipement_form;
+    @FXML
+    private AnchorPane equipement_form;
     @FXML
     Button equipbtn;
     @FXML
@@ -276,6 +278,32 @@ public class dashboardController implements Initializable {
     private ComboBox<String> banCombobox1;
 
 
+
+
+
+    @FXML
+    private Button camionbtn;
+    @FXML
+    private Button rdvmecbtn;
+    @FXML
+    private Button remobtn;
+    @FXML
+    private Button testdbtn;
+
+    @FXML
+    private VBox camion_form;
+    @FXML
+    private VBox rdvmec_form;
+    @FXML
+    private VBox remo_form;
+    @FXML
+    private VBox testd_form;
+
+
+
+
+
+
     private String[] banList = {"oui", "non"};
 
     private Image image;
@@ -283,9 +311,10 @@ public class dashboardController implements Initializable {
     public Button getPan() {
         return pan;
     }
-    private UserService userService = new UserService();
 
+    private UserService userService = new UserService();
     private OffreService offreService = new OffreService();
+
     @FXML
     AfficherReclamationController aff = new AfficherReclamationController();
 
@@ -363,7 +392,6 @@ public class dashboardController implements Initializable {
         }
     }
 
-
     public void showMechanicDetails(User selectedUser) {
         // Set the values of the text fields with the selected mechanic's details
         idTextfield.setText(String.valueOf(selectedUser.getId()));
@@ -406,9 +434,7 @@ public class dashboardController implements Initializable {
         }
     }
 
-
     public void registerMec() throws Exception {
-
         String cin = cinTextfield.getText();
         String email = emailTextfield.getText();
         String username = usernameTextfield.getText();
@@ -605,25 +631,25 @@ public class dashboardController implements Initializable {
         alert.setContentText("Êtes-vous sûr de vouloir vous déconnecter ?");
         Optional<ButtonType> option = alert.showAndWait();
         try{
-        if (option.get().equals(ButtonType.OK)) {
+            if (option.get().equals(ButtonType.OK)) {
 
-            // Load the login interface
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/LoginUser.fxml"));
-            Parent root = loader.load();
+                // Load the login interface
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/LoginUser.fxml"));
+                Parent root = loader.load();
 
-            // Get current stage (window) and set the new scene
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        }
+                // Get current stage (window) and set the new scene
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+            }
 
         } catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public void switchForm(ActionEvent event){
-        if(event.getSource() == acceuilBtn){
+    public void switchForm(ActionEvent event) {
+        if (event.getSource() == acceuilBtn) {
             Acceuil_form.setVisible(true);
             Mecaniciens_form.setVisible(false);
             clients_form.setVisible(false);
@@ -631,7 +657,10 @@ public class dashboardController implements Initializable {
             equipement_form.setVisible(false);
             comform.setVisible(false);
             rec_form.setVisible(false);
-
+            camion_form.setVisible(false);
+            rdvmec_form.setVisible(false);
+            remo_form.setVisible(false);
+            testd_form.setVisible(false);
 
             acceuilBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             addMecanicienBtn.setStyle("-fx-background-color: transparent");
@@ -640,8 +669,12 @@ public class dashboardController implements Initializable {
             equipbtn.setStyle("-fx-background-color: transparent");
             combtn.setStyle("-fx-background-color: transparent");
             recbtn.setStyle("-fx-background-color: transparent");
+            camionbtn.setStyle("-fx-background-color: transparent");
+            rdvmecbtn.setStyle(("-fx-background-color: transparent"));
+            testdbtn.setStyle(("-fx-background-color: transparent"));
+            remobtn.setStyle(("-fx-background-color: transparent"));
 
-        } else if (event.getSource() == addMecanicienBtn){
+        } else if (event.getSource() == addMecanicienBtn) {
             Acceuil_form.setVisible(false);
             Mecaniciens_form.setVisible(true);
             clients_form.setVisible(false);
@@ -649,6 +682,10 @@ public class dashboardController implements Initializable {
             equipement_form.setVisible(false);
             comform.setVisible(false);
             rec_form.setVisible(false);
+            camion_form.setVisible(false);
+            rdvmec_form.setVisible(false);
+            remo_form.setVisible(false);
+            testd_form.setVisible(false);
 
             addMecanicienBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             acceuilBtn.setStyle("-fx-background-color: transparent");
@@ -657,8 +694,12 @@ public class dashboardController implements Initializable {
             equipbtn.setStyle("-fx-background-color: transparent");
             combtn.setStyle("-fx-background-color: transparent");
             recbtn.setStyle("-fx-background-color: transparent");
+            camionbtn.setStyle("-fx-background-color: transparent");
+            rdvmecbtn.setStyle(("-fx-background-color: transparent"));
+            testdbtn.setStyle(("-fx-background-color: transparent"));
+            remobtn.setStyle(("-fx-background-color: transparent"));
 
-        } else if (event.getSource() == clientsBtn){
+        } else if (event.getSource() == clientsBtn) {
             Acceuil_form.setVisible(false);
             Mecaniciens_form.setVisible(false);
             clients_form.setVisible(true);
@@ -666,14 +707,22 @@ public class dashboardController implements Initializable {
             equipement_form.setVisible(false);
             comform.setVisible(false);
             rec_form.setVisible(false);
+            camion_form.setVisible(false);
+            rdvmec_form.setVisible(false);
+            remo_form.setVisible(false);
+            testd_form.setVisible(false);
 
             clientsBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             addMecanicienBtn.setStyle("-fx-background-color: transparent");
             acceuilBtn.setStyle("-fx-background-color: transparent");
             OffreBtn.setStyle("-fx-background-color: transparent");
-            combtn.setStyle("-fx-background-color: transparent");
             equipbtn.setStyle("-fx-background-color: transparent");
+            combtn.setStyle("-fx-background-color: transparent");
             recbtn.setStyle("-fx-background-color: transparent");
+            camionbtn.setStyle("-fx-background-color: transparent");
+            rdvmecbtn.setStyle(("-fx-background-color: transparent"));
+            testdbtn.setStyle(("-fx-background-color: transparent"));
+            remobtn.setStyle(("-fx-background-color: transparent"));
 
         } else if (event.getSource() == OffreBtn) {
             Acceuil_form.setVisible(false);
@@ -683,6 +732,10 @@ public class dashboardController implements Initializable {
             equipement_form.setVisible(false);
             comform.setVisible(false);
             rec_form.setVisible(false);
+            camion_form.setVisible(false);
+            rdvmec_form.setVisible(false);
+            remo_form.setVisible(false);
+            testd_form.setVisible(false);
 
             OffreBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             clientsBtn.setStyle("-fx-background-color: transparent");
@@ -691,29 +744,36 @@ public class dashboardController implements Initializable {
             equipbtn.setStyle("-fx-background-color: transparent");
             combtn.setStyle("-fx-background-color: transparent");
             recbtn.setStyle("-fx-background-color: transparent");
+            camionbtn.setStyle("-fx-background-color: transparent");
+            rdvmecbtn.setStyle(("-fx-background-color: transparent"));
+            testdbtn.setStyle(("-fx-background-color: transparent"));
+            remobtn.setStyle(("-fx-background-color: transparent"));
 
+        } else if (event.getSource() == equipbtn) {
+            Acceuil_form.setVisible(false);
+            Mecaniciens_form.setVisible(false);
+            clients_form.setVisible(false);
+            Offre_form.setVisible(false);
+            equipement_form.setVisible(true);
+            comform.setVisible(false);
+            rec_form.setVisible(false);
+            camion_form.setVisible(false);
+            rdvmec_form.setVisible(false);
+            remo_form.setVisible(false);
+            testd_form.setVisible(false);
 
-        }
-     else if (event.getSource() == equipbtn) {
-        Acceuil_form.setVisible(false);
-        Mecaniciens_form.setVisible(false);
-        clients_form.setVisible(false);
-        Offre_form.setVisible(false);
-        equipement_form.setVisible(true);
-        comform.setVisible(false);
-        rec_form.setVisible(false);
+            equipbtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            acceuilBtn.setStyle("-fx-background-color: transparent");
+            clientsBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
+            combtn.setStyle("-fx-background-color: transparent");
+            recbtn.setStyle("-fx-background-color: transparent");
+            camionbtn.setStyle("-fx-background-color: transparent");
+            rdvmecbtn.setStyle(("-fx-background-color: transparent"));
+            testdbtn.setStyle(("-fx-background-color: transparent"));
+            remobtn.setStyle(("-fx-background-color: transparent"));
 
-        OffreBtn.setStyle("-fx-background-color: transparent");
-        clientsBtn.setStyle("-fx-background-color: transparent");
-        addMecanicienBtn.setStyle("-fx-background-color: transparent");
-        acceuilBtn.setStyle("-fx-background-color: transparent");
-        equipbtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
-        combtn.setStyle("-fx-background-color: transparent");
-        recbtn.setStyle("-fx-background-color: transparent");
-
-
-    }
-        else if (event.getSource() == combtn) {
+        } else if (event.getSource() == combtn) {
             Acceuil_form.setVisible(false);
             Mecaniciens_form.setVisible(false);
             clients_form.setVisible(false);
@@ -721,18 +781,24 @@ public class dashboardController implements Initializable {
             equipement_form.setVisible(false);
             comform.setVisible(true);
             rec_form.setVisible(false);
+            camion_form.setVisible(false);
+            rdvmec_form.setVisible(false);
+            remo_form.setVisible(false);
+            testd_form.setVisible(false);
 
-            OffreBtn.setStyle("-fx-background-color: transparent");
+            combtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            acceuilBtn.setStyle("-fx-background-color: transparent");
             clientsBtn.setStyle("-fx-background-color: transparent");
             addMecanicienBtn.setStyle("-fx-background-color: transparent");
-            acceuilBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
             equipbtn.setStyle("-fx-background-color: transparent");
-            combtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             recbtn.setStyle("-fx-background-color: transparent");
+            camionbtn.setStyle("-fx-background-color: transparent");
+            rdvmecbtn.setStyle(("-fx-background-color: transparent"));
+            testdbtn.setStyle(("-fx-background-color: transparent"));
+            remobtn.setStyle(("-fx-background-color: transparent"));
 
-
-        }
-        else if (event.getSource() == recbtn) {
+        } else if (event.getSource() == recbtn) {
             Acceuil_form.setVisible(false);
             Mecaniciens_form.setVisible(false);
             clients_form.setVisible(false);
@@ -740,20 +806,138 @@ public class dashboardController implements Initializable {
             equipement_form.setVisible(false);
             comform.setVisible(false);
             rec_form.setVisible(true);
+            camion_form.setVisible(false);
+            rdvmec_form.setVisible(false);
+            remo_form.setVisible(false);
+            testd_form.setVisible(false);
 
-            OffreBtn.setStyle("-fx-background-color: transparent");
+            recbtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            acceuilBtn.setStyle("-fx-background-color: transparent");
             clientsBtn.setStyle("-fx-background-color: transparent");
             addMecanicienBtn.setStyle("-fx-background-color: transparent");
-            acceuilBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
             equipbtn.setStyle("-fx-background-color: transparent");
             combtn.setStyle("-fx-background-color: transparent");
-            recbtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            camionbtn.setStyle("-fx-background-color: transparent");
+            rdvmecbtn.setStyle(("-fx-background-color: transparent"));
+            testdbtn.setStyle(("-fx-background-color: transparent"));
+            remobtn.setStyle(("-fx-background-color: transparent"));
 
 
+
+
+
+
+
+        } else if (event.getSource() == camionbtn) {
+            Acceuil_form.setVisible(false);
+            Mecaniciens_form.setVisible(false);
+            clients_form.setVisible(false);
+            Offre_form.setVisible(false);
+            equipement_form.setVisible(false);
+            comform.setVisible(false);
+            rec_form.setVisible(false);
+            camion_form.setVisible(true);
+            rdvmec_form.setVisible(false);
+            remo_form.setVisible(false);
+            testd_form.setVisible(false);
+
+            camionbtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            acceuilBtn.setStyle("-fx-background-color: transparent");
+            addMecanicienBtn.setStyle("-fx-background-color: transparent");
+            clientsBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
+            equipbtn.setStyle("-fx-background-color: transparent");
+            combtn.setStyle("-fx-background-color: transparent");
+            recbtn.setStyle("-fx-background-color: transparent");
+            rdvmecbtn.setStyle(("-fx-background-color: transparent"));
+            testdbtn.setStyle(("-fx-background-color: transparent"));
+            remobtn.setStyle(("-fx-background-color: transparent"));
+
+        } else if (event.getSource() == rdvmecbtn) {
+            Acceuil_form.setVisible(false);
+            Mecaniciens_form.setVisible(false);
+            clients_form.setVisible(false);
+            Offre_form.setVisible(false);
+            equipement_form.setVisible(false);
+            comform.setVisible(false);
+            rec_form.setVisible(false);
+            camion_form.setVisible(false);
+            rdvmec_form.setVisible(true);
+            remo_form.setVisible(false);
+            testd_form.setVisible(false);
+
+            rdvmecbtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            acceuilBtn.setStyle("-fx-background-color: transparent");
+            addMecanicienBtn.setStyle(("-fx-background-color: transparent"));
+            clientsBtn.setStyle(("-fx-background-color: transparent"));
+            OffreBtn.setStyle(("-fx-background-color: transparent"));
+            equipbtn.setStyle(("-fx-background-color: transparent"));
+            combtn.setStyle(("-fx-background-color: transparent"));
+            recbtn.setStyle(("-fx-background-color: transparent"));
+            camionbtn.setStyle(("-fx-background-color: transparent"));
+            testdbtn.setStyle(("-fx-background-color: transparent"));
+            remobtn.setStyle(("-fx-background-color: transparent"));
+
+        } else if (event.getSource() == remobtn) {
+            Acceuil_form.setVisible(false);
+            Mecaniciens_form.setVisible(false);
+            clients_form.setVisible(false);
+            Offre_form.setVisible(false);
+            equipement_form.setVisible(false);
+            comform.setVisible(false);
+            rec_form.setVisible(false);
+            camion_form.setVisible(false);
+            rdvmec_form.setVisible(false);
+            remo_form.setVisible(true);
+            testd_form.setVisible(false);
+
+            remobtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            acceuilBtn.setStyle("-fx-background-color: transparent");
+            addMecanicienBtn.setStyle(("-fx-background-color: transparent"));
+            clientsBtn.setStyle(("-fx-background-color: transparent"));
+            OffreBtn.setStyle(("-fx-background-color: transparent"));
+            equipbtn.setStyle(("-fx-background-color: transparent"));
+            combtn.setStyle(("-fx-background-color: transparent"));
+            recbtn.setStyle(("-fx-background-color: transparent"));
+            camionbtn.setStyle(("-fx-background-color: transparent"));
+            rdvmecbtn.setStyle(("-fx-background-color: transparent"));
+            testdbtn.setStyle(("-fx-background-color: transparent"));
+
+
+        } else if (event.getSource() == testdbtn) {
+            Acceuil_form.setVisible(false);
+            Mecaniciens_form.setVisible(false);
+            clients_form.setVisible(false);
+            Offre_form.setVisible(false);
+            equipement_form.setVisible(false);
+            comform.setVisible(false);
+            rec_form.setVisible(false);
+            camion_form.setVisible(false);
+            rdvmec_form.setVisible(false);
+            remo_form.setVisible(false);
+            testd_form.setVisible(true);
+
+            testdbtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            acceuilBtn.setStyle("-fx-background-color: transparent");
+            addMecanicienBtn.setStyle(("-fx-background-color: transparent"));
+            clientsBtn.setStyle(("-fx-background-color: transparent"));
+            OffreBtn.setStyle(("-fx-background-color: transparent"));
+            equipbtn.setStyle(("-fx-background-color: transparent"));
+            combtn.setStyle(("-fx-background-color: transparent"));
+            recbtn.setStyle(("-fx-background-color: transparent"));
+            camionbtn.setStyle(("-fx-background-color: transparent"));
+            rdvmecbtn.setStyle(("-fx-background-color: transparent"));
+            remobtn.setStyle(("-fx-background-color: transparent"));
         }
+
+
+
+
+
+
     }
 
-    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         File ajoutFile = new File("images/ajout.png");
         Image ajoutImage = new Image(ajoutFile.toURI().toString());
@@ -791,6 +975,7 @@ public class dashboardController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
             Parent listEquipement = loader.load();
@@ -800,6 +985,7 @@ public class dashboardController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ValidationCommande.fxml"));
             Parent listCommandes = loader.load();
@@ -808,6 +994,7 @@ public class dashboardController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherReclamationController.fxml"));
             Parent listrec = loader.load();
@@ -820,7 +1007,74 @@ public class dashboardController implements Initializable {
 
 
 
+
+
+
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewCamionRemorquage.fxml"));
+            Parent listCamion = loader.load();
+
+            ViewCamionRemorquageController camionController = loader.getController();
+            camionController.setDashboardController(this); // Pass the dashboard controller
+
+            camion_form.getChildren().clear();
+            camion_form.getChildren().add(listCamion);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ViewCamionRemorquage.fxml");
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewMecanicienRDV.fxml"));
+            Parent listMecRDV = loader.load();
+
+            ViewMecanicienRDVController mecrdvController = loader.getController();
+            mecrdvController.setDashboardController(this); // Pass the dashboard controller
+
+            rdvmec_form.getChildren().clear();
+            rdvmec_form.getChildren().add(listMecRDV);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ViewMecanicienRDV.fxml");
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewRemorquage.fxml"));
+            Parent listRemo = loader.load();
+
+            ViewRemorquageController remoController = loader.getController();
+            remoController.setDashboardController(this); // Pass the dashboard controller
+
+            remo_form.getChildren().clear();
+            remo_form.getChildren().add(listRemo);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ViewRemorquage.fxml");
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewTestDrive.fxml"));
+            Parent listTestD = loader.load();
+
+            ViewTestDriveController testdController = loader.getController();
+            testdController.setDashboardController(this); // Pass the dashboard controller
+
+            testd_form.getChildren().clear();
+            testd_form.getChildren().add(listTestD);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ViewTestDrive.fxml");
+        }
+
+
+
+
+
+
+
+
+
+
     }
+
     public void loadListEquipementForm() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipement.fxml"));
@@ -1260,40 +1514,40 @@ public class dashboardController implements Initializable {
             return;
         }
 
-            Offre newOffre = new Offre(type_offre, description, taux_reduction, date_debut, date_fin, id_equipement, imageUrl);
+        Offre newOffre = new Offre(type_offre, description, taux_reduction, date_debut, date_fin, id_equipement, imageUrl);
 
-            try {
-                offreService.create(newOffre);
-                System.out.println("Offre ajoutée avec succès !");
-            } catch (Exception e) {
-                System.out.println("Erreur : " + e.getMessage());
-            }
+        try {
+            offreService.create(newOffre);
+            System.out.println("Offre ajoutée avec succès !");
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
         }
+    }
 
 
     public void registerOffre() throws Exception {
-            String typeOffre = typeTextfield.getText();
-            String description = descTextfield.getText();
-            String tauxReductionStr = tauxTextfield.getText();
-            LocalDate dateDebut = dateDpick.getValue();
-            LocalDate dateFin = DateFpick.getValue();
-            Pair<Integer, String> selectedEquipementPair = equipCombobox.getValue();
+        String typeOffre = typeTextfield.getText();
+        String description = descTextfield.getText();
+        String tauxReductionStr = tauxTextfield.getText();
+        LocalDate dateDebut = dateDpick.getValue();
+        LocalDate dateFin = DateFpick.getValue();
+        Pair<Integer, String> selectedEquipementPair = equipCombobox.getValue();
 
 
-            errormessage3.setText("");
+        errormessage3.setText("");
 
 
-            if (!isValidInputOffre()) {
-                return; // Stop registration if validation fails
-            }
-            addOffre();
-            errormessage3.setText("Utilisateur enregistré avec succès !");
-            PauseTransition pause = new PauseTransition(Duration.seconds(5));
-            pause.setOnFinished(event -> errormessage3.setText(""));
-            pause.play();
-            showOffres();
-
+        if (!isValidInputOffre()) {
+            return; // Stop registration if validation fails
         }
+        addOffre();
+        errormessage3.setText("Utilisateur enregistré avec succès !");
+        PauseTransition pause = new PauseTransition(Duration.seconds(5));
+        pause.setOnFinished(event -> errormessage3.setText(""));
+        pause.play();
+        showOffres();
+
+    }
 
     private boolean isValidInputOffre() throws Exception {
         StringBuilder errors = new StringBuilder();
@@ -1480,6 +1734,16 @@ public class dashboardController implements Initializable {
         equipCombobox.getSelectionModel().clearSelection();  // Clear ComboBox selection
     }
 
-
-
+    public void goToReservationTestDrive(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ViewTestDrive.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de ViewTestDrive.fxml");
+        }
+    }
 }
