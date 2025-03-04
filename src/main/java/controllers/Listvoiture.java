@@ -22,6 +22,8 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 public class Listvoiture implements Initializable {
+    @FXML private VBox chatbotContainer;
+
 
     @FXML
     private Button sortButton;
@@ -292,5 +294,24 @@ public class Listvoiture implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    private void openChatbot() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/chatbot.fxml"));
+            Parent root = loader.load();
+
+            Stage chatbotStage = new Stage();
+            chatbotStage.setTitle("Car Chatbot");
+            chatbotStage.setScene(new Scene(root, 400, 500));
+            chatbotStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void toggleChatbot() {
+        boolean isVisible = chatbotContainer.getOpacity() > 0;
+        chatbotContainer.setOpacity(isVisible ? 0 : 1);
     }
 }

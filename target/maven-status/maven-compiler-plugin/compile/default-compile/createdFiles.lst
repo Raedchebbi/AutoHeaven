@@ -6,6 +6,7 @@ utils\MyDb.class
 services\ReclamationService.class
 models\Stock.class
 controllers\profileController.class
+services\GeminiClient.class
 services\MessagerieService.class
 controllers\AfficherReclamationController.class
 models\mentions_j_aime.class
@@ -28,6 +29,7 @@ org\example\Mainfx.class
 models\Reclamation.class
 controllers\dashboardController$1.class
 services\OffreService.class
+controllers\Chatbot.class
 services\InfobipClientInitializer.class
 services\StockService.class
 controllers\loginuserController.class

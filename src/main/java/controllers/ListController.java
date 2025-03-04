@@ -82,10 +82,7 @@
 package controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import models.avis;
 import services.AvisService;
 import javafx.collections.FXCollections;
@@ -100,8 +97,14 @@ public class ListController {
     private TextField searchField;
     @FXML
     private Button searchButton;
+    @FXML
+    private Label carDetailsLabel;
     private AvisService avisService;
     private ObservableList<avis> avisObservableList;
+
+    private final String apiToken = "d6745cea-3949-433b-8889-8233587fea20";
+    private final String apiSecret = "978dac1d5449b91119a4e2250834b79d";
+    private final String apiUrl = "https://api.example.com/car-details"; // Example e
 
     public ListController() {
         avisService = new AvisService();
