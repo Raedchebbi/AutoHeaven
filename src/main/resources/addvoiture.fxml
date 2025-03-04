@@ -7,10 +7,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Addvoiture">
+<AnchorPane prefHeight="600.0" prefWidth="972.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Addvoiture">
 
     <children>
-        <Label alignment="TOP_LEFT" layoutX="423.0" layoutY="46.0" prefHeight="27.0" prefWidth="204.0" text="Formulaire d’Ajout de Voiture" textAlignment="JUSTIFY">
+        <Label alignment="TOP_LEFT" layoutX="384.0" layoutY="66.0" prefHeight="27.0" prefWidth="204.0" text="Formulaire d’Ajout de Voiture" textAlignment="JUSTIFY">
             <font>
                 <Font name="Berlin Sans FB Demi Bold" size="1.0" />
             </font>
@@ -36,12 +36,12 @@
         <TextField fx:id="prixTextField" layoutX="191.0" layoutY="324.0" />
         <Label fx:id="errorPrix" layoutX="191.0" layoutY="348.0" textFill="RED" />
 
-        <Label layoutX="525.0" layoutY="268.0" maxHeight="-Infinity" maxWidth="-Infinity" text="Image :">
+        <Label layoutX="492.0" layoutY="268.0" maxHeight="-Infinity" maxWidth="-Infinity" text="Image :">
          <font>
             <Font size="11.0" />
          </font></Label>
-        <Button fx:id="imageButton" layoutX="718.0" layoutY="394.0" onAction="#handleImageSelection" styleClass="delete-btn" stylesheets="@style1.css" text="Charger image" />
-      <AnchorPane layoutX="625.0" layoutY="187.0" style="-fx-background-color: white;" styleClass="shadow" stylesheets="@style1.css">
+        <Button fx:id="imageButton" layoutX="685.0" layoutY="394.0" onAction="#handleImageSelection" styleClass="delete-btn" stylesheets="@style1.css" text="Charger image" />
+      <AnchorPane layoutX="592.0" layoutY="187.0" style="-fx-background-color: white;" styleClass="shadow" stylesheets="@style1.css">
          <children>
               <ImageView fx:id="imageView" fitHeight="182.0" fitWidth="315.0" />
          </children>

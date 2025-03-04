@@ -11,6 +11,7 @@ C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\controllers\affiche
 C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\controllers\AfficherReclamationController.java
 C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\controllers\affichervoiture.java
 C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\controllers\CaptchaC.java
+C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\controllers\Chatbot.java
 C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\controllers\CommandeItemAdmin.java
 C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\controllers\Dashboard1.java
 C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\controllers\dashboardController.java
@@ -87,7 +88,9 @@ C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\services\CrudEquipe
 C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\services\CrudLigneCommande.java
 C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\services\CrudPanier.java
 C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\services\CrudStock.java
+C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\services\CrudUser.java
 C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\services\EquipementService.java
+C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\services\GeminiClient.java
 C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\services\InfobipClientInitializer.java
 C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\services\JavaConnector.java
 C:\Users\ASUS\Downloads\integration\AutoHeaven\src\main\java\services\LigneCommandeService.java

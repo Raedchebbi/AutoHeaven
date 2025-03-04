@@ -189,10 +189,6 @@ public class UserService implements Crud<User> {
         return photoProfile;
     }
 
-
-
-
-
     @Override
 
     public void updateStatus(int userId, String newStatus) throws SQLException {
@@ -296,5 +292,7 @@ public class UserService implements Crud<User> {
         }
         return mechanics;
     }
+
+
 
 }

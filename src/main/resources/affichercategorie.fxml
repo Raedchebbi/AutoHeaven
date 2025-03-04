@@ -4,38 +4,35 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="rootContainer" prefHeight="500.0" prefWidth="800.0" stylesheets="@style1.css"
-            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.affichercategorie">
+<AnchorPane fx:id="rootContainer" prefHeight="600.0" prefWidth="972.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.affichercategorie">
 
     <children>
-        <VBox layoutX="20.0" layoutY="20.0" spacing="5.0" prefWidth="760.0" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <VBox layoutX="20.0" layoutY="20.0" prefWidth="760.0" spacing="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
 
             <HBox spacing="10.0" style="-fx-border-color: black; -fx-border-width: 0 0 1 0; -fx-padding: 5;">
-                <Label text="Id_c" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
+                <Label style="-fx-font-weight: bold; -fx-pref-width: 120;" text="Id_c" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Type" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
+                <Label style="-fx-font-weight: bold; -fx-pref-width: 120;" text="Type" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Carburant" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
+                <Label style="-fx-font-weight: bold; -fx-pref-width: 120;" text="Carburant" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Utilisation" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
+                <Label style="-fx-font-weight: bold; -fx-pref-width: 120;" text="Utilisation" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Transmission" style="-fx-font-weight: bold; -fx-pref-width: 120;" />
+                <Label style="-fx-font-weight: bold; -fx-pref-width: 120;" text="Transmission" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Portes" style="-fx-font-weight: bold; -fx-pref-width: 80;" />
+                <Label style="-fx-font-weight: bold; -fx-pref-width: 80;" text="Portes" />
                 <Separator orientation="VERTICAL" />
-                <Label text="Actions" style="-fx-font-weight: bold; -fx-pref-width: 200;" />
+                <Label style="-fx-font-weight: bold; -fx-pref-width: 200;" text="Actions" />
             </HBox>
 
-            <VBox fx:id="categoriesContainer" spacing="5.0" AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="60.0"/>
+            <VBox fx:id="categoriesContainer" spacing="5.0" AnchorPane.bottomAnchor="60.0" AnchorPane.topAnchor="50.0" />
 
         </VBox>
 
-        <Button fx:id="refreshButton" layoutX="650.0" layoutY="450.0" text="Rafraîchir" onAction="#handleRefresh"
-                AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0"/>
+        <Button fx:id="refreshButton" layoutX="796.0" layoutY="621.0" onAction="#handleRefresh" text="Rafraîchir" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="80.0" />
     </children>
 
 </AnchorPane>

@@ -29,6 +29,11 @@ public class affichercategorie {
     private AnchorPane rootContainer;
 
     private CategorieService categorieService = new CategorieService();
+    private dashboardController dashboardController;
+
+    public void setDashboardController(dashboardController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
 
     @FXML
     public void initialize() {

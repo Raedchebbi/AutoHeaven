@@ -1,7 +1,6 @@
 services\CrudStock.class
 controllers\ListEquipement.class
 controllers\affichervoiture.class
-services\VoitureService.class
 org\example\VoitureMain.class
 services\CheckoutService.class
 controllers\NavigatorController.class
@@ -17,6 +16,7 @@ controllers\modifiercategorie.class
 models\CamionRemorquage.class
 controllers\addcategorie.class
 controllers\profileController.class
+services\GeminiClient.class
 controllers\AddMecanicienRDVController.class
 controllers\UpdateEquipCard.class
 services\CrudLigneCommande.class
@@ -33,7 +33,6 @@ controllers\ReclamationController.class
 controllers\UpdateCamionRemorquageController.class
 utils\DatabaseConnection.class
 services\CrudCommande.class
-controllers\AddTestDriveController.class
 controllers\EquipementsAchetes.class
 controllers\UpdateMecanicienController.class
 services\CamionRemorquageService.class
@@ -56,6 +55,7 @@ controllers\addreclamation_controller$1.class
 controllers\DetailEquipement.class
 controllers\navigatecontroller.class
 services\EquipementService.class
+services\CrudUser.class
 controllers\EquipementAchetesadr.class
 org\example\mainreclamation.class
 models\Offre.class
@@ -76,7 +76,6 @@ services\ResMecanicienService.class
 services\UserService.class
 org\example\Mainfx.class
 services\AvisService.class
-models\ResTestDrive.class
 models\Reclamation.class
 services\CrudPanier.class
 controllers\PanierItem.class
@@ -89,6 +88,7 @@ controllers\Paniers.class
 models\Commande.class
 controllers\AddRemorquageController.class
 services\OffreService.class
+controllers\Chatbot.class
 services\InfobipClientInitializer.class
 models\ResMecanicien.class
 controllers\UpdateTestDriveController.class

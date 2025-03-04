@@ -17,14 +17,11 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import models.EquipementAffichage;
-import models.User;
-import models.Offre;
+import models.*;
 //import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -278,6 +275,8 @@ public class profileController implements Initializable {
 
     private double prevX, prevY, prevWidth, prevHeight;
     private boolean isMaximized = false;
+    @FXML
+    Listvoiture aff = new Listvoiture();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -380,6 +379,16 @@ public class profileController implements Initializable {
             addrec= loader.getController();
             rec_form.getChildren().add(addreclamation);
             addrec.setDashboardController(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/listvoiture.fxml"));
+            Parent addv = loader.load();
+            aff= loader.getController();
+            voiture_form.getChildren().add(addv);
+            aff.setDashboardController(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -705,7 +714,19 @@ public class profileController implements Initializable {
             e.printStackTrace();
         }
     }
-
+   /* public void loadDetailForm() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/listvoiture.fxml"));
+            Parent voitures = loader.load();
+            Voiture paniersController = loader.getController();
+            paniersController.setDashboardController(this);
+            pan_form.getChildren().clear();
+            pan_form.getChildren().add(paniers);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+*/
     public void loadListEquipementClientForm() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListEquipementClient.fxml"));
@@ -718,6 +739,18 @@ public class profileController implements Initializable {
             e.printStackTrace();
         }
     }
+   /* public void loadListvoiture() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/listvoiture.fxml"));
+            Parent lisv = loader.load();
+            lisv = loader.getController();
+            lisv.setDashboardController(this);
+            voiture_form.getChildren().clear();
+            voiture_form.getChildren().add(listv);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
 
     public void loadDetailsForm(EquipementAffichage eq) {
         try {
@@ -733,6 +766,23 @@ public class profileController implements Initializable {
             e.printStackTrace();
         }
     }
+
+
+   /* public void loadDetailsVoiture(Categorie c ,Voiture v) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/detailsvoiture.fxml"));
+            Parent detailView = loader.load();
+            Detailsvoiture detailController = loader.getController();
+            detailController.setDashboardController(this);
+            detailController.setDetails(c ,v);
+
+            voiture_form.getChildren().clear();
+            voiture_form.getChildren().add(detailView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+
 
     public void loadComForm() {
         try {

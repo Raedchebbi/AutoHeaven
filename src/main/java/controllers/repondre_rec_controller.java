@@ -204,7 +204,7 @@ public class repondre_rec_controller {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                     Platform.runLater(() -> {
-                        showInfo("Connexion WebSocket établie en tant qu'Admin");
+                        //showInfo("Connexion WebSocket établie en tant qu'Admin");
                         webSocketClient.send("Admin connecté");
                     });
                 }

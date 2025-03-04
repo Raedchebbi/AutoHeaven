@@ -6,34 +6,34 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.addcategorie">
+<AnchorPane prefHeight="600.0" prefWidth="972.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.addcategorie">
     <children>
-        <Label layoutX="199.0" layoutY="14.0" prefHeight="32.0" prefWidth="237.0" text="Formulaire d’Ajout de Categorie">
+        <Label layoutX="291.0" layoutY="78.0" prefHeight="32.0" prefWidth="237.0" text="Formulaire d’Ajout de Categorie">
             <font>
                 <Font size="22.0" />
             </font>
         </Label>
 
-        <Label layoutX="29.0" layoutY="80.0" text="Type :" />
-        <TextField fx:id="typeTextField" layoutX="193.0" layoutY="76.0" />
-        <Label fx:id="errorType" layoutX="193.0" layoutY="100.0" textFill="RED" />
+        <Label layoutX="316.0" layoutY="214.0" text="Type :" />
+        <TextField fx:id="typeTextField" layoutX="480.0" layoutY="210.0" />
+        <Label fx:id="errorType" layoutX="480.0" layoutY="234.0" textFill="RED" />
 
-        <Label layoutX="29.0" layoutY="119.0" text="Type Carburant :" />
-        <TextField fx:id="typeCarburantTextField" layoutX="193.0" layoutY="115.0" />
-        <Label fx:id="errorTypeCarburant" layoutX="193.0" layoutY="139.0" textFill="RED" />
+        <Label layoutX="316.0" layoutY="253.0" text="Type Carburant :" />
+        <TextField fx:id="typeCarburantTextField" layoutX="480.0" layoutY="249.0" />
+        <Label fx:id="errorTypeCarburant" layoutX="480.0" layoutY="273.0" textFill="RED" />
 
-        <Label layoutX="29.0" layoutY="167.0" text="Type Utilisation :" />
-        <TextField fx:id="typeUtilisationTextField" layoutX="193.0" layoutY="163.0" />
-        <Label fx:id="errorTypeUtilisation" layoutX="193.0" layoutY="187.0" textFill="RED" />
+        <Label layoutX="316.0" layoutY="301.0" text="Type Utilisation :" />
+        <TextField fx:id="typeUtilisationTextField" layoutX="480.0" layoutY="297.0" />
+        <Label fx:id="errorTypeUtilisation" layoutX="480.0" layoutY="321.0" textFill="RED" />
 
-        <Label layoutX="29.0" layoutY="215.0" text="Transmission :" />
-        <TextField fx:id="transmissionTextField" layoutX="193.0" layoutY="211.0" />
-        <Label fx:id="errorTransmission" layoutX="193.0" layoutY="235.0" textFill="RED" />
+        <Label layoutX="316.0" layoutY="349.0" text="Transmission :" />
+        <TextField fx:id="transmissionTextField" layoutX="480.0" layoutY="345.0" />
+        <Label fx:id="errorTransmission" layoutX="480.0" layoutY="369.0" textFill="RED" />
 
-        <Label layoutX="29.0" layoutY="261.0" text="Nombre des Portes :" />
-        <TextField fx:id="nombrePortesTextField" layoutX="193.0" layoutY="257.0" />
-        <Label fx:id="errorNombrePortes" layoutX="193.0" layoutY="281.0" textFill="RED" />
+        <Label layoutX="316.0" layoutY="395.0" text="Nombre des Portes :" />
+        <TextField fx:id="nombrePortesTextField" layoutX="480.0" layoutY="391.0" />
+        <Label fx:id="errorNombrePortes" layoutX="480.0" layoutY="415.0" textFill="RED" />
 
-        <Button fx:id="ajouterButton" layoutX="534.0" layoutY="361.0" mnemonicParsing="false" text="Ajouter" onAction="#handleAjouterCategorie" />
+        <Button fx:id="ajouterButton" layoutX="363.0" layoutY="495.0" mnemonicParsing="false" onAction="#handleAjouterCategorie" prefHeight="48.0" prefWidth="342.0" text="Ajouter" />
     </children>
 </AnchorPane>

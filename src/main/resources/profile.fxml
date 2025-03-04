@@ -171,7 +171,7 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background-image" stylesheets="@profileDesign.css" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="Acceuil_form" layoutX="14.0" layoutY="14.0" prefHeight="554.4" prefWidth="868.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="Acceuil_form" layoutX="14.0" layoutY="14.0" prefHeight="554.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="11.0" layoutY="13.0" prefHeight="527.0" prefWidth="846.0" styleClass="profile-background" stylesheets="@../../../../AutoHeaven-62812b5c63f0b520d8a693556da52d24c699d4e7%20(2)/AutoHeaven-62812b5c63f0b520d8a693556da52d24c699d4e7/AutoHeaven-62812b5c63f0b520d8a693556da52d24c699d4e7/src/main/resources/profileDesign.css">
                            <children>
@@ -350,7 +350,10 @@
                      </children>
                   </AnchorPane>
                   <AnchorPane fx:id="services_form" layoutX="14.0" layoutY="14.0" prefHeight="554.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <AnchorPane fx:id="voiture_form" prefHeight="554.4" prefWidth="868.0" visible="false" />
+                  <AnchorPane fx:id="voiture_form" prefHeight="554.4" prefWidth="868.0">
+                     <children>
+                        <AnchorPane layoutX="19.0" layoutY="17.0" prefHeight="527.0" prefWidth="838.0" styleClass="profile-background" stylesheets="@profileDesign.css" />
+                     </children></AnchorPane>
                   <AnchorPane fx:id="pan_form" prefHeight="554.4" prefWidth="868.0" visible="false" />
                   <AnchorPane fx:id="avis_form" prefHeight="554.4" prefWidth="868.0" visible="false" />
                   <AnchorPane fx:id="rec_form" prefHeight="554.4" prefWidth="868.0" visible="false" />

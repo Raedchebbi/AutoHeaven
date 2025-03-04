@@ -23,6 +23,11 @@ public class affichervoiture {
     private AnchorPane mainContainer; // Added this to reference the parent container
 
     private final VoitureService voitureService = new VoitureService();
+    private dashboardController dashboardController;
+
+    public void setDashboardController(dashboardController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
 
     @FXML
     public void initialize() {

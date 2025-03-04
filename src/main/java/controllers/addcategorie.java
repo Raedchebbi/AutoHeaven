@@ -24,6 +24,11 @@ public class addcategorie {
     private TextField nombrePortesTextField;
     @FXML
     private Button ajouterButton;
+    private dashboardController dashboardController;
+
+    public void setDashboardController(dashboardController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
 
     @FXML
     private void handleAjouterCategorie() {

@@ -33,7 +33,11 @@ public class Addvoiture {
     private ImageView imageView;
 
     private File selectedFile;
+    private dashboardController dashboardController;
 
+    public void setDashboardController(dashboardController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
     @FXML
     private void handleImageSelection() {
         FileChooser fileChooser = new FileChooser();

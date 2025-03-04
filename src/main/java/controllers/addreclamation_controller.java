@@ -297,7 +297,7 @@ public class addreclamation_controller {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                     Platform.runLater(() -> {
-                        showInfo("Connexion WebSocket établie en tant que Client");
+                        //wshowInfo("Connexion WebSocket établie en tant que Client");
                         webSocketClient.send("Client connecté");
                     });
                 }
@@ -344,7 +344,7 @@ public class addreclamation_controller {
 
     @FXML
     private void sendChatMessage() {
-        if (webSocketClient != null && webSocketClient.isOpen() && messageInput != null) {
+            if (webSocketClient != null && webSocketClient.isOpen() && messageInput != null) {
             String message = messageInput.getText().trim();
             if (!message.isEmpty() && currentReclamationId != -1) {
                 String chatMessage = "Client : " + message;
