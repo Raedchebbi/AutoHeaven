@@ -1,7 +1,5 @@
 package controllers;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import models.User;
+import services.UserService;
 import utils.MyDb;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -20,8 +20,8 @@ import java.sql.*;
 import java.sql.Connection;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AfficherReclamationController {
@@ -31,27 +31,22 @@ public class AfficherReclamationController {
     @FXML private VBox contentBox;
     @FXML private CheckBox filterBannedCheckBox;
     @FXML private TextField searchField;
-    @FXML private ComboBox<String> sortComboBox;
-    private dashboardController dashboardController;
-    public void setDashboardController(dashboardController dashboardController) {
-        this.dashboardController = dashboardController;
-    }
+    @FXML private Label userNameLabel; // Pour afficher le nom de l'utilisateur
+    @FXML private Label userEmailLabel; // Pour afficher l'email de l'utilisateur
+    @FXML private Label userTelLabel; // Pour afficher le téléphone de l'utilisateur
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static final OkHttpClient client = new OkHttpClient();
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private dashboardController dashboardController;
 
+    public void setDashboardController(dashboardController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
     @FXML
     public void initialize() {
-        // Initialisation du ComboBox pour le tri
-        sortComboBox.getItems().addAll(
-                "Date (Récent → Ancien)",
-                "Date (Ancien → Récent)",
-                "Titre (A → Z)",
-                "Titre (Z → A)"
-        );
-        sortComboBox.setValue("Date (Récent → Ancien)");
-        sortComboBox.setOnAction(e -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText()));
+        // Récupérer et afficher les informations de l'utilisateur connecté
+        loadUserInfo();
 
         loadDataFromDatabase(false, "");
         filterBannedCheckBox.setOnAction(e -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText()));
@@ -65,13 +60,32 @@ public class AfficherReclamationController {
                 Parent form = loader.load();
                 repondreFormController = loader.getController();
                 repondreFormContainer.getChildren().setAll(form);
-                repondreFormController.setOnSuccessCallback(() -> {
-                    loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText());
-                    repondreFormContainer.setVisible(false);
-                });
             } catch (IOException e) {
                 showError("Erreur", "Erreur de chargement du formulaire : " + e.getMessage());
             }
+        }
+    }
+
+    // Méthode pour récupérer et afficher les informations de l'utilisateur connecté
+    private void loadUserInfo() {
+        try {
+            UserService us = new UserService();
+            User u = us.getById(loginuserController.loggedInUserID); // Récupérer l'utilisateur par son ID
+
+            if (u != null) {
+                String nom = u.getNom(); // Supposant que User a une méthode getNom()
+                String email = u.getEmail(); // Utilisation de getEmail() comme fourni
+                String tel = String.valueOf(u.getTel()); // Supposant que User a une méthode getTel()
+
+                // Afficher les informations dans les labels (assurez-vous qu'ils existent dans votre FXML)
+                if (userNameLabel != null) userNameLabel.setText("Nom: " + (nom != null ? nom : "Non disponible"));
+                if (userEmailLabel != null) userEmailLabel.setText("Email: " + (email != null ? email : "Non disponible"));
+                if (userTelLabel != null) userTelLabel.setText("Téléphone: " + (tel != null ? tel : "Non disponible"));
+            } else {
+                showError("Erreur", "Utilisateur non trouvé.");
+            }
+        } catch (Exception e) {
+            showError("Erreur", "Erreur lors de la récupération des informations utilisateur : " + e.getMessage());
         }
     }
 
@@ -80,7 +94,8 @@ public class AfficherReclamationController {
                 "COALESCE(r.status, 'en_attente') as status, " +
                 "r.datecreation, u.nom, u.tel, u.email " +
                 "FROM reclamation r " +
-                "JOIN user u ON r.id = u.id";
+                "JOIN user u ON r.id = u.id " +
+                "ORDER BY r.datecreation DESC";
 
         try (Connection conn = MyDb.getInstance().getConn();
              PreparedStatement ps = conn.prepareStatement(query);
@@ -96,6 +111,7 @@ public class AfficherReclamationController {
     }
 
     private List<HBox> processResultSet(ResultSet rs, boolean showOnlyBanned, String searchQuery) throws SQLException {
+        List<HBox> rows = new ArrayList<>();
         List<Reclamation> reclamations = new ArrayList<>();
 
         while (rs.next()) {
@@ -113,28 +129,17 @@ public class AfficherReclamationController {
         }
 
         String searchLower = searchQuery != null ? searchQuery.toLowerCase() : "";
-        String sortCriteria = sortComboBox.getValue();
-
-        return reclamations.stream()
-                .filter(r -> !showOnlyBanned || containsBadWord(r.getContenu()))
-                .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
-                .sorted(getComparator(sortCriteria))
-                .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
-                .collect(Collectors.toList());
-    }
-
-    private Comparator<Reclamation> getComparator(String sortCriteria) {
-        switch (sortCriteria) {
-            case "Date (Récent → Ancien)":
-                return (r1, r2) -> r2.getTimestamp().compareTo(r1.getTimestamp());
-            case "Date (Ancien → Récent)":
-                return (r1, r2) -> r1.getTimestamp().compareTo(r2.getTimestamp());
-            case "Titre (A → Z)":
-                return Comparator.comparing(Reclamation::getTitre, String.CASE_INSENSITIVE_ORDER);
-            case "Titre (Z → A)":
-                return (r1, r2) -> r2.getTitre().compareToIgnoreCase(r1.getTitre());
-            default:
-                return (r1, r2) -> r2.getTimestamp().compareTo(r1.getTimestamp());
+        if (showOnlyBanned) {
+            return reclamations.stream()
+                    .filter(r -> containsBadWord(r.getContenu()))
+                    .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
+                    .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
+                    .collect(Collectors.toList());
+        } else {
+            return reclamations.stream()
+                    .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
+                    .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
+                    .collect(Collectors.toList());
         }
     }
 
@@ -159,14 +164,64 @@ public class AfficherReclamationController {
         btnStatus.setWrapText(true);
         updateButtonState(btnStatus, id_rec, titre, contenu, status, isBannedContent);
 
+        // Icône de traduction (langue.png)
         ImageView translateIcon = new ImageView(getClass().getResource("/images/langue.png").toExternalForm());
         translateIcon.setFitWidth(25.0);
         translateIcon.setFitHeight(25.0);
         translateIcon.setPreserveRatio(true);
         setupTranslationMenu(translateIcon, lblContenu, contenu);
 
-        row.getChildren().addAll(lblTitre, lblContenu, lblDate, lblNom, lblTel, lblEmail, btnStatus, translateIcon);
+        // Icône de poubelle (poubelle.png) à côté de l’icône de langue
+        ImageView deleteIcon = new ImageView(getClass().getResource("/images/test.png").toExternalForm());
+        deleteIcon.setFitWidth(25.0);
+        deleteIcon.setFitHeight(25.0);
+        deleteIcon.setPreserveRatio(true);
+        deleteIcon.setOnMouseClicked(e -> deleteReclamation(id_rec)); // Action de suppression au clic
+
+        // Placer les icônes de langue et de poubelle côte à côte à la fin
+        HBox iconsBox = new HBox(5, translateIcon, deleteIcon);
+
+        row.getChildren().addAll(lblTitre, lblContenu, lblDate, lblNom, lblTel, lblEmail, btnStatus, iconsBox);
         return row;
+    }
+
+    private void deleteReclamation(int idRec) {
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Confirmation");
+        confirmation.setHeaderText(null);
+        confirmation.setContentText("Voulez-vous vraiment supprimer cette réclamation ? Cette action est irréversible.");
+        confirmation.getDialogPane().getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        confirmation.getDialogPane().setStyle("-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 10px; -fx-padding: 10px;");
+
+        Optional<ButtonType> result = confirmation.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            String deleteMessagesQuery = "DELETE FROM messagerie WHERE id_rec = ?";
+            String deleteReclamationQuery = "DELETE FROM reclamation WHERE id_rec = ?";
+
+            try (Connection conn = MyDb.getInstance().getConn();
+                 PreparedStatement psMessages = conn.prepareStatement(deleteMessagesQuery);
+                 PreparedStatement psReclamation = conn.prepareStatement(deleteReclamationQuery)) {
+
+                // Supprimer les messages associés
+                psMessages.setInt(1, idRec);
+                int messagesDeleted = psMessages.executeUpdate();
+                System.out.println("Messages supprimés : " + messagesDeleted);
+
+                // Supprimer la réclamation
+                psReclamation.setInt(1, idRec);
+                int reclamationDeleted = psReclamation.executeUpdate();
+
+                if (reclamationDeleted > 0) {
+                    showAlert("Succès", "Réclamation et messages associés supprimés avec succès.");
+                    loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText()); // Rafraîchir la liste
+                } else {
+                    showError("Erreur", "Aucune réclamation trouvée avec cet ID ou échec de la suppression.");
+                }
+
+            } catch (SQLException e) {
+                showError("Erreur SQL", "Erreur lors de la suppression de la réclamation : " + e.getMessage());
+            }
+        }
     }
 
     private void updateButtonState(Button btn, int id_rec, String titre, String contenu, String status, boolean isBannedContent) {
@@ -178,7 +233,6 @@ public class AfficherReclamationController {
             btn.setStyle("-fx-background-color: linear-gradient(to right, #A5D6A7, #8BC34A); -fx-text-fill: #2E7D32; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-background-radius: 8px; -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);");
             btn.setDisable(true);
         } else if ("en_attente".equalsIgnoreCase(status)) {
-            btn.setText("En attente");
             btn.setStyle("-fx-background-color: linear-gradient(to right, #FFCDD2, #FF8A80); -fx-text-fill: #C62828; -fx-font-weight: bold; -fx-padding: 8px 15px; -fx-background-radius: 8px; -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.1), 2, 0, 1, 1);");
             btn.setOnAction(e -> openRepondreFormInline(id_rec, titre, contenu, status));
         }
@@ -267,15 +321,23 @@ public class AfficherReclamationController {
     }
 
     private void showError(String title, String message) {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(title);
-            alert.setHeaderText(null);
-            alert.setContentText(message);
-            alert.getDialogPane().getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-            alert.getDialogPane().setStyle("-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 10px; -fx-padding: 10px;");
-            alert.showAndWait();
-        });
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        alert.getDialogPane().setStyle("-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 10px; -fx-padding: 10px;");
+        alert.showAndWait();
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        alert.getDialogPane().setStyle("-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 10px; -fx-padding: 10px;");
+        alert.showAndWait();
     }
 
     private boolean containsBadWord(String text) {

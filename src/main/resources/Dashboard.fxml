@@ -149,7 +149,7 @@
             <center>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="background-image" stylesheets="@dashboardDesign.css" BorderPane.alignment="TOP_LEFT">
                     <children>
-                        <AnchorPane fx:id="Acceuil_form" layoutX="14.0" layoutY="14.0" prefHeight="554.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="Acceuil_form" layoutX="14.0" layoutY="14.0" prefHeight="678.4" prefWidth="989.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="644.0" prefWidth="972.0" styleClass="profile-background" stylesheets="@profileDesign.css" />
                             </children>
@@ -544,7 +544,7 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-                  <AnchorPane fx:id="voiture_form1" prefHeight="678.4" prefWidth="989.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="voiture_form1" prefHeight="678.4" prefWidth="989.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="23.0" layoutY="21.0" prefHeight="636.0" prefWidth="942.0" styleClass="profile-background" stylesheets="@profileDesign.css">
                            <children>

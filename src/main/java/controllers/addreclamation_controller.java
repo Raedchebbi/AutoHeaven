@@ -20,10 +20,17 @@ import org.java_websocket.handshake.ServerHandshake;
 
 public class addreclamation_controller {
 
-    private static final int USER_ID = 3;  // L'ID de l'utilisateur client
+    private int userId; // ID dynamique de l'utilisateur récupéré depuis la table user
+    private String userRole; // Rôle de l'utilisateur (admin, client, mécanicien)
+    private String username; // Nom d'utilisateur pour identification
     private static final int TITRE_MAX_LENGTH = 100;
     private static final int CONTENU_MIN_LENGTH = 10;
     private static final int CONTENU_MAX_LENGTH = 1000;
+    private profileController dashboardController;
+
+    public void setDashboardController(profileController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
 
     @FXML
     private TextField objetTextField;
@@ -46,12 +53,12 @@ public class addreclamation_controller {
     private WebSocketClient webSocketClient;
     private int currentReclamationId = -1; // Stocke l’ID de la réclamation initiale
     private String initialTitre = ""; // Stocke le titre initial pour le rendre fixe
-    private profileController dashboardController;
-    public void setDashboardController(profileController dashboardController) {
-        this.dashboardController = dashboardController;
-    }
+
     @FXML
     public void initialize() {
+        // Récupérer dynamiquement l'ID de l'utilisateur connecté via loginuserController
+        loadUserInfo();
+
         // Initialiser la connexion WebSocket pour le client
         connectWebSocketForChat();
 
@@ -92,9 +99,43 @@ public class addreclamation_controller {
         });
     }
 
+    // Méthode pour récupérer dynamiquement les informations de l'utilisateur depuis la table user
+    private void loadUserInfo() {
+        // Récupérer l'ID de l'utilisateur connecté via loginuserController
+        int loggedInId = loginuserController.loggedInUserID ; // Appel à la méthode statique pour obtenir l'ID
+
+        String sql = "SELECT id, role, username FROM user WHERE id = ?"; // Utiliser l'ID pour récupérer les informations
+
+        try (Connection conn = MyDb.getInstance().getConn();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, loggedInId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                userId = rs.getInt("id");
+                userRole = rs.getString("role");
+                username = rs.getString("username"); // Récupérer le username depuis la base de données
+                System.out.println("Utilisateur connecté - ID: " + userId + ", Rôle: " + userRole + ", Username: " + username);
+            } else {
+                showError("Erreur", "Utilisateur non trouvé dans la base de données.");
+                userId = -1; // Valeur par défaut si l'utilisateur n'est pas trouvé
+            }
+        } catch (SQLException e) {
+            showError("Erreur", "Erreur lors de la récupération des informations utilisateur : " + e.getMessage());
+            userId = -1;
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void handleEnvoyerReclamation() {
         clearErrors();
+
+        if (userId == -1) {
+            showError("Erreur", "Utilisateur non identifié. Veuillez vous connecter.");
+            return;
+        }
 
         String titre = objetTextField.getText().trim();
         String contenu = reclamationTextArea.getText().trim();
@@ -136,7 +177,7 @@ public class addreclamation_controller {
             // Stocker le titre initial avant l’envoi
             initialTitre = titre;
 
-            // Insérer la réclamation dans la base de données
+            // Insérer la réclamation dans la base de données avec l'ID dynamique de l'utilisateur
             int idRec = insererReclamation(titre, contenu);
 
             // Stocker l’ID de la réclamation initiale
@@ -152,7 +193,7 @@ public class addreclamation_controller {
             // Afficher uniquement le contenu avec le préfixe "Client :"
             if (webSocketClient != null && webSocketClient.isOpen()) {
                 String message = "Client : " + contenu;
-                webSocketClient.send("[Client] Réclamation - ID: " + idRec + ", Titre: " + titre + ", Contenu: " + contenu);
+                webSocketClient.send("[Client] Réclamation - ID: " + idRec + ", Titre: " + titre + ", Contenu: " + contenu + ", Utilisateur: " + username);
                 messageList.getItems().add(message); // Afficher uniquement "Client : [contenu]"
                 responseDisplay.appendText(message + "\n"); // Afficher dans le TextArea avec le même format
                 System.out.println("Réclamation envoyée par le client: " + message);
@@ -234,7 +275,7 @@ public class addreclamation_controller {
     }
 
     private int insererReclamation(String titre, String contenu) {
-        String sql = "INSERT INTO reclamation (titre, contenu, id, datecreation) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO reclamation (titre, contenu, id, datecreation) VALUES (?, ?, ?, NOW())";
         int generatedId = -1;
 
         try (Connection conn = MyDb.getInstance().getConn();
@@ -242,8 +283,7 @@ public class addreclamation_controller {
 
             pstmt.setString(1, titre);
             pstmt.setString(2, contenu);
-            pstmt.setInt(3, USER_ID);
-            pstmt.setTimestamp(4, new java.sql.Timestamp(new java.util.Date().getTime())); // Ajout de la date courante
+            pstmt.setInt(3, userId); // Utilise l'ID dynamique de l'utilisateur
 
             int rowsAffected = pstmt.executeUpdate();
 
@@ -297,8 +337,8 @@ public class addreclamation_controller {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                     Platform.runLater(() -> {
-                        //wshowInfo("Connexion WebSocket établie en tant que Client");
-                        webSocketClient.send("Client connecté");
+                        showInfo("Connexion WebSocket établie en tant que Client (Utilisateur: " + username + ")");
+                        webSocketClient.send("Client connecté - Utilisateur: " + username);
                     });
                 }
 
@@ -344,11 +384,11 @@ public class addreclamation_controller {
 
     @FXML
     private void sendChatMessage() {
-            if (webSocketClient != null && webSocketClient.isOpen() && messageInput != null) {
+        if (webSocketClient != null && webSocketClient.isOpen() && messageInput != null) {
             String message = messageInput.getText().trim();
             if (!message.isEmpty() && currentReclamationId != -1) {
                 String chatMessage = "Client : " + message;
-                webSocketClient.send("Client: " + message + " (Réclamation ID: " + currentReclamationId + ")");
+                webSocketClient.send("Client: " + message + " (Réclamation ID: " + currentReclamationId + ", Utilisateur: " + username + ")");
                 messageList.getItems().add(chatMessage); // Afficher uniquement "Client : [contenu]"
                 responseDisplay.appendText(chatMessage + "\n"); // Ajouter au TextArea avec le même format
                 messageInput.clear();
