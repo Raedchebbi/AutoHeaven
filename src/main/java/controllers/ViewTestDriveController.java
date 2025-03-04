@@ -43,13 +43,18 @@ public class ViewTestDriveController {
     private ResTestDriveService testDriveService = new ResTestDriveService();
     private UserService userService = new UserService();
     private VoitureService voitureService = new VoitureService();
-    private List<ResTestDrive> testDriveList; // Liste originale pour filtrage
+    private List<ResTestDrive> testDriveList;
+    private dashboardController dashboardController;
 
     @FXML
     public void initialize() {
         loadTestDrives();
         setupSearch(); // Configurer la recherche
         successMessage.setVisible(false);
+    }
+
+    public void setDashboardController(dashboardController controller) {
+        this.dashboardController = controller;
     }
 
     private void loadTestDrives() {

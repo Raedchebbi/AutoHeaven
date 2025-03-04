@@ -41,10 +41,16 @@ public class ViewRemorquageController {
     private CamionRemorquageService camionService = new CamionRemorquageService();
     private List<ResRemorquage> remorquageList; // Liste originale pour filtrage
 
+    private dashboardController dashboardController;
+
     @FXML
     public void initialize() {
         loadRemorquages();
         setupSearch(); // Configurer la recherche
+    }
+
+    public void setDashboardController(dashboardController controller) {
+        this.dashboardController = controller;
     }
 
     private void loadRemorquages() {

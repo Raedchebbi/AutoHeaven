@@ -2,7 +2,6 @@ package controllers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +20,6 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
 import netscape.javascript.JSObject;
 import utils.MyDb;
 
@@ -339,7 +337,7 @@ public class loginuserController implements Initializable {
                 if (role.equals("admin")) {
                     try {
                         loginButton.getScene().getWindow().hide();
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/dashboard.fxml"));
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Dashboard.fxml"));
                         Parent root = loader.load();
 
                         // Passer le username au dashboard

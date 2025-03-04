@@ -30,7 +30,9 @@ public class ViewCamionRemorquageController {
     private Button back_btn;
 
     private CamionRemorquageService camionService = new CamionRemorquageService();
-    private List<CamionRemorquage> camionList; // Store original list for filtering
+    private List<CamionRemorquage> camionList;
+
+    private dashboardController dashboardController;
 
     @FXML
     public void initialize() {
@@ -38,9 +40,13 @@ public class ViewCamionRemorquageController {
         setupSearch();
     }
 
+    public void setDashboardController(dashboardController controller) {
+        this.dashboardController = controller;
+    }
+
     private void loadCamions() {
         try {
-            camionList = camionService.getAll(); // Store original list
+            camionList = camionService.getAll();
             populateCamionContainer(camionList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,28 +60,17 @@ public class ViewCamionRemorquageController {
             hbox.setSpacing(20);
 
             Label nomAgenceLabel = new Label(camion.getNomAgence());
-            nomAgenceLabel.setPrefWidth(160.0);
-
             Label modeleLabel = new Label(camion.getModele());
-            modeleLabel.setPrefWidth(130.0);
-
             Label anneeLabel = new Label(String.valueOf(camion.getAnnee()));
-            anneeLabel.setPrefWidth(90.0);
-
             Label numTelLabel = new Label(camion.getNum_tel());
-            numTelLabel.setPrefWidth(140.0);
-
             Label statutLabel = new Label(camion.getStatut());
-            statutLabel.setPrefWidth(180.0);
 
             Button updateButton = new Button("Modifier");
             updateButton.setOnAction(e -> openUpdateInterface(camion));
             Button deleteButton = new Button("Supprimer");
             deleteButton.setOnAction(e -> confirmDeleteCamion(camion));
 
-            HBox actionButtons = new HBox(10, updateButton, deleteButton);
-
-            hbox.getChildren().addAll(nomAgenceLabel, modeleLabel, anneeLabel, numTelLabel, statutLabel, actionButtons);
+            hbox.getChildren().addAll(nomAgenceLabel, modeleLabel, anneeLabel, numTelLabel, statutLabel, updateButton, deleteButton);
             camion_container.getChildren().add(hbox);
         }
     }
