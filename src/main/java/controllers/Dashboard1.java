@@ -5,11 +5,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -89,8 +91,11 @@ public class Dashboard1 implements Initializable {
     @FXML
     private Button clientsBtn;
     @FXML
+    private Button voitureBtn;
+    @FXML
     private Button combtn ;
-
+    @FXML
+    private AnchorPane voitures_form;
     @FXML
     private AnchorPane clients_form;
 
@@ -241,6 +246,7 @@ public class Dashboard1 implements Initializable {
             Offre_form.setVisible(false);
             equipement_form.setVisible(false);
             comform.setVisible(false);
+            voitures_form.setVisible(false); // Add this line
 
             acceuilBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             addMecanicienBtn.setStyle("-fx-background-color: transparent");
@@ -248,6 +254,7 @@ public class Dashboard1 implements Initializable {
             OffreBtn.setStyle("-fx-background-color: transparent");
             equipbtn.setStyle("-fx-background-color: transparent");
             combtn.setStyle("-fx-background-color: transparent");
+            voitureBtn.setStyle("-fx-background-color: transparent"); // Add this line
 
         } else if (event.getSource() == addMecanicienBtn){
             Acceuil_form.setVisible(false);
@@ -256,6 +263,7 @@ public class Dashboard1 implements Initializable {
             Offre_form.setVisible(false);
             equipement_form.setVisible(false);
             comform.setVisible(false);
+            voitures_form.setVisible(false); // Add this line
 
             addMecanicienBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             acceuilBtn.setStyle("-fx-background-color: transparent");
@@ -263,6 +271,7 @@ public class Dashboard1 implements Initializable {
             OffreBtn.setStyle("-fx-background-color: transparent");
             equipbtn.setStyle("-fx-background-color: transparent");
             combtn.setStyle("-fx-background-color: transparent");
+            voitureBtn.setStyle("-fx-background-color: transparent"); // Add this line
 
         } else if (event.getSource() == clientsBtn){
             Acceuil_form.setVisible(false);
@@ -271,6 +280,7 @@ public class Dashboard1 implements Initializable {
             Offre_form.setVisible(false);
             equipement_form.setVisible(false);
             comform.setVisible(false);
+            voitures_form.setVisible(false); // Add this line
 
             clientsBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             addMecanicienBtn.setStyle("-fx-background-color: transparent");
@@ -278,6 +288,7 @@ public class Dashboard1 implements Initializable {
             OffreBtn.setStyle("-fx-background-color: transparent");
             equipbtn.setStyle("-fx-background-color: transparent");
             combtn.setStyle("-fx-background-color: transparent");
+            voitureBtn.setStyle("-fx-background-color: transparent"); // Add this line
 
         } else if (event.getSource() == OffreBtn) {
             Acceuil_form.setVisible(false);
@@ -286,6 +297,7 @@ public class Dashboard1 implements Initializable {
             Offre_form.setVisible(true);
             equipement_form.setVisible(false);
             comform.setVisible(false);
+            voitures_form.setVisible(false); // Add this line
 
             OffreBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             clientsBtn.setStyle("-fx-background-color: transparent");
@@ -293,14 +305,16 @@ public class Dashboard1 implements Initializable {
             acceuilBtn.setStyle("-fx-background-color: transparent");
             equipbtn.setStyle("-fx-background-color: transparent");
             combtn.setStyle("-fx-background-color: transparent");
+            voitureBtn.setStyle("-fx-background-color: transparent"); // Add this line
 
-        } else if (event.getSource() ==  equipbtn) {
+        } else if (event.getSource() == equipbtn) {
             Acceuil_form.setVisible(false);
             Mecaniciens_form.setVisible(false);
             clients_form.setVisible(false);
             Offre_form.setVisible(false);
             equipement_form.setVisible(true);
             comform.setVisible(false);
+            voitures_form.setVisible(false); // Add this line
 
             equipbtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
             clientsBtn.setStyle("-fx-background-color: transparent");
@@ -308,14 +322,16 @@ public class Dashboard1 implements Initializable {
             acceuilBtn.setStyle("-fx-background-color: transparent");
             OffreBtn.setStyle("-fx-background-color: transparent");
             combtn.setStyle("-fx-background-color: transparent");
-        }
-        else if (event.getSource() ==  combtn) {
+            voitureBtn.setStyle("-fx-background-color: transparent"); // Add this line
+
+        } else if (event.getSource() == combtn) {
             Acceuil_form.setVisible(false);
             Mecaniciens_form.setVisible(false);
             clients_form.setVisible(false);
             Offre_form.setVisible(false);
             equipement_form.setVisible(false);
             comform.setVisible(true);
+            voitures_form.setVisible(false); // Add this line
 
             equipbtn.setStyle("-fx-background-color: transparent");
             clientsBtn.setStyle("-fx-background-color: transparent");
@@ -323,7 +339,26 @@ public class Dashboard1 implements Initializable {
             acceuilBtn.setStyle("-fx-background-color: transparent");
             OffreBtn.setStyle("-fx-background-color: transparent");
             combtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            voitureBtn.setStyle("-fx-background-color: transparent"); // Add this line
+
+        } else if (event.getSource() == voitureBtn) {
+            Acceuil_form.setVisible(false);
+            Mecaniciens_form.setVisible(false);
+            clients_form.setVisible(false);
+            Offre_form.setVisible(false);
+            equipement_form.setVisible(false);
+            comform.setVisible(false);
+            voitures_form.setVisible(true);  // Show the voitures form
+
+            voitureBtn.setStyle("-fx-background-color:linear-gradient(to bottom right, #fa4040, #766f6f)");
+            acceuilBtn.setStyle("-fx-background-color: transparent");
+            addMecanicienBtn.setStyle("-fx-background-color: transparent");
+            clientsBtn.setStyle("-fx-background-color: transparent");
+            OffreBtn.setStyle("-fx-background-color: transparent");
+            equipbtn.setStyle("-fx-background-color: transparent");
+            combtn.setStyle("-fx-background-color: transparent");
         }
+
     }
 
     @Override
@@ -342,6 +377,14 @@ public class Dashboard1 implements Initializable {
             Parent listCommandes = loader.load();
             commandeController = loader.getController();
             comform.getChildren().add(listCommandes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/navigate.fxml"));
+            Parent navigate = loader.load();
+            // If you want to add it to a container (e.g., a pane), you can do so here:
+            // someContainer.getChildren().add(navigate);
         } catch (IOException e) {
             e.printStackTrace();
         }

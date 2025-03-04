@@ -19,7 +19,6 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="main_form" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Dashboard1">
     <children>
         <BorderPane layoutX="31.0" layoutY="107.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -94,6 +93,7 @@
                                             </image></ImageView>
                                     </graphic>
                                 </Button>
+
                                 <Button fx:id="logout" layoutX="15.0" layoutY="514.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="17.0" style="-fx-background-color: #7b7b7b; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@dashboardDesign.css">
                                     <graphic>
                                         <ImageView fx:id="déconnexion" fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
@@ -119,9 +119,18 @@
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                        <Button fx:id="equipbtn" layoutX="29.0" layoutY="392.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Gérer Equipements" />
-                        <Button fx:id="combtn" layoutX="27.0" layoutY="428.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Gérer Commandes" />
-                        <Button fx:id="Notif" layoutX="29.0" layoutY="463.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Notifications" />
+                        <Button fx:id="equipbtn" layoutX="29.0" layoutY="385.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Gérer Equipements" />
+                        <Button fx:id="combtn" layoutX="29.0" layoutY="416.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Gérer Commandes" />
+                                <Button fx:id="voitureBtn" layoutX="17.0" layoutY="470.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Gérer Les Voitures">
+                                    <graphic>
+                                        <ImageView fx:id="voiture" fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../../../images/voitures.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                        <Button fx:id="Notif" layoutX="29.0" layoutY="440.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Notifications" />
                             </children>
                         </AnchorPane>
                     </children>

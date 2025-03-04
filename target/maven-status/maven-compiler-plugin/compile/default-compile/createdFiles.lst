@@ -5,6 +5,7 @@ controllers\login2Controller.class
 utils\MyDb.class
 services\ReclamationService.class
 models\Stock.class
+controllers\Apivoituree.class
 controllers\profileController.class
 services\GeminiClient.class
 services\MessagerieService.class
@@ -24,6 +25,7 @@ services\Mention_j_aimeService.class
 controllers\addreclamation_controller.class
 services\StripeConfig.class
 controllers\dashboardController.class
+services\Apivoiture.class
 services\UserService.class
 org\example\Mainfx.class
 models\Reclamation.class
