@@ -23,7 +23,8 @@ import javafx.fxml.Initializable;
 
 public class Listvoiture implements Initializable {
     @FXML private VBox chatbotContainer;
-
+    @FXML
+    private Button ajout;
 
     @FXML
     private Button sortButton;
@@ -55,7 +56,21 @@ public class Listvoiture implements Initializable {
         setupFilterPopup();
         loadCategoryFilters();
         sortButton.setOnAction(event -> sortVoituresByMarque());
+        ajout.setOnAction(event -> goToSirine());;
+    }
 
+    private void goToSirine() {
+        try {
+            // Charger la vue Sirine
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sirine.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ajout.getScene().getWindow(); // Obtenir la fenêtre actuelle
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Afficher une erreur si le fichier FXML ne peut pas être chargé
+        }
     }
 
     private void loadAllVoitures() {

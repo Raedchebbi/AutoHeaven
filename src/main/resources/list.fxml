@@ -1,63 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.text.Font?>
+
 <?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.ListController" stylesheets="@Testsirine.css">
-
-    <VBox spacing="20" alignment="CENTER" prefWidth="800" prefHeight="600">
-        <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
-
-        <!-- En-tête avec icône -->
-        <HBox alignment="CENTER" spacing="10">
-            <Label text="📋 Liste des Avis" styleClass="title"/>
-        </HBox>
-
-        <!-- Barre de recherche améliorée -->
-        <HBox spacing="15" alignment="CENTER" styleClass="search-box">
-            <TextField fx:id="searchField" promptText="Rechercher un avis..." styleClass="modern-textfield"/>
-            <Button text="Rechercher" fx:id="searchButton" styleClass="modern-button"/>
-        </HBox>
-
-        <!-- ListView stylisée -->
-        <ListView fx:id="listViewAvis" styleClass="styled-list" prefHeight="400">
-            <items>
-                <FXCollections fx:factory="observableArrayList"/>
-            </items>
-        </ListView>
-    </VBox>
-</AnchorPane>
 <!--<?xml version="1.0" encoding="UTF-8"?>-->
-
 <!--<?import javafx.scene.control.*?>-->
 <!--<?import javafx.scene.layout.*?>-->
 <!--<?import javafx.geometry.Insets?>-->
-
 <!--<?import javafx.collections.FXCollections?>-->
 <!--<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"-->
 <!--            fx:controller="Controllers.ListController">-->
-
 <!--    <VBox spacing="10" alignment="CENTER" prefWidth="600" prefHeight="400">-->
-
 <!--        &lt;!&ndash; En-tête &ndash;&gt;-->
 <!--        <Label text="Liste des Avis" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>-->
-
 <!--        &lt;!&ndash; Barre de recherche &ndash;&gt;-->
 <!--        <HBox spacing="10" alignment="CENTER">-->
 <!--            <TextField fx:id="searchField" promptText="Rechercher un avis..." prefWidth="400"/>-->
 <!--            <Button text="Rechercher" fx:id="searchButton"/>-->
 <!--        </HBox>-->
-
 <!--        &lt;!&ndash; ListView pour afficher les avis &ndash;&gt;-->
 <!--        <ListView fx:id="listViewAvis" prefHeight="300">-->
 <!--            <items>-->
 <!--                <FXCollections fx:factory="observableArrayList"/>-->
 <!--            </items>-->
 <!--        </ListView>-->
-
 <!--    </VBox>-->
-
 <!--</AnchorPane>-->
+
+<AnchorPane stylesheets="@Testsirine.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ListController">
+    <Button fx:id="stat" onAction="#goToTrendChart" prefHeight="36.0" prefWidth="101.0" text="Trend Chart" />
+    <VBox alignment="CENTER" layoutX="26.0" layoutY="14.0" prefHeight="624.0" prefWidth="860.0" spacing="20">
+        <padding><Insets bottom="20" left="20" right="20" top="20" /></padding>
+
+        <!-- En-tête avec icône -->
+        <HBox alignment="CENTER" spacing="10">
+            <Label styleClass="title" text="📋 Liste des Avis" />
+        </HBox>
+
+        <!-- Barre de recherche améliorée -->
+        <HBox alignment="CENTER" spacing="15" styleClass="search-box">
+            <TextField fx:id="searchField" promptText="Rechercher un avis..." styleClass="modern-textfield" />
+            <Button fx:id="searchButton" styleClass="modern-button" text="Rechercher" />
+        </HBox>
+
+        <!-- ListView stylisée -->
+        <ListView fx:id="listViewAvis" prefHeight="400" styleClass="styled-list">
+            <items>
+                <FXCollections fx:factory="observableArrayList" />
+            </items>
+        </ListView>
+
+    </VBox>
+</AnchorPane>

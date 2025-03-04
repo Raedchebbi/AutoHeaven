@@ -16,7 +16,7 @@
 
 <AnchorPane prefHeight="531.0" prefWidth="939.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Listvoiture">
 
-    <HBox layoutX="20" layoutY="20" prefHeight="46.0" prefWidth="915.0" spacing="10">
+    <HBox layoutX="20" layoutY="20" prefHeight="46.0" prefWidth="613.0" spacing="10">
         <HBox spacing="10">
             <Label text="Recherche:" />
             <TextField fx:id="searchTextField" prefWidth="400" promptText="Entrez la marque" />
@@ -84,5 +84,7 @@
             </ImageView>
         </graphic>
     </Button>
+   <Button fx:id="ajout" layoutX="757.0" layoutY="20.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="138.0" text="Ajout un Avis" />
+    
 
 </AnchorPane>

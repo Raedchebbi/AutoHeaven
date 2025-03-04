@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.TrendChart">
+    <children>
+        <LineChart fx:id="lineChart" layoutX="50" layoutY="50" prefWidth="600" prefHeight="400">
+            <xAxis>
+                <CategoryAxis fx:id="xAxis" label="Date"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="yAxis" label="Note" lowerBound="0" upperBound="5" tickUnit="1"/>
+            </yAxis>
+        </LineChart>
+    </children>
+</AnchorPane>
