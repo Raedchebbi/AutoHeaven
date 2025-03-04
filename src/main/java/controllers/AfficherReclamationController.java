@@ -8,8 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import models.User;
-import services.UserService;
 import utils.MyDb;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -31,23 +29,19 @@ public class AfficherReclamationController {
     @FXML private VBox contentBox;
     @FXML private CheckBox filterBannedCheckBox;
     @FXML private TextField searchField;
-    @FXML private Label userNameLabel; // Pour afficher le nom de l'utilisateur
-    @FXML private Label userEmailLabel; // Pour afficher l'email de l'utilisateur
-    @FXML private Label userTelLabel; // Pour afficher le téléphone de l'utilisateur
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static final OkHttpClient client = new OkHttpClient();
     private static final ObjectMapper objectMapper = new ObjectMapper();
+
     private dashboardController dashboardController;
 
     public void setDashboardController(dashboardController dashboardController) {
         this.dashboardController = dashboardController;
     }
+
     @FXML
     public void initialize() {
-        // Récupérer et afficher les informations de l'utilisateur connecté
-        loadUserInfo();
-
         loadDataFromDatabase(false, "");
         filterBannedCheckBox.setOnAction(e -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText()));
         searchField.textProperty().addListener((observable, oldValue, newValue) -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), newValue));
@@ -63,29 +57,6 @@ public class AfficherReclamationController {
             } catch (IOException e) {
                 showError("Erreur", "Erreur de chargement du formulaire : " + e.getMessage());
             }
-        }
-    }
-
-    // Méthode pour récupérer et afficher les informations de l'utilisateur connecté
-    private void loadUserInfo() {
-        try {
-            UserService us = new UserService();
-            User u = us.getById(loginuserController.loggedInUserID); // Récupérer l'utilisateur par son ID
-
-            if (u != null) {
-                String nom = u.getNom(); // Supposant que User a une méthode getNom()
-                String email = u.getEmail(); // Utilisation de getEmail() comme fourni
-                String tel = String.valueOf(u.getTel()); // Supposant que User a une méthode getTel()
-
-                // Afficher les informations dans les labels (assurez-vous qu'ils existent dans votre FXML)
-                if (userNameLabel != null) userNameLabel.setText("Nom: " + (nom != null ? nom : "Non disponible"));
-                if (userEmailLabel != null) userEmailLabel.setText("Email: " + (email != null ? email : "Non disponible"));
-                if (userTelLabel != null) userTelLabel.setText("Téléphone: " + (tel != null ? tel : "Non disponible"));
-            } else {
-                showError("Erreur", "Utilisateur non trouvé.");
-            }
-        } catch (Exception e) {
-            showError("Erreur", "Erreur lors de la récupération des informations utilisateur : " + e.getMessage());
         }
     }
 

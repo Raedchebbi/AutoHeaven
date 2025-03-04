@@ -15,7 +15,7 @@
 
 <AnchorPane style="-fx-background-radius: 10;" styleClass="profile-background" stylesheets="@profileDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ListEquipement">
    <children>
-      <Pane fx:id="equip_pa" prefHeight="700.0" prefWidth="972.0">
+      <Pane fx:id="equip_pa" prefHeight="644.0" prefWidth="972.0">
           <children>
               <Label layoutX="36.0" layoutY="23.0" text="Liste des équipements">
                   <font>

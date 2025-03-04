@@ -1,6 +1,7 @@
 services\CrudStock.class
 controllers\ListEquipement.class
 controllers\affichervoiture.class
+services\VoitureService.class
 org\example\VoitureMain.class
 services\CheckoutService.class
 controllers\NavigatorController.class
@@ -11,6 +12,7 @@ services\ReclamationService.class
 controllers\ViewCamionRemorquageController.class
 models\Stock.class
 controllers\ListEquipementClient.class
+controllers\TrendChart.class
 controllers\modifiervoiture.class
 controllers\modifiercategorie.class
 models\CamionRemorquage.class
@@ -33,6 +35,7 @@ controllers\ReclamationController.class
 controllers\UpdateCamionRemorquageController.class
 utils\DatabaseConnection.class
 services\CrudCommande.class
+controllers\AddTestDriveController.class
 controllers\EquipementsAchetes.class
 controllers\UpdateMecanicienController.class
 services\CamionRemorquageService.class
@@ -76,6 +79,7 @@ services\ResMecanicienService.class
 services\UserService.class
 org\example\Mainfx.class
 services\AvisService.class
+models\ResTestDrive.class
 models\Reclamation.class
 services\CrudPanier.class
 controllers\PanierItem.class
@@ -89,11 +93,13 @@ models\Commande.class
 controllers\AddRemorquageController.class
 services\OffreService.class
 controllers\Chatbot.class
+models\Review.class
 services\InfobipClientInitializer.class
 models\ResMecanicien.class
 controllers\UpdateTestDriveController.class
 services\StockService.class
 controllers\loginuserController.class
+org\example\MainApp.class
 controllers\repondre_rec_controller.class
 controllers\ViewMecanicienRDVController.class
 models\Categorie.class

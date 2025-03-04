@@ -35,7 +35,7 @@
                             <Label prefWidth="140.0" styleClass="header-cell" text="Nom" />
                             <Label prefWidth="120.0" styleClass="header-cell" text="Téléphone" />
                             <Label prefWidth="240.0" styleClass="header-cell" text="Email" wrapText="true" />
-                            <Label prefWidth="140.0" styleClass="header-cell" text="Statut" />
+                            <Label prefHeight="42.0" prefWidth="195.0" styleClass="header-cell" text="Statut" />
                         </HBox>
                         <VBox fx:id="contentBox" spacing="10" />
                     </VBox>

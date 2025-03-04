@@ -11,12 +11,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="521.0" prefWidth="834.0" style="-fx-border-radius: 10;" styleClass="profile-background" vbarPolicy="AS_NEEDED" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.addreclamation_controller">
    <content>
       <AnchorPane prefHeight="800.0" prefWidth="500.0">
          <children>
-            <VBox alignment="TOP_CENTER" layoutX="37.0" layoutY="25.0" prefHeight="1118.0" prefWidth="693.0" spacing="25.0" styleClass="container">
+            <VBox alignment="TOP_CENTER" layoutX="61.0" layoutY="25.0" prefHeight="977.0" prefWidth="638.0" spacing="25.0" styleClass="container">
                <children>
                   <Label styleClass="main-title" text="Formulaire de Réclamation" />
                   <VBox alignment="CENTER_LEFT" spacing="10.0">
@@ -40,10 +39,10 @@
                      </children>
                   </HBox>
                   <!-- Ajout de la section messagerie pour le client -->
-                  <Label styleClass="main-title" text="Messagerie (Client)" />
+                  <Label styleClass="main-title" text="Messagerie " />
                   <ListView fx:id="messageList" prefHeight="200.0" prefWidth="400.0" styleClass="list-view" />
-                  <TextArea fx:id="messageInput" prefHeight="100.0" prefWidth="400.0" promptText="Tapez votre message ici..." styleClass="text-area" />
-                  <Button onAction="#sendChatMessage" styleClass="button" text="Envoyer Message" />
+
+
                </children>
             </VBox>
          </children>
