@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="camion_pa" prefHeight="544.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.UpdateCamionRemorquageController">
+    <VBox alignment="CENTER" layoutX="366.0" layoutY="55.0" spacing="10">
+        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="262.0" text="Modifier un Camion">
+            <font>
+                <Font name="System Bold" size="27.0" />
+            </font>
+        </Label>
+
+        <Label text="Nom de l'agence :" />
+        <TextField fx:id="tfNomAgence" promptText="Enter Nom de l'agence" />
+
+        <Label text="Modele :" />
+        <ComboBox fx:id="cbModele" promptText="Choisir un Modele">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Standard" />
+                    <String fx:value="Grande Taille" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <Label text="Annee :" />
+        <TextField fx:id="tfAnnee" promptText="Enter Annee" />
+
+        <Label text="Numero de Telephone :" />
+        <TextField fx:id="tfNumTel" promptText="Enter Num Tel" />
+
+        <HBox alignment="CENTER" spacing="10">
+            <Button fx:id="btnUpdate" onAction="#updateCamionRemorquage" text="Mettre à jour" />
+            <Button fx:id="btnCancel" onAction="#cancelAction" text="Annuler" />
+            <Button fx:id="btnBack" onAction="#goBack" text="Retour" />
+        </HBox>
+
+        <Text fx:id="errorMessage" fill="red" visible="false" />
+        <Text fx:id="successMessage" fill="green" visible="false" />
+    </VBox>
+</Pane>
