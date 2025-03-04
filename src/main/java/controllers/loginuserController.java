@@ -345,7 +345,9 @@ public class loginuserController implements Initializable {
                         dashboardCtrl.displayUsername();
 
                         Stage dashboardStage = new Stage();
-                        dashboardStage.setScene(new Scene(root, 1100, 600));
+                        //dashboardStage.setScene(new Scene(root, 1100, 600));
+                        dashboardStage.setScene(new Scene(root));
+
                         dashboardStage.initStyle(StageStyle.UNDECORATED);
                         dashboardStage.show();
                     } catch (Exception e) {

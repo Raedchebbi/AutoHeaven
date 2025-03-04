@@ -314,6 +314,7 @@ public class dashboardController implements Initializable {
 
     private UserService userService = new UserService();
     private OffreService offreService = new OffreService();
+    private Statistique statcon ;
 
     @FXML
     AfficherReclamationController aff = new AfficherReclamationController();
@@ -1062,6 +1063,14 @@ public class dashboardController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Erreur lors du chargement de ViewTestDrive.fxml");
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Statistique.fxml"));
+            Parent stat = loader.load();
+            statcon = loader.getController();
+            Acceuil_form.getChildren().add(stat);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 

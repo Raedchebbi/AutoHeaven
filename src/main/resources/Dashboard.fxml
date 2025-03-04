@@ -271,18 +271,18 @@
 
 
 
-                        <VBox fx:id="camion_form" layoutX="0" layoutY="0" prefHeight="400.0" prefWidth="600.0" visible="false"></VBox>
-                        <VBox fx:id="rdvmec_form" layoutX="0" layoutY="0" prefHeight="400.0" prefWidth="600.0" visible="false"></VBox>
-                        <VBox fx:id="remo_form" layoutX="0" layoutY="0" prefHeight="400.0" prefWidth="600.0" visible="false"></VBox>
-                        <VBox fx:id="testd_form" layoutX="0" layoutY="0" prefHeight="400.0" prefWidth="600.0" visible="false"></VBox>
+                        <VBox fx:id="camion_form" layoutX="0" layoutY="0" prefHeight="400.0" prefWidth="600.0" visible="false" />
+                        <VBox fx:id="rdvmec_form" layoutX="0" layoutY="0" prefHeight="400.0" prefWidth="600.0" visible="false" />
+                        <VBox fx:id="remo_form" layoutX="0" layoutY="0" prefHeight="400.0" prefWidth="600.0" visible="false" />
+                        <VBox fx:id="testd_form" layoutX="0" layoutY="0" prefHeight="400.0" prefWidth="600.0" visible="false" />
 
 
 
 
-                        <AnchorPane fx:id="equipement_form" prefHeight="553.0" prefWidth="868.0" visible="false" />
+                        <AnchorPane fx:id="equipement_form" prefHeight="600.0" prefWidth="868.0" />
                         <AnchorPane fx:id="comform" prefHeight="554.0" prefWidth="867.0" visible="false" />
                         <AnchorPane fx:id="rec_form" prefHeight="554.0" prefWidth="867.0" visible="false" />
-                        <AnchorPane fx:id="Mecaniciens_form" prefHeight="554.4" prefWidth="868.0">
+                        <AnchorPane fx:id="Mecaniciens_form" prefHeight="554.4" prefWidth="868.0" visible="false">
                             <children>
                                 <AnchorPane layoutX="17.0" layoutY="16.0" prefHeight="521.0" prefWidth="834.0" style="-fx-background-radius: 10px;" styleClass="profile-background">
                                     <children>

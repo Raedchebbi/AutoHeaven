@@ -28,6 +28,7 @@ controllers\HistoriqueCommande.class
 models\mentions_j_aime.class
 controllers\ViewTestDriveController.class
 controllers\adduserController.class
+org\example\SimpleChatServer.class
 controllers\ReclamationController.class
 controllers\UpdateCamionRemorquageController.class
 utils\DatabaseConnection.class
@@ -51,6 +52,7 @@ controllers\ValidationCommande.class
 services\ResRemorquageService.class
 controllers\HistoriqueComItem.class
 controllers\Listvoiture.class
+controllers\addreclamation_controller$1.class
 controllers\DetailEquipement.class
 controllers\navigatecontroller.class
 services\EquipementService.class
@@ -95,6 +97,8 @@ controllers\loginuserController.class
 controllers\repondre_rec_controller.class
 controllers\ViewMecanicienRDVController.class
 models\Categorie.class
+controllers\MailjetEmailSender.class
+controllers\repondre_rec_controller$1.class
 models\Equipement.class
 models\Messagerie.class
 controllers\CommandeItemAdmin.class

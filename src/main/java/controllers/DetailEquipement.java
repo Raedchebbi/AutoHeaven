@@ -108,7 +108,7 @@ public class DetailEquipement {
     @FXML
     private void handleAddToCart() throws Exception {
         int id =equipement.getId();
-        int idu =5129;
+        int idu =loginuserController.loggedInUserID;
         PanierService ps = new PanierService();
 
         Panier panier = new Panier(Integer.parseInt(input.getText()),idu,id);

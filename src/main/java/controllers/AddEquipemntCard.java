@@ -135,7 +135,7 @@ public class AddEquipemntCard implements Initializable {
             String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf("."));
             imageName = uniqueID + extension;
 
-            Path destination = Paths.get("C:\\Users\\ASUS\\Downloads\\rayen\\AutoHeaven\\src\\main\\resources\\dir", imageName);
+            Path destination = Paths.get("C:\\Users\\ASUS\\Downloads\\integration\\AutoHeaven\\src\\main\\resources\\dir", imageName);
             try {
                 Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
@@ -148,7 +148,7 @@ public class AddEquipemntCard implements Initializable {
     void Ajouter(ActionEvent event) throws Exception {
         boolean check = false;
         // Récupérer le chemin de l'image
-        String imagePath = "C:\\Users\\ASUS\\Downloads\\rayen\\AutoHeaven\\src\\main\\resources\\dir\\" + imageName;
+        String imagePath = "C:\\Users\\ASUS\\Downloads\\integration\\AutoHeaven\\src\\main\\resources\\dir\\" + imageName;
         if (imageName == null) {
             error_photo.setVisible(true);
             check=true;
