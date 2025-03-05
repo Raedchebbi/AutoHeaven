@@ -11,6 +11,7 @@ utils\MyDb.class
 services\ReclamationService.class
 controllers\ViewCamionRemorquageController.class
 models\Stock.class
+controllers\Apivoituree.class
 controllers\ListEquipementClient.class
 controllers\TrendChart.class
 controllers\modifiervoiture.class
@@ -74,6 +75,7 @@ services\StripeConfig.class
 services\CategorieService.class
 controllers\dashboardController.class
 controllers\UpdateRemorquageController.class
+services\Apivoiture.class
 controllers\Statistique.class
 services\ResMecanicienService.class
 services\UserService.class

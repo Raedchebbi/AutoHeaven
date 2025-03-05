@@ -714,6 +714,11 @@ public class profileController implements Initializable {
             e.printStackTrace();
         }
     }
+    public void loadDetailsVoiture(Parent detailsView) {
+        voiture_form.getChildren().clear(); // Effacez le contenu actuel
+        voiture_form.getChildren().add(detailsView); // Ajoutez la vue Detailsvoiture
+        voiture_form.setVisible(true); // Assurez-vous que le conteneur est visible
+    }
    /* public void loadDetailForm() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/listvoiture.fxml"));
@@ -735,6 +740,22 @@ public class profileController implements Initializable {
             listc.setDashboardController(this);
             pan_form.getChildren().clear();
             pan_form.getChildren().add(listcl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void loadListvoiture() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/listvoiture.fxml"));
+            Parent listvoiture = loader.load();
+            Listvoiture listvoitureController = loader.getController();
+            listvoitureController.setDashboardController(this); // Passez la référence du dashboardController
+
+            voiture_form.getChildren().clear();
+            voiture_form.getChildren().add(listvoiture);
+
+            // Assurez-vous que le conteneur est visible
+            voiture_form.setVisible(true);
         } catch (IOException e) {
             e.printStackTrace();
         }

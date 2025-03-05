@@ -10,6 +10,7 @@ C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\controllers\Addvoiture.j
 C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\controllers\affichercategorie.java
 C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\controllers\AfficherReclamationController.java
 C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\controllers\affichervoiture.java
+C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\controllers\Apivoituree.java
 C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\controllers\CaptchaC.java
 C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\controllers\Chatbot.java
 C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\controllers\CommandeItemAdmin.java
@@ -80,6 +81,7 @@ C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\org\example\mainreclamat
 C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\org\example\SimpleChatServer.java
 C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\org\example\UserMain.java
 C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\org\example\VoitureMain.java
+C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\services\Apivoiture.java
 C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\services\AvisService.java
 C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\services\CamionRemorquageService.java
 C:\Users\ASUS\Downloads\sirine\AutoHeaven\src\main\java\services\CategorieService.java

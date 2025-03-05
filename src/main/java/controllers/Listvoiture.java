@@ -171,7 +171,7 @@ public class Listvoiture implements Initializable {
         return voitureBox;
     }
 
-    private void openDetails(Categorie categorie, Voiture voiture) {
+   private void openDetails(Categorie categorie, Voiture voiture) {
         try {
             System.out.println("Opening details for category: " + categorie.getType());
 
@@ -188,6 +188,20 @@ public class Listvoiture implements Initializable {
             e.printStackTrace();
         }
     }
+  /*private void openDetails(Categorie categorie, Voiture voiture) {
+      try {
+          FXMLLoader loader = new FXMLLoader(getClass().getResource("/detailsvoiture.fxml"));
+          Parent detailsView = loader.load();
+
+          Detailsvoiture detailsController = loader.getController();
+          detailsController.setDetails(categorie, voiture);
+
+          // Chargez Detailsvoiture dans le conteneur voiture_form du dashboard
+          dashboardController.loadDetailsVoiture(detailsView);
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+  }*/
 
     private void setupFilterPopup() {
         Button applyButton = new Button("Appliquer");

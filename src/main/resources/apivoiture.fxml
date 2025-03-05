@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.Apivoituree">
+
+    <GridPane alignment="CENTER" hgap="10" vgap="10">
+        <!-- Row 0 -->
+        <Label text="Marque (Make):" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <ComboBox fx:id="makeComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+        <!-- Row 1 -->
+        <Label text="Modèle (Model):" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <ComboBox fx:id="modelComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+        <!-- Row 2 -->
+        <Button text="Rechercher" onAction="#searchCarInfo" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+        <!-- Row 3 -->
+        <TextArea fx:id="resultTextArea" prefRowCount="10" wrapText="true" editable="false" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+    </GridPane>
+</VBox>
