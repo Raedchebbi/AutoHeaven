@@ -1906,4 +1906,8 @@ public class dashboardController implements Initializable {
             System.err.println("Erreur lors du chargement de ViewTestDrive.fxml");
         }
     }
+
+    public AnchorPane getMainContainer() {
+        return Acceuil_form;
+    }
 }

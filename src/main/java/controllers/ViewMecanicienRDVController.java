@@ -93,29 +93,45 @@ public class ViewMecanicienRDVController {
                 Button confirmButton = new Button("Confirmer");
                 confirmButton.setStyle("-fx-background-color: green; -fx-text-fill: white;");
                 confirmButton.setOnAction(e -> {
-                    rdv.setStatus("confirmee");
                     try {
+                        rdv.setStatus("confirmee");
                         mecanicienService.update(rdv);
+
+                        // Envoyer l'email à l'utilisateur
+                        User user1 = userService.getById(rdv.getId_mec());
+                        MailService mailService = new MailService();
+                        String subject = "Confirmation de Rendez-vous";
+                        String content = "Votre rendez-vous avec le mécanicien " + user1.getUsername() + " est confirmé.";
+                        mailService.sendEmailToUser(rdv.getId_u(), subject, content);
+
+                        successMessage.setText("Rendez-vous confirmé et email envoyé !");
+                        successMessage.setVisible(true);
+                        loadMecanicienRDVs();
                     } catch (Exception ex) {
-                        throw new RuntimeException(ex);
+                        ex.printStackTrace();
                     }
-                    successMessage.setText("Rendez-vous confirmé !");
-                    successMessage.setVisible(true);
-                    loadMecanicienRDVs();
                 });
 
                 Button rejectButton = new Button("Rejeter");
                 rejectButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
                 rejectButton.setOnAction(e -> {
-                    rdv.setStatus("rejetee");
                     try {
+                        rdv.setStatus("rejetee");
                         mecanicienService.update(rdv);
+
+                        // Envoyer l'email à l'utilisateur
+                        User user2 = userService.getById(rdv.getId_mec());
+                        MailService mailService = new MailService();
+                        String subject = "Rendez-vous Rejeté";
+                        String content = "Votre rendez-vous avec le mécanicien " + user2.getUsername() + " a été rejeté.";
+                        mailService.sendEmailToUser(rdv.getId_u(), subject, content);
+
+                        successMessage.setText("Rendez-vous rejeté et email envoyé !");
+                        successMessage.setVisible(true);
+                        loadMecanicienRDVs();
                     } catch (Exception ex) {
-                        throw new RuntimeException(ex);
+                        ex.printStackTrace();
                     }
-                    successMessage.setText("Rendez-vous rejeté !");
-                    successMessage.setVisible(true);
-                    loadMecanicienRDVs();
                 });
 
                 hbox.getChildren().addAll(adresseLabel, noteLabel, userLabel, mecanicienLabel, dateLabel, statusLabel, confirmButton, rejectButton);

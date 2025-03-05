@@ -112,6 +112,7 @@
 
 
 
+
                                 <Button fx:id="camionbtn" layoutX="27.0" layoutY="358.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Gérer Camions Remorquages" />
                                 <Button fx:id="rdvmecbtn" layoutX="27.0" layoutY="393.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Gérer RDV Mecanicien" />
                                 <Button fx:id="remobtn" layoutX="27.0" layoutY="428.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Reservation Remorquage" />
@@ -140,7 +141,7 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                        <Button fx:id="voitureBtn" layoutX="29.0" layoutY="603.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Gérer voiture" />
+                                <Button fx:id="voitureBtn" layoutX="29.0" layoutY="603.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@dashboardDesign.css" text="Gérer voiture" />
                             </children>
                         </AnchorPane>
                     </children>
@@ -269,246 +270,242 @@
                                 </TextField>
                             </children>
                         </AnchorPane>
-                  <AnchorPane fx:id="camion_form" prefHeight="678.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <AnchorPane layoutX="20.0" layoutY="16.0" prefHeight="642.0" prefWidth="829.0" styleClass="profile-background" stylesheets="@profileDesign.css">
-                           <children>
-            
-            
-            
-                                    <VBox layoutX="13.0" layoutY="14.0" prefHeight="614.0" prefWidth="806.0" />
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="rdvmec_form" prefHeight="678.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <AnchorPane layoutX="36.0" layoutY="27.0" styleClass="profile-background" stylesheets="@profileDesign.css">
-                           <children>
-                                    <VBox layoutX="-20.0" layoutY="-17.0" prefHeight="640.0" prefWidth="816.0" visible="false" />
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="remo_form" prefHeight="678.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <AnchorPane layoutX="23.0" layoutY="22.0" prefHeight="633.0" prefWidth="813.0" styleClass="profile-background" stylesheets="@profileDesign.css">
-                           <children>
-                                    <VBox layoutX="17.0" layoutY="18.0" prefHeight="614.0" prefWidth="803.0" visible="false" />
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="testd_form" prefHeight="678.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <AnchorPane layoutX="26.0" layoutY="27.0" prefHeight="633.0" prefWidth="827.0" styleClass="profile-background" stylesheets="@profileDesign.css">
-                           <children>
-                                    <VBox prefHeight="628.0" prefWidth="820.0" styleClass="profile-background" stylesheets="@profileDesign.css" visible="false" />
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </AnchorPane>
-
-            
-            
-            
-                                    <AnchorPane fx:id="equipement_form" layoutX="16.8" layoutY="11.2" prefHeight="652.0" prefWidth="837.0" visible="false" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="11.0" />
-                        <AnchorPane fx:id="comform" layoutX="16.0" layoutY="24.0" prefHeight="642.0" prefWidth="839.0" visible="false" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="24.0" />
-                        <AnchorPane fx:id="rec_form" layoutX="18.4" layoutY="22.4" prefHeight="642.0" prefWidth="823.0" visible="false" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="22.0" />
-                        <AnchorPane fx:id="Mecaniciens_form" prefHeight="678.0" prefWidth="972.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-52.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="camion_form" prefHeight="678.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                             <children>
-                                <AnchorPane layoutX="17.0" layoutY="16.0" prefHeight="646.0" prefWidth="972.0" style="-fx-background-radius: 10px;" styleClass="profile-background">
+                                <AnchorPane layoutX="20.0" layoutY="16.0" prefHeight="642.0" prefWidth="829.0" styleClass="profile-background" stylesheets="@profileDesign.css">
                                     <children>
-                                        <AnchorPane layoutX="69.0" layoutY="21.0" prefHeight="293.0" prefWidth="834.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@dashboardDesign.css">
-                                            <children>
-                                                <BorderPane layoutX="125.0" layoutY="29.0" prefHeight="308.0" prefWidth="834.0" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                    <top>
-                                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="839.0" styleClass="table-header" stylesheets="@dashboardDesign.css" text="Liste Des Mécaniciens" textFill="WHITE" BorderPane.alignment="CENTER" />
-                                                    </top>
-                                       <center>
-                                                        <ScrollPane prefHeight="228.0" prefWidth="824.0" BorderPane.alignment="CENTER">
-                                                            <BorderPane.margin>
-                                                                <Insets left="10.0" />
-                                                            </BorderPane.margin>
-                                                            <content>
-                                                                <VBox fx:id="tablecontainer" prefHeight="266.0" prefWidth="814.0" spacing="10.0" stylesheets="@dashboardDesign.css">
-                                                                    <children>
-                                                                        <HBox prefHeight="43.0" prefWidth="813.0" spacing="20.0" styleClass="table-row" stylesheets="@dashboardDesign.css">
-                                                                            <children>
-                                                                                <Label text="Cin" textFill="#b11c1c" translateX="2.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="10.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Nom" textFill="#b11c1c" translateX="10.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="10.0" right="10.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Prénom" textFill="#b11c1c" translateX="10.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                </Label>
-                                                                                <Label text="Tel" textFill="#b11c1c" translateX="20.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets right="5.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Email" textFill="#b11c1c">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="55.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Mdp" textFill="#b11c1c" translateX="30.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="30.0" right="5.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Role" textFill="#b11c1c" translateX="10.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="15.0" right="5.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Adresse" textFill="#b11c1c">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="35.0" right="20.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Username" textFill="#b11c1c">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="10.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Banni" textFill="#b11c1c">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="10.0" /></padding>
-                                                                                </Label>
-                                                                            </children>
-                                                                        </HBox>
-                                                                    </children>
-                                                                </VBox>
-                                                            </content>
-                                                        </ScrollPane>
-                                       </center>
-                                                </BorderPane>
-                                            </children>
-                                        </AnchorPane>
-
-                                        <Label layoutX="124.0" layoutY="372.0" text="Prénom">
-                                            <font><Font size="13.0" /></font>
-                                        </Label>
-                                        <TextField fx:id="prenomTextfield" layoutX="195.0" layoutY="369.0" prefHeight="26.0" prefWidth="178.0" promptText="Prénom" />
-                                        <Label layoutX="132.0" layoutY="426.0" text="Nom">
-                                            <font><Font size="13.0" /></font>
-                                        </Label>
-                                        <TextField fx:id="nomTextfield" layoutX="196.0" layoutY="423.0" prefHeight="26.0" prefWidth="178.0" promptText="Nom" />
-                                        <Label layoutX="140.0" layoutY="479.0" text="CIN">
-                                            <font><Font size="13.0" /></font>
-                                        </Label>
-                                        <TextField fx:id="cinTextfield" layoutX="197.0" layoutY="476.0" prefHeight="26.0" prefWidth="178.0" promptText="CIN" />
-                                        <Label layoutX="140.0" layoutY="528.0" text="Email">
-                                            <font><Font size="13.0" /></font>
-                                        </Label>
-                                        <TextField fx:id="emailTextfield" layoutX="197.0" layoutY="525.0" prefHeight="26.0" prefWidth="178.0" promptText="Email" />
-                                        <Label layoutX="146.0" layoutY="573.0" text="Tél">
-                                            <font><Font size="13.0" /></font>
-                                        </Label>
-                                        <TextField fx:id="telTextfield" layoutX="197.0" layoutY="570.0" prefHeight="26.0" prefWidth="178.0" promptText="Télephone" />
-                                        <Label layoutX="406.0" layoutY="372.0" text="Adresse">
-                                            <font><Font size="13.0" /></font>
-                                        </Label>
-                                        <TextField fx:id="adresseTextfield" layoutX="470.0" layoutY="369.0" prefHeight="26.0" prefWidth="178.0" promptText="Adresse" />
-                                        <Label layoutX="416.0" layoutY="403.0" text="Role">
-                                            <font><Font size="13.0" /></font>
-                                        </Label>
-                                        <Label layoutX="399.0" layoutY="436.0" text="Username">
-                                            <font><Font size="13.0" /></font>
-                                        </Label>
-                                        <TextField fx:id="usernameTextfield" layoutX="470.0" layoutY="433.0" prefHeight="25.0" prefWidth="178.0" promptText="Username" />
-                                        <Label layoutX="401.0" layoutY="473.0" text="Password">
-                                            <font><Font size="13.0" /></font>
-                                        </Label>
-                                        <PasswordField fx:id="setPasswordfield" layoutX="471.0" layoutY="470.0" prefHeight="26.0" prefWidth="178.0" promptText="Password" />
-                                        <Button fx:id="ajouterMecBtn" layoutX="738.0" layoutY="367.0" mnemonicParsing="false" onAction="#registerMec" prefHeight="41.0" prefWidth="138.0" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Ajouter" />
-                                        <Button fx:id="updateMecBtn" layoutX="738.0" layoutY="437.0" mnemonicParsing="false" onAction="#handleUpdateAction" prefHeight="41.0" prefWidth="138.0" styleClass="update-btn" stylesheets="@dashboardDesign.css" text="Modifier" />
-                                        <Button fx:id="deleteMecBtn" layoutX="738.0" layoutY="499.0" mnemonicParsing="false" onAction="#handleDeleteAction" prefHeight="41.0" prefWidth="138.0" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Supprimer" />
-                                        <RadioButton fx:id="mecRadioBtn" layoutX="470.0" layoutY="404.0" mnemonicParsing="false" text="Mécanicien" />
-                                        <Label fx:id="errormessage" alignment="TOP_LEFT" layoutX="400.0" layoutY="552.0" prefHeight="80.0" prefWidth="302.0" textFill="#ff1b1b">
-                                            <font><Font size="13.0" /></font>
-                                        </Label>
-                                        <TextField fx:id="idTextfield" editable="false" layoutX="96.0" layoutY="415.0" prefHeight="13.0" prefWidth="10.0" style="-fx-background-color: Transparent;">
-                                            <font><Font size="1.0" /></font>
-                                        </TextField>
-                                        <Button fx:id="clearBtn" layoutX="738.0" layoutY="561.0" mnemonicParsing="false" onAction="#viderOnAction" prefHeight="41.0" prefWidth="138.0" styleClass="vider-btn" stylesheets="@dashboardDesign.css" text="Vider" textFill="#fffdfd">
-                                            <font><Font size="1.0" /></font>
-                                        </Button>
-                                        <Label layoutX="415.0" layoutY="506.0" text="Banni">
-                                            <font><Font size="13.0" /></font>
-                                        </Label>
-                                        <ComboBox fx:id="banCombobox1" layoutX="470.0" layoutY="504.0" prefHeight="26.0" prefWidth="178.0" promptText="Status de ban " />
+                                        <VBox layoutX="13.0" layoutY="14.0" prefHeight="614.0" prefWidth="806.0" />
                                     </children>
-                                    <stylesheets>
-                                        <URL value="@dashboardDesign.css" />
-                                        <URL value="@profileDesign.css" />
-                                    </stylesheets>
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="clients_form" prefHeight="678.4" prefWidth="972.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="rdvmec_form" prefHeight="678.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                             <children>
-                                <AnchorPane layoutX="17.0" layoutY="16.0" prefHeight="648.0" prefWidth="972.0" style="-fx-background-radius: 10px;" styleClass="profile-background" stylesheets="@profileDesign.css">
+                                <AnchorPane layoutX="36.0" layoutY="27.0" styleClass="profile-background" stylesheets="@profileDesign.css">
                                     <children>
-                                        <AnchorPane layoutX="69.0" layoutY="14.0" prefHeight="293.0" prefWidth="834.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@dashboardDesign.css">
-                                            <children>
-                                                <BorderPane layoutX="125.0" layoutY="29.0" prefHeight="293.6" prefWidth="834.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                    <top>
-                                                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="839.0" styleClass="table-header" stylesheets="@dashboardDesign.css" text="Liste Des Clients" textFill="WHITE" BorderPane.alignment="CENTER" />
-                                                    </top>
-                                                    <center>
-                                                        <ScrollPane BorderPane.alignment="CENTER">
-                                                            <content>
-                                                                <VBox fx:id="tableContainer" prefHeight="276.0" prefWidth="822.0" spacing="10.0" stylesheets="@dashboardDesign.css">
-                                                                    <children>
-                                                                        <HBox prefHeight="43.0" prefWidth="813.0" spacing="30.0" styleClass="table-row" stylesheets="@dashboardDesign.css">
-                                                                            <children>
-                                                                                <Label text="Cin" textFill="#b11c1c">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="10.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Nom" textFill="#b11c1c" translateX="3.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="25.0" right="10.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Prénom" textFill="#b11c1c" translateX="5.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="15.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Tel" textFill="#b11c1c" translateX="10.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets right="5.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Email" textFill="#b11c1c" translateX="7.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="45.0" right="20.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Mdp" textFill="#b11c1c" translateX="43.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="5.0" right="5.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Adresse" textFill="#b11c1c" translateX="20.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="35.0" right="20.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Username" textFill="#b11c1c" translateX="20.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="10.0" /></padding>
-                                                                                </Label>
-                                                                                <Label text="Banni" textFill="#b11c1c" translateX="5.0">
-                                                                                    <font><Font name="Arial Bold" size="13.0" /></font>
-                                                                                    <padding><Insets left="10.0" /></padding>
-                                                                                </Label>
-                                                                            </children>
-                                                                        </HBox>
-                                                                    </children>
-                                                                </VBox>
-                                                            </content>
-                                                        </ScrollPane>
-                                                    </center>
-                                                </BorderPane>
-                                            </children>
-                                        </AnchorPane>
-                                        <Label layoutX="113.0" layoutY="349.0" text="Prénom"><font><Font size="13.0" /></font></Label>
+                                        <VBox layoutX="-20.0" layoutY="-17.0" prefHeight="640.0" prefWidth="816.0" visible="false" />
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="remo_form" prefHeight="678.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                            <children>
+                                <AnchorPane layoutX="23.0" layoutY="22.0" prefHeight="633.0" prefWidth="813.0" styleClass="profile-background" stylesheets="@profileDesign.css">
+                                    <children>
+                                        <VBox layoutX="17.0" layoutY="18.0" prefHeight="614.0" prefWidth="803.0" visible="false" />
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="testd_form" prefHeight="678.4" prefWidth="868.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                            <children>
+                                <AnchorPane layoutX="26.0" layoutY="27.0" prefHeight="633.0" prefWidth="827.0" styleClass="profile-background" stylesheets="@profileDesign.css">
+                                    <children>
+                                        <VBox prefHeight="628.0" prefWidth="820.0" styleClass="profile-background" stylesheets="@profileDesign.css" visible="false" />
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </AnchorPane>
+
+            
+            
+                        <AnchorPane fx:id="equipement_form" layoutX="16.8" layoutY="11.2" prefHeight="652.0" prefWidth="837.0" visible="false" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="11.0" />
+                        <AnchorPane fx:id="comform" layoutX="16.0" layoutY="24.0" prefHeight="642.0" prefWidth="839.0" visible="false" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="24.0" />
+                        <AnchorPane fx:id="rec_form" layoutX="18.4" layoutY="22.4" prefHeight="642.0" prefWidth="823.0" visible="false" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="22.0" />
+                        <AnchorPane fx:id="Mecaniciens_form" prefHeight="678.0" prefWidth="972.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-52.0" AnchorPane.topAnchor="0.0">
+                        <children>
+                            <AnchorPane layoutX="17.0" layoutY="16.0" prefHeight="646.0" prefWidth="972.0" style="-fx-background-radius: 10px;" styleClass="profile-background">
+                                <children>
+                                    <AnchorPane layoutX="69.0" layoutY="21.0" prefHeight="293.0" prefWidth="834.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@dashboardDesign.css">
+                                        <children>
+                                            <BorderPane layoutX="125.0" layoutY="29.0" prefHeight="308.0" prefWidth="834.0" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <top>
+                                                    <Label alignment="CENTER" prefHeight="30.0" prefWidth="839.0" styleClass="table-header" stylesheets="@dashboardDesign.css" text="Liste Des Mécaniciens" textFill="WHITE" BorderPane.alignment="CENTER" />
+                                                </top>
+                                                <center>
+                                                    <ScrollPane prefHeight="228.0" prefWidth="824.0" BorderPane.alignment="CENTER">
+                                                        <BorderPane.margin>
+                                                            <Insets left="10.0" />
+                                                        </BorderPane.margin>
+                                                        <content>
+                                                            <VBox fx:id="tablecontainer" prefHeight="266.0" prefWidth="814.0" spacing="10.0" stylesheets="@dashboardDesign.css">
+                                                                <children>
+                                                                    <HBox prefHeight="43.0" prefWidth="813.0" spacing="20.0" styleClass="table-row" stylesheets="@dashboardDesign.css">
+                                                                        <children>
+                                                                            <Label text="Cin" textFill="#b11c1c" translateX="2.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="10.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Nom" textFill="#b11c1c" translateX="10.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="10.0" right="10.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Prénom" textFill="#b11c1c" translateX="10.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                            </Label>
+                                                                            <Label text="Tel" textFill="#b11c1c" translateX="20.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets right="5.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Email" textFill="#b11c1c">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="55.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Mdp" textFill="#b11c1c" translateX="30.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="30.0" right="5.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Role" textFill="#b11c1c" translateX="10.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="15.0" right="5.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Adresse" textFill="#b11c1c">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="35.0" right="20.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Username" textFill="#b11c1c">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="10.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Banni" textFill="#b11c1c">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="10.0" /></padding>
+                                                                            </Label>
+                                                                        </children>
+                                                                    </HBox>
+                                                                </children>
+                                                            </VBox>
+                                                        </content>
+                                                    </ScrollPane>
+                                                </center>
+                                            </BorderPane>
+                                        </children>
+                                    </AnchorPane>
+
+                                    <Label layoutX="124.0" layoutY="372.0" text="Prénom">
+                                        <font><Font size="13.0" /></font>
+                                    </Label>
+                                    <TextField fx:id="prenomTextfield" layoutX="195.0" layoutY="369.0" prefHeight="26.0" prefWidth="178.0" promptText="Prénom" />
+                                    <Label layoutX="132.0" layoutY="426.0" text="Nom">
+                                        <font><Font size="13.0" /></font>
+                                    </Label>
+                                    <TextField fx:id="nomTextfield" layoutX="196.0" layoutY="423.0" prefHeight="26.0" prefWidth="178.0" promptText="Nom" />
+                                    <Label layoutX="140.0" layoutY="479.0" text="CIN">
+                                        <font><Font size="13.0" /></font>
+                                    </Label>
+                                    <TextField fx:id="cinTextfield" layoutX="197.0" layoutY="476.0" prefHeight="26.0" prefWidth="178.0" promptText="CIN" />
+                                    <Label layoutX="140.0" layoutY="528.0" text="Email">
+                                        <font><Font size="13.0" /></font>
+                                    </Label>
+                                    <TextField fx:id="emailTextfield" layoutX="197.0" layoutY="525.0" prefHeight="26.0" prefWidth="178.0" promptText="Email" />
+                                    <Label layoutX="146.0" layoutY="573.0" text="Tél">
+                                        <font><Font size="13.0" /></font>
+                                    </Label>
+                                    <TextField fx:id="telTextfield" layoutX="197.0" layoutY="570.0" prefHeight="26.0" prefWidth="178.0" promptText="Télephone" />
+                                    <Label layoutX="406.0" layoutY="372.0" text="Adresse">
+                                        <font><Font size="13.0" /></font>
+                                    </Label>
+                                    <TextField fx:id="adresseTextfield" layoutX="470.0" layoutY="369.0" prefHeight="26.0" prefWidth="178.0" promptText="Adresse" />
+                                    <Label layoutX="416.0" layoutY="403.0" text="Role">
+                                        <font><Font size="13.0" /></font>
+                                    </Label>
+                                    <Label layoutX="399.0" layoutY="436.0" text="Username">
+                                        <font><Font size="13.0" /></font>
+                                    </Label>
+                                    <TextField fx:id="usernameTextfield" layoutX="470.0" layoutY="433.0" prefHeight="25.0" prefWidth="178.0" promptText="Username" />
+                                    <Label layoutX="401.0" layoutY="473.0" text="Password">
+                                        <font><Font size="13.0" /></font>
+                                    </Label>
+                                    <PasswordField fx:id="setPasswordfield" layoutX="471.0" layoutY="470.0" prefHeight="26.0" prefWidth="178.0" promptText="Password" />
+                                    <Button fx:id="ajouterMecBtn" layoutX="738.0" layoutY="367.0" mnemonicParsing="false" onAction="#registerMec" prefHeight="41.0" prefWidth="138.0" styleClass="add-btn" stylesheets="@dashboardDesign.css" text="Ajouter" />
+                                    <Button fx:id="updateMecBtn" layoutX="738.0" layoutY="437.0" mnemonicParsing="false" onAction="#handleUpdateAction" prefHeight="41.0" prefWidth="138.0" styleClass="update-btn" stylesheets="@dashboardDesign.css" text="Modifier" />
+                                    <Button fx:id="deleteMecBtn" layoutX="738.0" layoutY="499.0" mnemonicParsing="false" onAction="#handleDeleteAction" prefHeight="41.0" prefWidth="138.0" styleClass="delete-btn" stylesheets="@dashboardDesign.css" text="Supprimer" />
+                                    <RadioButton fx:id="mecRadioBtn" layoutX="470.0" layoutY="404.0" mnemonicParsing="false" text="Mécanicien" />
+                                    <Label fx:id="errormessage" alignment="TOP_LEFT" layoutX="400.0" layoutY="552.0" prefHeight="80.0" prefWidth="302.0" textFill="#ff1b1b">
+                                        <font><Font size="13.0" /></font>
+                                    </Label>
+                                    <TextField fx:id="idTextfield" editable="false" layoutX="96.0" layoutY="415.0" prefHeight="13.0" prefWidth="10.0" style="-fx-background-color: Transparent;">
+                                        <font><Font size="1.0" /></font>
+                                    </TextField>
+                                    <Button fx:id="clearBtn" layoutX="738.0" layoutY="561.0" mnemonicParsing="false" onAction="#viderOnAction" prefHeight="41.0" prefWidth="138.0" styleClass="vider-btn" stylesheets="@dashboardDesign.css" text="Vider" textFill="#fffdfd">
+                                        <font><Font size="1.0" /></font>
+                                    </Button>
+                                    <Label layoutX="415.0" layoutY="506.0" text="Banni">
+                                        <font><Font size="13.0" /></font>
+                                    </Label>
+                                    <ComboBox fx:id="banCombobox1" layoutX="470.0" layoutY="504.0" prefHeight="26.0" prefWidth="178.0" promptText="Status de ban " />
+                                </children>
+                                <stylesheets>
+                                    <URL value="@dashboardDesign.css" />
+                                    <URL value="@profileDesign.css" />
+                                </stylesheets>
+                            </AnchorPane>
+                        </children>
+                    </AnchorPane>
+                    <AnchorPane fx:id="clients_form" prefHeight="678.4" prefWidth="972.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <children>
+                            <AnchorPane layoutX="17.0" layoutY="16.0" prefHeight="648.0" prefWidth="972.0" style="-fx-background-radius: 10px;" styleClass="profile-background" stylesheets="@profileDesign.css">
+                                <children>
+                                    <AnchorPane layoutX="69.0" layoutY="14.0" prefHeight="293.0" prefWidth="834.0" style="-fx-background-color: white; -fx-background-radius: 10px;" styleClass="shadow" stylesheets="@dashboardDesign.css">
+                                        <children>
+                                            <BorderPane layoutX="125.0" layoutY="29.0" prefHeight="293.6" prefWidth="834.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <top>
+                                                    <Label alignment="CENTER" prefHeight="30.0" prefWidth="839.0" styleClass="table-header" stylesheets="@dashboardDesign.css" text="Liste Des Clients" textFill="WHITE" BorderPane.alignment="CENTER" />
+                                                </top>
+                                                <center>
+                                                    <ScrollPane BorderPane.alignment="CENTER">
+                                                        <content>
+                                                            <VBox fx:id="tableContainer" prefHeight="276.0" prefWidth="822.0" spacing="10.0" stylesheets="@dashboardDesign.css">
+                                                                <children>
+                                                                    <HBox prefHeight="43.0" prefWidth="813.0" spacing="30.0" styleClass="table-row" stylesheets="@dashboardDesign.css">
+                                                                        <children>
+                                                                            <Label text="Cin" textFill="#b11c1c">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="10.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Nom" textFill="#b11c1c" translateX="3.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="25.0" right="10.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Prénom" textFill="#b11c1c" translateX="5.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="15.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Tel" textFill="#b11c1c" translateX="10.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets right="5.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Email" textFill="#b11c1c" translateX="7.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="45.0" right="20.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Mdp" textFill="#b11c1c" translateX="43.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="5.0" right="5.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Adresse" textFill="#b11c1c" translateX="20.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="35.0" right="20.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Username" textFill="#b11c1c" translateX="20.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="10.0" /></padding>
+                                                                            </Label>
+                                                                            <Label text="Banni" textFill="#b11c1c" translateX="5.0">
+                                                                                <font><Font name="Arial Bold" size="13.0" /></font>
+                                                                                <padding><Insets left="10.0" /></padding>
+                                                                            </Label>
+                                                                        </children>
+                                                                    </HBox>
+                                                                </children>
+                                                            </VBox>
+                                                        </content>
+                                                    </ScrollPane>
+                                                </center>
+                                            </BorderPane>
+                                        </children>
+                                    </AnchorPane>
+                                    <Label layoutX="113.0" layoutY="349.0" text="Prénom"><font><Font size="13.0" /></font></Label>
                                         <TextField fx:id="prenomTextfield1" layoutX="181.0" layoutY="346.0" prefHeight="26.0" prefWidth="178.0" promptText="Prénom" />
                                         <Label layoutX="125.0" layoutY="407.0" text="Nom"><font><Font size="13.0" /></font></Label>
                                         <TextField fx:id="nomTextfield1" layoutX="185.0" layoutY="404.0" prefHeight="26.0" prefWidth="178.0" promptText="Nom" />
@@ -544,31 +541,30 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-                  <AnchorPane fx:id="voiture_form1" prefHeight="678.4" prefWidth="989.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <AnchorPane layoutX="23.0" layoutY="21.0" prefHeight="636.0" prefWidth="942.0" styleClass="profile-background" stylesheets="@profileDesign.css">
-                           <children>
-                              <AnchorPane layoutY="-1.0" prefHeight="52.0" prefWidth="942.0" style="-fx-border-radius: 10;" styleClass="nav-form" stylesheets="@profileDesign.css">
-                                 <children>
-                                    <Button fx:id="addVBtn" layoutX="743.0" layoutY="8.0" onAction="#switchFormraed" style="-fx-min-width: 150;" styleClass="transparent-button" stylesheets="@dashboardDesign.css" text="Ajouter Voiture" textFill="WHITE" />
-                                    <Button fx:id="addCatBtn" layoutX="499.0" layoutY="8.0" onAction="#switchFormraed" style="-fx-min-width: 150;" styleClass="transparent-button" stylesheets="@dashboardDesign.css" text="Ajouter Catégorie" textFill="WHITE" />
-                                    <Button fx:id="afficherVBtn" layoutX="240.0" layoutY="8.0" onAction="#switchFormraed" style="-fx-min-width: 150;" styleClass="transparent-button" stylesheets="@dashboardDesign.css" text="Afficher Voitures" textFill="WHITE" />
-                                    <Button fx:id="affichercatBtn" layoutX="14.0" layoutY="8.0" onAction="#switchFormraed" style="-fx-min-width: 150;" styleClass="transparent-button" stylesheets="@dashboardDesign.css" text="Afficher Catégories" textFill="WHITE" />
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane layoutX="4.0" layoutY="53.0" prefHeight="579.0" prefWidth="934.0">
-                                 <children>
-                                    <AnchorPane fx:id="categorie_form" prefHeight="579.2" prefWidth="934.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    <AnchorPane fx:id="voiture_form" prefHeight="579.2" prefWidth="934.4" visible="false" />
-                                    <AnchorPane fx:id="addcat_form" prefHeight="579.2" prefWidth="934.4" visible="false" />
-                                    <AnchorPane fx:id="addv_form" prefHeight="579.2" prefWidth="934.4" visible="false" />
-                                 </children>
-                              </AnchorPane>
-                           </children>
+                        <AnchorPane fx:id="voiture_form1" prefHeight="678.4" prefWidth="989.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <AnchorPane layoutX="23.0" layoutY="21.0" prefHeight="636.0" prefWidth="942.0" styleClass="profile-background" stylesheets="@profileDesign.css">
+                                    <children>
+                                        <AnchorPane layoutY="-1.0" prefHeight="52.0" prefWidth="942.0" style="-fx-border-radius: 10;" styleClass="nav-form" stylesheets="@profileDesign.css">
+                                            <children>
+                                                <Button fx:id="addVBtn" layoutX="743.0" layoutY="8.0" onAction="#switchFormraed" style="-fx-min-width: 150;" styleClass="transparent-button" stylesheets="@dashboardDesign.css" text="Ajouter Voiture" textFill="WHITE" />
+                                                <Button fx:id="addCatBtn" layoutX="499.0" layoutY="8.0" onAction="#switchFormraed" style="-fx-min-width: 150;" styleClass="transparent-button" stylesheets="@dashboardDesign.css" text="Ajouter Catégorie" textFill="WHITE" />
+                                                <Button fx:id="afficherVBtn" layoutX="240.0" layoutY="8.0" onAction="#switchFormraed" style="-fx-min-width: 150;" styleClass="transparent-button" stylesheets="@dashboardDesign.css" text="Afficher Voitures" textFill="WHITE" />
+                                                <Button fx:id="affichercatBtn" layoutX="14.0" layoutY="8.0" onAction="#switchFormraed" style="-fx-min-width: 150;" styleClass="transparent-button" stylesheets="@dashboardDesign.css" text="Afficher Catégories" textFill="WHITE" />
+                                            </children>
+                                        </AnchorPane>
+                                        <AnchorPane layoutX="4.0" layoutY="53.0" prefHeight="579.0" prefWidth="934.0">
+                                            <children>
+                                                <AnchorPane fx:id="categorie_form" prefHeight="579.2" prefWidth="934.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <AnchorPane fx:id="voiture_form" prefHeight="579.2" prefWidth="934.4" visible="false" />
+                                                <AnchorPane fx:id="addcat_form" prefHeight="579.2" prefWidth="934.4" visible="false" />
+                                                <AnchorPane fx:id="addv_form" prefHeight="579.2" prefWidth="934.4" visible="false" />
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </AnchorPane>
+                            </children>
                         </AnchorPane>
-                     </children>
-                  </AnchorPane>
-
                     </children>
                 </AnchorPane>
             </center>

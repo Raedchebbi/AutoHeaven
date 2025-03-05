@@ -2,7 +2,6 @@
 
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -15,14 +14,14 @@
 
 <Pane fx:id="testdrive_pa" prefHeight="544.0" prefWidth="972.0" styleClass="profile-background" stylesheets="@profileDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ViewTestDriveController">
     <children>
-        <Label layoutX="105.0" layoutY="24.0" text="Liste des Test Drives">
+        <Label layoutX="36.0" layoutY="33.0" text="Liste des Test Drives">
             <font>
-                <Font name="Arial Bold" size="25.0" />
+                <Font name="Arial Bold" size="30.0" />
             </font>
         </Label>
 
         <!-- ComboBox pour choisir le critère de recherche -->
-        <ComboBox fx:id="searchCriteria" layoutX="600.0" layoutY="28.0" prefHeight="25.0" prefWidth="130.0">
+        <ComboBox fx:id="searchCriteria" layoutX="797.0" layoutY="38.0" prefHeight="25.0" prefWidth="130.0">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Utilisateur" />
@@ -31,7 +30,7 @@
             </items>
         </ComboBox>
 
-        <TextField fx:id="search_id" layoutX="742.0" layoutY="28.0" prefHeight="25.0" prefWidth="186.0" promptText="Recherche..." styleClass="search-bar" />
+        <TextField fx:id="search_id" layoutX="740.0" layoutY="73.0" prefHeight="25.0" prefWidth="186.0" promptText="Recherche..." styleClass="search-bar" />
 
         <HBox fx:id="testdrive_header" layoutX="36.0" layoutY="125.0" prefHeight="19.0" prefWidth="902.0" styleClass="container_header">
             <children>
@@ -65,9 +64,6 @@
                 </VBox>
             </content>
         </ScrollPane>
-
-        <Button fx:id="back_btn" layoutX="36.0" layoutY="27.0" mnemonicParsing="false" onAction="#goBack" text="Retour" />
-        <Button fx:id="add_btn" layoutX="800.0" layoutY="64.0" mnemonicParsing="false" onAction="#goToAddTestDrive" text="Ajouter un Test Drive" />
 
         <!-- Message de succès -->
         <Text fx:id="successMessage" fill="green" layoutX="36.0" layoutY="500.0" visible="false" />

@@ -227,7 +227,7 @@ public class UserService implements Crud<User> {
                     rs.getString("role"),
                     rs.getString("adresse"),
                     rs.getString("username"),
-                    rs.getString("photoProfile"),
+                    rs.getString("photo_profile"),
                     rs.getString("ban"),
                     rs.getString("question"),
                     rs.getString("reponse")
@@ -255,7 +255,7 @@ public class UserService implements Crud<User> {
                     rs.getString("role"),
                     rs.getString("adresse"),
                     rs.getString("username"),
-                    rs.getString("photoProfile"),
+                    rs.getString("photo_profile"),
                     rs.getString("ban"),
                     rs.getString("question"),
                     rs.getString("reponse")
@@ -283,7 +283,7 @@ public class UserService implements Crud<User> {
                     rs.getString("role"),
                     rs.getString("adresse"),
                     rs.getString("username"),
-                    rs.getString("photoProfile"),
+                    rs.getString("photo_profile"),
                     rs.getString("ban"),
                     rs.getString("question"),
                     rs.getString("reponse")
@@ -292,6 +292,19 @@ public class UserService implements Crud<User> {
         }
         return mechanics;
     }
+    public List<String> getAllEmails() throws SQLException {
+        List<String> emails = new ArrayList<>();
+        String sql = "SELECT email FROM user";  // Modifier selon ton besoin (ex: WHERE role = 'client')
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                emails.add(rs.getString("email"));
+            }
+        }
+        return emails;
+    }
+
 
 
 

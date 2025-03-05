@@ -90,7 +90,7 @@ public class ViewTestDriveController {
 
             hbox.getChildren().addAll(userLabel, vehicleLabel, dateLabel, statusLabel);
 
-            if (testDrive.getStatus().equals("en_cours_de_traitement")) {
+            /* if (testDrive.getStatus().equals("en_cours_de_traitement")) {
                 Button confirmButton = new Button("Confirmer");
                 confirmButton.setStyle("-fx-background-color: green; -fx-text-fill: white;");
                 confirmButton.setOnAction(e -> {
@@ -103,15 +103,66 @@ public class ViewTestDriveController {
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
+                }); */
+
+            if (testDrive.getStatus().equals("en_cours_de_traitement")) {
+                Button confirmButton = new Button("Confirmer");
+                confirmButton.setStyle("-fx-background-color: green; -fx-text-fill: white;");
+                confirmButton.setOnAction(e -> {
+                    try {
+                        // Mettre à jour le statut
+                        testDrive.setStatus("confirmee");
+                        testDriveService.update(testDrive);
+
+                        // Obtenir la voiture associée
+                        Voiture voiture1 = voitureService.getById(testDrive.getId_v());
+
+                        // Envoyer l'email à l'utilisateur
+                        MailService mailService = new MailService();
+                        String subject = "TestDrive Reservation";
+                        String content = "Votre réservation de testdrive de la voiture " + voiture1.getMarque() + " est acceptée.";
+                        mailService.sendEmailToUser(testDrive.getId_u(), subject, content);
+
+                        successMessage.setText("Test Drive confirmé et email envoyé avec succès !");
+                        successMessage.setVisible(true);
+                        loadTestDrives();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 });
 
-                Button rejectButton = new Button("Rejeter");
+                /*Button rejectButton = new Button("Rejeter");
                 rejectButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
                 rejectButton.setOnAction(e -> {
                     try {
                         testDrive.setStatus("rejetee");
                         testDriveService.update(testDrive);
                         successMessage.setText("Test Drive rejeté avec succès !");
+                        successMessage.setVisible(true);
+                        loadTestDrives();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                });*/
+
+                Button rejectButton = new Button("Rejeter");
+                rejectButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+                rejectButton.setOnAction(e -> {
+                    try {
+                        // Mettre à jour le statut
+                        testDrive.setStatus("rejetee");
+                        testDriveService.update(testDrive);
+
+                        // Obtenir la voiture associée
+                        Voiture voiture2 = voitureService.getById(testDrive.getId_v());
+
+                        // Envoyer l'email à l'utilisateur
+                        MailService mailService = new MailService();
+                        String subject = "TestDrive Reservation";
+                        String content = "Votre réservation de test drive de la voiture " + voiture2.getMarque() + " est rejetée.";
+                        mailService.sendEmailToUser(testDrive.getId_u(), subject, content);
+
+                        successMessage.setText("Test Drive rejeté et email envoyé avec succès !");
                         successMessage.setVisible(true);
                         loadTestDrives();
                     } catch (Exception ex) {

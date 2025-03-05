@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -60,10 +61,15 @@ public class ViewCamionRemorquageController {
             hbox.setSpacing(20);
 
             Label nomAgenceLabel = new Label(camion.getNomAgence());
+            nomAgenceLabel.setPrefWidth(150.0);
             Label modeleLabel = new Label(camion.getModele());
+            modeleLabel.setPrefWidth(150.0);
             Label anneeLabel = new Label(String.valueOf(camion.getAnnee()));
+            anneeLabel.setPrefWidth(100.0);
             Label numTelLabel = new Label(camion.getNum_tel());
+            numTelLabel.setPrefWidth(120.0);
             Label statutLabel = new Label(camion.getStatut());
+            statutLabel.setPrefWidth(100.0);
 
             Button updateButton = new Button("Modifier");
             updateButton.setOnAction(e -> openUpdateInterface(camion));
@@ -131,7 +137,7 @@ public class ViewCamionRemorquageController {
         }
     }
 
-    @FXML
+    /*@FXML
     private void goToAddCamion() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddCamionRemorquage.fxml"));
@@ -139,6 +145,25 @@ public class ViewCamionRemorquageController {
             Stage stage = (Stage) add_btn.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors du chargement de AddCamionRemorquage.fxml");
+        }
+    }*/
+
+    @FXML
+    private void goToAddCamion() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddCamionRemorquage.fxml"));
+            Parent addCamionRoot = loader.load();
+
+            // Ajoutez l'interface d'ajout de camion dans le conteneur principal de votre tableau de bord
+            // Par exemple, si vous avez un AnchorPane dans le dashboard pour cela, l'ajoutez ici
+            AnchorPane mainContainer = (AnchorPane) dashboardController.getMainContainer(); // Assurez-vous d'avoir une méthode pour accéder au conteneur
+            mainContainer.getChildren().clear(); // Effacer le contenu précédent
+            mainContainer.getChildren().add(addCamionRoot); // Ajouter la nouvelle interface
+
+            System.out.println("Ajout de l'interface d'ajout de camion.");
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Erreur lors du chargement de AddCamionRemorquage.fxml");

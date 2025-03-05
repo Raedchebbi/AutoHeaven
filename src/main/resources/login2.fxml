@@ -49,7 +49,7 @@
                <children>
                   <ImageView fx:id="searchImageView" fitHeight="25.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../images/search.png" />
+                        <Image url="@images/search.png" />
                      </image>
                   </ImageView>
                   <TextField promptText="Marque de Voiture ..." styleClass="transparent" stylesheets="@profileDesign.css">

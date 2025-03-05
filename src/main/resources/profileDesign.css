@@ -95,7 +95,7 @@
 }
 
 .background-image{
-    -fx-background-image: url("file:/C:/Users/ASUS/Downloads/integration/AutoHeaven/images/back.jpg");
+    -fx-background-image: url("images/back.jpg");
     -fx-background-repeat: stretch;
 
 }

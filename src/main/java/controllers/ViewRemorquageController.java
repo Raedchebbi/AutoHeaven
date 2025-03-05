@@ -100,6 +100,16 @@ public class ViewRemorquageController {
                     try {
                         remorquage.setStatus("confirmee");
                         remorquageService.update(remorquage);
+
+                        // Obtenir la voiture associée
+                        CamionRemorquage camion1 = camionService.getById(remorquage.getId_cr());
+
+                        // Envoyer l'email à l'utilisateur
+                        MailService mailService = new MailService();
+                        String subject = "TestDrive Reservation";
+                        String content = "Votre réservation de remorquage de l'agence " + camion1.getNomAgence() + " est acceptée.";
+                        mailService.sendEmailToUser(remorquage.getId_u(), subject, content);
+
                         loadRemorquages();
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -112,6 +122,16 @@ public class ViewRemorquageController {
                     try {
                         remorquage.setStatus("rejetee");
                         remorquageService.update(remorquage);
+
+                        // Obtenir la voiture associée
+                        CamionRemorquage camion2 = camionService.getById(remorquage.getId_cr());
+
+                        // Envoyer l'email à l'utilisateur
+                        MailService mailService = new MailService();
+                        String subject = "TestDrive Reservation";
+                        String content = "Votre réservation de remorquage de l'agence " + camion2.getNomAgence() + " est rejetée.";
+                        mailService.sendEmailToUser(remorquage.getId_u(), subject, content);
+
                         loadRemorquages();
                     } catch (Exception ex) {
                         ex.printStackTrace();
