@@ -1,9 +1,11 @@
 package controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
@@ -27,6 +29,12 @@ public class Detailsvoiture {
     private Label transmissionLabel;
     @FXML
     private ImageView imageView;
+    @FXML
+    private Button themeToggleButton;
+
+    private boolean isDarkMode = false;
+    @FXML
+    private AnchorPane rootPane;
 
     public void setDetails(Categorie categorie, Voiture voiture) {
         typeLabel.setText("Type: " + categorie.getType());
@@ -58,5 +66,27 @@ public class Detailsvoiture {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    private void toggleTheme() {
+        if (isDarkMode) {
+            applyLightTheme();
+            themeToggleButton.setText("Dark Mode");
+        } else {
+            applyDarkTheme();
+            themeToggleButton.setText("Light Mode");
+        }
+        isDarkMode = !isDarkMode; // Toggle the state
+    }
+    private void applyLightTheme() {
+        Scene scene = rootPane.getScene();
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource("/style1.css").toExternalForm());
+    }
+
+    private void applyDarkTheme() {
+        Scene scene = rootPane.getScene();
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource("/dark-theme.css").toExternalForm());
     }
 }

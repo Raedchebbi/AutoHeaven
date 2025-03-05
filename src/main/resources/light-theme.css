@@ -1,0 +1,17 @@
+.root {
+    -fx-background-color: #ffffff; /* White background */
+    -fx-text-fill: #000000; /* Black text */
+}
+
+.button {
+    -fx-background-color: #dddddd; /* Light gray buttons */
+    -fx-text-fill: #000000; /* Black text */
+}
+
+.label {
+    -fx-text-fill: #000000; /* Black text */
+}
+
+.scroll-pane {
+    -fx-background-color: #ffffff; /* White background */
+}

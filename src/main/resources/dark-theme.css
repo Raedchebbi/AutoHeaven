@@ -1,0 +1,38 @@
+/* Dark Theme */
+.root {
+    -fx-background-color: #2d2d2d; /* Dark background */
+    -fx-text-fill: #ffffff; /* White text */
+}
+
+.button {
+    -fx-background-color: #444444; /* Dark gray buttons */
+    -fx-text-fill: #ffffff; /* White text */
+}
+
+.label {
+    -fx-text-fill: #ffffff; /* White text */
+}
+
+.scroll-pane {
+    -fx-background-color: #2d2d2d; /* Dark background */
+}
+
+/* Style the content inside the ScrollPane */
+.scroll-pane .viewport {
+    -fx-background-color: #2d2d2d; /* Match the ScrollPane background */
+}
+
+.scroll-pane .content {
+    -fx-background-color: #2d2d2d; /* Match the ScrollPane background */
+}
+
+/* Style the VBox (or other containers) inside the ScrollPane */
+.scroll-pane .vbox {
+    -fx-background-color: #2d2d2d; /* Match the ScrollPane background */
+    -fx-text-fill: #ffffff; /* White text */
+}
+
+/* Style labels and other text elements inside the ScrollPane */
+.scroll-pane .label {
+    -fx-text-fill: #ffffff; /* White text */
+}

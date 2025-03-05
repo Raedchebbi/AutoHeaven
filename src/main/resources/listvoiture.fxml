@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Listvoiture">
+<AnchorPane  fx:id="rootPane" prefHeight="531.0" prefWidth="939.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Listvoiture">
 
-    <HBox layoutX="20" layoutY="20" prefWidth="1160" spacing="10">
+    <HBox layoutX="20" layoutY="20" prefHeight="46.0" prefWidth="915.0" spacing="10">
         <HBox spacing="10">
             <Label text="Recherche:" />
             <TextField fx:id="searchTextField" prefWidth="400" promptText="Entrez la marque" />
@@ -33,10 +33,11 @@
             </graphic>
         </Button>
         <Button fx:id="sortButton" onAction="#sortVoituresByMarque" style="-fx-background-color: #ddd; -fx-text-fill: black; -fx-padding: 5px 10px; -fx-background-radius: 5px;" text="Tri" />
+        <Button fx:id="themeToggleButton" layoutX="850" layoutY="20" text="Dark Mode" onAction="#toggleTheme" />
     </HBox>
 
     <!-- Simplified Filter Panel -->
-    <VBox fx:id="filterPanel" layoutX="700" layoutY="100" prefWidth="300" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-padding: 10;">
+    <VBox fx:id="filterPanel" layoutX="700" layoutY="100" prefHeight="178.0" prefWidth="233.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-padding: 10;">
         <GridPane hgap="10" vgap="10">
             <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
             <ComboBox fx:id="typeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" />
@@ -60,28 +61,26 @@
             </rowConstraints>
         </GridPane>
 
-        <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10;">
+        <HBox alignment="CENTER_RIGHT" prefHeight="283.0" prefWidth="293.0" spacing="10" style="-fx-padding: 10;">
             <Button onAction="#applyFilters" text="Appliquer" />
             <Button onAction="#toggleFilterPanel" text="Fermer" />
         </HBox>
     </VBox>
 
-    <ScrollPane layoutX="20" layoutY="80" prefHeight="500" prefWidth="1053.0">
+    <ScrollPane layoutX="20" layoutY="80" prefHeight="355.0" prefWidth="915.0">
         <VBox fx:id="voitureVBox" spacing="15" />
     </ScrollPane>
 
     <!-- Chatbot Container -->
-    <VBox fx:id="chatbotContainer" layoutX="800.0" layoutY="350.0" prefWidth="350.0" prefHeight="250.0"
-          style="-fx-background-color: white; -fx-border-color: #ccc; -fx-padding: 10; -fx-border-radius: 10; -fx-background-radius: 10; -fx-opacity: 0;">
-        <fx:include source="chatbot.fxml"/>
+    <VBox fx:id="chatbotContainer" layoutX="371.0" layoutY="189.0" prefHeight="366.0" prefWidth="400.0" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-padding: 10; -fx-border-radius: 10; -fx-background-radius: 10; -fx-opacity: 0;">
+        <fx:include source="chatbot.fxml" />
     </VBox>
 
-    <Button fx:id="chatbotButton" layoutX="1061.0" layoutY="536.0" onAction="#toggleChatbot"
-            prefHeight="57.0" prefWidth="72.0" style="-fx-background-color: white; -fx-background-radius: 50%; -fx-font-size: 18px;">
+       <Button fx:id="chatbotButton" layoutX="299.0" layoutY="435.0" onAction="#toggleChatbot" prefHeight="57.0" prefWidth="72.0" style="-fx-background-color: white; -fx-background-radius: 50%; -fx-font-size: 18px;">
         <graphic>
             <ImageView fitHeight="30" fitWidth="30">
                 <image>
-                    <Image url="@dir/chatgpt.png"/>
+                    <Image url="@dir/chatgpt.png" />
                 </image>
             </ImageView>
         </graphic>

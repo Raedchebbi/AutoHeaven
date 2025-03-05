@@ -43,6 +43,12 @@ public class Listvoiture implements Initializable {
     private Popup filterPopup = new Popup();
     @FXML
     private VBox filterPanel;
+    @FXML
+    private Button themeToggleButton;
+
+    private boolean isDarkMode = false;
+    @FXML
+    private AnchorPane rootPane;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadAllVoitures();
@@ -50,6 +56,12 @@ public class Listvoiture implements Initializable {
         setupFilterPopup();
         loadCategoryFilters();
         sortButton.setOnAction(event -> sortVoituresByMarque());
+        rootPane.sceneProperty().addListener((observable, oldScene, newScene) -> {
+            if (newScene != null) {
+                applyLightTheme(); // Apply the theme once the scene is set
+            }
+        });
+
 
     }
 
@@ -313,5 +325,27 @@ public class Listvoiture implements Initializable {
     private void toggleChatbot() {
         boolean isVisible = chatbotContainer.getOpacity() > 0;
         chatbotContainer.setOpacity(isVisible ? 0 : 1);
+    }
+    @FXML
+    private void toggleTheme() {
+        if (isDarkMode) {
+            applyLightTheme();
+            themeToggleButton.setText("Dark Mode");
+        } else {
+            applyDarkTheme();
+            themeToggleButton.setText("Light Mode");
+        }
+        isDarkMode = !isDarkMode; // Toggle the state
+    }
+    private void applyLightTheme() {
+        Scene scene = rootPane.getScene();
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource("/style1.css").toExternalForm());
+    }
+
+    private void applyDarkTheme() {
+        Scene scene = rootPane.getScene();
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource("/dark-theme.css").toExternalForm());
     }
 }

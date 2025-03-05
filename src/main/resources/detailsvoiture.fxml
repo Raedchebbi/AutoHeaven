@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
 
-<AnchorPane stylesheets="@style1.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+<AnchorPane  fx:id="rootPane"  stylesheets="@style1.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="controllers.Detailsvoiture" prefHeight="600.0" prefWidth="1200.0">
     <VBox spacing="15" layoutX="50.0" layoutY="50.0" alignment="CENTER">
         <Label fx:id="typeLabel" text="Type: " />
@@ -16,6 +16,7 @@
         <ImageView fx:id="imageView" fitWidth="300" fitHeight="200" />
 
         <Button fx:id="backButton" text="Back" onAction="#handleBack" />
+        <Button fx:id="themeToggleButton" layoutX="850" layoutY="20" text="Dark Mode" onAction="#toggleTheme" />
     </VBox>
 
 </AnchorPane>
