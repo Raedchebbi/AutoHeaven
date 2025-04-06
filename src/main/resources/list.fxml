@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -34,8 +35,8 @@
 <!--    </VBox>-->
 <!--</AnchorPane>-->
 
-<AnchorPane stylesheets="@Testsirine.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ListController">
-    <Button fx:id="stat" onAction="#goToTrendChart" prefHeight="48.0" prefWidth="174.0" text="Trend Chart" />
+<AnchorPane styleClass="profile-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ListController">
+    <Button fx:id="stat" onAction="#goToTrendChart" prefHeight="48.0" prefWidth="174.0" styleClass="nav-form" stylesheets="@profileDesign.css" text="Trend Chart" />
     <VBox alignment="CENTER" layoutX="26.0" layoutY="14.0" prefHeight="624.0" prefWidth="860.0" spacing="20">
         <padding><Insets bottom="20" left="20" right="20" top="20" /></padding>
 
@@ -47,15 +48,19 @@
         <!-- Barre de recherche améliorée -->
         <HBox alignment="CENTER" prefHeight="74.0" prefWidth="796.0" spacing="15" styleClass="search-box">
             <TextField fx:id="searchField" promptText="Rechercher un avis..." styleClass="modern-textfield" />
-            <Button fx:id="searchButton" styleClass="modern-button" text="Rechercher" />
+            <Button fx:id="searchButton" styleClass="transparent-button" stylesheets="@profileDesign.css" text="Rechercher" />
         </HBox>
 
         <!-- ListView stylisée -->
-        <ListView fx:id="listViewAvis" prefHeight="400" styleClass="styled-list">
+        <ListView fx:id="listViewAvis" prefHeight="400" styleClass="profile-background" stylesheets="@profileDesign.css">
             <items>
                 <FXCollections fx:factory="observableArrayList" />
             </items>
         </ListView>
 
     </VBox>
+   <stylesheets>
+      <URL value="@Testsirine.css" />
+      <URL value="@profileDesign.css" />
+   </stylesheets>
 </AnchorPane>

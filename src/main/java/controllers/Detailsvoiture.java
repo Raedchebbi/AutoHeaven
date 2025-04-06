@@ -96,7 +96,7 @@ public class Detailsvoiture {
     private void applyLightTheme() {
         Scene scene = rootPane.getScene();
         scene.getStylesheets().clear();
-        scene.getStylesheets().add(getClass().getResource("/style1.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/styless.css").toExternalForm());
     }
 
     private void applyDarkTheme() {

@@ -10,14 +10,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="554.0" prefWidth="972.0" stylesheets="@styles.css" vbarPolicy="AS_NEEDED" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherReclamationController">
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="644.0" prefWidth="972.0" stylesheets="@styles.css" vbarPolicy="AS_NEEDED" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AfficherReclamationController">
     <content>
         <AnchorPane prefHeight="900.0" prefWidth="1300.0">
             <HBox alignment="TOP_CENTER" prefHeight="850.0" spacing="25" styleClass="main-container">
                 <padding>
                     <Insets bottom="20" left="20" right="20" top="20" />
                 </padding>
-                <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="850.0" prefWidth="1010.0" styleClass="data-container" vbarPolicy="ALWAYS">
+                <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="969.0" prefWidth="1198.0" styleClass="data-container" vbarPolicy="ALWAYS">
                     <VBox prefHeight="850.0" prefWidth="778.0" spacing="15" styleClass="content-container">
                         <padding>
                             <Insets bottom="15" left="15" right="15" top="15" />
@@ -30,12 +30,12 @@
                         </HBox>
                         <HBox styleClass="header-row">
                             <Label prefWidth="160.0" styleClass="header-cell" text="Objet" />
-                            <Label prefWidth="260.0" styleClass="header-cell" text="Réclamation" wrapText="true" />
-                            <Label prefWidth="140.0" styleClass="header-cell" text="Date" />
-                            <Label prefWidth="140.0" styleClass="header-cell" text="Nom" />
-                            <Label prefWidth="120.0" styleClass="header-cell" text="Téléphone" />
-                            <Label prefWidth="240.0" styleClass="header-cell" text="Email" wrapText="true" />
-                            <Label prefHeight="42.0" prefWidth="195.0" styleClass="header-cell" text="Statut" />
+                            <Label prefHeight="42.0" prefWidth="214.0" styleClass="header-cell" text="Réclamation" wrapText="true" />
+                            <Label prefHeight="42.0" prefWidth="138.0" styleClass="header-cell" text="Date" />
+                            <Label prefHeight="42.0" prefWidth="138.0" styleClass="header-cell" text="Nom" />
+                            <Label prefHeight="42.0" prefWidth="111.0" styleClass="header-cell" text="Téléphone" />
+                            <Label prefHeight="42.0" prefWidth="216.0" styleClass="header-cell" text="Email" wrapText="true" />
+                            <Label prefHeight="42.0" prefWidth="195.0" styleClass="header-cell" text="Status" />
                         </HBox>
                         <VBox fx:id="contentBox" spacing="10" />
                     </VBox>

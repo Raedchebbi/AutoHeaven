@@ -4,21 +4,31 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="554.4" prefWidth="868.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Detailsvoiture">
-    <VBox alignment="CENTER" layoutX="50.0" layoutY="50.0" spacing="15">
-        <Label fx:id="typeLabel" text="Type: " />
-        <Label fx:id="typeCarburantLabel" text="Type Carburant: " />
-        <Label fx:id="typeUtilisationLabel" text="Type Utilisation: " />
-        <Label fx:id="nbrPorteLabel" text="Nombre de Portes: " />
-        <Label fx:id="transmissionLabel" text="Transmission: " />
+<AnchorPane fx:id="rootPane" prefHeight="554.4" prefWidth="868.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Detailsvoiture">
+    <HBox alignment="CENTER_LEFT" layoutX="10" layoutY="10" spacing="20">
+        <VBox alignment="CENTER" layoutX="50.0" layoutY="50.0" spacing="15">
+            <Label fx:id="typeLabel" text="Type: " />
+            <Label fx:id="typeCarburantLabel" text="Type Carburant: " />
+            <Label fx:id="typeUtilisationLabel" text="Type Utilisation: " />
+            <Label fx:id="nbrPorteLabel" text="Nombre de Portes: " />
+            <Label fx:id="transmissionLabel" text="Transmission: " />
 
-        <ImageView fx:id="imageView" fitHeight="200" fitWidth="300" />
+            <ImageView fx:id="imageView" fitHeight="200" fitWidth="300" />
 
-        <Button fx:id="backButton" onAction="#handleBack" text="Back" />
-        <Button fx:id="themeToggleButton" layoutX="850" layoutY="20" onAction="#toggleTheme" text="Dark Mode" />
-    </VBox>
-   <Button layoutX="667.0" layoutY="83.0" mnemonicParsing="false" text="More Details" />
+            <Button fx:id="backButton" onAction="#handleBack" text="Back" />
+        </VBox>
+        <VBox alignment="CENTER" spacing="10">
+            <Label fx:id="info" prefHeight="122.0" prefWidth="300.0" text="Obtenir plus d'informations sur les voitures " textAlignment="RIGHT" textFill="#cc0b0b">
+                <font>
+                    <Font size="15.0" />
+                </font></Label>
+            <fx:include source="apivoiture.fxml" />
+        </VBox>
+    </HBox>
+    <Button fx:id="themeToggleButton" layoutX="772.0" layoutY="14.0" onAction="#toggleTheme" text="Dark Mode" />
 
 </AnchorPane>

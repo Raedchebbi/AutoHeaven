@@ -261,6 +261,10 @@ public class profileController implements Initializable {
     @FXML
     private Label surchargeLabel;
 
+    @FXML
+    private Label majLab;
+
+
     public Button getPan(){
         return pan;
     }
@@ -612,6 +616,7 @@ public class profileController implements Initializable {
 
         if (weatherCondition.equalsIgnoreCase("Rain") || weatherCondition.equalsIgnoreCase("Snow")) {
             surchargeLabel.setWrapText(true);
+
             surchargeLabel.setText("Une majoration de 20 % sera appliquée en raison des conditions météorologiques défavorables.");
         } else {
             surchargeLabel.setText(""); // No surcharge message
@@ -675,6 +680,10 @@ public class profileController implements Initializable {
         if (weatherCondition.equalsIgnoreCase("Rain") || weatherCondition.equalsIgnoreCase("Snow")) {
             surchargeLabel.setWrapText(true);
             surchargeLabel.setText("Une majoration de 20 % sera appliquée en raison des conditions météorologiques défavorables.");
+            majLab.setWrapText(true);
+            majLab.setText("Une majoration de 20 % sera appliquée en raison des conditions météorologiques défavorables.");
+
+
         } else {
             surchargeLabel.setText("");
         }
@@ -1048,7 +1057,7 @@ public class profileController implements Initializable {
             avis_form.setVisible(false);
             rec_form.setVisible(false);
             offre_form.setVisible(true);
-            pan_form.setVisible(true);
+            pan_form.setVisible(false);
 
             acceuilBtn.setStyle("-fx-background-color: transparent");
             profileBtn.setStyle("-fx-background-color: transparent");

@@ -13,14 +13,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="531.0" prefWidth="939.0" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Listvoiture">
+<AnchorPane prefHeight="531.0" prefWidth="939.0" styleClass="profile-background" stylesheets="@profileDesign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Listvoiture">
 
-    <HBox layoutX="20" layoutY="20" prefHeight="46.0" prefWidth="613.0" spacing="10">
+    <HBox layoutX="20" layoutY="20" prefHeight="46.0" prefWidth="677.0" spacing="10">
         <HBox spacing="10">
-            <Label text="Recherche:" />
-            <TextField fx:id="searchTextField" prefWidth="400" promptText="Entrez la marque" />
-            <Button onAction="#handleSearch" text="Rechercher" />
+            <Label prefHeight="18.0" prefWidth="95.0" stylesheets="@profileDesign.css" text="Recherche:">
+            <font>
+               <Font name="Candara Light" size="14.0" />
+            </font></Label>
+            <TextField fx:id="searchTextField" prefHeight="26.0" prefWidth="334.0" promptText="Entrez la marque" />
+            <Button onAction="#handleSearch" prefHeight="26.0" prefWidth="98.0" styleClass="purple-button" stylesheets="@dashboardDesign.css" text="Rechercher" textFill="WHITE" />
         </HBox>
 
         <Button fx:id="filterButton" onAction="#toggleFilterPanel" style="-fx-background-color: transparent;">
@@ -32,7 +36,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button fx:id="sortButton" onAction="#sortVoituresByMarque" style="-fx-background-color: #ddd; -fx-text-fill: black; -fx-padding: 5px 10px; -fx-background-radius: 5px;" text="Tri" />
+        <Button fx:id="sortButton" onAction="#sortVoituresByMarque" prefHeight="27.0" prefWidth="46.0" style="-fx-background-color: #ddd; -fx-text-fill: black; -fx-padding: 5px 10px; -fx-background-radius: 15;" styleClass="transparent-button" stylesheets="@profileDesign.css" text="Tri" />
     </HBox>
 
     <!-- Simplified Filter Panel -->
@@ -84,7 +88,7 @@
             </ImageView>
         </graphic>
     </Button>
-   <Button fx:id="ajout" layoutX="757.0" layoutY="20.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="138.0" text="Ajout un Avis" />
-    
+   <Button fx:id="ajout" layoutX="757.0" layoutY="20.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="138.0" styleClass="pink-button" stylesheets="@profileDesign.css" text="Ajout un Avis" textFill="WHITE" />
+
 
 </AnchorPane>

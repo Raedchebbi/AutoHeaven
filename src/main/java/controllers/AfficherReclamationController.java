@@ -17,9 +17,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.sql.Connection;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AfficherReclamationController {
@@ -29,11 +27,12 @@ public class AfficherReclamationController {
     @FXML private VBox contentBox;
     @FXML private CheckBox filterBannedCheckBox;
     @FXML private TextField searchField;
+    @FXML private ComboBox<String> sortComboBox;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private static final OkHttpClient client = new OkHttpClient();
     private static final ObjectMapper objectMapper = new ObjectMapper();
-
+    private String currentSortCriteria = "Date (Récent)";
     private dashboardController dashboardController;
 
     public void setDashboardController(dashboardController dashboardController) {
@@ -42,6 +41,17 @@ public class AfficherReclamationController {
 
     @FXML
     public void initialize() {
+        if (sortComboBox != null) {
+            sortComboBox.getItems().addAll("Titre (A-Z)", "Titre (Z-A)", "Date (Récent)", "Date (Ancien)", "Statut (A-Z)");
+            sortComboBox.setValue("Date (Récent)");
+            sortComboBox.setOnAction(e -> {
+                currentSortCriteria = sortComboBox.getValue() != null ? sortComboBox.getValue() : "Date (Récent)";
+                loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText());
+            });
+        } else {
+            System.err.println("sortComboBox is null. Check FXML configuration for <ComboBox fx:id=\"sortComboBox\" ... />");
+        }
+
         loadDataFromDatabase(false, "");
         filterBannedCheckBox.setOnAction(e -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText()));
         searchField.textProperty().addListener((observable, oldValue, newValue) -> loadDataFromDatabase(filterBannedCheckBox.isSelected(), newValue));
@@ -65,8 +75,7 @@ public class AfficherReclamationController {
                 "COALESCE(r.status, 'en_attente') as status, " +
                 "r.datecreation, u.nom, u.tel, u.email " +
                 "FROM reclamation r " +
-                "JOIN user u ON r.id = u.id " +
-                "ORDER BY r.datecreation DESC";
+                "JOIN user u ON r.id = u.id";
 
         try (Connection conn = MyDb.getInstance().getConn();
              PreparedStatement ps = conn.prepareStatement(query);
@@ -82,7 +91,6 @@ public class AfficherReclamationController {
     }
 
     private List<HBox> processResultSet(ResultSet rs, boolean showOnlyBanned, String searchQuery) throws SQLException {
-        List<HBox> rows = new ArrayList<>();
         List<Reclamation> reclamations = new ArrayList<>();
 
         while (rs.next()) {
@@ -95,23 +103,20 @@ public class AfficherReclamationController {
             String tel = rs.getString("tel");
             String email = rs.getString("email");
 
-            Reclamation reclamation = new Reclamation(id_rec, titre, contenu, status, timestamp, nom, tel, email);
-            reclamations.add(reclamation);
+            reclamations.add(new Reclamation(id_rec, titre, contenu, status, timestamp, nom, tel, email));
         }
 
         String searchLower = searchQuery != null ? searchQuery.toLowerCase() : "";
-        if (showOnlyBanned) {
-            return reclamations.stream()
-                    .filter(r -> containsBadWord(r.getContenu()))
-                    .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
-                    .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
-                    .collect(Collectors.toList());
-        } else {
-            return reclamations.stream()
-                    .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
-                    .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
-                    .collect(Collectors.toList());
-        }
+        List<Reclamation> filteredReclamations = reclamations.stream()
+                .filter(r -> !showOnlyBanned || containsBadWord(r.getContenu()))
+                .filter(r -> searchLower.isEmpty() || r.getTitre().toLowerCase().contains(searchLower))
+                .collect(Collectors.toList());
+
+        List<Reclamation> sortedReclamations = sortReclamations(filteredReclamations, currentSortCriteria);
+
+        return sortedReclamations.stream()
+                .map(r -> createDataRow(r.getIdRec(), r.getTitre(), r.getContenu(), r.getStatus(), r.getTimestamp(), r.getNom(), r.getTel(), r.getEmail(), containsBadWord(r.getContenu())))
+                .collect(Collectors.toList());
     }
 
     private HBox createDataRow(int id_rec, String titre, String contenu, String status, Timestamp timestamp, String nom, String tel, String email, boolean isBannedContent) {
@@ -135,23 +140,19 @@ public class AfficherReclamationController {
         btnStatus.setWrapText(true);
         updateButtonState(btnStatus, id_rec, titre, contenu, status, isBannedContent);
 
-        // Icône de traduction (langue.png)
         ImageView translateIcon = new ImageView(getClass().getResource("/images/langue.png").toExternalForm());
         translateIcon.setFitWidth(25.0);
         translateIcon.setFitHeight(25.0);
         translateIcon.setPreserveRatio(true);
         setupTranslationMenu(translateIcon, lblContenu, contenu);
 
-        // Icône de poubelle (poubelle.png) à côté de l’icône de langue
-        ImageView deleteIcon = new ImageView(getClass().getResource("/images/test.png").toExternalForm());
+        ImageView deleteIcon = new ImageView(getClass().getResource("/images/poubelle.png").toExternalForm());
         deleteIcon.setFitWidth(25.0);
         deleteIcon.setFitHeight(25.0);
         deleteIcon.setPreserveRatio(true);
-        deleteIcon.setOnMouseClicked(e -> deleteReclamation(id_rec)); // Action de suppression au clic
+        deleteIcon.setOnMouseClicked(e -> deleteReclamation(id_rec));
 
-        // Placer les icônes de langue et de poubelle côte à côte à la fin
         HBox iconsBox = new HBox(5, translateIcon, deleteIcon);
-
         row.getChildren().addAll(lblTitre, lblContenu, lblDate, lblNom, lblTel, lblEmail, btnStatus, iconsBox);
         return row;
     }
@@ -173,22 +174,19 @@ public class AfficherReclamationController {
                  PreparedStatement psMessages = conn.prepareStatement(deleteMessagesQuery);
                  PreparedStatement psReclamation = conn.prepareStatement(deleteReclamationQuery)) {
 
-                // Supprimer les messages associés
                 psMessages.setInt(1, idRec);
                 int messagesDeleted = psMessages.executeUpdate();
                 System.out.println("Messages supprimés : " + messagesDeleted);
 
-                // Supprimer la réclamation
                 psReclamation.setInt(1, idRec);
                 int reclamationDeleted = psReclamation.executeUpdate();
 
                 if (reclamationDeleted > 0) {
                     showAlert("Succès", "Réclamation et messages associés supprimés avec succès.");
-                    loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText()); // Rafraîchir la liste
+                    loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText());
                 } else {
                     showError("Erreur", "Aucune réclamation trouvée avec cet ID ou échec de la suppression.");
                 }
-
             } catch (SQLException e) {
                 showError("Erreur SQL", "Erreur lors de la suppression de la réclamation : " + e.getMessage());
             }
@@ -218,7 +216,6 @@ public class AfficherReclamationController {
             item.setOnAction(e -> translateContent(originalContent, lang.toLowerCase(), contenuLabel));
             contextMenu.getItems().add(item);
         }
-
         translateIcon.setOnMouseClicked(e -> contextMenu.show(translateIcon, javafx.geometry.Side.BOTTOM, 0, 0));
     }
 
@@ -226,22 +223,19 @@ public class AfficherReclamationController {
         String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyBovR0DquNLAyKmSjnYxN6BD1FgxckdHPU";
         String prompt = "Traduisez ce texte en " + targetLanguage + " : " + content;
 
-        java.util.Map<String, Object> messagePart = new java.util.HashMap<>();
+        Map<String, Object> messagePart = new HashMap<>();
         messagePart.put("text", prompt);
 
-        java.util.Map<String, Object> contentPart = new java.util.HashMap<>();
+        Map<String, Object> contentPart = new HashMap<>();
         contentPart.put("parts", new Object[]{messagePart});
 
-        java.util.Map<String, Object> requestBody = new java.util.HashMap<>();
+        Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("contents", new Object[]{contentPart});
 
         try {
             String jsonPayload = objectMapper.writeValueAsString(requestBody);
             RequestBody body = RequestBody.create(jsonPayload, MediaType.get("application/json; charset=utf-8"));
-            Request request = new Request.Builder()
-                    .url(url)
-                    .post(body)
-                    .build();
+            Request request = new Request.Builder().url(url).post(body).build();
 
             try (Response response = client.newCall(request).execute()) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -269,7 +263,6 @@ public class AfficherReclamationController {
             System.err.println("repondreFormController is null. Check FXML loading.");
             return;
         }
-
         repondreFormController.setReclamationId(reclamationId);
         repondreFormController.setReclamationTitre(titre);
         repondreFormController.setReclamationContent(contenu);
@@ -277,7 +270,6 @@ public class AfficherReclamationController {
             loadDataFromDatabase(filterBannedCheckBox.isSelected(), searchField.getText());
             repondreFormContainer.setVisible(false);
         });
-
         repondreFormContainer.setVisible(true);
         repondreFormContainer.setManaged(true);
     }
@@ -312,14 +304,59 @@ public class AfficherReclamationController {
     }
 
     private boolean containsBadWord(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return false;
+        }
+
         String lowerText = text.toLowerCase();
-        String[] badWords = {"badword", "insulte", "profanité"};
+        String[] badWords = {
+                // Français
+                "merde", "putain", "connard", "salaud", "fils de pute", "enculé", "chier", "bordel", "pute", "batard",
+                "sacré bleu", "crétin", "imbécile", "con", "salope", "foutre", "branleur", "nique", "souillure", "débile",
+                "tocard", "trou du cul", "merdique", "pétasse", "crasseux", "ordure", "pourriture", "fumier", "racaille",
+                "gueux", "pourri", "vermine", "grognasse", "suceur", "cochon",
+                // Anglais
+                "shit", "fuck", "asshole", "bastard", "bitch", "cunt", "dick", "piss", "damn", "hell",
+                "prick", "twat", "motherfucker", "son of a bitch", "cock", "slut", "wanker", "arse", "bollocks", "bugger",
+                "crap", "douchebag", "jerk", "shithead", "pussy", "rat", "scumbag", "trash", "pig", "moron",
+                "idiot", "loser", "ass", "fucker", "suck"
+        };
+
         for (String badWord : badWords) {
             if (lowerText.contains(badWord)) {
                 return true;
             }
         }
         return false;
+    }
+
+    private List<Reclamation> sortReclamations(List<Reclamation> reclamations, String sortCriteria) {
+        if (reclamations == null || reclamations.isEmpty()) {
+            return reclamations;
+        }
+
+        Comparator<Reclamation> comparator;
+        switch (sortCriteria) {
+            case "Titre (A-Z)":
+                comparator = Comparator.comparing(Reclamation::getTitre, String.CASE_INSENSITIVE_ORDER);
+                break;
+            case "Titre (Z-A)":
+                comparator = Comparator.comparing(Reclamation::getTitre, String.CASE_INSENSITIVE_ORDER).reversed();
+                break;
+            case "Date (Récent)":
+                comparator = Comparator.comparing(Reclamation::getTimestamp, Comparator.reverseOrder());
+                break;
+            case "Date (Ancien)":
+                comparator = Comparator.comparing(Reclamation::getTimestamp);
+                break;
+            case "Statut (A-Z)":
+                comparator = Comparator.comparing(Reclamation::getStatus, String.CASE_INSENSITIVE_ORDER);
+                break;
+            default:
+                comparator = Comparator.comparing(Reclamation::getTimestamp, Comparator.reverseOrder());
+        }
+
+        return reclamations.stream().sorted(comparator).collect(Collectors.toList());
     }
 
     private static class Reclamation {

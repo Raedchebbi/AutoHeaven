@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -34,11 +35,11 @@ public class Paniers implements Initializable {
 
     @FXML
     private AnchorPane anc;
+
     private profileController dashboardController;
-
+    @FXML
+    public static Label majLab;
     // Référence au contrôleur du Dashboard
-
-
     // Méthode pour définir la référence au contrôleur du Dashboard
     public void setDashboardController(profileController dashboardController) {
         this.dashboardController = dashboardController;

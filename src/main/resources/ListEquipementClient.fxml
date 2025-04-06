@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="560.0" prefWidth="908.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ListEquipementClient">
+<AnchorPane prefHeight="560.0" prefWidth="915.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ListEquipementClient">
     <children>
         <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="872.0">
             <children>
@@ -63,7 +63,7 @@
                 </ImageView>
             </children>
         </HBox>
-        <HBox layoutX="-19.0" layoutY="66.0" prefHeight="100.0" prefWidth="862.0">
+        <HBox layoutX="-14.0" layoutY="66.0" prefHeight="100.0" prefWidth="862.0">
             <children>
                 <HBox alignment="CENTER" prefHeight="90.0" prefWidth="356.0" styleClass="free-delivery-card" stylesheets="@equipclient.css">
                     <children>
@@ -120,9 +120,9 @@
                 </HBox>
             </children>
         </HBox>
-        <HBox alignment="CENTER" layoutX="35.0" layoutY="166.0" prefHeight="378.0" prefWidth="837.0">
+        <HBox alignment="CENTER" layoutX="35.0" layoutY="166.0" prefHeight="385.0" prefWidth="838.0">
             <children>
-                <ScrollPane fx:id="scroll" prefHeight="368.0" prefWidth="850.0" styleClass="transparent" stylesheets="@equipclient.css">
+                <ScrollPane fx:id="scroll" prefHeight="375.0" prefWidth="838.0" styleClass="transparent" stylesheets="@equipclient.css">
                     <content>
                         <GridPane fx:id="grid" prefHeight="11.0" prefWidth="31.0">
                             <rowConstraints>
